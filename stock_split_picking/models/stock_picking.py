@@ -2,7 +2,7 @@
 # Copyright 2018 Camptocamp SA - Julien Coux
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
 
@@ -17,10 +17,10 @@ class StockPicking(models.Model):
     def _check_split_process(self):
         # Check the picking state and condition before split
         if self.state == "draft":
-            raise UserError(_("Mark as todo this picking please."))
+            raise UserError(self.env._("Mark as todo this picking please."))
         if all([x.quantity == 0.0 for x in self.move_line_ids]):
             raise UserError(
-                _(
+                self.env._(
                     "You must enter quantity in order to split your "
                     "picking in several ones."
                 )
@@ -91,7 +91,7 @@ class StockPicking(models.Model):
             )
         )
         self.message_post(
-            body=_(
+            body=self.env._(
                 "The backorder %s has been created.", backorder_picking._get_html_link()
             )
         )
