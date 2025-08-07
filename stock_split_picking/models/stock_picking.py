@@ -4,7 +4,7 @@
 
 from odoo import models
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_compare
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 from ..exceptions import NotPossibleToSplitPickError, SplitPickNotAllowedInStateError
 
@@ -18,7 +18,10 @@ class StockPicking(models.Model):
         # Check the picking state and condition before split
         if self.state == "draft":
             raise UserError(self.env._("Mark as todo this picking please."))
-        if all([x.quantity == 0.0 for x in self.move_line_ids]):
+        if all(
+            float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)
+            for ml in self.move_line_ids
+        ):
             raise UserError(
                 self.env._(
                     "You must enter quantity in order to split your "
@@ -56,7 +59,7 @@ class StockPicking(models.Model):
                         new_move = move
                     new_moves |= new_move
                     # Remove the move if the quantity is 0
-                    if float_compare(quantity, 0, precision_rounding=rounding) == 0:
+                    if float_is_zero(quantity, precision_rounding=rounding):
                         moves2remove |= move
 
             # If we have new moves to move, create the backorder picking
