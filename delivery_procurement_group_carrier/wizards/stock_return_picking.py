@@ -10,6 +10,10 @@ class StockReturnPicking(models.TransientModel):
         vals = super()._prepare_move_default_values(return_line, new_picking)
         group = new_picking.move_lines.group_id
         if not group:
-            group = self.env["procurement.group"].create({"name": new_picking.name})
+            group_vals = {"name": new_picking.name, "carrier_id": False}
+            if return_line.move_id.group_id:
+                group = return_line.move_id.group_id.copy(group_vals)
+            else:
+                group = self.env["procurement.group"].create(group_vals)
         vals["group_id"] = group.id
         return vals
