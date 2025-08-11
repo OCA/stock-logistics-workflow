@@ -41,6 +41,11 @@ msgstr ""
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
 msgid "Choose a file to import..."
 msgstr ""
 
@@ -180,9 +185,4 @@ msgstr ""
 #, python-format
 msgid ""
 "You only can import S/N for picking operations with creation lots checked"
-msgstr ""
-
-#. module: stock_picking_import_serial_number
-#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
-msgid "_Cancel"
 msgstr ""
