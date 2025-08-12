@@ -79,7 +79,7 @@ addon | version | maintainers | summary
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 18.0.1.0.0 |  | Send stock picking by email
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 18.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
 [stock_picking_show_return](stock_picking_show_return/) | 18.0.1.0.0 |  | Show returns on stock pickings
-[stock_picking_tier_validation](stock_picking_tier_validation/) | 18.0.1.0.0 |  | Extends the functionality of Transfers to support a tier validation process.
+[stock_picking_tier_validation](stock_picking_tier_validation/) | 18.0.1.0.1 |  | Extends the functionality of Transfers to support a tier validation process.
 [stock_picking_type_force_move_type](stock_picking_type_force_move_type/) | 18.0.1.0.1 |  | Force shipping policies on operation types
 [stock_picking_warn_message](stock_picking_warn_message/) | 18.0.1.0.0 |  | Add a popup warning on picking to ensure warning is populated
 [stock_picking_whole_scrap](stock_picking_whole_scrap/) | 18.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Create whole scrap from a picking for move lines
