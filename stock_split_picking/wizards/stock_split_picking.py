@@ -83,6 +83,9 @@ class StockSplitPicking(models.TransientModel):
             moves_to_recompute_state = self.env["stock.move"]
             for move in picking.move_ids:
                 rounding = move.product_uom.rounding
+                # Do not split moves that are done or cancelled
+                if move.state in ("done", "cancel"):
+                    continue
                 # If there aren't assigned quantities, there's nothing to split
                 if float_is_zero(move.quantity, precision_rounding=rounding):
                     continue
@@ -135,9 +138,17 @@ class StockSplitPicking(models.TransientModel):
         """
         new_pickings = self.env["stock.picking"]
         for picking in self.picking_ids:
+            # If the picking only has one move, there's nothing to split
             if len(picking.move_ids) <= 1:
                 continue
-            new_pickings += picking._split_off_moves(picking.move_ids[0])
+            # Get the moves that can be split off (not done nor cancelled)
+            todo = picking.move_ids.filtered(
+                lambda move: move.state not in ("done", "cancel")
+            ).sorted()
+            if not todo:
+                continue
+            # Split off the first one
+            new_pickings += picking._split_off_moves(todo[0])
         return new_pickings
 
     def _apply_selection(self):
