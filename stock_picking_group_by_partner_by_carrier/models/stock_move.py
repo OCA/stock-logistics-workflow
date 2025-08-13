@@ -5,6 +5,7 @@
 from collections import namedtuple
 
 from odoo import api, fields, models
+from odoo.osv import expression
 from odoo.tools import groupby
 
 
@@ -81,7 +82,11 @@ class StockMove(models.Model):
             return domain
 
         # remove group
-        domain = [x for x in domain if x[0] != "group_id"]
+        tree_domain = expression._tree_from_domain(domain)
+        tree_domain = [
+            x for x in tree_domain if expression.is_operator(x) or x[1] != "group_id"
+        ]
+        domain = expression._tree_as_domain(tree_domain)
 
         grouping_domain = self._assign_picking_group_domain()
 
