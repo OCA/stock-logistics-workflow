@@ -1,8 +1,8 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo import api, fields, models
-from odoo.tools import groupby
+from odoo import fields, models
+from odoo.tools import float_compare
 
 
 class StockSplitPicking(models.TransientModel):
@@ -14,84 +14,102 @@ class StockSplitPicking(models.TransientModel):
     )
     kit_split_quantity = fields.Integer(string="Number of kits by transfer")
 
-    @api.model
-    def _sort_move_lines(self, move):
-        return move.sequence
-
     def _apply_kit_quantity(self):
-        pickings = self.env["stock.picking"]
+        new_pickings = self.env["stock.picking"]
         for picking in self.picking_ids:
-            pickings |= self._split_by_kit_quantity(picking)
-        return self._picking_action(pickings)
-
-    def _split_by_kit_quantity(self, picking):
-        filters = {
-            "incoming_moves": lambda m: True,
-            "outgoing_moves": lambda m: False,
-        }
-        move_lines = picking.move_ids.filtered(
-            lambda m: m.state not in ["done", "cancel"]
-        )
-        move_lines = move_lines.sorted(self._sort_move_lines)
-        moves_to_backorder = self.env["stock.move"]
-        new_picking = self.env["stock.picking"]
-        used_slots = 0
-        max_slots = self.kit_split_quantity
-        for bom, bom_move_list in groupby(
-            move_lines, key=lambda move: move.bom_line_id.bom_id
-        ):
-            moves = self.env["stock.move"].browse([move.id for move in bom_move_list])
-            if used_slots >= max_slots:
-                # Current picking is full, everything else is moved to a new picking
-                moves_to_backorder |= moves
-                continue
-
-            available_slots = max_slots - used_slots
-            if bom.type != "phantom":
-                # Non kit moves, their quantity is the number of slots used
-                for move in moves:
-                    is_reserved = bool(move.move_line_ids)
-                    quantity = move.product_qty
-                    if available_slots >= quantity:
-                        used_slots += quantity
-                        available_slots = max_slots - used_slots
-                    elif available_slots <= 0:
-                        moves_to_backorder |= move
-                    else:
-                        new_move_vals = move._split(quantity - available_slots)
-                        moves_to_backorder |= self.env["stock.move"].create(
-                            new_move_vals
+            new_moves_vals = []
+            moves_to_split_off = self.env["stock.move"]
+            # Do not split off moves that are done or cancelled
+            todo_qty = self.kit_split_quantity
+            todo_moves = picking.move_ids.filtered(
+                lambda m: m.state not in ("done", "cancel")
+            ).sorted()
+            todo_moves_by_bom = todo_moves.grouped(lambda m: m.bom_line_id.bom_id)
+            # Process each bom
+            for bom, moves in todo_moves_by_bom.items():
+                # Stop processing if there's nothing else to split off
+                if todo_qty <= 0:
+                    break
+                # Handle kits
+                if bom.type == "phantom":
+                    kit_quantity = moves._compute_kit_quantities(
+                        bom.product_id,
+                        bom.product_qty,
+                        bom,
+                        {
+                            "incoming_moves": lambda m: True,
+                            "outgoing_moves": lambda m: False,
+                        },
+                    )
+                    # If the kit quantity is lower or equal than the todo_qty, we can
+                    # split off the whole kit moves without any move splitting.
+                    if (
+                        float_compare(
+                            kit_quantity,
+                            todo_qty,
+                            precision_rounding=bom.product_uom_id.rounding,
                         )
-                        if is_reserved:
-                            move._action_assign()
-                        used_slots = max_slots
-            else:
-                # Kit moves
-                kit_quantity = moves._compute_kit_quantities(
-                    bom.product_id,
-                    max(moves.mapped("product_qty")),  # Just use max possible
-                    bom,
-                    filters,
-                )
-                if kit_quantity <= available_slots:
-                    used_slots += kit_quantity
-                else:
-                    kit_to_split = kit_quantity - available_slots
-                    new_move_vals = []
-                    is_reserved = bool(moves.move_line_ids)
-                    if is_reserved:
-                        moves._do_unreserve()
+                        <= 0
+                    ):
+                        todo_qty -= kit_quantity
+                        moves_to_split_off += moves
+                        continue
+                    # Otherwise, we'd be consuming the complete todo_qty, but we need to
+                    # split the kit component moves.
                     for move in moves:
-                        new_move_vals += move._split(
-                            move.bom_line_id.product_qty * kit_to_split
+                        new_moves_vals += move.with_context(
+                            cancel_backorder=False
+                        )._split(
+                            move.product_uom._compute_quantity(
+                                move.bom_line_id.product_qty * todo_qty,
+                                move.product_id.uom_id,
+                                rounding_method="HALF-UP",
+                            )
                         )
-                    moves_to_backorder |= self.env["stock.move"].create(new_move_vals)
-                    if is_reserved:
-                        moves._action_assign()
-                    used_slots = max_slots
-        if moves_to_backorder:
-            new_picking = picking._create_split_backorder()
-            moves_to_backorder.write({"picking_id": new_picking.id})
-            moves_to_backorder.move_line_ids.write({"picking_id": new_picking.id})
-
-        return new_picking
+                    # If we got this far, we've consumed all the todo_qty
+                    todo_qty = 0
+                    break
+                # Handle regular products: use their quantity as they are complete
+                else:  # (non-kit)
+                    for move in moves:
+                        rounding = move.product_uom.rounding
+                        # If the move quantity is lower or equal than the todo_qty,
+                        # we can split off the whole move without splitting it.
+                        if (
+                            float_compare(
+                                move.product_uom_qty,
+                                todo_qty,
+                                precision_rounding=rounding,
+                            )
+                            <= 0
+                        ):
+                            todo_qty -= move.product_uom_qty
+                            moves_to_split_off += move
+                            continue
+                        # Otherwise, we need to split the move
+                        new_moves_vals += move.with_context(
+                            cancel_backorder=False
+                        )._split(
+                            move.product_uom._compute_quantity(
+                                todo_qty,
+                                move.product_id.uom_id,
+                                rounding_method="HALF-UP",
+                            )
+                        )
+                        # If we got this far, we've consumed all the todo_qty
+                        todo_qty = 0
+                        break
+            # Create the partially split off moves
+            if new_moves_vals:
+                new_moves = self.env["stock.move"].create(new_moves_vals)
+                new_moves.with_context(
+                    bypass_entire_pack=True, bypass_procurement_creation=True
+                )._action_confirm(merge=False)
+                moves_to_split_off += new_moves
+            # If all the picking moves are the ones to be split, then it means
+            # we haven't created any backorder move. We keep the picking as-is.
+            if picking.move_ids == moves_to_split_off or not moves_to_split_off:
+                continue  # pragma: no cover
+            # Create the split orders for the extracted moves, and split them off
+            new_pickings += picking._split_off_moves(moves_to_split_off)
+        return new_pickings
