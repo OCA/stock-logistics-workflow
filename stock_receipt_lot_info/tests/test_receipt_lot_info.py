@@ -66,7 +66,7 @@ class ReceiptLotInfo(TransactionCase):
         move_line1 = move1.move_line_ids[0]
         move_line1.write(
             {
-                "qty_done": 1,
+                "quantity": 1,
                 "lot_name": "lot1",
                 "expiration_date": date + timedelta(days=15),
                 "lot_use_date": date + timedelta(days=5),
