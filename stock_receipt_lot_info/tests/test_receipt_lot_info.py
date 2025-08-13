@@ -23,7 +23,7 @@ class ReceiptLotInfo(TransactionCase):
         cls.product_lot = cls.product.create(
             {
                 "name": "Product A",
-                "type": "product",
+                "is_storable": True,
                 "tracking": "lot",
                 "categ_id": cls.env.ref("product.product_category_all").id,
             }
