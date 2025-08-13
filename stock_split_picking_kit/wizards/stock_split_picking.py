@@ -29,7 +29,7 @@ class StockSplitPicking(models.TransientModel):
             "incoming_moves": lambda m: True,
             "outgoing_moves": lambda m: False,
         }
-        move_lines = picking.move_lines.filtered(
+        move_lines = picking.move_ids.filtered(
             lambda m: m.state not in ["done", "cancel"]
         )
         move_lines = move_lines.sorted(self._sort_move_lines)
@@ -40,7 +40,6 @@ class StockSplitPicking(models.TransientModel):
         for bom, bom_move_list in groupby(
             move_lines, key=lambda move: move.bom_line_id.bom_id
         ):
-
             moves = self.env["stock.move"].browse([move.id for move in bom_move_list])
             if used_slots >= max_slots:
                 # Current picking is full, everything else is moved to a new picking

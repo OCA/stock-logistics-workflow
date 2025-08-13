@@ -1,14 +1,16 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests import Form, TransactionCase
+
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 
-class TestStockSplitPickingKit(SavepointCase):
+class TestStockSplitPickingKit(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
@@ -20,7 +22,7 @@ class TestStockSplitPickingKit(SavepointCase):
         cls.product_garden_table = cls.product_model.create(
             {
                 "name": "GARDEN TABLE",
-                "type": "product",
+                "type": "consu",
                 "sale_ok": True,
                 "purchase_ok": True,
             }
@@ -29,14 +31,16 @@ class TestStockSplitPickingKit(SavepointCase):
         cls.product_garden_table_top = cls.product_model.create(
             {
                 "name": "GARDEN TABLE TOP",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "sale_ok": True,
             }
         )
         cls.product_garden_table_leg = cls.product_model.create(
             {
                 "name": "GARDEN TABLE LEG",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "sale_ok": False,
                 "purchase_ok": False,
             }
@@ -94,14 +98,14 @@ class TestStockSplitPickingKit(SavepointCase):
             "incoming_moves": lambda m: True,
             "outgoing_moves": lambda m: False,
         }
-        kit_quantity = picking.move_lines._compute_kit_quantities(
-            bom.product_id, max(picking.move_lines.mapped("product_qty")), bom, filters
+        kit_quantity = picking.move_ids._compute_kit_quantities(
+            bom.product_id, max(picking.move_ids.mapped("product_qty")), bom, filters
         )
         return kit_quantity
 
     def _check_move_lines(self, picking, move_lines):
         moves = []
-        for move in picking.move_lines:
+        for move in picking.move_ids:
             moves.append((move.product_id, move.product_qty, bool(move.bom_line_id)))
         self.assertEqual(set(moves), set(move_lines))
 
