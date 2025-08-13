@@ -10,7 +10,7 @@ from odoo.tests.common import TransactionCase
 class ReceiptLotInfo(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(ReceiptLotInfo, cls).setUpClass()
+        super().setUpClass()
         group_stock_multi_locations = cls.env.ref("stock.group_stock_multi_locations")
         cls.env.user.write({"groups_id": [(4, group_stock_multi_locations.id, 0)]})
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
