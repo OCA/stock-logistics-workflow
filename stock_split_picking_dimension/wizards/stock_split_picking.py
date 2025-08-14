@@ -66,9 +66,7 @@ class StockSplitPicking(models.TransientModel):
             ("category_id", "=", self.env.ref("uom.product_uom_categ_vol").id)
         ],
         help="Packaging volume unit of measure",
-        default=lambda self: self.env[
-            "product.template"
-        ]._get_volume_uom_id_from_ir_config_parameter(),
+        default=lambda self: self._get_system_volume_uom(),
         required=True,
     )
 
@@ -126,43 +124,31 @@ class StockSplitPicking(models.TransientModel):
     def _compute_user_max_volume(self):
         volume_uom = self._get_system_volume_uom()
         for rec in self:
-            if rec.max_volume:
-                rec.user_max_volume = volume_uom._compute_quantity(
-                    rec.max_volume, to_unit=rec.user_volume_uom_id
-                )
-            else:
-                rec.user_max_volume = 0
+            rec.user_max_volume = volume_uom._compute_quantity(
+                rec.max_volume, to_unit=rec.user_volume_uom_id
+            )
 
     def _inverse_user_max_volume(self):
         volume_uom = self._get_system_volume_uom()
         for rec in self:
-            if rec.user_max_volume:
-                rec.max_volume = rec.user_volume_uom_id._compute_quantity(
-                    rec.user_max_volume, to_unit=volume_uom
-                )
-            else:
-                rec.max_volume = 0
+            rec.max_volume = rec.user_volume_uom_id._compute_quantity(
+                rec.user_max_volume, to_unit=volume_uom
+            )
 
     @api.depends("max_weight", "user_weight_uom_id")
     def _compute_user_max_weight(self):
         weight_uom = self._get_system_weight_uom()
         for rec in self:
-            if rec.max_weight:
-                rec.user_max_weight = weight_uom._compute_quantity(
-                    rec.max_weight, to_unit=rec.user_weight_uom_id
-                )
-            else:
-                rec.user_max_weight = 0
+            rec.user_max_weight = weight_uom._compute_quantity(
+                rec.max_weight, to_unit=rec.user_weight_uom_id
+            )
 
     def _inverse_user_max_weight(self):
         weight_uom = self._get_system_weight_uom()
         for rec in self:
-            if rec.user_max_weight:
-                rec.max_weight = rec.user_weight_uom_id._compute_quantity(
-                    rec.user_max_weight, to_unit=weight_uom
-                )
-            else:
-                rec.max_weight = 0
+            rec.max_weight = rec.user_weight_uom_id._compute_quantity(
+                rec.user_max_weight, to_unit=weight_uom
+            )
 
     @api.model
     def _get_system_volume_uom(self):
