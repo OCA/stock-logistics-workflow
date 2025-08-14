@@ -10,7 +10,6 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": [
-        "delivery",  # weight on picking
         "stock_picking_volume",  # OCA/stock-logistics-warehouse
         "stock_split_picking",  # OCA/stock-logistics-worflow
     ],

@@ -179,7 +179,7 @@ class StockSplitPicking(models.TransientModel):
             moves_kept = self.env["stock.move"]
             new_pickings = self.env["stock.picking"]
             for move in picking.move_ids:
-                move_weight = move.weight
+                move_weight = move.product_qty * move.product_id.weight
                 move_volume = move.volume
                 if self.max_nbr_lines and nbr_lines >= self.max_nbr_lines:
                     break
