@@ -1,6 +1,7 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo.tests import RecordCapturer
 
 from odoo.addons.stock_split_picking.tests.common import TestStockSplitPickingCase
 
@@ -99,19 +100,16 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
         )
 
     def test_wizard_split_nbr_lines(self):
-        wizard = (
-            self.env["stock.split.picking"]
-            .with_context(active_ids=self.picking.ids)
-            .create(
-                {
-                    "mode": "dimensions",
-                    "max_nbr_lines": 1,
-                    "max_volume": 0,
-                    "max_weight": 0,
-                }
+        with RecordCapturer(self.env["stock.picking"], []) as rc:
+            self._split_picking(
+                self.picking,
+                mode="dimensions",
+                max_nbr_lines=1,
+                max_volume=0,
+                max_weight=0,
             )
-        )
-        new_picking = wizard.action_apply()
+            new_picking = rc.records
+
         self.assertEqual(len(self.picking.move_ids), 1)
         self.assertEqual(self.picking.move_ids, self.move)
 
@@ -119,19 +117,16 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
         self.assertEqual(new_picking.move_ids, self.move_2 + self.move_3)
 
     def test_wizard_split_volume(self):
-        wizard = (
-            self.env["stock.split.picking"]
-            .with_context(active_ids=self.picking.ids)
-            .create(
-                {
-                    "mode": "dimensions",
-                    "max_nbr_lines": 0,
-                    "max_volume": 2600,
-                    "max_weight": 0,
-                }
+        with RecordCapturer(self.env["stock.picking"], []) as rc:
+            self._split_picking(
+                self.picking,
+                mode="dimensions",
+                max_nbr_lines=0,
+                max_volume=2600,
+                max_weight=0,
             )
-        )
-        new_picking = wizard.action_apply()
+            new_picking = rc.records
+
         self.assertEqual(len(self.picking.move_ids), 2)
         # The second move is by passed because it's volume is 2000
         # but the sum of the first and third move is 2500 which is less than 2600
@@ -141,19 +136,16 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
         self.assertEqual(new_picking.move_ids, self.move_2)
 
     def test_wizard_split_weight(self):
-        wizard = (
-            self.env["stock.split.picking"]
-            .with_context(active_ids=self.picking.ids)
-            .create(
-                {
-                    "mode": "dimensions",
-                    "max_nbr_lines": 0,
-                    "max_volume": 0,
-                    "max_weight": 25,
-                }
+        with RecordCapturer(self.env["stock.picking"], []) as rc:
+            self._split_picking(
+                self.picking,
+                mode="dimensions",
+                max_nbr_lines=0,
+                max_volume=0,
+                max_weight=25,
             )
-        )
-        new_picking = wizard.action_apply()
+            new_picking = rc.records
+
         self.assertEqual(len(self.picking.move_ids), 2)
         # The second move is by passed because it's weight is 20
         # but the sum of the first and second move is 30 which is more than 25
