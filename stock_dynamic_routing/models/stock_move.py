@@ -123,7 +123,10 @@ class StockMove(models.Model):
             sql.SQL("SAVEPOINT {}").format(sql.Identifier(savepoint_name))
         )
         _logger.debug("Prepare pull re-routing")
-        super(StockMove, self.with_context(bypass_entire_pack=True))._action_assign()
+        super(
+            StockMove,
+            self.with_context(bypass_entire_pack=True, avoid_putaway_rules=True),
+        )._action_assign()
 
         moves_routing = self._routing_compute_rules()
         if not any(
@@ -137,6 +140,9 @@ class StockMove(models.Model):
                 sql.SQL("RELEASE SAVEPOINT {}").format(sql.Identifier(savepoint_name))
             )
             self.mapped("picking_id")._check_entire_pack()
+            self.filtered(
+                lambda move: move.state in ("assigned", "partially_available")
+            ).move_line_ids._apply_putaway_strategy()
             return {}
 
         _logger.debug("Rollback computation for applying pull re-routing")
