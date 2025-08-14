@@ -163,47 +163,59 @@ class StockSplitPicking(models.TransientModel):
         ]._get_weight_uom_id_from_ir_config_parameter()
 
     def _apply_dimensions(self):
-        """Split picking based on dimensions. Keep moves lines in the original picking
-        if they fit in the user-defined dimensions. Remaining move lines are split off
-        into new pickings.
+        """Apply mode `mode`: By dimensions
 
-        :return: new pickings
-        :rtype: stock.picking
+        Spit off moves lines if they fit in the user-defined dimensions.
+        Keep the rest in the original picking.
         """
         volume_uom = self._get_system_volume_uom()
         weight_uom = self._get_system_weight_uom()
-        for picking in self.mapped("picking_ids"):
-            nbr_lines = 0
-            volume = 0.0
-            weight = 0.0
-            moves_kept = self.env["stock.move"]
-            new_pickings = self.env["stock.picking"]
+        new_pickings = self.env["stock.picking"]
+        for picking in self.picking_ids:
+            taken_nbr_lines = 0
+            taken_volume = 0.0
+            taken_weight = 0.0
+            moves_to_split_off = self.env["stock.move"]
             for move in picking.move_ids:
+                # Stop if we've reached the maximum number of lines, volume, or weight
+                if (
+                    (self.max_nbr_lines and taken_nbr_lines >= self.max_nbr_lines)
+                    or (self.max_volume and taken_volume >= self.max_volume)
+                    or (self.max_weight and taken_weight >= self.max_weight)
+                ):
+                    break
+                # Do not split moves that are done or cancelled
+                if move.state in ("done", "cancel"):
+                    continue
+                # If the move fits in the available dimensions, split it off
                 move_weight = move.product_qty * move.product_id.weight
                 move_volume = move.volume
-                if self.max_nbr_lines and nbr_lines >= self.max_nbr_lines:
-                    break
-                if not (
-                    self.max_volume
-                    and float_compare(
-                        volume + move_volume,
-                        self.max_volume,
+                if (
+                    not self.max_volume
+                    or float_compare(
+                        move_volume,
+                        self.max_volume - taken_volume,
                         precision_rounding=volume_uom.rounding,
                     )
-                    > 0
-                    or self.max_weight
-                    and float_compare(
-                        weight + move_weight,
-                        self.max_weight,
+                    <= 0
+                ) and (
+                    not self.max_weight
+                    or float_compare(
+                        move_weight,
+                        self.max_weight - taken_weight,
                         precision_rounding=weight_uom.rounding,
                     )
-                    > 0
+                    <= 0
                 ):
-                    moves_kept |= move
-                    nbr_lines += 1
-                    volume += move_volume
-                    weight += move_weight
-            if moves_kept != picking.move_ids:
-                moves_to_split = picking.move_ids - moves_kept
-                new_pickings |= picking._split_off_moves(moves_to_split)
+                    moves_to_split_off += move
+                    taken_nbr_lines += 1
+                    taken_volume += move_volume
+                    taken_weight += move_weight
+                    continue
+            # If all the picking moves are the ones to be split, then it means
+            # we haven't created any backorder move. We keep the picking as-is.
+            if picking.move_ids == moves_to_split_off or not moves_to_split_off:
+                continue  # pragma: no cover
+            # Create the split orders for the extracted moves, and split them off
+            new_pickings += picking._split_off_moves(moves_to_split_off)
         return new_pickings

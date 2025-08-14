@@ -110,11 +110,8 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
             )
             new_picking = rc.records
 
-        self.assertEqual(len(self.picking.move_ids), 1)
-        self.assertEqual(self.picking.move_ids, self.move)
-
-        self.assertEqual(len(new_picking.move_ids), 2)
-        self.assertEqual(new_picking.move_ids, self.move_2 + self.move_3)
+        self.assertEqual(new_picking.move_ids, self.move)
+        self.assertEqual(self.picking.move_ids, self.move_2 + self.move_3)
 
     def test_wizard_split_volume(self):
         with RecordCapturer(self.env["stock.picking"], []) as rc:
@@ -127,13 +124,10 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
             )
             new_picking = rc.records
 
-        self.assertEqual(len(self.picking.move_ids), 2)
         # The second move is by passed because it's volume is 2000
         # but the sum of the first and third move is 2500 which is less than 2600
-        self.assertEqual(self.picking.move_ids, self.move + self.move_3)
-
-        self.assertEqual(len(new_picking.move_ids), 1)
-        self.assertEqual(new_picking.move_ids, self.move_2)
+        self.assertEqual(new_picking.move_ids, self.move + self.move_3)
+        self.assertEqual(self.picking.move_ids, self.move_2)
 
     def test_wizard_split_weight(self):
         with RecordCapturer(self.env["stock.picking"], []) as rc:
@@ -146,13 +140,26 @@ class TestStockSplitPickingDimension(TestStockSplitPickingCase):
             )
             new_picking = rc.records
 
-        self.assertEqual(len(self.picking.move_ids), 2)
         # The second move is by passed because it's weight is 20
         # but the sum of the first and second move is 30 which is more than 25
-        self.assertEqual(self.picking.move_ids, self.move + self.move_3)
+        self.assertEqual(new_picking.move_ids, self.move + self.move_3)
+        self.assertEqual(self.picking.move_ids, self.move_2)
 
-        self.assertEqual(len(new_picking.move_ids), 1)
+    def test_wizard_ignore_cancelled_moves(self):
+        self.move._action_cancel()
+
+        with RecordCapturer(self.env["stock.picking"], []) as rc:
+            self._split_picking(
+                self.picking,
+                mode="dimensions",
+                max_nbr_lines=1,
+                max_volume=0,
+                max_weight=0,
+            )
+            new_picking = rc.records
+
         self.assertEqual(new_picking.move_ids, self.move_2)
+        self.assertEqual(self.picking.move_ids, self.move + self.move_3)
 
     def test_wizard_user_volume_uom(self):
         # The default system volume is cubic meter, but we change it
