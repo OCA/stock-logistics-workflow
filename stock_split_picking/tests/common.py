@@ -51,15 +51,24 @@ class TestStockSplitPickingCase(TransactionCase):
         )
 
     @classmethod
-    def _create_stock_move(cls, product, picking):
+    def _create_stock_move(cls, product, picking, qty=10):
         return cls.env["stock.move"].create(
             {
                 "name": "/",
                 "picking_id": picking.id,
                 "product_id": product.id,
-                "product_uom_qty": 10,
+                "product_uom_qty": qty,
                 "product_uom": product.uom_id.id,
                 "location_id": cls.src_location.id,
                 "location_dest_id": cls.dest_location.id,
             }
+        )
+
+    @classmethod
+    def _split_picking(cls, picking, **wizard_vals):
+        return (
+            cls.env["stock.split.picking"]
+            .with_context(active_ids=picking.ids)
+            .create(wizard_vals)
+            .action_apply()
         )

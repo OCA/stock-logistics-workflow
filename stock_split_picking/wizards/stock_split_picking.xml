@@ -6,13 +6,13 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="mode" />
+                    <field name="mode" widget="radio" />
                     <field name="picking_ids" invisible="True" />
                     <field
                         name="move_ids"
                         invisible="mode != 'selection'"
                         required="mode == 'selection'"
-                        domain="[('picking_id', 'in', picking_ids)]"
+                        domain="[('picking_id', 'in', picking_ids), ('state', 'not in', ('done', 'cancel'))]"
                     >
                         <list create="true" edit="true" delete="true">
                             <field name="product_id" />
