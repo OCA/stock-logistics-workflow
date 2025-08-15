@@ -18,6 +18,22 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: stock_split_picking
+#. odoo-python
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+msgid ""
+"%s: Nothing to split, all demand is done. For split you need at least one "
+"line not fully fulfilled"
+msgstr ""
+
+#. module: stock_split_picking
+#. odoo-python
+#: code:addons/stock_split_picking/wizards/stock_split_picking.py:0
+msgid ""
+"%s: Nothing to split. Fill the quantities you want in a new transfer in the "
+"done quantities"
+msgstr ""
+
+#. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "Cancel"
 msgstr "Cancelar"
@@ -70,12 +86,6 @@ msgid "Last Updated on"
 msgstr "Última Actualización el"
 
 #. module: stock_split_picking
-#. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
-msgid "Mark as todo this picking please."
-msgstr "Marque como 'Por realizar' este albarán, por favor."
-
-#. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__mode
 msgid "Mode"
 msgstr "Modo"
@@ -117,6 +127,12 @@ msgid "Split a picking"
 msgstr "Dividir un albarán"
 
 #. module: stock_split_picking
+#. odoo-python
+#: code:addons/stock_split_picking/models/stock_picking.py:0
+msgid "Split off from %s"
+msgstr ""
+
+#. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
 msgid "Split pickings"
 msgstr "Dividir albaranes"
@@ -124,8 +140,8 @@ msgstr "Dividir albaranes"
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
-msgid "The backorder %s has been created."
-msgstr "Se ha creado el pedido pendiente %s."
+msgid "The split order %s has been created."
+msgstr ""
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
@@ -138,15 +154,19 @@ msgid "Unit of Measure"
 msgstr "Unidad de Medida"
 
 #. module: stock_split_picking
-#. odoo-python
-#: code:addons/stock_split_picking/models/stock_picking.py:0
-msgid "You must enter quantity in order to split your picking in several ones."
-msgstr "Debe introducir la cantidad para dividir el pedido en varios."
-
-#. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
 msgid "or"
 msgstr "o"
+
+#~ msgid "Mark as todo this picking please."
+#~ msgstr "Marque como 'Por realizar' este albarán, por favor."
+
+#~ msgid "The backorder %s has been created."
+#~ msgstr "Se ha creado el pedido pendiente %s."
+
+#~ msgid ""
+#~ "You must enter quantity in order to split your picking in several ones."
+#~ msgstr "Debe introducir la cantidad para dividir el pedido en varios."
 
 #, python-format
 #~ msgid "Cannot split off all moves from picking %s"
