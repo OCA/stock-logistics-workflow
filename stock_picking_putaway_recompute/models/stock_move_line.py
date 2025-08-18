@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing_extensions import Self
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
+from odoo.tools import groupby
 
 
 class StockMoveLine(models.Model):
@@ -28,11 +30,7 @@ class StockMoveLine(models.Model):
 
     def _can_recompute_putaway(self):
         self.ensure_one()
-        return (
-            self.picking_id._can_recompute_putaway()
-            and not self.result_package_id
-            and not self.picked
-        )
+        return self.picking_id._can_recompute_putaway() and not self.picked
 
     def _filtered_for_putaway_recompute(self) -> Self:
         """
@@ -44,12 +42,32 @@ class StockMoveLine(models.Model):
         """
         return self.filtered(lambda line: line._can_recompute_putaway())
 
+    def _check_all_lines_from_same_package(self):
+        for _package, move_line_list in groupby(
+            self, lambda line: line.result_package_id
+        ):
+            move_lines = self.env["stock.move.line"].concat(*move_line_list)
+            other_package_lines = self.env["stock.move.line"].search(
+                [
+                    ("picking_id", "=", move_lines.mapped("picking_id").id),
+                    ("id", "not in", move_lines.ids),
+                ]
+            )
+            if other_package_lines:
+                raise UserError(
+                    self.env._(
+                        "Recomputation of putaway is not allowed if not all move lines"
+                        " from same package were selected."
+                    )
+                )
+
     def _recompute_putaways(self) -> None:
         """
         Launches the computation of putaways on operations that are
         allowed to.
         """
         to_recompute_lines = self._filtered_for_putaway_recompute()
+        to_recompute_lines._check_all_lines_from_same_package()
         # Reset location destinations to their move destination
         # First, protect the field from recomputations as
         # value will be reaffected afterwards.
