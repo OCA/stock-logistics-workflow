@@ -49,9 +49,3 @@ class StockMoveLine(models.Model):
             values["quantity"] = qty
         self.with_context(move_line_pick_qty=True).update(values)
         return True
-
-    def _action_done(self):
-        for ml in self:
-            if ml.qty_picked and ml.picked and ml.qty_picked != ml.quantity:
-                ml.quantity = ml.qty_picked
-        return super()._action_done()
