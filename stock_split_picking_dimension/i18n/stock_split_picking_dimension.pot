@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: stock_split_picking_dimension
 #. odoo-python
 #: code:addons/stock_split_picking_dimension/exceptions.py:0
-#, python-format
 msgid "At least one dimension must be set"
 msgstr ""
 
@@ -68,7 +67,6 @@ msgstr ""
 #. module: stock_split_picking_dimension
 #. odoo-python
 #: code:addons/stock_split_picking_dimension/exceptions.py:0
-#, python-format
 msgid "Value of '%(field_label)s' must be positive"
 msgstr ""
 
