@@ -268,16 +268,19 @@ class MakePickingBatch(models.TransientModel):
 
     def _split_first_picking_for_limit(self, picking):
         nbr_lines, volume, weight = self._get_picking_max_dimensions()
-        wizard = self.env["stock.split.picking"].with_context(active_ids=picking.ids)
-        wizard.create(
-            {
-                "mode": "dimensions",
-                "max_nbr_lines": nbr_lines,
-                "max_volume": volume,
-                "max_weight": weight,
-            }
-        ).action_apply()
-        return picking
+        return (
+            self.env["stock.split.picking"]
+            .with_context(active_ids=picking.ids)
+            .create(
+                {
+                    "mode": "dimensions",
+                    "max_nbr_lines": nbr_lines,
+                    "max_volume": volume,
+                    "max_weight": weight,
+                }
+            )
+            ._action_apply()
+        )
 
     def _is_picking_exceeding_limits(self, picking):
         """Check if the picking exceeds the limits of the available devices.
