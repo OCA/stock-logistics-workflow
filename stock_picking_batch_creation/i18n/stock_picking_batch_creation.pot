@@ -148,15 +148,13 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_picking_batch_creation
-#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
+#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
 msgid ""
-"If checked, the maximum number of lines will not be applied if there is no "
-"candidate to add to the batch with a number of lines less than the maximum "
-"number of lines. This option is useful if you want relax the maximum number "
-"of lines to allow to create a batch even if there is no candidate to add to "
-"the batch at first. This will avoid to manually create a batch with a single"
-" picking for the sole case where a device is suitable for the picking but "
-"the picking has more lines than the maximum number of lines."
+"If checked, the pickings exceeding the maximum number of lines, volume or "
+"weight of available devices will be split into multiple pickings to respect "
+"the limits. If unchecked, the pickings exceeding the limits will not be "
+"added to the batch. The limits are defined by the limits of the last "
+"available devices."
 msgstr ""
 
 #. module: stock_picking_batch_creation
@@ -264,11 +262,6 @@ msgid "No device found for batch picking."
 msgstr ""
 
 #. module: stock_picking_batch_creation
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
-msgid "No line limit if no candidate"
-msgstr ""
-
-#. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__nbr_bins
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_picking_batch__batch_nbr_bins
 msgid "Number of compartments"
@@ -302,6 +295,12 @@ msgid "Packaging volume unit of measure"
 msgstr ""
 
 #. module: stock_picking_batch_creation
+#. odoo-python
+#: code:addons/stock_picking_batch_creation/exceptions.py:0
+msgid "Picking %(name)s cannot be split"
+msgstr ""
+
+#. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__picking_locking_mode
 msgid "Picking locking mode"
 msgstr ""
@@ -329,6 +328,11 @@ msgstr ""
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields.selection,name:stock_picking_batch_creation.selection__make_picking_batch__picking_locking_mode__sql_for_update_skip_locked
 msgid "SQL FOR UPDATE SKIP LOCKED"
+msgstr ""
+
+#. module: stock_picking_batch_creation
+#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
+msgid "Split pickings exceeding limits"
 msgstr ""
 
 #. module: stock_picking_batch_creation
