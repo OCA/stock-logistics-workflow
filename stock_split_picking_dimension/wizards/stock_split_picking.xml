@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_split_picking_form_view">
+        <field name="model">stock.split.picking</field>
+        <field name="inherit_id" ref="stock_split_picking.view_stock_split_picking" />
+        <field name="arch" type="xml">
+            <group position="after">
+                <group name="dimensions" invisible="mode != 'dimensions'">
+                    <group colspan="4">
+                        <field name="max_nbr_lines" />
+                    </group>
+                    <group name="dimensions_unit" invisible="mode != 'dimensions'">
+                        <field name="max_weight" invisible="1" />
+                        <field name="max_volume" invisible="1" />
+                        <label for="user_max_volume" />
+                        <div class="o_row">
+                            <field name="user_max_volume" class="oe_inline" />
+                            <span>
+                                <field name="user_volume_uom_name" />
+                            </span>
+                        </div>
+                        <label for="user_max_weight" />
+                        <div class="o_row">
+                            <field name="user_max_weight" class="oe_inline" />
+                            <span>
+                                <field name="user_weight_uom_name" />
+                            </span>
+                        </div>
+                    </group>
+                    <group name="dimensions_unit_uom" invisible="mode != 'dimensions'">
+                        <field name="user_volume_uom_id" />
+                        <field name="user_weight_uom_id" />
+                    </group>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
