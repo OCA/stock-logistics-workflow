@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Stock Picking Batch Creation
 ============================
@@ -17,7 +13,7 @@ Stock Picking Batch Creation
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -147,6 +143,24 @@ will prevent to consume at least one bin for each picking if pickings
 are for the same partner. When activated, the computation of the number
 of bins consumed by the picking into the batch will take into account
 the volume of the pickings for the same partners already.
+
+Splitting picking if needed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can also activate the option *Split picking exceeding the limits* on
+the wizard. In this case, when the system select the first picking to
+add to the batch, it will disable the criteria based on the volume,
+weight and number of lines. If the picking is exceeding the limits, the
+system will then try to split the picking so that the new picking fits
+the criteria and can be added to the batch. If the picking can't be
+split, an exception will be raised.
+
+This option is useful to allow to create a batch picking with pickings
+that are exceeding the limits defined in the wizard. It also ensures
+that the processing of pickings is done in the order of the pickings. If
+the option is not activated, the system will try to find a picking that
+fits the criteria and will ignore those that are exceeding the limits
+even if they are to be processed first.
 
 Bug Tracker
 ===========

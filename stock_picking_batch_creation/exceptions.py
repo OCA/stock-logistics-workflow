@@ -13,6 +13,7 @@ class NoPickingCandidateError(UserError):
 
 class PickingCandidateNumberLineExceedError(UserError):
     def __init__(self, picking, max_line):
+        self.env = picking.env
         self.picking = picking
         self.env = picking.env
         super().__init__(
@@ -38,3 +39,12 @@ class NoSuitableDeviceError(UserError):
                 names=", ".join(self.pickings.mapped("name")),
             )
         super().__init__(message)
+
+
+class PickingSplitNotPossibleError(UserError):
+    def __init__(self, picking):
+        self.env = picking.env
+        self.picking = picking
+        super().__init__(
+            self.env._("Picking %(name)s cannot be split", name=self.picking.name)
+        )

@@ -16,6 +16,7 @@
         "delivery",  # weight on picking
         "stock_picking_batch",
         "stock_picking_volume",  # OCA/stock-logistics-warehouse
+        "stock_split_picking_dimension",
     ],
     "data": [
         "views/stock_device_type.xml",
