@@ -206,9 +206,10 @@ class ClusterPickingCommonFeatures(BaseCommon):
                         "product_uom": p.uom_id.id,
                         "location_id": cls.env.ref("stock.stock_location_stock").id,
                         "location_dest_id": warehouse.wh_output_stock_loc_id.id,
+                        "sequence": sequence,
                     },
                 )
-                for p in products
+                for sequence, p in enumerate(products)
             ],
         }
         picking = cls.env["stock.picking"].create(picking_values)
