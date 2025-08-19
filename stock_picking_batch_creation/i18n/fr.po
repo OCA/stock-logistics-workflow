@@ -19,7 +19,6 @@ msgstr ""
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid " Pickings %(names)s do not match any device"
 msgstr ""
 "Transferts %(names)s ne correspondent à aucune type de matérial de "
@@ -44,7 +43,6 @@ msgstr ""
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid ""
 "At least one picking candidate found %(name)s but with more line to process "
 "than the maximum number of line allowed in a batch picking. (%(max_line)s) "
@@ -163,15 +161,13 @@ msgid "ID"
 msgstr ""
 
 #. module: stock_picking_batch_creation
-#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
+#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
 msgid ""
-"If checked, the maximum number of lines will not be applied if there is no "
-"candidate to add to the batch with a number of lines less than the maximum "
-"number of lines. This option is useful if you want relax the maximum number "
-"of lines to allow to create a batch even if there is no candidate to add to "
-"the batch at first. This will avoid to manually create a batch with a single "
-"picking for the sole case where a device is suitable for the picking but the "
-"picking has more lines than the maximum number of lines."
+"If checked, the pickings exceeding the maximum number of lines, volume or "
+"weight of available devices will be split into multiple pickings to respect "
+"the limits. If unchecked, the pickings exceeding the limits will not be "
+"added to the batch. The limits are defined by the limits of the last "
+"available devices."
 msgstr ""
 
 #. module: stock_picking_batch_creation
@@ -208,12 +204,6 @@ msgstr "Indique le volume total des transferts inclus."
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_weight
 msgid "Indicates total weight of transfers included."
 msgstr "Indique le poids total des transferts inclus."
-
-#. module: stock_picking_batch_creation
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch____last_update
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type____last_update
-msgid "Last Modified on"
-msgstr "Modifié le"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__write_uid
@@ -287,14 +277,8 @@ msgstr "Nom"
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid "No device found for batch picking."
 msgstr "Aucun matériel de préparation trouvé pour la vague de transferts."
-
-#. module: stock_picking_batch_creation
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
-msgid "No line limit if no candidate"
-msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__nbr_bins
@@ -332,6 +316,12 @@ msgid "Packaging volume unit of measure"
 msgstr "Unité de mesure de volume"
 
 #. module: stock_picking_batch_creation
+#. odoo-python
+#: code:addons/stock_picking_batch_creation/exceptions.py:0
+msgid "Picking %(name)s cannot be split"
+msgstr ""
+
+#. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__picking_locking_mode
 msgid "Picking locking mode"
 msgstr "Mode de verrouillage des transferts"
@@ -360,6 +350,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:stock_picking_batch_creation.selection__make_picking_batch__picking_locking_mode__sql_for_update_skip_locked
 msgid "SQL FOR UPDATE SKIP LOCKED"
 msgstr "SQL FOR UPDATE SKIP LOCKED"
+
+#. module: stock_picking_batch_creation
+#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
+msgid "Split pickings exceeding limits"
+msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.actions.act_window,name:stock_picking_batch_creation.stock_device_type_act_window
@@ -432,9 +427,11 @@ msgstr "ex: Transpalette"
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid "no candidate pickings to batch"
 msgstr "aucun transfert candidat à la création de la vague de préparation"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Modifié le"
 
 #~ msgid "Indicates the bins occupied by the picking on the device."
 #~ msgstr ""

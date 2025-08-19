@@ -19,7 +19,6 @@ msgstr ""
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid " Pickings %(names)s do not match any device"
 msgstr " Il prelievo %(names)s non corrisponde a nessun dispositivo"
 
@@ -43,7 +42,6 @@ msgstr ""
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid ""
 "At least one picking candidate found %(name)s but with more line to process "
 "than the maximum number of line allowed in a batch picking. (%(max_line)s) "
@@ -103,8 +101,7 @@ msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__picking_type_ids
-msgid ""
-"Default list of eligible operation types when creating a batch transfer"
+msgid "Default list of eligible operation types when creating a batch transfer"
 msgstr ""
 "Lista predefinita dei tipi operazione utilizzabili nella creazione di un "
 "trasferimento raggruppato"
@@ -165,31 +162,21 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_batch_creation
-#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
+#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
 msgid ""
-"If checked, the maximum number of lines will not be applied if there is no "
-"candidate to add to the batch with a number of lines less than the maximum "
-"number of lines. This option is useful if you want relax the maximum number "
-"of lines to allow to create a batch even if there is no candidate to add to "
-"the batch at first. This will avoid to manually create a batch with a single"
-" picking for the sole case where a device is suitable for the picking but "
-"the picking has more lines than the maximum number of lines."
+"If checked, the pickings exceeding the maximum number of lines, volume or "
+"weight of available devices will be split into multiple pickings to respect "
+"the limits. If unchecked, the pickings exceeding the limits will not be "
+"added to the batch. The limits are defined by the limits of the last "
+"available devices."
 msgstr ""
-"Se selezionate, il massimo nimero di righe non verrà applicato se non ci "
-"sono candidati da aggiungere al gruppo con un numero di righe inferiore al "
-"massimo numero di righe. L'opzione è utile se si vuolerilasciare il massimo "
-"numero di righe per consentire di creare un gruppo anche se non ci sono "
-"candidati da aggiungere al gruppo come primi. Questo eviterà di creare "
-"manualmente un gruppo con un singolo prelievo per il solo caso in cui un "
-"dispositivo sia disponibile per il prelievo ma il prelievo ha più righe del "
-"massimo."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__add_picking_list_in_error
 msgid ""
 "If not suitable device is provided for the pickings candidates, the error "
-"message will contain the list of the pickings names. In somecases, this list"
-" can be very long. That's why this option is uncheckedby default."
+"message will contain the list of the pickings names. In somecases, this list "
+"can be very long. That's why this option is uncheckedby default."
 msgstr ""
 "Se non viene fornito un dispositivo idoneo per i prelievi candidati, il "
 "messaggio di errore conterrà la lista dei nomi dei prelievi. In alcunui "
@@ -216,12 +203,6 @@ msgstr "Indica il volume totale dei trasferimenti inclusi."
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_picking_batch__batch_weight
 msgid "Indicates total weight of transfers included."
 msgstr "Indica il peso totale dei trasferimenti inclusi."
-
-#. module: stock_picking_batch_creation
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch____last_update
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__write_uid
@@ -295,14 +276,8 @@ msgstr "Nome"
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid "No device found for batch picking."
 msgstr "Nessun dispositivo trovato per il gruppo prelievo."
-
-#. module: stock_picking_batch_creation
-#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__no_line_limit_if_no_candidate
-msgid "No line limit if no candidate"
-msgstr "Nessun limite riga se non c'è il candidato"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__nbr_bins
@@ -341,6 +316,12 @@ msgid "Packaging volume unit of measure"
 msgstr "Unità di misura per il volume dell'imballaggio"
 
 #. module: stock_picking_batch_creation
+#. odoo-python
+#: code:addons/stock_picking_batch_creation/exceptions.py:0
+msgid "Picking %(name)s cannot be split"
+msgstr ""
+
+#. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__picking_locking_mode
 msgid "Picking locking mode"
 msgstr "Modalità bloccaggio prelievo"
@@ -369,6 +350,11 @@ msgstr "Restringi alla stessa priorità"
 #: model:ir.model.fields.selection,name:stock_picking_batch_creation.selection__make_picking_batch__picking_locking_mode__sql_for_update_skip_locked
 msgid "SQL FOR UPDATE SKIP LOCKED"
 msgstr "SQL PER SALTO AGGIORNAMENTO BLOCCATO"
+
+#. module: stock_picking_batch_creation
+#: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__split_picking_exceeding_limits
+msgid "Split pickings exceeding limits"
+msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.actions.act_window,name:stock_picking_batch_creation.stock_device_type_act_window
@@ -441,6 +427,30 @@ msgstr "es. muletto"
 #. module: stock_picking_batch_creation
 #. odoo-python
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
-#, python-format
 msgid "no candidate pickings to batch"
 msgstr "nessun prelievo candidato da raggruppare"
+
+#~ msgid ""
+#~ "If checked, the maximum number of lines will not be applied if there is "
+#~ "no candidate to add to the batch with a number of lines less than the "
+#~ "maximum number of lines. This option is useful if you want relax the "
+#~ "maximum number of lines to allow to create a batch even if there is no "
+#~ "candidate to add to the batch at first. This will avoid to manually "
+#~ "create a batch with a single picking for the sole case where a device is "
+#~ "suitable for the picking but the picking has more lines than the maximum "
+#~ "number of lines."
+#~ msgstr ""
+#~ "Se selezionate, il massimo nimero di righe non verrà applicato se non ci "
+#~ "sono candidati da aggiungere al gruppo con un numero di righe inferiore "
+#~ "al massimo numero di righe. L'opzione è utile se si vuolerilasciare il "
+#~ "massimo numero di righe per consentire di creare un gruppo anche se non "
+#~ "ci sono candidati da aggiungere al gruppo come primi. Questo eviterà di "
+#~ "creare manualmente un gruppo con un singolo prelievo per il solo caso in "
+#~ "cui un dispositivo sia disponibile per il prelievo ma il prelievo ha più "
+#~ "righe del massimo."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#~ msgid "No line limit if no candidate"
+#~ msgstr "Nessun limite riga se non c'è il candidato"
