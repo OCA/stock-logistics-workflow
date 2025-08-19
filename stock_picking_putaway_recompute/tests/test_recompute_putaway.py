@@ -1,5 +1,6 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo.exceptions import UserError
 from odoo.fields import Command, first
 from odoo.tests import TransactionCase
 
@@ -266,14 +267,14 @@ class TestRecomputePutaway(TransactionCase):
             [False, False], move_lines_picking2.mapped("can_recompute_putaways")
         )
 
-    def test_recompute_putaway_packaging(self):
+    def test_recompute_putaway_package(self):
         """
         Create a single picking from Suppliers -> Stock
         The created operation point to the Sub location 1
         Simulate a package presence on operations
         Change the rule to point to Sub location 2
         Launch the action to recompute putaways
-        The operation still points to the Sub location 1
+        The operation points to the Sub location 2
         """
         self._create_picking()
         self.picking.action_confirm()
@@ -286,14 +287,26 @@ class TestRecomputePutaway(TransactionCase):
         # Simulate the package is already set
         self.picking.move_line_ids.result_package_id = self.package
 
-        # Change the rule destination
+        # Change the rule destination for one product
         self.rule.location_out_id = self.sub_location_2
 
+        # Recompute putaway cannot find a common destination for single
+        #  package, so it must stay on stock
         self.picking.action_recompute_putaways()
+        self.assertEqual(self.stock, self.picking.move_line_ids.location_dest_id)
 
+        # Change the rule destination for other product
+        self.rule_2.location_out_id = self.sub_location_2
+
+        # Recompute putaway can find a common destination for single
+        #  package
+        self.picking.action_recompute_putaways()
         self.assertEqual(
-            self.sub_location_1, self.picking.move_line_ids.location_dest_id
+            self.sub_location_2, self.picking.move_line_ids.location_dest_id
         )
+
+        with self.assertRaises(UserError):
+            self.picking.move_line_ids[:1].action_recompute_putaways()
 
     def test_no_recompute_putaway(self):
         """

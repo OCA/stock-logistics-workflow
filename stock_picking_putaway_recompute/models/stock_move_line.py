@@ -42,7 +42,7 @@ class StockMoveLine(models.Model):
         """
         return self.filtered(lambda line: line._can_recompute_putaway())
 
-    def _check_all_lines_from_same_package(self):
+    def _check_all_lines_with_same_dest_package(self):
         for _package, move_line_list in groupby(
             self, lambda line: line.result_package_id
         ):
@@ -57,7 +57,7 @@ class StockMoveLine(models.Model):
                 raise UserError(
                     self.env._(
                         "Recomputation of putaway is not allowed if not all move lines"
-                        " from same package were selected."
+                        " with same destination package were selected."
                     )
                 )
 
@@ -67,7 +67,7 @@ class StockMoveLine(models.Model):
         allowed to.
         """
         to_recompute_lines = self._filtered_for_putaway_recompute()
-        to_recompute_lines._check_all_lines_from_same_package()
+        to_recompute_lines._check_all_lines_with_same_dest_package()
         # Reset location destinations to their move destination
         # First, protect the field from recomputations as
         # value will be reaffected afterwards.
