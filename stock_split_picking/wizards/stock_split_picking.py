@@ -30,8 +30,11 @@ class StockSplitPicking(models.TransientModel):
         return self.env["stock.picking"].browse(self.env.context.get("active_ids", []))
 
     def action_apply(self):
-        new_pickings = getattr(self, f"_apply_{self[:1].mode}")()
+        new_pickings = self._action_apply()
         return self._picking_action(new_pickings)
+
+    def _action_apply(self):
+        return getattr(self, f"_apply_{self[:1].mode}")()
 
     def _check_can_split_by_quantity(self):
         for picking in self.picking_ids:
