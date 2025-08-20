@@ -69,6 +69,7 @@ addon | version | maintainers | summary
 [stock_putaway_hook](stock_putaway_hook/) | 17.0.1.0.0 |  | Add hooks allowing modules to add more putaway strategies
 [stock_quant_package_dimension](stock_quant_package_dimension/) | 17.0.1.0.0 |  | Use dimensions on packages
 [stock_quant_package_product_packaging](stock_quant_package_product_packaging/) | 17.0.1.0.0 |  | Use product packagings on packages
+[stock_receipt_lot_info](stock_receipt_lot_info/) | 17.0.1.0.0 |  | Be able to introduce more info on lot/serial number while processing a receipt.
 [stock_restrict_by_planned_consumed_date](stock_restrict_by_planned_consumed_date/) | 17.0.1.0.0 |  | Stock restrict by planned consumed date
 [stock_restrict_lot](stock_restrict_lot/) | 17.0.1.2.1 | <a href='https://github.com/florian-dacosta'><img src='https://github.com/florian-dacosta.png' width='32' height='32' style='border-radius:50%;' alt='florian-dacosta'/></a> | Base module that add back the concept of restrict lot on stock move
 [stock_scrap_tier_validation](stock_scrap_tier_validation/) | 17.0.1.0.0 |  | Stock Scrap Tier Validation
