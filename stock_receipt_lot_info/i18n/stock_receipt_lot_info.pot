@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,4 +31,9 @@ msgstr ""
 #. module: stock_receipt_lot_info
 #: model:ir.model,name:stock_receipt_lot_info.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_receipt_lot_info
+#: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__show_lots_text
+msgid "Show Lots Text"
 msgstr ""
