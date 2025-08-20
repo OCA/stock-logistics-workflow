@@ -99,9 +99,15 @@
         <field name="res_model">stock.grn</field>
     </record>
     <menuitem
-        id="menu_stock_grn"
+        id="menu_stock_grn_root"
+        name="GRN"
         parent="stock.menu_stock_warehouse_mgmt"
         sequence="30"
+    />
+    <menuitem
+        id="menu_stock_grn"
+        parent="stock_grn.menu_stock_grn_root"
+        sequence="10"
         action="action_grn_view"
     />
 </odoo>
