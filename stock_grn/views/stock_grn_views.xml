@@ -78,14 +78,18 @@
                             <field name="description" />
                         </group>
                     </group>
-                    <label for="picking_ids" />
-                    <field
-                        name="picking_ids"
-                        nolabel="1"
-                        widget="many2many"
-                        options="{'delete':False}"
-                        context="{'search_default_available':1,'search_default_nogrn':1}"
-                    />
+                    <notebook>
+                        <page name="pickings" string="Incoming Shipments">
+                            <label for="picking_ids" />
+                            <field
+                                name="picking_ids"
+                                nolabel="1"
+                                widget="many2many"
+                                options="{'delete':False}"
+                                context="{'search_default_available':1,'search_default_nogrn':1}"
+                            />
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
