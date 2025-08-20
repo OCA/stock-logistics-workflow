@@ -40,16 +40,13 @@
                 <field name="picking_type_code" invisible="1" />
                 <field
                     name="grn_id"
-                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
+                    invisible="picking_type_code != 'incoming'"
                     options="{'no_create':True}"
                 />
-                <field
-                    name="grn_date"
-                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
-                />
+                <field name="grn_date" invisible="picking_type_code != 'incoming'" />
                 <field
                     name="delivery_note_supplier_number"
-                    attrs="{'invisible':[('picking_type_code','!=','incoming')]}"
+                    invisible="picking_type_code != 'incoming'"
                 />
             </field>
         </field>

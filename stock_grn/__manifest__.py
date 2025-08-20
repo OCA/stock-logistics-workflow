@@ -4,7 +4,7 @@
 
 {
     "name": "Goods Received Note",
-    "version": "16.0.1.1.0",
+    "version": "18.0.1.0.0",
     "author": "BCIM, ACSONE SA/NV, Odoo Community Association (OCA)",
     "category": "Delivery",
     "depends": ["stock"],
@@ -19,7 +19,5 @@
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
     ],
-    "installable": True,
-    "auto_install": False,
     "license": "AGPL-3",
 }

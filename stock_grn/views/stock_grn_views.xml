@@ -28,7 +28,7 @@
         <field name="name">stock.grn.tree</field>
         <field name="model">stock.grn</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="date" />
                 <field name="carrier_id" />
@@ -38,7 +38,7 @@
                 <field name="qty_pallet" />
                 <field name="qty_box" />
                 <field name="delivery_note_supplier_number" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_grn_form">

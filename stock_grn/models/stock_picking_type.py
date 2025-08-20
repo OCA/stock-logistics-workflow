@@ -16,13 +16,9 @@ class StockPickingType(models.Model):
                 ("picking_type_id", "in", self.ids),
             ],
             ["picking_type_id"],
-            ["picking_type_id"],
+            aggregates=["__count"],
         )
-        count = {
-            x["picking_type_id"][0]: x["picking_type_id_count"]
-            for x in data
-            if x["picking_type_id"]
-        }
+        count = {picking_type.id: count for picking_type, count in data}
         for rec in self:
             rec.count_picking_grn = count.get(rec.id, 0)
 

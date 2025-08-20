@@ -18,9 +18,9 @@
         <field name="name">stock.grn.type.tree</field>
         <field name="model">stock.grn.type</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_grn_type_form">
@@ -34,7 +34,7 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
                     <div class="oe_title">
                         <h1>
