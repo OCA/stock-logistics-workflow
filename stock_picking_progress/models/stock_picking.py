@@ -9,15 +9,12 @@ class StockPicking(models.Model):
 
     progress = fields.Float(compute="_compute_progress", store=True, aggregator="avg")
 
-    @api.depends("move_ids", "move_ids.progress")
+    @api.depends("state", "move_ids.progress")
     def _compute_progress(self):
-        for record in self:
-            if record.state == "done":
-                record.progress = 100
-                continue
-            moves_progress = record.move_ids.mapped("progress")
-            # Avoid dividing by 0
-            if moves_progress:
-                record.progress = sum(moves_progress) / len(moves_progress)
+        for picking in self:
+            if picking.state == "done" or not (
+                moves_progress := picking.move_ids.mapped("progress")
+            ):
+                picking.progress = 100
             else:
-                record.progress = 100
+                picking.progress = sum(moves_progress) / len(moves_progress)
