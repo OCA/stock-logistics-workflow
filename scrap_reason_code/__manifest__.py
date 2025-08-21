@@ -6,7 +6,7 @@
     "license": "AGPL-3",
     "summary": "Reason code for scrapping",
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
     "depends": ["stock"],
     "data": [
