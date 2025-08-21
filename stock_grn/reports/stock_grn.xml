@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="label_stock_grn">
+        <t t-set="curr_date" t-value="datetime.datetime.today()" />
+        <t t-foreach="docs" t-as="grn">
+
+^XA
+<t t-name="supplier_name">
+^CF0,60
+^FO10,50^FD<t t-esc="grn.supplier_id.display_name" />^FS
+</t>
+<t t-name="reference">
+^CF0,30
+^FO10,115^FDREF: <t t-esc="grn.ref" />^FS
+</t>
+<t t-name="origin">
+^FO10,150^FDORIGIN: <t
+                    t-esc="','.join([origin for origin in grn.picking_ids.mapped('origin') if origin])"
+                />^FS
+</t>
+<t t-name="grn_name">
+^FO10,185^FDGRN: <t t-esc="grn.name" />^FS
+</t>
+<t t-name="grn_date">
+^FO10,220^FDDATE: <t t-esc="curr_date" t-options='{"widget": "date"}' />^FS
+</t>
+<t t-name="grn_qr">
+^BQN,2,6,M,7
+^FO500,50^FH^FDQA,<t t-esc="grn.name" />^FS
+</t>
+^XZ
+        </t>
+    </template>
+
+
+  <record model="ir.actions.report" id="report_stock_grn_label">
+    <field name="name">GRN Label (ZPL)</field>
+    <field name="model">stock.grn</field>
+    <field name="report_type">qweb-text</field>
+    <field name="report_name">stock_grn.label_stock_grn</field>
+    <field name="report_file">stock_grn.label_stock_grn</field>
+    <field name="binding_model_id" ref="model_stock_grn" />
+    <field name="binding_type">report</field>
+  </record>
+</odoo>
