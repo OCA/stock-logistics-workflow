@@ -4,21 +4,23 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class StockScrap(TransactionCase):
-    def setUp(self):
-        super().setUp()
+class StockScrap(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.stock_location = self.env.ref("stock.stock_location_stock")
-        self.customer_location = self.env.ref("stock.stock_location_customers")
-        self.categ_1 = self.env.ref("product.product_category_all")
-        self.categ_2 = self.env["product.category"].create({"name": "Test category"})
-        stock_location_locations_virtual = self.env["stock.location"].create(
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
+        cls.categ_1 = cls.env.ref("product.product_category_all")
+        cls.categ_2 = cls.env["product.category"].create({"name": "Test category"})
+        stock_location_locations_virtual = cls.env["stock.location"].create(
             {"name": "Virtual Locations", "usage": "view", "posz": 1}
         )
-        self.scrapped_location = self.env["stock.location"].create(
+        cls.scrapped_location = cls.env["stock.location"].create(
             {
                 "name": "Scrapped",
                 "location_id": stock_location_locations_virtual.id,
@@ -27,37 +29,39 @@ class StockScrap(TransactionCase):
             }
         )
 
-        self.scrap_product = self.env["product.product"].create(
+        cls.scrap_product = cls.env["product.product"].create(
             {
                 "name": "Scrap Product A",
-                "type": "product",
-                "categ_id": self.categ_1.id,
+                "type": "consu",
+                "is_storable": True,
+                "categ_id": cls.categ_1.id,
             }
         )
-        self.scrap_product_2 = self.env["product.product"].create(
+        cls.scrap_product_2 = cls.env["product.product"].create(
             {
                 "name": "Scrap Product A",
-                "type": "product",
-                "categ_id": self.categ_2.id,
+                "type": "consu",
+                "is_storable": True,
+                "categ_id": cls.categ_2.id,
             }
         )
 
-        self.reason_code = self.env["scrap.reason.code"].create(
+        cls.reason_code = cls.env["scrap.reason.code"].create(
             {
                 "name": "DM300",
                 "description": "Product is damage",
-                "location_id": self.scrapped_location.id,
+                "location_id": cls.scrapped_location.id,
             }
         )
-        self.reason_code_only_categ_2 = self.env["scrap.reason.code"].create(
+        cls.reason_code_only_categ_2 = cls.env["scrap.reason.code"].create(
             {
                 "name": "Test Code 2",
                 "description": "Test description",
-                "product_category_ids": [(6, 0, self.categ_2.ids)],
+                "product_category_ids": [(6, 0, cls.categ_2.ids)],
             }
         )
 
-        self.uom_unit = self.env.ref("uom.product_uom_unit")
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
 
     def test_scrap_reason_code(self):
         """Scrap the product of a picking. Then modify the
