@@ -41,6 +41,11 @@ class StockDeviceType(models.Model):
         readonly=False,
     )
     nbr_bins = fields.Integer(string="Number of compartments")
+    split_mode = fields.Selection(
+        selection=[("dimension", "Dimension")],
+        default="dimension",
+        required=True,
+    )
 
     volume_per_bin = fields.Float(
         string="Max volume per bin", compute="_compute_volume_per_bin"
