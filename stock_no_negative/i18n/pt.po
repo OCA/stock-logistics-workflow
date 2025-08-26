@@ -7,20 +7,21 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-21 14:50+0000\n"
-"PO-Revision-Date: 2023-11-21 14:50+0000\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2025-08-26 11:24+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_no_negative
 #. odoo-python
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 msgid " lot %(name)s"
-msgstr ""
+msgstr " lote %(name)s"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -72,7 +73,7 @@ msgstr "Localizações de Inventário"
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
@@ -94,5 +95,6 @@ msgid ""
 "product and/or location."
 msgstr ""
 "Não pode validar esta operação de stock porque o nível de stock do produto "
-"'%s'%s tornar-se-ia negativo (%s) na localização '%s' e um stock negativo "
-"não é permitido para este produto e/ou local."
+"'{name}'{name_lot} ficaria negativo ({q_quantity}) na localização de stock "
+"'{complete_name}' e um stock negativo não é permitido para este produto e/ou "
+"local."
