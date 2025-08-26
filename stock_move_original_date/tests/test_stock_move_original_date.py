@@ -19,7 +19,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
 
         cls.product_1 = cls.env["product.product"].create(
-            {"name": "test", "type": "product"}
+            {"name": "test", "is_storable": True}
         )
 
         cls.comparison_delta = td(seconds=1)
@@ -35,7 +35,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
                 "location_id": cls.supplier_location.id,
                 "location_dest_id": cls.stock_location.id,
                 "scheduled_date": date_move,
-                "move_lines": [
+                "move_ids": [
                     (
                         0,
                         0,
@@ -54,17 +54,11 @@ class TestStockMoveOriginalDate(common.TransactionCase):
         )
         return picking
 
-    @classmethod
-    def _validate_picking(cls, picking):
-        for line in picking.move_lines:
-            line.quantity_done = line.product_uom_qty
-        picking._action_done()
-
     def test_01_original_date_stored(self):
         picking = self.create_picking_in(self.product_1, self.tomorrow)
         self.assertTrue(picking.scheduled_date)
         self.assertFalse(picking.original_scheduled_date)
-        move = picking.move_lines
+        move = picking.move_ids
         self.assertTrue(move.date)
         self.assertFalse(move.original_date)
         picking.action_confirm()
@@ -79,7 +73,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
         self.assertEqual(move.original_date, self.tomorrow)
         self.assertEqual(move.date, self.day_2)
         # Validating the picking update `date` (date done now) but not `original_date`
-        self._validate_picking(picking)
+        picking.button_validate()
         self.assertAlmostEqual(
             picking.original_scheduled_date, self.tomorrow, delta=self.comparison_delta
         )

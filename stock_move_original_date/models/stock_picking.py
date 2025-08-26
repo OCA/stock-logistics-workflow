@@ -16,10 +16,10 @@ class StockMove(models.Model):
         "shipment to be processed at transfer confirmation.",
     )
 
-    @api.depends("move_lines.state", "move_lines.original_date", "move_type")
+    @api.depends("move_ids.state", "move_ids.original_date", "move_type")
     def _compute_original_scheduled_date(self):
         for picking in self:
-            raw_moves_dates = picking.move_lines.filtered(
+            raw_moves_dates = picking.move_ids.filtered(
                 lambda move: move.state != "cancel"
             ).mapped("original_date")
             moves_dates = []

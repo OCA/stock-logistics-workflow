@@ -11,7 +11,7 @@
                 <field name="original_scheduled_date" />
             </field>
             <xpath
-                expr="//field[@name='move_ids_without_package']//tree//field[@name='date']"
+                expr="//field[@name='move_ids_without_package']//list//field[@name='date']"
                 position="after"
             >
                 <field name="original_date" optional="hide" />
