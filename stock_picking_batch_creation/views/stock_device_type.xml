@@ -15,6 +15,7 @@
                 <field name="max_volume" />
                 <field name="max_weight" />
                 <field name="nbr_bins" />
+                <field name="split_mode" optional="hide" />
             </list>
         </field>
     </record>
@@ -61,6 +62,7 @@
                             </div>
                             <field name="nbr_bins" />
                             <field name="sequence" />
+                            <field name="split_mode" />
                         </group>
                         <group string="Units of Measure">
                             <field name="user_volume_uom_id" />

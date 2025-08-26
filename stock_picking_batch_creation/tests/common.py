@@ -143,28 +143,23 @@ class ClusterPickingCommonFeatures(BaseCommon):
         return cls.env["res.partner"].create({"name": name, "ref": ref})
 
     @classmethod
-    def _create_product(
-        cls, name, weight, length, height, width, uom_id=None, product_type=None
-    ):
-        if not uom_id:
-            uom_id = cls.uom_id
-        if not product_type:
-            product_type = "consu"
-        volume = length * height * width
-        return cls.env["product.product"].create(
-            {
-                "name": name,
-                "uom_id": uom_id,
-                "type": product_type,
-                "is_storable": True,
-                "weight": weight,
-                "product_length": length,
-                "product_height": height,
-                "product_width": width,
-                "volume": volume,
-                "dimensional_uom_id": cls.uom_m.id,
-            }
-        )
+    def _create_product(cls, name, weight, length, height, width, **kwargs):
+        vals = {
+            "name": name,
+            "weight": weight,
+            "product_length": length,
+            "product_height": height,
+            "product_width": width,
+            "dimensional_uom_id": cls.uom_m.id,
+            **kwargs,
+        }
+        if vals.get("type", "consu") == "consu" and "is_storable" not in vals:
+            vals["is_storable"] = True
+        if "uom_id" not in vals:
+            vals["uom_id"] = cls.uom_id
+        if "volume" not in vals:
+            vals["volume"] = length * height * width
+        return cls.env["product.product"].create(vals)
 
     @classmethod
     def _create_device(
@@ -211,9 +206,10 @@ class ClusterPickingCommonFeatures(BaseCommon):
                         "product_uom": p.uom_id.id,
                         "location_id": cls.env.ref("stock.stock_location_stock").id,
                         "location_dest_id": warehouse.wh_output_stock_loc_id.id,
+                        "sequence": sequence,
                     },
                 )
-                for p in products
+                for sequence, p in enumerate(products)
             ],
         }
         picking = cls.env["stock.picking"].create(picking_values)

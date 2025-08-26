@@ -258,41 +258,36 @@ class MakePickingBatch(models.TransientModel):
             domain, order=self._get_picking_order_by(), limit=limit
         )
 
-    def _get_picking_max_dimensions(self):
-        self.ensure_one()
-        nbr_lines = self.maximum_number_of_preparation_lines
-        last_device = self.stock_device_type_ids[-1]
-        volume = last_device.max_volume
-        weight = last_device.max_weight
-        return nbr_lines, volume, weight
-
     def _split_first_picking_for_limit(self, picking):
-        nbr_lines, volume, weight = self._get_picking_max_dimensions()
-        return (
-            self.env["stock.split.picking"]
-            .with_context(active_ids=picking.ids)
-            .create(
-                {
-                    "mode": "dimensions",
-                    "max_nbr_lines": nbr_lines,
-                    "max_volume": volume,
-                    "max_weight": weight,
-                }
+        last_device = self.stock_device_type_ids[-1]
+        if last_device.split_mode == "dimension":
+            return (
+                self.env["stock.split.picking"]
+                .with_context(active_ids=picking.ids)
+                .create(
+                    {
+                        "mode": "dimensions",
+                        "max_nbr_lines": self.maximum_number_of_preparation_lines,
+                        "max_volume": last_device.max_volume,
+                        "max_weight": last_device.max_weight,
+                    }
+                )
+                ._action_apply()
             )
-            ._action_apply()
-        )
 
     def _is_picking_exceeding_limits(self, picking):
         """Check if the picking exceeds the limits of the available devices.
 
         :param picking: the picking to check
         """
-        nbr_lines, volume, weight = self._get_picking_max_dimensions()
-        return (
-            picking.nbr_picking_lines > nbr_lines
-            or picking.volume > volume
-            or picking.weight > weight
-        )
+        last_device = self.stock_device_type_ids[-1]
+        if last_device.split_mode == "dimension":
+            return (
+                picking.nbr_picking_lines > self.maximum_number_of_preparation_lines
+                or picking.volume > last_device.max_volume
+                or picking.weight > last_device.max_weight
+            )
+        return False
 
     def _get_first_picking(self, raise_if_not_found=False):
         """Get the first picking to add to the batch.
