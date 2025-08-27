@@ -1,0 +1,234 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_checkout_sync
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-07 02:44+0000\n"
+"Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_checkout_sync
+#: code:addons/stock_checkout_sync/wizards/stock_move_checkout_sync.py:0
+#, python-format
+msgid "<li><strong>{}: {} move(s)</strong></li>"
+msgstr "<li><strong>{}: {} movimiento(s)</strong></li>"
+
+#. module: stock_checkout_sync
+#: code:addons/stock_checkout_sync/wizards/stock_move_checkout_sync.py:0
+#, python-format
+msgid "<li>{}: {} move(s)</li>"
+msgstr "<li>{}: {} movimiento(s)</li>"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking__can_sync_to_checkout
+msgid "Can Sync To Checkout"
+msgstr "Puede Sincronizar Al Checkout"
+
+#. module: stock_checkout_sync
+#: code:addons/stock_checkout_sync/wizards/stock_move_checkout_sync.py:0
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+#, python-format
+msgid "Checkout Sync"
+msgstr "Sincronizar Checkout"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type__checkout_sync
+msgid "Checkout Synchronization"
+msgstr "Sincronización Checkout"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid "Date Expected"
+msgstr "Fecha Esperada"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__picking_type_location_id
+msgid "Default Source Location"
+msgstr "Recurso Predeterminado de la Ubicación"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__dest_picking_id
+msgid "Dest Picking"
+msgstr "Entrega de Destino"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,help:stock_checkout_sync.field_stock_move_checkout_sync__location_id
+msgid "Destination location where all the moves will be sent."
+msgstr "Ubicación de destino donde se enviarán todos los movimientos."
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,help:stock_checkout_sync.field_stock_move_checkout_sync__dest_picking_id
+msgid "Destination operation for these moves."
+msgstr "Operación de destino para estos movimientos."
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__display_name
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__done_dest_picking_ids
+msgid "Done Dest Picking"
+msgstr "Entrega de Destino Realizada"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__id
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync____last_update
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__location_id
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__move_ids
+msgid "Move"
+msgstr "Movimiento"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__picking_ids
+msgid "Picking"
+msgstr "Entrega"
+
+#. module: stock_checkout_sync
+#: model:ir.model,name:stock_checkout_sync.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de Entrega"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__remaining_help
+msgid "Remaining Help"
+msgstr "Ayuda Restante"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,field_description:stock_checkout_sync.field_stock_move_checkout_sync__show_skip_button
+msgid "Show Skip Button"
+msgstr "Mostrar Botón de Omisión"
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid "Skip"
+msgstr "Omitir"
+
+#. module: stock_checkout_sync
+#: model:ir.model,name:stock_checkout_sync.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de Inventario"
+
+#. module: stock_checkout_sync
+#: model:ir.model,name:stock_checkout_sync.model_stock_move_checkout_sync
+msgid "Stock Move Checkout Sync"
+msgstr "Sincronizar Checkout del Movimiento de Stock"
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid "Sync Destination"
+msgstr "Sincronizar Destino"
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,help:stock_checkout_sync.field_stock_picking__can_sync_to_checkout
+msgid ""
+"Technical field. Indicates if the button to synchronize the destination "
+"towards a checkout location is visible."
+msgstr ""
+"Campo técnico. Indica si el botón para sincronizar el destino hacia una "
+"ubicación de pago está visible."
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,help:stock_checkout_sync.field_stock_move_checkout_sync__picking_type_location_id
+msgid ""
+"This is the default source location when you create a picking manually with "
+"this operation type. It is possible however to change it or that the routes "
+"put another location. If it is empty, it will check for the supplier "
+"location on the partner. "
+msgstr ""
+"Esta es la ubicación de origen predeterminada cuando crea una entrega "
+"manualmente con este tipo de operación. Sin embargo, es posible cambiarlo o "
+"que las rutas pongan otra ubicación. Si está vacío, buscará la ubicación del "
+"proveedor en el contacto. "
+
+#. module: stock_checkout_sync
+#: model:ir.model,name:stock_checkout_sync.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid "Unit of Measure"
+msgstr "Unidad de Medida"
+
+#. module: stock_checkout_sync
+#: model_terms:ir.ui.view,arch_db:stock_checkout_sync.view_stock_move_checkout_sync
+msgid ""
+"Use this assistant to select a checkout location for all the moves going to "
+"the same operation (including in other transfers).\n"
+"                    The destination location of the moves below will be "
+"updated with the selected location."
+msgstr ""
+"Utilice este asistente para seleccionar una ubicación de checkout para todos "
+"los movimientos que van a la misma operación (incluso en otras "
+"transferencias).\n"
+"                     La ubicación de destino de los movimientos a "
+"continuación se actualizará con la ubicación seleccionada."
+
+#. module: stock_checkout_sync
+#: model:ir.model.fields,help:stock_checkout_sync.field_stock_picking_type__checkout_sync
+msgid ""
+"When checked, a button on transfers allow users to select a single location "
+"for all moves reaching this operation type. On selection, all the move lines "
+"are updated with the same destination."
+msgstr ""
+"Cuando está marcado, un botón en transferencias permite a los usuarios "
+"seleccionar una única ubicación para todos los movimientos que llegan a este "
+"tipo de operación. En la selección, todas las líneas de movimiento se "
+"actualizan con el mismo destino."
