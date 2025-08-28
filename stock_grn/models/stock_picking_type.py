@@ -22,5 +22,10 @@ class StockPickingType(models.Model):
         for rec in self:
             rec.count_picking_grn = count.get(rec.id, 0)
 
+    def _get_action(self, action_xmlid):
+        res = super()._get_action(action_xmlid)
+        res["context"].update({"grn_visible": bool(self.code == "incoming")})
+        return res
+
     def get_action_picking_tree_grn(self):
         return self._get_action("stock_grn.action_picking_tree_grn")

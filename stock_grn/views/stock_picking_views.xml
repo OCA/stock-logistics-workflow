@@ -25,9 +25,23 @@
         <field name="inherit_id" ref="stock.vpicktree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="grn_id" string="GRN" />
-                <field name="delivery_note_supplier_number" />
-                <field name="grn_date" widget="date" />
+                <field
+                    name="grn_id"
+                    string="GRN"
+                    optional="hide"
+                    column_invisible="not context.get('grn_visible') and not (context.get('restricted_picking_type_code') == 'incoming')"
+                />
+                <field
+                    name="delivery_note_supplier_number"
+                    optional="hide"
+                    column_invisible="not context.get('grn_visible') and not (context.get('restricted_picking_type_code') == 'incoming')"
+                />
+                <field
+                    name="grn_date"
+                    widget="date"
+                    optional="hide"
+                    column_invisible="not context.get('grn_visible') and not (context.get('restricted_picking_type_code') == 'incoming')"
+                />
             </field>
         </field>
     </record>
