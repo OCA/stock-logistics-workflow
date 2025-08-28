@@ -3,8 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Stock Restrict Expiration date",
-    "summary": "Add concept of restrict lot on stock move based on specific expiration date",
-    "version": "14.0.1.3.1",
+    "summary": "Add concept of restrict lot on stock move "
+    "based on specific expiration date",
+    "version": "17.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",

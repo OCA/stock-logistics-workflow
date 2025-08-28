@@ -3,10 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from datetime import date
 
-from odoo.tests.common import SavepointCase
+import freezegun
+
+from odoo.tests.common import TransactionCase
 
 
-class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
+@freezegun.freeze_time("2024-01-24 10:10")
+class TestReservationBasedOnPlannedConsumedDate(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -24,7 +27,7 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
 
         cls.product.write({"tracking": "lot", "use_expiration_date": True})
 
-        cls.lot1 = cls.env["stock.production.lot"].create(
+        cls.lot1 = cls.env["stock.lot"].create(
             {
                 "name": "lot1",
                 "expiration_date": "2024-01-25 15:15",
@@ -32,7 +35,7 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
                 "company_id": cls.warehouse.company_id.id,
             }
         )
-        cls.lot2 = cls.env["stock.production.lot"].create(
+        cls.lot2 = cls.env["stock.lot"].create(
             {
                 "name": "lot2",
                 "expiration_date": "2024-02-02 16:16",
@@ -41,7 +44,7 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
             }
         )
 
-        cls.product.categ_id.route_ids |= cls.env["stock.location.route"].search(
+        cls.product.categ_id.route_ids |= cls.env["stock.route"].search(
             [("name", "ilike", "deliver in 2")]
         )
         cls.location_1 = cls.env["stock.location"].create(
@@ -52,39 +55,26 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
         )
 
     def _update_product_stock(self, qty, lot_id=False, location=None):
-        inventory = self.env["stock.inventory"].create(
+        return self.env["stock.quant"].create(
             {
-                "name": "Test Inventory",
-                "product_ids": [(6, 0, self.product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": qty,
-                            "location_id": location.id
-                            if location
-                            else self.warehouse.lot_stock_id.id,
-                            "product_id": self.product.id,
-                            "product_uom_id": self.product.uom_id.id,
-                            "prod_lot_id": lot_id.id,
-                        },
-                    )
-                ],
-            }
+                "product_id": self.product.id,
+                "location_id": location.id
+                if location
+                else self.warehouse.lot_stock_id.id,
+                "quantity": qty,
+                "lot_id": lot_id.id,
+            },
         )
-        inventory.action_validate()
 
     def assert_move_line_per_lot_and_location(
         self,
-        move_lines,
+        move_ids,
         expect_lot=None,
         expect_from_location=None,
         expect_restrict_expiration_date=None,
         expect_reserved_qty=0,
     ):
-        concern_move_line = move_lines.filtered(
+        concern_move_line = move_ids.filtered(
             lambda mov: (expect_lot is None or mov.lot_id == expect_lot)
             and (
                 expect_from_location is None or mov.location_id == expect_from_location
@@ -95,16 +85,17 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
                 == expect_restrict_expiration_date
             )
         )
+        location = expect_from_location if expect_lot is not None else expect_lot
         self.assertEqual(
             len(concern_move_line),
             1,
             "Expect only one stock.move.line found matching lot: "
             f"{expect_lot.name if expect_lot is not None else expect_lot}, "
-            f"location: {expect_from_location if expect_lot is not None else expect_lot}, "
+            f"location: {location}, "
             f"restrict expiration date {expect_restrict_expiration_date}. "
             "None accept all values",
         )
-        self.assertEqual(concern_move_line.product_uom_qty, expect_reserved_qty)
+        self.assertEqual(concern_move_line.quantity_product_uom, expect_reserved_qty)
 
     def test_procurement_with_2_steps_output(self):
         self._update_product_stock(10, lot_id=self.lot1, location=self.location_1)
@@ -155,7 +146,7 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
 
         pick.action_assign()
         self.assertEqual(pick.state, "assigned")
-        self.assertEqual(len(pick.move_lines), 2)
+        self.assertEqual(len(pick.move_line_ids), 4)
 
         self.assert_move_line_per_lot_and_location(
             pick.move_line_ids,
@@ -223,7 +214,7 @@ class TestReservationBasedOnPlannedConsumedDate(SavepointCase):
         self._update_product_stock(10, lot_id=self.lot2, location=self.location_1)
         pick.action_assign()
         self.assertEqual(pick.state, "assigned")
-        self.assertEqual(len(pick.move_lines), 1)
+        self.assertEqual(len(pick.move_ids), 1)
 
         self.assert_move_line_per_lot_and_location(
             pick.move_line_ids,
