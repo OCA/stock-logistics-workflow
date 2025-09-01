@@ -5,7 +5,6 @@ from odoo import _, fields, models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     def action_stock_picking_full_return(self):
