@@ -1,7 +1,7 @@
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestStockPickingReturnRestrictLot(SavepointCase):
+class TestStockPickingReturnRestrictLot(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -58,21 +58,21 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
                 ],
             }
         )
-        cls.lot = cls.env["stock.production.lot"].create(
+        cls.lot = cls.env["stock.lot"].create(
             {
                 "name": "lot test",
                 "product_id": cls.product.id,
                 "company_id": cls.warehouse.company_id.id,
             }
         )
-        cls.lot2 = cls.env["stock.production.lot"].create(
+        cls.lot2 = cls.env["stock.lot"].create(
             {
                 "name": "lot test 2",
                 "product_id": cls.product.id,
                 "company_id": cls.warehouse.company_id.id,
             }
         )
-        cls.lot3 = cls.env["stock.production.lot"].create(
+        cls.lot3 = cls.env["stock.lot"].create(
             {
                 "name": "lot test 3",
                 "product_id": cls.product.id,
@@ -80,60 +80,34 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
             }
         )
 
-        inventory = cls.env["stock.inventory"].create(
-            {
-                "name": "Populate some stock",
-                "product_ids": [(6, 0, cls.product.ids)],
-                "state": "confirm",
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": 10,
-                            "location_id": cls.wh_stock_loc.id,
-                            "product_id": cls.product.id,
-                            "product_uom_id": cls.product.uom_id.id,
-                            "prod_lot_id": cls.lot.id,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": 5,
-                            "location_id": cls.wh_stock_loc.id,
-                            "product_id": cls.product.id,
-                            "product_uom_id": cls.product.uom_id.id,
-                            "prod_lot_id": cls.lot2.id,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": 10,
-                            "location_id": cls.wh_stock_sub_loc_A.id,
-                            "product_id": cls.product.id,
-                            "product_uom_id": cls.product.uom_id.id,
-                            "prod_lot_id": cls.lot3.id,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "product_qty": 10,
-                            "location_id": cls.wh_stock_sub_loc_B.id,
-                            "product_id": cls.product.id,
-                            "product_uom_id": cls.product.uom_id.id,
-                            "prod_lot_id": cls.lot3.id,
-                        },
-                    ),
-                ],
-            }
+        cls.env["stock.quant"].create(
+            [
+                {
+                    "product_id": cls.product.id,
+                    "location_id": cls.wh_stock_loc.id,
+                    "quantity": 10,
+                    "lot_id": cls.lot.id,
+                },
+                {
+                    "product_id": cls.product.id,
+                    "location_id": cls.wh_stock_loc.id,
+                    "quantity": 5,
+                    "lot_id": cls.lot2.id,
+                },
+                {
+                    "product_id": cls.product.id,
+                    "location_id": cls.wh_stock_sub_loc_A.id,
+                    "quantity": 10,
+                    "lot_id": cls.lot3.id,
+                },
+                {
+                    "product_id": cls.product.id,
+                    "location_id": cls.wh_stock_sub_loc_B.id,
+                    "quantity": 10,
+                    "lot_id": cls.lot3.id,
+                },
+            ]
         )
-        inventory.action_validate()
 
         cls.receipt = cls.env["stock.picking"].create(
             {
@@ -157,7 +131,7 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         cls.receipt.action_confirm()
         cls.receipt.action_assign()
         cls.receipt.move_line_ids.lot_id = cls.lot
-        cls.receipt.move_line_ids.qty_done = 2
+        cls.receipt.move_line_ids.quantity = 2
         # assume there is kind of put away rules
         cls.receipt.move_line_ids.location_dest_id = cls.wh_stock_sub_loc_A
 
@@ -166,14 +140,14 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
                 "move_id": cls.move.id,
                 "product_id": cls.product.id,
                 "product_uom_id": cls.product.uom_id.id,
-                "qty_done": 3,
+                "quantity": 3,
                 "lot_id": cls.lot2.id,
                 "location_id": cls.supplier_loc.id,
                 # assume there is kind of put away rules
                 "location_dest_id": cls.wh_stock_sub_loc_B.id,
             }
         )
-        cls.receipt._action_done()
+        cls.receipt.button_validate()
 
         # generate 2 steps deliveries
 
@@ -261,13 +235,13 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         self.assertEqual(
             return_picking.move_line_ids.filtered(
                 lambda line, lot=self.lot: line.lot_id == lot
-            ).product_uom_qty,
+            ).quantity_product_uom,
             2,
         )
         self.assertEqual(
             return_picking.move_line_ids.filtered(
                 lambda line, lot=self.lot2: line.lot_id == lot
-            ).product_uom_qty,
+            ).quantity_product_uom,
             3,
         )
 
@@ -276,9 +250,9 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         receipt2.action_confirm()
         receipt2.action_assign()
         receipt2.move_line_ids.lot_id = self.lot3
-        receipt2.move_line_ids.qty_done = 5
+        receipt2.move_line_ids.quantity = 5
 
-        receipt2._action_done()
+        receipt2.button_validate()
 
         action = (self.receipt | receipt2).action_stock_picking_full_return()
 
@@ -286,8 +260,8 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         self.assertEqual(len(action["domain"][0][2]), 2)
 
     def test_returning_picking_cancel_delivery_reservation(self):
-        self.picking.move_line_ids.qty_done = 10
-        self.picking._action_done()
+        self.picking.move_line_ids.quantity = 10
+        self.picking.button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 10)
         self.assertEqual(self.delivery.state, "assigned")
         self.assert_product_quantity(
@@ -295,39 +269,45 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         )
         action = self.picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
-        self.assertEqual(return_picking.move_lines.product_uom_qty, 10)
+        self.assertEqual(return_picking.move_ids.product_uom_qty, 10)
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 10)
         self.assertEqual(self.delivery.state, "confirmed")
-        return_picking.move_line_ids.qty_done = 10
-        return_picking._action_done()
+        return_picking.move_line_ids.quantity = 10
+        return_picking.button_validate()
         self.assert_product_quantity(self.picking.location_id, self.lot, 10)
 
     def test_returning_picking_with_partial_delivered_no_backorder(self):
-        self.picking.move_line_ids.qty_done = 10
-        self.picking._action_done()
+        self.picking.move_line_ids.quantity = 10
+        self.picking.button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 10)
-        self.delivery.move_line_ids.qty_done = 6
-        self.delivery.with_context(cancel_backorder=True)._action_done()
+        self.delivery.move_line_ids.quantity = 6
+        self.delivery.with_context(
+            skip_backorder=True, picking_ids_not_to_backorder=self.delivery.ids
+        ).button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 4)
         self.assert_product_quantity(
             self.picking.location_dest_id, self.lot, 0, qty_field="reserved_quantity"
         )
         action = self.picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
-        self.assertEqual(return_picking.move_lines.product_uom_qty, 10)
+        self.assertEqual(return_picking.move_ids.product_uom_qty, 10)
         self.assertEqual(self.delivery.state, "done")
-        self.assertEqual(return_picking.move_line_ids.product_uom_qty, 4)
-        return_picking.move_line_ids.qty_done = 4
-        return_picking._action_done()
+        self.assertEqual(return_picking.move_line_ids.quantity_product_uom, 4)
+        return_picking.move_line_ids.quantity = 4
+        return_picking.with_context(
+            cancel_backorder=False, skip_backorder=True
+        ).button_validate()
         self.assert_product_quantity(self.picking.location_id, self.lot, 4)
         self.assert_product_quantity(self.customer_loc, self.lot, 6)
 
     def test_returning_picking_with_partial_delivered_with_backorder(self):
-        self.picking.move_line_ids.qty_done = 10
-        self.picking._action_done()
+        self.picking.move_line_ids.quantity = 10
+        self.picking.button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 10)
-        self.delivery.move_line_ids.qty_done = 4
-        self.delivery.with_context(cancel_backorder=False)._action_done()
+        self.delivery.move_line_ids.quantity = 4
+        self.delivery.with_context(
+            cancel_backorder=False, skip_backorder=True
+        ).button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 6)
         delivery_backorder = self.delivery.backorder_ids
         self.assertEqual(delivery_backorder.state, "assigned")
@@ -336,52 +316,52 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         )
         action = self.picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
-        self.assertEqual(return_picking.move_lines.product_uom_qty, 10)
+        self.assertEqual(return_picking.move_ids.product_uom_qty, 10)
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 6)
         self.assertEqual(self.delivery.state, "done")
         self.assertEqual(delivery_backorder.state, "confirmed")
-        self.assertEqual(return_picking.move_line_ids.product_uom_qty, 6)
-        return_picking.move_line_ids.qty_done = 6
-        return_picking._action_done()
+        self.assertEqual(return_picking.move_line_ids.quantity_product_uom, 6)
+        return_picking.move_line_ids.quantity = 6
+        return_picking.with_context(
+            cancel_backorder=False, skip_backorder=True
+        ).button_validate()
         self.assert_product_quantity(self.picking.location_id, self.lot, 6)
         self.assert_product_quantity(self.customer_loc, self.lot, 4)
 
     def test_returning_picking_with_full_delivered_quantities(self):
-        self.picking.move_line_ids.qty_done = 10
-        self.picking._action_done()
+        self.picking.move_line_ids.quantity = 10
+        self.picking.button_validate()
         self.assert_product_quantity(self.picking.location_dest_id, self.lot, 10)
-        self.delivery.move_line_ids.qty_done = 10
-        self.delivery._action_done()
+        self.delivery.move_line_ids.quantity = 10
+        self.delivery.button_validate()
         self.assert_product_quantity(self.customer_loc, self.lot, 10)
         action = self.picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
+        self.assertEqual(return_picking.move_ids.move_orig_ids, self.picking.move_ids)
         self.assertEqual(
-            return_picking.move_lines.move_orig_ids, self.picking.move_lines
-        )
-        self.assertEqual(
-            return_picking.move_lines.move_dest_ids, self.env["stock.move"].browse()
+            return_picking.move_ids.move_dest_ids, self.env["stock.move"].browse()
         )
         self.assertEqual(return_picking.state, "waiting")
-        self.assertEqual(return_picking.move_lines.product_uom_qty, 10)
+        self.assertEqual(return_picking.move_ids.product_uom_qty, 10)
 
     def test_return_twice(self):
-        self.picking.move_line_ids.qty_done = 10
-        self.picking._action_done()
+        self.picking.move_line_ids.quantity = 10
+        self.picking.button_validate()
         action = self.picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
-        return_picking.move_line_ids.qty_done = 10
-        return_picking._action_done()
+        return_picking.move_line_ids.quantity = 10
+        return_picking.button_validate()
         action = return_picking.action_stock_picking_full_return()
         re_pick = self.env["stock.picking"].browse(action["res_id"])
-        self.assertEqual(re_pick.move_lines.move_orig_ids, return_picking.move_lines)
+        self.assertEqual(re_pick.move_ids.move_orig_ids, return_picking.move_ids)
         # not sure adding return picking move as dest make a lot of sense here
         # but mainly copy / paste the behaviour from odoo return wizard
         self.assertEqual(
-            re_pick.move_lines.move_dest_ids,
-            (return_picking.move_lines | self.delivery.move_lines),
+            re_pick.move_ids.move_dest_ids,
+            (return_picking.move_ids | self.delivery.move_ids),
         )
-        re_pick.move_line_ids.qty_done = 10
-        re_pick._action_done()
+        re_pick.move_line_ids.quantity = 10
+        re_pick.button_validate()
         self.assertEqual(self.delivery.state, "assigned")
 
     def test_return_a_partial_with_nil_qty_done(self):
@@ -409,15 +389,17 @@ class TestStockPickingReturnRestrictLot(SavepointCase):
         )
         picking.action_assign()
         picking.move_line_ids.filtered(
-            lambda l, lot=self.lot2: l.lot_id == lot
-        ).qty_done = 2
-        picking.with_context(cancel_backorder=True)._action_done()
+            lambda line, lot=self.lot3: line.lot_id == lot
+        ).quantity = 0
+        picking.with_context(
+            skip_backorder=True, picking_ids_not_to_backorder=picking.ids
+        ).button_validate()
         self.assertEqual(
-            picking.move_lines.filtered(
-                lambda l, lot=self.lot3: l.restrict_lot_id == lot
+            picking.move_ids.filtered(
+                lambda line, lot=self.lot3: line.restrict_lot_id == lot
             ).state,
             "cancel",
         )
         action = picking.action_stock_picking_full_return()
         return_picking = self.env["stock.picking"].browse(action["res_id"])
-        return_picking.move_lines.product_uom_qty = 2
+        return_picking.move_ids.product_uom_qty = 2

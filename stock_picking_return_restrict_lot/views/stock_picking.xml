@@ -9,11 +9,11 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field eval="12" name="priority" />
         <field name="arch" type="xml">
-            <xpath expr="//header/button[@name='do_unreserve']" position="before">
+            <xpath expr="//header/button[@name='action_cancel']" position="after">
                 <button
                     name="action_stock_picking_full_return"
                     string="Full return"
-                    attrs="{'invisible': [('state', '!=', 'done')]}"
+                    invisible="state != 'done'"
                     type="object"
                     groups="base.group_user"
                 />

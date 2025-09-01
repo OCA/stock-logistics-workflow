@@ -48,7 +48,7 @@ class StockPicking(models.Model):
 
     def _create_full_return(self):
         self.ensure_one()
-        for return_move in self.move_lines:
+        for return_move in self.move_ids:
             return_move.move_dest_ids.filtered(
                 lambda m: m.state not in ("done", "cancel")
             )._do_unreserve()
@@ -59,7 +59,7 @@ class StockPicking(models.Model):
         )
         new_picking = self.copy(
             {
-                "move_lines": [],
+                "move_ids": [],
                 "picking_type_id": picking_type_id,
                 "state": "draft",
                 "origin": _("Return of %s", self.name),
@@ -67,19 +67,18 @@ class StockPicking(models.Model):
                 "location_dest_id": self.location_id.id,
             }
         )
-        new_picking.message_post_with_view(
+        new_picking._message_log_with_view(
             "mail.message_origin_link",
-            values={"self": new_picking, "origin": self},
-            subtype_id=self.env.ref("mail.mt_note").id,
+            render_values={"self": new_picking, "origin": self},
         )
-
         for return_line in self.move_line_ids:
-            if return_line.qty_done and return_line.state == "done":
+            if return_line.quantity and return_line.state == "done":
                 vals = self._prepare_return_move_default_values(
                     return_line, new_picking
                 )
                 r = return_line.move_id.copy(vals)
                 vals = {}
+                # vals = {"product_uom_qty": vals["product_uom_qty"]}
 
                 move_orig_to_link = return_line.move_id.move_dest_ids.mapped(
                     "returned_move_ids"
@@ -106,7 +105,6 @@ class StockPicking(models.Model):
                 vals["move_orig_ids"] = [(4, m.id) for m in move_orig_to_link]
                 vals["move_dest_ids"] = [(4, m.id) for m in move_dest_to_link]
                 r.write(vals)
-
         new_picking.action_confirm()
         new_picking.action_assign()
         return new_picking
@@ -114,7 +112,7 @@ class StockPicking(models.Model):
     def _prepare_return_move_default_values(self, stock_move_line, new_picking):
         vals = {
             "product_id": stock_move_line.product_id.id,
-            "product_uom_qty": stock_move_line.qty_done,
+            "product_uom_qty": stock_move_line.quantity,
             "product_uom": stock_move_line.product_id.uom_id.id,
             "picking_id": new_picking.id,
             "state": "draft",
