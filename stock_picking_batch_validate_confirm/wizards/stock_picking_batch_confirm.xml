@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <form string="">
                 <p>There are <i>pending origin moves</i> yet. By clickcing on <i
-                    >validate</i>, batch will be validated</p>
+                >validate</i>, batch will be validated</p>
                 <p
                     groups="!stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group"
                 >
