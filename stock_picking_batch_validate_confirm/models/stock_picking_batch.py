@@ -1,7 +1,7 @@
 # Copyright 2024 Moduon Team S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
-from odoo import _, models
+from odoo import models
 
 
 class StockPickingBatch(models.Model):
@@ -20,7 +20,7 @@ class StockPickingBatch(models.Model):
 
     def _action_generate_batch_confirm_wizard(self):
         return {
-            "name": _("Batch Confirm"),
+            "name": self.env._("Batch Confirm"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "stock.picking.batch.confirm",

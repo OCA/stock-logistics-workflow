@@ -77,17 +77,13 @@ class TestBatchConfirm(TestStockCommon):
                 ],
             }
         )
-        batch = batch.with_context(
-            active_model=batch._name, active_id=batch.id, active_ids=batch.ids
-        )
+        batch = batch.with_context(active_model=batch._name, active_id=batch.id)
         self.env["stock.quant"]._update_available_quantity(
             self.productA, self.location, 10.0
         )
         (picking_pick_1 | picking_pick_2).action_assign()
-        picking_pick_1.action_set_quantities_to_reservation()
-        picking_pick_1._action_done()
+        picking_pick_1.button_validate()
 
-        batch.action_set_quantities_to_reservation()
         res_dict = batch.action_done()
         self.assertEqual(res_dict.get("res_model"), "stock.picking.batch.confirm")
         wizard = Form(

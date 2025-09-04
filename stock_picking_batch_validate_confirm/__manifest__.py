@@ -3,8 +3,8 @@
 
 {
     "name": "Stock Picking Batch Validate Confirm",
-    "summary": "Request confirmation when validating batch if there are pending origin moves",
-    "version": "16.0.1.1.2",
+    "summary": "Request confirmation when validating batch if any pending origin moves",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -13,7 +13,6 @@
     "license": "LGPL-3",
     "application": False,
     "installable": True,
-    "preloadable": True,
     "depends": [
         "stock_picking_batch",
     ],
