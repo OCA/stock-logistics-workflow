@@ -8,6 +8,7 @@ from odoo import api, fields, models
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
+
     picking_device_id = fields.Many2one(
         "stock.device.type",
         string="Device for the picking",
@@ -25,7 +26,7 @@ class StockPicking(models.Model):
         self.ensure_one()
         if not device:
             return 0
-        if not self.volume:
+        if not self.volume or not device.volume_per_bin:
             return 1
         return math.ceil(self.volume / device.volume_per_bin)
 

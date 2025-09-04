@@ -131,7 +131,7 @@ class MakePickingBatch(models.TransientModel):
     def _reset_counters(self):
         self._volume_by_partners = defaultdict(lambda: 0)
         self._device = None
-        self._remaining_weight = 0
+        self._remaining_weight = None  # None means unlimited
         self._remaining_nbr_picking_lines = 0
         self._selected_picking_ids = []
         self._first_picking = None
@@ -178,11 +178,14 @@ class MakePickingBatch(models.TransientModel):
         return AND([picking_domain_common, picking_domain_first])
 
     def _get_picking_domain_for_device(self, device):
-        return [
-            ("volume", ">=", device.min_volume),
-            ("volume", "<=", device.max_volume),
-            ("weight", "<=", device.max_weight),
-        ]
+        domain = []
+        if device.min_volume:
+            domain.append(("volume", ">=", device.min_volume))
+        if device.max_volume:
+            domain.append(("volume", "<=", device.max_volume))
+        if device.max_weight:
+            domain.append(("weight", "<=", device.max_weight))
+        return domain
 
     def _get_picking_domain_for_additional(self):
         """Provides the domain expressing the additional constraints to apply to
@@ -196,9 +199,10 @@ class MakePickingBatch(models.TransientModel):
                 self._remaining_nbr_picking_lines,
             ),
             ("id", "not in", excluded_ids),
-            ("weight", "<=", self._remaining_weight),
             ("picking_type_id", "=", self._first_picking.picking_type_id.id),
         ]
+        if self._remaining_weight is not None:  # None means unlimited
+            domain.append(("weight", "<=", self._remaining_weight))
         previous_picking = self._previous_selected_picking
         if self.restrict_to_same_priority:
             domain.append(("priority", "=", previous_picking.priority))
@@ -280,13 +284,19 @@ class MakePickingBatch(models.TransientModel):
 
         :param picking: the picking to check
         """
+        # First check the number of lines
+        if (
+            self.maximum_number_of_preparation_lines
+            and picking.nbr_picking_lines > self.maximum_number_of_preparation_lines
+        ):
+            return True
+        # Then, check the device limits
         last_device = self.stock_device_type_ids[-1]
         if last_device.split_mode == "dimension":
-            return (
-                picking.nbr_picking_lines > self.maximum_number_of_preparation_lines
-                or picking.volume > last_device.max_volume
-                or picking.weight > last_device.max_weight
-            )
+            if last_device.max_volume and picking.volume > last_device.max_volume:
+                return True
+            if last_device.max_weight and picking.weight > last_device.max_weight:
+                return True
         return False
 
     def _get_first_picking(self, raise_if_not_found=False):
@@ -353,23 +363,10 @@ class MakePickingBatch(models.TransientModel):
         return remaining_volume
 
     def _compute_device_to_use(self, picking):
-        available_devices = self.stock_device_type_ids.sorted(lambda d: d.sequence)
-        for device in available_devices:
-            if (
-                self._volume_condition_for_device_choice(
-                    device.min_volume,
-                    picking.volume,
-                    device.max_volume,
-                )
-                and tools.float_compare(
-                    device.max_weight,
-                    picking.weight,
-                    precision_digits=self._precision_volume(),
-                )
-                > 0
-            ):
+        for device in self.stock_device_type_ids.sorted("sequence"):
+            if picking.filtered_domain(self._get_picking_domain_for_device(device)):
                 return device
-        return None
+        return self.env["stock.device.type"]
 
     def _volume_condition_for_device_choice(
         self, min_volume, picking_volume, max_volume
@@ -431,12 +428,6 @@ class MakePickingBatch(models.TransientModel):
         batch = self.env["stock.picking.batch"].create(vals)
         return batch
 
-    def _precision_volume(self):
-        return max(
-            6,
-            self.env["decimal.precision"].precision_get("Product Unit of Measure") * 2,
-        )
-
     def _init_counters(self, first_picking, device):
         """Initialize the counters used to compute the batch.
         This method is called at the beginning of the batch creation. It allows
@@ -447,7 +438,11 @@ class MakePickingBatch(models.TransientModel):
         :param device: the device to use to prepare the batch
         """
         self._device = device
-        self._remaining_weight = device.max_weight - first_picking.weight
+        self._remaining_weight = (
+            max(device.max_weight - first_picking.weight, 0)
+            if device.max_weight
+            else None  # None means unlimited
+        )
         self._remaining_nbr_picking_lines = (
             self.maximum_number_of_preparation_lines - first_picking.nbr_picking_lines
         )
