@@ -1,10 +1,12 @@
 # Copyright 2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import Form, SavepointCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestRestrictCancelStockMove(SavepointCase):
+class TestRestrictCancelStockMove(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -20,20 +22,24 @@ class TestRestrictCancelStockMove(SavepointCase):
         # Create product and set the default vendor
         product_form = Form(cls.env["product.product"])
         product_form.name = "Product A"
-        product_form.type = "product"
+        product_form.type = "consu"
+        product_form.is_storable = "True"
         product_form.purchase_ok = True
         with product_form.seller_ids.new() as seller:
-            seller.name = partner
+            seller.partner_id = partner
         product_form.route_ids.add(cls.env.ref("purchase_stock.route_warehouse0_buy"))
         cls.dummy_product = product_form.save()
         # Create product reordering rule
-        orderpoint_form = Form(cls.env["stock.warehouse.orderpoint"])
-        orderpoint_form.warehouse_id = cls.warehouse
-        orderpoint_form.location_id = cls.warehouse.lot_stock_id
-        orderpoint_form.product_id = cls.dummy_product
-        orderpoint_form.product_min_qty = 0.000
-        orderpoint_form.product_max_qty = 10.000
-        cls.order_point = orderpoint_form.save()
+        cls.order_point = cls.env["stock.warehouse.orderpoint"].create(
+            {
+                "name": f"OP-{cls.dummy_product.name}",
+                "warehouse_id": cls.warehouse.id,
+                "location_id": cls.stock_loc.id,
+                "product_id": cls.dummy_product.id,
+                "product_min_qty": 0.0,
+                "product_max_qty": 10.0,
+            }
+        )
 
     def test_restrict(self):
         # Run scheduler, this should create new PO and Stock Move (QC -> Stock)
