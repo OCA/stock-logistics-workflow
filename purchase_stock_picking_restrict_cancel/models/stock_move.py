@@ -8,7 +8,7 @@ class StockMove(models.Model):
 
     def identify_blocking_objects(self, blocking_moves):
         res = super().identify_blocking_objects(blocking_moves)
-        purchases = blocking_moves.mapped("created_purchase_line_id")
+        purchases = blocking_moves.mapped("created_purchase_line_ids")
         if purchases:
             res.update({"purchases": purchases})
         return res
