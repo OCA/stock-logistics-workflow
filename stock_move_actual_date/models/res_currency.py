@@ -7,8 +7,10 @@ from odoo import models
 class ResCurrency(models.Model):
     _inherit = "res.currency"
 
-    def _convert(self, from_amount, to_currency, company=None, date=None, round=True):
+    def _convert(
+        self, from_amount, to_currency, company=None, date=None, do_round=True
+    ):
         date = self.env.context.get("actual_date") or date
         return super()._convert(
-            from_amount, to_currency, company=company, date=date, round=round
+            from_amount, to_currency, company=company, date=date, round=do_round
         )
