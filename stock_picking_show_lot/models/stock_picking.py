@@ -1,7 +1,7 @@
 # Copyright 2024 Tecnativa - Pilar Vargas
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -18,8 +18,8 @@ class StockPicking(models.Model):
             action["res_id"] = self.move_line_ids.lot_id.id
             action["view_mode"] = "form"
         else:
-            action["view_mode"] = "tree,form"
+            action["view_mode"] = "list,form"
             action["domain"] = [("id", "in", self.move_line_ids.lot_id.ids)]
         action["context"] = {}
-        action["name"] = _("Lots")
+        action["name"] = self.env._("Lots")
         return action
