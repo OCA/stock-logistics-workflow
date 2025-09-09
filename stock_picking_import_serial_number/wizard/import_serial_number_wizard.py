@@ -3,8 +3,9 @@
 # Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import base64
+import io
 
-import xlrd
+from openpyxl import load_workbook
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -59,10 +60,9 @@ class StockPickingImportSerialNumber(models.TransientModel):
         xl_workbook = False
         xl_sheet = False
         if self.filename.split(".")[1] in ["xls", "xlsx"]:
-            xl_workbook = xlrd.open_workbook(
-                file_contents=base64.b64decode(self.data_file)
-            )
-            xl_sheet = xl_workbook.sheet_by_index(0)
+            file_data = base64.b64decode(self.data_file)
+            xl_workbook = load_workbook(io.BytesIO(file_data), read_only=True)
+            xl_sheet = xl_workbook.active
             for picking in self.picking_ids:
                 move_lines = picking.mapped("move_line_ids").filtered(
                     lambda ln: ln.product_id.tracking == "serial"
@@ -97,17 +97,25 @@ class StockPickingImportSerialNumber(models.TransientModel):
     def _import_serial_number(self, xl_sheet, stock_move_lines, picking):
         product_file_set = set()
         serial_list = []
-        for row_idx in range(1, xl_sheet.nrows):
-            product = str(xl_sheet.cell(row_idx, self.sn_product_column_index).value)
-            serial = str(xl_sheet.cell(row_idx, self.sn_serial_column_index).value)
+        rows = list(xl_sheet.iter_rows(min_row=2, values_only=True))
+        for row in rows:
+            if not row or len(row) <= self.sn_product_column_index:
+                continue
+            product_value = row[self.sn_product_column_index]
+            serial_value = row[self.sn_serial_column_index] if len(row) > self.sn_serial_column_index else None
+            
+            product = str(product_value) if product_value is not None else ""
+            serial = str(serial_value) if serial_value is not None else ""
+            
             try:
-                package = str(
-                    xl_sheet.cell(row_idx, self.sn_package_column_index).value
-                )
+                package_value = row[self.sn_package_column_index] if len(row) > self.sn_package_column_index else None
+                package = str(package_value) if package_value is not None else False
             except IndexError:
                 package = False
-            product_file_set.add(product)
-            serial_list.append((product, serial, package))
+            
+            if product and serial:
+                product_file_set.add(product)
+                serial_list.append((product, serial, package))
 
         products = self.env["product.product"].search(
             [(self.sn_search_product_by_field, "in", list(product_file_set))]
@@ -117,7 +125,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
             product = products.filtered(
                 lambda p, key=product_key: p[self.sn_search_product_by_field] == key
             )
-            if picking.picking_type_id.show_reserved:
+            if picking.picking_type_id.show_reserved_sns:
                 product_match = product
                 smls = stock_move_lines.filtered(
                     lambda ln, p=product_match: ln.product_id == p
