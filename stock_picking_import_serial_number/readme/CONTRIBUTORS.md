@@ -1,0 +1,7 @@
+- [Tecnativa](https://www.tecnativa.com):
+
+  > - Carlos Dauden
+  > - Sergio Teruel
+  > - Carolina Fernandez
+  > - Víctor Martínez
+  > - Juan Carlos Oñate
