@@ -73,6 +73,8 @@ class ResPartner(models.Model):
 
     @property
     def delivery_time_weekdays(self):
+        if not self:
+            return set()
         self.ensure_one()
         if self.delivery_time_preference == "anytime":
             weekdays = set(range(7))
