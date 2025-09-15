@@ -36,11 +36,11 @@
                 </group>
                 <footer>
                     <button
-                        string="Apply"
-                        name="action_apply"
-                        type="object"
-                        class="oe_highlight"
-                    />
+                    string="Apply"
+                    name="action_apply"
+                    type="object"
+                    class="oe_highlight"
+                />
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>

@@ -13,8 +13,7 @@
                     string="Change Location"
                     groups="stock.group_stock_multi_locations"
                     attrs="{'invisible': [('show_operations', '=', True)]}"
-                >
-                </button>
+                />
             </xpath>
             <xpath expr="//field[@name='move_line_nosuggest_ids']" position="before">
                 <button
@@ -23,8 +22,7 @@
                     string="Change Location"
                     groups="stock.group_stock_multi_locations"
                     attrs="{'invisible': [('show_operations', '=', False)]}"
-                >
-                </button>
+                />
             </xpath>
         </field>
     </record>
