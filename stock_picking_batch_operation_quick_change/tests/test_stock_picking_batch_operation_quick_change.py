@@ -1,12 +1,14 @@
 # Copyright 2024 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestOperationBatchQuickChange(TransactionCase):
+class TestOperationBatchQuickChange(BaseCommon):
     def setUp(self):
         super().setUp()
         self.Location = self.env["stock.location"]
@@ -22,7 +24,8 @@ class TestOperationBatchQuickChange(TransactionCase):
         self.product = self.Product.create(
             {
                 "name": "Product - Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 100.00,
                 "standard_price": 100.00,
             }
@@ -31,7 +34,8 @@ class TestOperationBatchQuickChange(TransactionCase):
         self.product2 = self.Product.create(
             {
                 "name": "Product2 - Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 100.00,
                 "standard_price": 100.00,
             }
@@ -47,30 +51,30 @@ class TestOperationBatchQuickChange(TransactionCase):
                 "location_id": self.warehouse.lot_stock_id.id,
                 "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
                 "picking_type_id": self.picking_type.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
+                "move_ids": [
+                    Command.create(
                         {
                             "name": self.product.name,
                             "product_id": self.product.product_variant_ids.id,
                             "product_uom_qty": 20.0,
                             "product_uom": self.product.uom_id.id,
                             "location_id": self.warehouse.lot_stock_id.id,
-                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
+                            "location_dest_id": (
+                                self.warehouse.wh_output_stock_loc_id.id
+                            ),
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": self.product.name,
                             "product_id": self.product2.product_variant_ids.id,
                             "product_uom_qty": 60.0,
                             "product_uom": self.product.uom_id.id,
                             "location_id": self.warehouse.lot_stock_id.id,
-                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
-                        },
+                            "location_dest_id": (
+                                self.warehouse.wh_output_stock_loc_id.id
+                            ),
+                        }
                     ),
                 ],
             }

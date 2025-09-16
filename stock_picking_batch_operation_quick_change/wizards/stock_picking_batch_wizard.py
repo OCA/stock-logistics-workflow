@@ -1,7 +1,7 @@
 # Copyright 2024 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -82,7 +82,7 @@ class StockPickingBatchOperationWizard(models.TransientModel):
         )
         if forbidden_pickings:
             raise UserError(
-                _(
+                self.env._(
                     "You can not change operations destination location if "
                     "picking state is not in %s"
                 )
