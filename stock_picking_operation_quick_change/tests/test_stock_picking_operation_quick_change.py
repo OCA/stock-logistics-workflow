@@ -1,13 +1,15 @@
 # Copyright 2022 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestOperationQuickChange(TransactionCase):
+class TestOperationQuickChange(BaseCommon):
     def setUp(self):
         super().setUp()
         self.Location = self.env["stock.location"]
@@ -23,7 +25,8 @@ class TestOperationQuickChange(TransactionCase):
         self.product = self.Product.create(
             {
                 "name": "Product - Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 100.00,
                 "standard_price": 100.00,
             }
@@ -32,7 +35,8 @@ class TestOperationQuickChange(TransactionCase):
         self.product2 = self.Product.create(
             {
                 "name": "Product2 - Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 100.00,
                 "standard_price": 100.00,
             }
@@ -49,28 +53,28 @@ class TestOperationQuickChange(TransactionCase):
                 "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
                 "picking_type_id": self.picking_type.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": self.product.name,
                             "product_id": self.product.product_variant_ids.id,
                             "product_uom_qty": 20.0,
                             "product_uom": self.product.uom_id.id,
                             "location_id": self.warehouse.lot_stock_id.id,
-                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
+                            "location_dest_id": (
+                                self.warehouse.wh_output_stock_loc_id.id
+                            ),
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": self.product.name,
                             "product_id": self.product2.product_variant_ids.id,
                             "product_uom_qty": 60.0,
                             "product_uom": self.product.uom_id.id,
                             "location_id": self.warehouse.lot_stock_id.id,
-                            "location_dest_id": self.warehouse.wh_output_stock_loc_id.id,
+                            "location_dest_id": (
+                                self.warehouse.wh_output_stock_loc_id.id
+                            ),
                         },
                     ),
                 ],
@@ -137,7 +141,7 @@ class TestOperationQuickChange(TransactionCase):
     def test_picking_operation_change_location_dest_failed(self):
         self.picking.action_assign()
         for move in self.picking.move_ids:
-            move.quantity_done = 1
+            move.picked = True
         self.picking._action_done()
         new_location_dest_id = self.Location.create(
             {
