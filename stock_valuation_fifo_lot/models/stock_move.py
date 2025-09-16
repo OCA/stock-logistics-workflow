@@ -73,6 +73,10 @@ class StockMove(models.Model):
             not self.purchase_line_id
             and self.product_id.cost_method == "fifo"
             and len(self.lot_ids) == 1
+            and not (
+                self.origin_returned_move_id
+                and self.origin_returned_move_id.sudo().stock_valuation_layer_ids
+            )
         ):
             candidates = (
                 self.env["stock.valuation.layer"]
@@ -93,5 +97,8 @@ class StockMove(models.Model):
                 )
             )
             if candidates:
-                price_unit = candidates[0].unit_cost
+                candidates = candidates[0] | candidates[0].stock_valuation_layer_ids
+                price_unit = sum(candidates.mapped("value")) / sum(
+                    candidates.mapped("quantity")
+                )
         return price_unit
