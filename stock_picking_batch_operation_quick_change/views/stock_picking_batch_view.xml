@@ -10,8 +10,7 @@
                     type="action"
                     string="Change Location"
                     groups="stock.group_stock_user"
-                >
-                </button>
+                />
             </xpath>
         </field>
     </record>
