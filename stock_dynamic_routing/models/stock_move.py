@@ -295,7 +295,10 @@ class StockMove(models.Model):
                     __applying_routing_rule=True
                 ).location_id = routing_rule.location_src_id
 
-            move.picking_type_id = routing_rule.picking_type_id
+            # Use the picking type of the routing rule, if not already done
+            if move.picking_type_id != routing_rule.picking_type_id:
+                move.picking_type_id = routing_rule.picking_type_id
+
             dest_location = move.location_dest_id
             rule_location = routing_rule.location_dest_id
             if rule_location.is_sublocation_of(dest_location):
