@@ -287,9 +287,14 @@ class StockMove(models.Model):
             # pull routing rules
             original_destination = move.location_dest_id
             current_picking_type = move.picking_id.picking_type_id
-            move.with_context(
-                __applying_routing_rule=True
-            ).location_id = routing_rule.location_src_id
+
+            # Use the source location of the routing rule, if not already done
+            # If a sublocation is used, it's respected.
+            if not move.location_id.is_sublocation_of(routing_rule.location_src_id):
+                move.with_context(
+                    __applying_routing_rule=True
+                ).location_id = routing_rule.location_src_id
+
             move.picking_type_id = routing_rule.picking_type_id
             dest_location = move.location_dest_id
             rule_location = routing_rule.location_dest_id

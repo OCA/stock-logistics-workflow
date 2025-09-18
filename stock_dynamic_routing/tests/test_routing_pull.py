@@ -920,6 +920,106 @@ class TestRoutingPull(TestRoutingPullCommon):
 
         self.assertEqual(move_b.picking_id.picking_type_id, pick_type_routing_delivery)
 
+    def test_change_dest_move_source_chain_with_sublocation(self):
+        location_qa = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "QA"}
+        )
+        location_qa_1 = self.env["stock.location"].create(
+            {"location_id": location_qa.id, "name": "QA: 1"}
+        )
+        # The setup we want is:
+        #
+        # * When the initial move line reserves in Highbay, the move is
+        #   classified in picking type "Dynamic Routing" with locations
+        #   Highbay -> Handover (a new move is inserted between Handover and
+        #   Output)
+        # * When the next move source location is set to "Handover", we
+        #   we want to classify the next move as "QA" with locations Handover
+        #   -> Output/QA/1
+        # * When the last move source location is changed to "QA/1", it must be
+        #   classified as "Delivery (after QA)" with locations Output/QA/1 ->
+        #   Customer
+
+        pick_type_routing_qa = self.env["stock.picking.type"].create(
+            {
+                "name": "QA",
+                "code": "internal",
+                "sequence_code": "WH/QA",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": self.location_handover.id,
+                "default_location_dest_id": location_qa_1.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": self.location_handover.id,
+                "picking_type_id": self.wh.pick_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {"method": "pull", "picking_type_id": pick_type_routing_qa.id},
+                    )
+                ],
+            }
+        )
+
+        pick_type_routing_delivery = self.env["stock.picking.type"].create(
+            {
+                "name": "Delivery (after QA)",
+                "code": "outgoing",
+                "sequence_code": "OUT(R)",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": location_qa.id,
+                "default_location_dest_id": self.customer_loc.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": location_qa.id,
+                "picking_type_id": self.wh.out_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": pick_type_routing_delivery.id,
+                        },
+                    )
+                ],
+            }
+        )
+
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(self.product1, 10)]
+        )
+        move_a = pick_picking.move_ids
+        move_b = customer_picking.move_ids
+
+        self._update_product_qty_in_location(
+            self.location_hb_1_2, move_a.product_id, 100
+        )
+        pick_picking.action_assign()
+        move_middle = move_a.move_dest_ids
+        self.assertNotEqual(move_middle, move_b)
+
+        self.assert_src_highbay(move_a)
+        self.assert_dest_handover(move_a)
+        self.assert_src_handover(move_middle)
+        self.assertEqual(move_middle.location_dest_id, location_qa_1)
+        self.assertEqual(move_b.location_id, location_qa_1)
+        self.assert_dest_customer(move_b)
+
+        # routing has been applied
+        self.assertEqual(move_middle.picking_id.picking_type_id, pick_type_routing_qa)
+
+        self.assertEqual(move_b.picking_id.picking_type_id, pick_type_routing_delivery)
+
     def test_mix_routing_reservation_same_location(self):
         """Test a picking with different types of routing
 
