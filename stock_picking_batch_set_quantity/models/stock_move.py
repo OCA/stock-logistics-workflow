@@ -7,6 +7,8 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def action_set_quantities_to_reservation(self):
-        """Public method to be called from button"""
-        self._set_quantities_to_reservation()
+    def action_set_quantity(self):
+        self.ensure_one()
+        self._action_assign()
+        if self.quantity:
+            self.state = "done"
