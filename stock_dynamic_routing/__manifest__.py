@@ -11,8 +11,6 @@
     "depends": [
         # core
         "stock",
-        # OCA/stock-logistics-warehouse
-        "stock_location_is_sublocation",
     ],
     "demo": [
         "demo/stock_location_demo.xml",
