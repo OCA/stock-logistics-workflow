@@ -5,3 +5,4 @@
 - Serpent Consulting Services Pvt. Ltd. \<<support@serpentcs.com>\>
 - Sulivan Lominchar \<<slominchar@archeti.com>\>
 - Stefan Rijnhart \<<stefan@opener.amsterdam>\>
+- Andrius Laukavičius \<<andrius.laukavicius@versada.eu>\>

@@ -3,20 +3,25 @@
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from odoo.fields import Command
 from odoo.tests import Form, common
 
 
-class TestStockMove(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+class TestMoveLinesSequence(common.TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # Useful models
-        self.Picking = self.env["stock.picking"]
-        self.product_id_1 = self.env.ref("product.product_product_8")
-        self.product_id_2 = self.env.ref("product.product_product_11")
-        self.product_id_3 = self.env.ref("product.product_product_6")
-        self.picking_type_in = self.env.ref("stock.warehouse0").in_type_id
-        self.supplier_location = self.env.ref("stock.stock_location_suppliers")
-        self.customer_location = self.env.ref("stock.stock_location_customers")
+        cls.Picking = cls.env["stock.picking"]
+        cls.SaleOrder = cls.env["sale.order"]
+        cls.ResPartner = cls.env["res.partner"]
+        cls.ProductProduct = cls.env["product.product"]
+        cls.product_id_1 = cls.env.ref("product.product_product_8")
+        cls.product_id_2 = cls.env.ref("product.product_product_11")
+        cls.product_id_3 = cls.env.ref("product.product_product_6")
+        cls.picking_type_in = cls.env.ref("stock.warehouse0").in_type_id
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
     def _create_picking(self):
         """Create a Picking."""
@@ -131,3 +136,41 @@ class TestStockMove(common.TransactionCase):
                 agg_mls[key]["visible_sequence"],
                 "The Sequence is not copied properly in the aggregated move lines",
             )
+
+    def test_move_lines_sequence_from_sale(self):
+        # GIVEN
+        product_1, product_2 = self.ProductProduct.create(
+            [
+                {"name": "MY-PRODUCT-1", "type": "consu"},
+                {"name": "MY-PRODUCT-2", "type": "consu"},
+            ]
+        )
+        partner = self.ResPartner.create({"name": "MY-PARTNER-1"})
+        sale = self.SaleOrder.create(
+            {
+                "partner_id": partner.id,
+                "order_line": [
+                    Command.create(
+                        {
+                            "product_id": product_1.id,
+                            "product_uom_qty": 1,
+                            "price_unit": 1,
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "product_id": product_2.id,
+                            "product_uom_qty": 1,
+                            "price_unit": 1,
+                        }
+                    ),
+                ],
+            }
+        )
+        # WHEN
+        sale.action_confirm()
+        # THEN
+        picking = sale.picking_ids
+        move_1, move_2 = picking.move_ids
+        self.assertEqual(move_1.visible_sequence, 1)
+        self.assertEqual(move_2.visible_sequence, 2)
