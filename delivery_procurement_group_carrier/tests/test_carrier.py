@@ -11,6 +11,15 @@ from .common import TestProcurementGroupCarrierCommon
 
 @tagged("post_install", "-at_install")
 class TestProcurementGroupCarrier(TestProcurementGroupCarrierCommon):
+    def _set_pickship(self, order, propagate_carrier):
+        order.warehouse_id.delivery_steps = "pick_ship"
+        delivery_route = order.warehouse_id.delivery_route_id
+        pick_rule, ship_rule = delivery_route.rule_ids
+        ship_rule.propagate_carrier = True
+        ship_rule.write({"action": "pull"})
+        pick_rule.location_dest_id = delivery_route.rule_ids[1].location_src_id
+        pick_rule.propagate_carrier = propagate_carrier
+
     def test_sale_procurement_group_carrier(self):
         """Check the SO procurement group contains the carrier on SO confirmation"""
         order = self._create_sale_order([(self.product, 1.0)], carrier=self.carrier)
@@ -18,23 +27,42 @@ class TestProcurementGroupCarrier(TestProcurementGroupCarrierCommon):
         self.assertTrue(order.picking_ids)
         self.assertEqual(order.procurement_group_id.carrier_id, order.carrier_id)
 
-    def test_sale_picking_group_carrier_aligned(self):
-        # Create an order without carrier
+    def test_sale_picking_group_carrier_aligned_with_propagate(self):
+        """Check picking carrier is set from procurement group"""
+        # Create an order without carrier but set carrier on proc group
         order = self._create_sale_order([(self.product, 1.0)])
-        order.warehouse_id.delivery_steps = "pick_ship"
-        delivery_route = order.warehouse_id.delivery_route_id
-        delivery_route.rule_ids[0].location_dest_id = delivery_route.rule_ids[
-            1
-        ].location_src_id
-        delivery_route.rule_ids[1].write({"action": "pull"})
-        delivery_route.rule_ids.propagate_carrier = False
-        order.carrier_id = self.carrier
+        group_vals = order.order_line._prepare_procurement_group_vals()
+        group_vals["carrier_id"] = self.carrier.id
+        order.procurement_group_id = self.env["procurement.group"].create(group_vals)
+        self._set_pickship(order, propagate_carrier=True)
         order.action_confirm()
         out_transfer = order.picking_ids.filtered(
             lambda pick: pick.location_dest_id.usage == "customer"
         )
         pick_transfer = order.picking_ids - out_transfer
         move_group = order.procurement_group_id
+        self.assertFalse(order.carrier_id)
+        self.assertEqual(out_transfer.carrier_id, self.carrier)
+        self.assertEqual(move_group.carrier_id, self.carrier)
+        self.assertEqual(pick_transfer.carrier_id, self.carrier)
+
+    def test_sale_picking_group_carrier_aligned_without_propagate(self):
+        """Check picking carrier is set from procurement group
+
+        And check changing the carrier keeps the group aligned"""
+        # Create an order without carrier but set carrier on proc group
+        order = self._create_sale_order([(self.product, 1.0)])
+        group_vals = order.order_line._prepare_procurement_group_vals()
+        group_vals["carrier_id"] = self.carrier.id
+        order.procurement_group_id = self.env["procurement.group"].create(group_vals)
+        self._set_pickship(order, propagate_carrier=False)
+        order.action_confirm()
+        out_transfer = order.picking_ids.filtered(
+            lambda pick: pick.location_dest_id.usage == "customer"
+        )
+        pick_transfer = order.picking_ids - out_transfer
+        move_group = order.procurement_group_id
+        self.assertFalse(order.carrier_id)
         self.assertEqual(out_transfer.carrier_id, self.carrier)
         self.assertEqual(move_group.carrier_id, self.carrier)
         self.assertFalse(pick_transfer.carrier_id)
