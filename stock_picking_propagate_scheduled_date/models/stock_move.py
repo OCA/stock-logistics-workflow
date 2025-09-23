@@ -30,6 +30,12 @@ class StockMove(models.Model):
                 if move_dest.id in already_propagated_ids:
                     continue
                 move_dest.date -= delta
+            for move_orig in move.move_orig_ids:
+                if move_orig.state in ("done", "cancel"):
+                    continue
+                if move_orig.id in already_propagated_ids:
+                    continue
+                move_orig.date -= delta
 
     def write(self, vals):
         # propagate date changes in the stock move chain
