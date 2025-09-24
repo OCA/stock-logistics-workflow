@@ -57,6 +57,8 @@ class StockMove(models.Model):
                 moves = self.browse(m.id for m in imoves)
                 moves.picking_id._update_merged_origin()
                 moves._on_assign_picking_message_link()
+                # clear SO pickings cache to ensure action_confirm is called
+                moves.sale_line_id.order_id.invalidate_recordset(fnames=["picking_ids"])
         res = super()._assign_picking_post_process(new=new)
         return res
 
