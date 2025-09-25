@@ -25,9 +25,8 @@
         "security/ir.model.access.csv",
     ],
     "assets": {
-        "web.assets.backend": [
-            "stock_picking_group_by_partner_by_carrier/static"
-            "/src/scss/report_delivery_slip.scss"
+        "web.report_assets_common": [
+            "stock_picking_group_by_partner_by_carrier/static/src/scss/report_delivery_slip.scss"
         ]
     },
     "installable": True,
