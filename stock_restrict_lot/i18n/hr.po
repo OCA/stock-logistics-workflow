@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-29 10:09+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>\n"
+"PO-Revision-Date: 2025-09-26 16:43+0000\n"
+"Last-Translator: vladimiruvid <vladimir@uvid.hr>\n"
 "Language-Team: none\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -34,13 +34,13 @@ msgstr "Lot"
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Varijanta proizvoda"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_picking__restrict_lot_id
 msgid "Restrict Lot"
-msgstr "Ograniči lot"
+msgstr "Ograničeni lot"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
@@ -59,6 +59,8 @@ msgid ""
 "The lot(s) %(move_line_lot)s being moved is inconsistent with the "
 "restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
+"Lot(ovi) %(move_line_lot)s koji se premještaju nisu u skladu s Ograničenim "
+"lot(ovi) %(move_restrict_lot)s postavljenim na skladišnici"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
@@ -72,3 +74,5 @@ msgid ""
 "You can't modify the Lot/Serial number because at least one move in the "
 "chain has already been done with another Lot/Serial number."
 msgstr ""
+"Ne možete mijenjati broj lota/serijski broj jer je barem jedan potez u lancu "
+"već obavljen s drugim brojem lota/serijskim brojem."
