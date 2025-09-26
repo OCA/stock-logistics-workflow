@@ -1,0 +1,90 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_auto_move
+#
+# Translators:
+# Carles Antoli <carlesantoli@hotmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-14 08:48+0000\n"
+"PO-Revision-Date: 2022-01-26 17:40+0000\n"
+"Last-Translator: Jaume Planas <jaume.planas@minorisa.net>\n"
+"Language-Team: Catalan (https://www.transifex.com/oca/teams/23907/ca/)\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: stock_auto_move
+#: model:stock.rule,name:stock_auto_move.stock_rule_a_to_b
+msgid "1 => 2 with auto_move"
+msgstr "1 => 2 amb auto_move"
+
+#. module: stock_auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_move__auto_move
+#: model:ir.model.fields,field_description:stock_auto_move.field_stock_rule__auto_move
+msgid "Automatic move"
+msgstr "Moviment automàtic"
+
+#. module: stock_auto_move
+#: model:ir.model.fields,help:stock_auto_move.field_stock_rule__auto_move
+msgid ""
+"If this option is selected, the generated move will be automatically "
+"processed as soon as the products are available. This can be useful for "
+"situations with chained moves where we do not want an operator action."
+msgstr ""
+"Si seleccioneu aquesta opció, el moviment generat es processarà "
+"automàticament tan bon punt estiguin disponibles els productes. Això pot ser "
+"útil en situacions amb moviments encadenats on no es vulgui una acció de "
+"l'operador."
+
+#. module: stock_auto_move
+#: model:ir.model.fields,help:stock_auto_move.field_stock_move__auto_move
+msgid ""
+"If this option is selected, the move will be automatically processed as soon "
+"as the products are available."
+msgstr ""
+"Si seleccioneu aquesta opciño, el moviment es processarà automàticament tan "
+"bon punt estiguin disponibles els productes."
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_move
+msgid "Stock Move"
+msgstr "Moviment d'estoc"
+
+#. module: stock_auto_move
+#: model:ir.model,name:stock_auto_move.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.rule,name:stock_auto_move.auto_location_path
+msgid "Test push route 3=>1"
+msgstr ""
+
+#. module: stock_auto_move
+#: model:stock.route,name:stock_auto_move.test_route
+msgid "Test route"
+msgstr "Ruta de prova"
+
+#~ msgid "Location 1"
+#~ msgstr "Ubicació 1"
+
+#~ msgid "Location 2"
+#~ msgstr "Ubicació 2"
+
+#~ msgid "Location 3"
+#~ msgstr "Ubicació 3"
+
+#~ msgid "Procurement"
+#~ msgstr "Aprovisionament"
+
+#~ msgid "Procurement Rule"
+#~ msgstr "Regla d'aprovisionament"
+
+#~ msgid "Pushed Flow"
+#~ msgstr "Flux empès"
