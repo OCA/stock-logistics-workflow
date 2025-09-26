@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [sale_planned_consumed_date](sale_planned_consumed_date/) | 17.0.1.0.0 |  | Sale planned consumed date
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 17.0.1.0.1 |  | Add more flexibility in the run fifo method.
 [stock_account_show_automatic_valuation](stock_account_show_automatic_valuation/) | 17.0.1.0.0 |  | Allow automatic valuation for stock moves in community edition
+[stock_auto_move](stock_auto_move/) | 17.0.1.0.0 |  | Automatic Move Processing
 [stock_landed_costs_priority](stock_landed_costs_priority/) | 17.0.1.0.0 |  | Add priority to landed costs
 [stock_lock_lot](stock_lock_lot/) | 17.0.1.0.0 |  | Stock Lock Lot
 [stock_lot_on_hand_first](stock_lot_on_hand_first/) | 17.0.1.0.0 | <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | Allows to display lots on hand first in M2o fields
