@@ -12,7 +12,8 @@ class StockMove(models.Model):
         store=True,
     )
     actual_date_source = fields.Date(
-        help="Technical field to store the actual_date of the source document."
+        copy=False,
+        help="Technical field to store the actual_date of the source document.",
     )
 
     def _get_timezone(self):
@@ -74,7 +75,7 @@ class StockMove(models.Model):
         )
 
     def _action_done(self, cancel_backorder=False):
-        moves = super()._action_done(cancel_backorder)
+        moves = super()._action_done(cancel_backorder=cancel_backorder)
         # i.e. Inventory adjustments with actual date
         if self.env.context.get("force_period_date"):
             self.write({"actual_date_source": self.env.context["force_period_date"]})
