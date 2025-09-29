@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================================
 Stock Picking: group by partner and carrier
 ===========================================
@@ -17,7 +13,7 @@ Stock Picking: group by partner and carrier
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -97,11 +93,11 @@ which you want grouping.
 
 If you want to enable this for the shippings of a warehouse:
 
-- be sure that in the settings of the Inventory app, you checked "Manage
-  Push and Pull inventory flows"
-- enable "debug mode"
-- go to the warehouse for which you want grouping and check the setting
-  "Group Shippings"
+-  be sure that in the settings of the Inventory app, you checked
+   "Manage Push and Pull inventory flows"
+-  enable "debug mode"
+-  go to the warehouse for which you want grouping and check the setting
+   "Group Shippings"
 
 You can also enable this for individual picking types by checking the
 setting "Group Pickings" on the picking type view.
@@ -128,25 +124,25 @@ Authors
 Contributors
 ------------
 
-- Camptocamp:
+-  Camptocamp:
 
-  - Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
-  - Thierry Ducrest <thierry.ducrest@camptocamp.com>
+   -  Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+   -  Thierry Ducrest <thierry.ducrest@camptocamp.com>
 
-- BCIM:
+-  BCIM:
 
-  - Jacques-Etienne Baudoux <je@bcim.be>
+   -  Jacques-Etienne Baudoux <je@bcim.be>
 
-- Phuc Tran Thanh <phuc@trobz.com>
-- Denis Roussel <denis.roussel@acsone.eu>
-- Karl SOuthern <karl@glo.systems>
+-  Phuc Tran Thanh <phuc@trobz.com>
+-  Denis Roussel <denis.roussel@acsone.eu>
+-  Karl SOuthern <karl@glo.systems>
 
 Other credits
 -------------
 
 The development of this module has been financially supported by:
 
-- Camptocamp
+-  Camptocamp
 
 Maintainers
 -----------
