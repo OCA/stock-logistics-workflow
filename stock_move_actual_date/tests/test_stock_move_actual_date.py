@@ -40,7 +40,7 @@ class TestStockMoveActualDate(TransactionCase):
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
 
-    def create_picking(self, actual_date=False):
+    def create_picking(self, actual_date=False, is_done=True):
         receipt = self.env["stock.picking"].create(
             {
                 "location_id": self.supplier_location.id,
@@ -72,7 +72,8 @@ class TestStockMoveActualDate(TransactionCase):
             }
         )
         receipt.move_ids._action_confirm()
-        receipt.move_ids._action_done()
+        if is_done:
+            receipt.move_ids._action_done()
         return receipt, receipt.move_ids
 
     def create_scrap(self, receipt, actual_date=False):
@@ -176,3 +177,21 @@ class TestStockMoveActualDate(TransactionCase):
             date(2025, 3, 10),
             "SVL accounting date should match the move actual date.",
         )
+
+    def test_backorder_picking_actual_date(self):
+        picking, move = self.create_picking(date(2025, 3, 10), is_done=False)
+        move.move_line_ids.qty_done = 5.0
+        move.quantity_done = 5.0
+        backorder_wizard_values = picking.button_validate()
+        backorder_wizard = (
+            self.env[(backorder_wizard_values.get("res_model"))]
+            .browse(backorder_wizard_values.get("res_id"))
+            .with_context(**backorder_wizard_values["context"])
+        )
+        backorder_wizard.process()
+        backorder = self.env["stock.picking"].search(
+            [("backorder_id", "=", picking.id)], limit=1
+        )
+        self.assertTrue(backorder, "Backorder picking should be created.")
+        self.assertFalse(backorder.actual_date)
+        self.assertFalse(backorder.move_ids.actual_date_source)

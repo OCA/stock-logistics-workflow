@@ -12,7 +12,8 @@ class StockMove(models.Model):
         store=True,
     )
     actual_date_source = fields.Date(
-        help="Technical field to store the actual_date of the source document."
+        copy=False,
+        help="Technical field to store the actual_date of the source document.",
     )
 
     def _get_timezone(self):
