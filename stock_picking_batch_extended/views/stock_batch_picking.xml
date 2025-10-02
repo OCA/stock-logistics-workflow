@@ -51,7 +51,6 @@
                 </button>
             </xpath>
             <field name="picking_ids" position="before">
-                <field name="active_picking_ids" invisible="True" />
                 <button
                     name="remove_undone_pickings"
                     string="Remove Undone"
@@ -69,7 +68,7 @@
             <xpath expr="//field[@name='picking_ids']" position="attributes">
                 <attribute
                     name="context"
-                >{'form_view_ref': 'stock_picking_batch.view_picking_form_inherited', 'tree_view_ref': 'stock.vpicktree'}</attribute>
+                >{'form_view_ref': 'stock_picking_batch.view_picking_form_inherited', 'list_view_ref': 'stock.vpicktree'}</attribute>
             </xpath>
         </field>
     </record>

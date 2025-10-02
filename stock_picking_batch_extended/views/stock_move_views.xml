@@ -8,61 +8,54 @@
         <field name="mode">primary</field>
         <field name="priority">999</field>
         <field name="arch" type="xml">
-            <field name="product_id" position="before">
-                <field name="picking_code" invisible="1" />
-                <field name="is_locked" invisible="1" />
-                <field name="lots_visible" invisible="1" />
-            </field>
             <field name="picking_id" position="attributes">
                 <attribute name="domain" />
                 <attribute name="optional">show</attribute>
             </field>
             <field name="lot_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)], 'invisible': [('lots_visible', '=', False)]}</attribute>
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
+                <attribute name="column_invisible" />
                 <attribute name="optional">show</attribute>
             </field>
             <field name="lot_name" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)], 'invisible': [('lots_visible', '=', False)]}</attribute>
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
+                <attribute name="column_invisible" />
                 <attribute name="optional">hide</attribute>
             </field>
             <field name="location_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': ['|', ('picking_code', '=', 'incoming'), '&amp;', ('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)]}</attribute>
+                    name="readonly"
+                >picking_code == 'incoming' or (state in ('done', 'cancel') and is_locked)</attribute>
                 <attribute name="optional">show</attribute>
             </field>
             <field name="location_dest_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': ['|', ('picking_code', '=', 'outgoing'), '&amp;', ('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)]}</attribute>
+                    name="readonly"
+                >picking_code == 'outgoing' or (state in ('done', 'cancel') and is_locked)</attribute>
                 <attribute name="optional">show</attribute>
             </field>
             <field name="package_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)]}</attribute>
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
                 <attribute name="optional">show</attribute>
             </field>
             <field name="result_package_id" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)]}</attribute>
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
                 <attribute name="optional">show</attribute>
             </field>
-            <field name="product_uom_qty" position="attributes">
+            <field name="quantity" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': [('picking_code', '=', 'incoming')]}</attribute>
-                <attribute name="optional">show</attribute>
-            </field>
-            <field name="qty_done" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('state', 'in', ('done', 'cancel')), ('is_locked', '=', True)]}</attribute>
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
                 <attribute name="force_save">1</attribute>
             </field>
         </field>
