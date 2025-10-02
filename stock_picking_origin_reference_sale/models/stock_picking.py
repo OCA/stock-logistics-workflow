@@ -11,13 +11,19 @@ class StockPicking(models.Model):
     def _selection_origin_reference(self):
         return super()._selection_origin_reference() + [(SO_MODEL_NAME, "Sales Order")]
 
+    def convert_origin(self, origin):
+        if not origin:
+            return ""
+        return origin.split("-")[0].strip()
+
     @api.depends(lambda x: x._get_depends_compute_origin_reference())
     def _compute_origin_reference(self):
         res = super()._compute_origin_reference()
         for picking in self:
             if not picking.origin_reference:
+                origin = self.convert_origin(picking.origin)
                 rel_sale = self.env[SO_MODEL_NAME].search(
-                    [("name", "=", picking.origin)], limit=1
+                    [("name", "=", origin)], limit=1
                 )
                 if rel_sale:
                     picking.origin_reference = f"{SO_MODEL_NAME},{rel_sale.id}"
