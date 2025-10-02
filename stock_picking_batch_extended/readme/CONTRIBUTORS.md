@@ -24,6 +24,7 @@
   - Carlos Dauden
   - Sergio Teruel
   - César A. Sánchez
+  - Carlos Lopez
 
 - [Trobz](https://trobz.com):
 

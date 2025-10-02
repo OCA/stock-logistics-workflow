@@ -1,7 +1,7 @@
 When you create a batch pick, the creation wizard will appear with the
 new fields added.
 
-![](../static/batch_wizard.png)
+![wizard](../static/batch_wizard.png)
 
 1.  Name: Allows to rename the batch. But be careful, if this is done,
     it overwrites the name that Odoo assigns to the batch by default.
@@ -13,7 +13,7 @@ Adds to the form view of batch picking:
 
 **In "Draft" status:**
 
-![](../static/batch_form_draft.png)
+![draft](../static/batch_form_draft.png)
 
 1.  Delete all delivery notes in the batch whose status is not done or
     canceled.
@@ -29,7 +29,7 @@ Adds to the form view of batch picking:
 
 **"In progress" status:**
 
-![](../static/batch_form_in_progress.png)
+![in_progress](../static/batch_form_in_progress.png)
 
 1.  Delete all pickings in the batch whose status is not done or
     cancelled.
@@ -47,7 +47,7 @@ validation approach in the inventory settings.
 
 **In "Done" status:**
 
-![](../static/batch_form_done.png)
+![done](../static/batch_form_done.png)
 
 1.  Print pickings.
 2.  Smart button with counting and access to pickings.

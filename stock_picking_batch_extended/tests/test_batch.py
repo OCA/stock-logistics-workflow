@@ -91,7 +91,14 @@ class TestBatchPicking(BaseCommon):
             result.get("report_name"),
             "stock.report_deliveryslip",
         )
-        report_pdf = self.env["ir.actions.report"]._render(report_name, self.batch.ids)
+        report_pdf = self.env["ir.actions.report"]._render(
+            report_name, self.batch.picking_ids.ids
+        )
+        self.assertGreaterEqual(len(report_pdf[0]), 1)
+        report_name = "stock_picking_batch_extended.report_batch_picking"
+        report_pdf = self.env["ir.actions.report"]._render_qweb_html(
+            report_name, self.batch.ids
+        )
         self.assertGreaterEqual(len(report_pdf[0]), 1)
 
     def test_assign__no_picking(self):
@@ -171,7 +178,11 @@ class TestBatchPicking(BaseCommon):
 
     def test_create_wizard(self):
         wizard = self.env["stock.picking.to.batch"].create(
-            {"name": "Unittest wizard", "mode": "new"}
+            {
+                "name": "Unittest wizard",
+                "mode": "new",
+                "description": "Unittest description",
+            }
         )
 
         # Pickings already in batch.
@@ -192,6 +203,7 @@ class TestBatchPicking(BaseCommon):
 
         batch = self.batch_model.search([("name", "=", "Unittest wizard")])
         self.assertEqual(1, len(batch))
+        self.assertEqual("Unittest description", batch.description)
 
         # Only picking3 because self.picking is already in another batch.
         self.assertEqual(picking3, batch.picking_ids)
