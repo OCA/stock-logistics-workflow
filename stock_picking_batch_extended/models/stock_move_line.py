@@ -6,8 +6,8 @@ from odoo import models
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    def _add_to_wave(self, wave=False):
-        super()._add_to_wave(wave)
+    def _add_to_wave(self, wave=False, description=False):
+        super()._add_to_wave(wave, description)
         return self.env["stock.picking.to.batch"].action_view_batch_picking(
             self.batch_id
         )

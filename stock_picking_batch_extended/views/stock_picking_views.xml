@@ -4,17 +4,17 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <field name="user_id" position="after">
-                <field
-                    name="batch_id"
-                    domain="[
-                            ('state', 'in', ['draft', 'in_progress']),
-                            '|',
-                                ('picking_type_id', '=', picking_type_id),
-                                ('picking_type_id', '=', False),
-                        ]"
-                    context="{'default_picking_type_id': picking_type_id}"
-                />
+            <field name="batch_id" position="attributes">
+                <attribute name="readonly">state in ('done', 'cancel')</attribute>
+                <attribute name="domain">[
+                    ('state', 'in', ['draft', 'in_progress']),
+                    '|',
+                        ('picking_type_id', '=', picking_type_id),
+                        ('picking_type_id', '=', False),
+                    ]</attribute>
+                <attribute
+                    name="context"
+                >{'default_picking_type_id': picking_type_id}</attribute>
             </field>
         </field>
     </record>

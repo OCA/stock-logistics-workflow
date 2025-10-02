@@ -75,6 +75,7 @@ class StockPickingToBatch(models.TransientModel):
     def _prepare_stock_batch_picking(self):
         vals = {
             "notes": self.notes,
+            "description": self.description,
             "user_id": self.user_id.id,
         }
         if self.name:

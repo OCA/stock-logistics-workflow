@@ -1,11 +1,7 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import logging
 
 from odoo import api, fields, models
-from odoo.tools.float_utils import float_is_zero
-
-_logger = logging.getLogger(__name__)
 
 
 class ReportPrintBatchPicking(models.AbstractModel):
@@ -22,8 +18,8 @@ class ReportPrintBatchPicking(models.AbstractModel):
 
     @api.model
     def new_level_0(self, operation):
-        location_name = operation.location_id.name_get()[0][1]
-        location_dest_name = operation.location_dest_id.name_get()[0][1]
+        location_name = operation.location_id.display_name
+        location_dest_name = operation.location_dest_id.display_name
         level_0_name = f"{location_name} \u21e8 {location_dest_name}"
         return {
             "name": level_0_name,
@@ -33,27 +29,16 @@ class ReportPrintBatchPicking(models.AbstractModel):
         }
 
     @api.model
-    def _get_operation_qty(self, operation):
-        return (
-            float_is_zero(
-                operation.reserved_qty,
-                precision_rounding=operation.product_uom_id.rounding,
-            )
-            and operation.qty_done
-            or operation.reserved_qty
-        )
-
-    @api.model
     def new_level_1(self, operation):
         return {
             "product": operation.product_id,
-            "product_qty": self._get_operation_qty(operation),
+            "product_qty": operation.quantity,
             "operations": operation,
         }
 
     @api.model
     def update_level_1(self, group_dict, operation):
-        group_dict["product_qty"] += self._get_operation_qty(operation)
+        group_dict["product_qty"] += operation.quantity
         group_dict["operations"] += operation
 
     @api.model
