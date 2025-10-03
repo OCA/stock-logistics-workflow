@@ -6,7 +6,7 @@ from base64 import b64encode
 from os import path
 
 
-class CommonStockPickingImportSerial(object):
+class CommonStockPickingImportSerial:
     def assertUniqueIn(self, element_list):
         elements = []
         for element in element_list:
@@ -31,7 +31,7 @@ class CommonStockPickingImportSerial(object):
 
     @classmethod
     def _create_product(cls, tracking="lot", reference=None):
-        name = "{tracking}".format(tracking=tracking)
+        name = f"{tracking}"
         vals = {
             "name": name,
             "type": "product",
@@ -60,7 +60,7 @@ class CommonStockPickingImportSerial(object):
         location_dest = picking.picking_type_id.default_location_dest_id
         cls.move = cls.env["stock.move"].create(
             {
-                "name": "test-{product}".format(product=product.name),
+                "name": f"test-{product.name}",
                 "product_id": product.id,
                 "picking_id": picking.id,
                 "picking_type_id": picking.picking_type_id.id,
