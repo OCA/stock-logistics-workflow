@@ -9,10 +9,7 @@
     "summary": "Split a picking in two not transferred pickings",
     "version": "18.0.2.1.0",
     "category": "Inventory",
-    "author": "Camptocamp, "
-    "Tecnativa, "
-    "ForgeFlow S.L., "
-    "Odoo Community Association (OCA)",
+    "author": "Camptocamp, Tecnativa, ForgeFlow S.L., Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
