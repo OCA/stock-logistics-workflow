@@ -13,5 +13,7 @@
     "depends": [
         "stock",
     ],
-    "data": [],
+    "data": [
+        "views/stock_move_line.xml",
+    ],
 }
