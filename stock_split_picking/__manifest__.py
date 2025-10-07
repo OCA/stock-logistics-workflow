@@ -7,7 +7,7 @@
 {
     "name": "Split picking",
     "summary": "Split a picking in two not transferred pickings",
-    "version": "18.0.2.1.0",
+    "version": "19.0.1.0.0",
     "category": "Inventory",
     "author": "Camptocamp, Tecnativa, ForgeFlow S.L., Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -18,4 +18,6 @@
         "wizards/stock_split_picking.xml",
         "views/stock_partial_picking.xml",
     ],
+    "installable": True,
+    "application": False,
 }

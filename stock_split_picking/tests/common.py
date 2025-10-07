@@ -3,17 +3,13 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
-
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockSplitPickingCase(TransactionCase):
+class TestStockSplitPickingCase(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
-
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
 
@@ -54,7 +50,6 @@ class TestStockSplitPickingCase(TransactionCase):
     def _create_stock_move(cls, product, picking, qty=10):
         return cls.env["stock.move"].create(
             {
-                "name": "/",
                 "picking_id": picking.id,
                 "product_id": product.id,
                 "product_uom_qty": qty,
