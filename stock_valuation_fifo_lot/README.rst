@@ -28,7 +28,28 @@ Stock Valuation Fifo Lot
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is used to calculate FIFO cost by lot.
+This module is used to apply FIFO cost calculation at the lot or serial level instead of the product level.
+
+Example: Lot-Level Costing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Purchase:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 100 units at $12 each.
+
+- Sale:
+
+  - 50 units from Lot B.
+
+- COGS Calculation:
+
+  - 50 units * $12 = $600 assigned to COGS.
+
+- Ending Inventory:
+
+  - Lot A: 100 units at $10 each.
+  - Lot B: 50 units at $12 each.
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -39,6 +60,11 @@ This module is used to calculate FIFO cost by lot.
 
 .. contents::
    :local:
+
+Usage
+=====
+
+Process an outgoing move with a lot/serial for a product of FIFO costing method, the costs will be calculated based on the lot/serial.
 
 Bug Tracker
 ===========
