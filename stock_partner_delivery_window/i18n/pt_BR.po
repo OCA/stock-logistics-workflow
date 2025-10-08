@@ -88,6 +88,14 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid ""
+"No scheduled delivery date is set on the picking, cannot check if it is in "
+"partner's delivery window."
+msgstr ""
+
+#. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
 msgid "Partner"
 msgstr ""
@@ -114,15 +122,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer"
-" deliveries on working days."
+"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer "
+"deliveries on working days."
 msgstr ""
 
 #. module: stock_partner_delivery_window
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer deliveries on following time windows:\n"
+"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+"deliveries on following time windows:\n"
 "%(window)s"
 msgstr ""
 
@@ -154,7 +163,9 @@ msgstr ""
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,help:stock_partner_delivery_window.field_partner_delivery_time_window__tz
 msgid ""
-"When printing documents and exporting/importing data, time values are computed according to this timezone.\n"
+"When printing documents and exporting/importing data, time values are "
+"computed according to this timezone.\n"
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
-"Anywhere else, time values are computed according to the time offset of your web client."
+"Anywhere else, time values are computed according to the time offset of your "
+"web client."
 msgstr ""
