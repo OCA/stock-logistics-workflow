@@ -3,7 +3,7 @@
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 
@@ -32,14 +32,16 @@ class StockMove(models.Model):
         ):
             for move in self:
                 if move.state == "done" and move.invoice_line_ids:
-                    raise UserError(_("You can not modify an invoiced stock move"))
+                    raise UserError(
+                        self.env._("You can not modify an invoiced stock move")
+                    )
         res = super().write(vals)
         return res
 
     def get_moves_delivery_link_invoice(self):
         return self.filtered(
             lambda x: x.state == "done"
-            and not x.scrapped
+            and not x.location_dest_usage == "inventory"
             and (
                 x.location_id.usage == "internal"
                 or (x.location_dest_id.usage == "internal" and x.to_refund)
