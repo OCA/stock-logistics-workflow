@@ -24,7 +24,7 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
             )
         )
         for product in cls.product_a + cls.product_b + cls.product_c:
-            with picking_form.move_ids_without_package.new() as line_form:
+            with picking_form.move_ids.new() as line_form:
                 line_form.product_id = product
                 line_form.product_uom_qty = 2
         picking = picking_form.save()
@@ -48,7 +48,7 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
                 {
                     "move_id": invoice.id,
                     "move_line_ids": [Command.set(move.ids)],
-                    "name": move.name,
+                    "name": "test_line",
                     "quantity": move.product_uom_qty,
                     "price_unit": move.price_unit,
                     "product_id": move.product_id.id,
