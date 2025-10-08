@@ -96,7 +96,7 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
         self.assertEqual(
             self.pickingA.invoice_ids,
             self.invoiceA,
-            "Stock Picking: Stock picking should be " "an invoice related ",
+            "Stock Picking: Stock picking should be an invoice related ",
         )
 
     def test_01_sale_stock_invoice_link(self):
