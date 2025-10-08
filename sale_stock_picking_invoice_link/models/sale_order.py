@@ -19,7 +19,7 @@ class SaleOrderLine(models.Model):
         ):
             if (
                 stock_move.state != "done"
-                or stock_move.scrapped
+                or stock_move.location_dest_usage == "inventory"
                 or (
                     stock_move.location_dest_id.usage != "customer"
                     and (
@@ -38,7 +38,7 @@ class SaleOrderLine(models.Model):
                 moves_linked += stock_move
                 continue
             elif float_is_zero(
-                to_invoice, precision_rounding=self.product_uom.rounding
+                to_invoice, precision_rounding=self.product_uom_id.rounding
             ):
                 break
             to_invoice -= (

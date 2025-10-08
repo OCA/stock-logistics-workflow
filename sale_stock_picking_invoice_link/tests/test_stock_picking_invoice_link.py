@@ -39,7 +39,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
                             "name": cls.prod_order.name,
                             "product_id": cls.prod_order.id,
                             "product_uom_qty": 2,
-                            "product_uom": cls.prod_order.uom_id.id,
+                            "product_uom_id": cls.prod_order.uom_id.id,
                             "price_unit": cls.prod_order.list_price,
                         },
                     ),
@@ -50,7 +50,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
                             "name": cls.prod_del.name,
                             "product_id": cls.prod_del.id,
                             "product_uom_qty": 2,
-                            "product_uom": cls.prod_del.uom_id.id,
+                            "product_uom_id": cls.prod_del.uom_id.id,
                             "price_unit": cls.prod_del.list_price,
                         },
                     ),
@@ -61,7 +61,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
                             "name": cls.serv_order.name,
                             "product_id": cls.serv_order.id,
                             "product_uom_qty": 2,
-                            "product_uom": cls.serv_order.uom_id.id,
+                            "product_uom_id": cls.serv_order.uom_id.id,
                             "price_unit": cls.serv_order.list_price,
                         },
                     ),
@@ -132,6 +132,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
+        pick_2.move_ids.write({"to_refund": False})
         pick_2.move_line_ids.write({"quantity": 1})
         pick_2.button_validate()
         backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
@@ -402,6 +403,8 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned")
         )
+        # Force to_refund to False to simulate a delivery
+        picking.move_ids.write({"to_refund": False})
         picking.move_line_ids.write({"quantity": 2})
         picking.button_validate()
         # Two invoice lines has been created, One of them related to product service
