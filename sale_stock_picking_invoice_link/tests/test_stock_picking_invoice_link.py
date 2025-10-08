@@ -137,8 +137,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
         self.assertFalse(
             backorders,
-            "Sale Stock: second picking should be "
-            "final without need for a backorder",
+            "Sale Stock: second picking should be final without need for a backorder",
         )
         self.assertEqual(
             self.so.invoice_status,
