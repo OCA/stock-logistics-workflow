@@ -23,7 +23,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.stock_location_2 = cls.stock_location.copy({"name": "stock 2"})
         cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "is_storable": True}
+            {"name": "Test product", "type": "product"}
         )
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 100
@@ -142,7 +142,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
 
     def test_mls_picked_and_not_picked(self):
         product = self.env["product.product"].create(
-            {"name": "Test product", "is_storable": True, "tracking": "lot"}
+            {"name": "Test product", "type": "product", "tracking": "lot"}
         )
 
         lot_map = {}
