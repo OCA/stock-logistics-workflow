@@ -1,7 +1,7 @@
 <odoo>
     <record id="group_stock_force_assign" model="res.groups">
         <field name="name">Force availability on pickings</field>
-        <field name="category_id" ref="base.module_category_extra"/>
+        <field name="category_id" ref="base.module_category_extra" />
     </record>
     <data noupdate="1">
         <record id="group_stock_force_assign" model="res.groups">
