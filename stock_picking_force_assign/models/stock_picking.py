@@ -1,8 +1,7 @@
 # Copyright 2021 Hunki Enterprises BV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import functools
-
 from odoo import _, exceptions, models, tools
+from odoo.tools import float_compare
 
 
 class StockPicking(models.Model):
@@ -12,6 +11,8 @@ class StockPicking(models.Model):
         """Unreserve other pickings in order to reserve pickings in self"""
         link_template = '<a href="#" data-oe-model="%s" data-oe-id="%d">%s</a>'
         to_unreserve = self._force_assign_find_moves()
+        if not to_unreserve:
+            raise exceptions.UserError(_("No moves to unreserve"))
         to_unreserve._do_unreserve()
         self.message_post(
             body=_("Unreserved picking(s) %s in order to assign this one")
@@ -41,14 +42,12 @@ class StockPicking(models.Model):
         location = self.mapped("location_id")
         result = self.env["stock.move"]
         assert len(location) == 1, "Pickings need to be from the same location"
-        float_compare = functools.partial(
-            tools.float_compare,
-            precision_digits=result._fields["product_qty"].digits,
-        )
-
         for move in self.mapped("move_lines"):
             demand = move.product_qty - move.reserved_availability - move.availability
-            if float_compare(demand, 0) <= 0:
+            if (
+                float_compare(demand, 0, precision_rounding=move.product_uom.rounding)
+                <= 0
+            ):
                 continue
             candidates = self.env["stock.move"].search(
                 [
@@ -62,15 +61,26 @@ class StockPicking(models.Model):
             )
 
             for candidate in candidates:
-                if float_compare(demand, 0) > 0:
+                if (
+                    float_compare(
+                        demand, 0, precision_rounding=move.product_uom.rounding
+                    )
+                    > 0
+                ):
                     result += candidate
                     demand -= candidate.reserved_availability
                 else:
                     break
 
-            if float_compare(demand, 0) > 0 and not self._force_assign_allow_partial():
+            if (
+                float_compare(demand, 0, precision_rounding=move.product_uom.rounding)
+                > 0
+                and not self._force_assign_allow_partial()
+            ):
                 raise exceptions.UserError(
-                    _("Cannot unreserve enough %s, missing quantity is %d")
-                    % (move.product_id.name, demand)
+                    _(
+                        f"Cannot unreserve enough {move.product_id.name}, "
+                        "missing quantity is {demand}"
+                    )
                 )
         return result

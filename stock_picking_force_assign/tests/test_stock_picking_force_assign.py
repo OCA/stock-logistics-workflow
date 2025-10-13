@@ -14,18 +14,22 @@ class TestStockPickingForceAssign(TransactionCase):
                 "type": "product",
             }
         )
+        self.stock_location = self.env.ref("stock.stock_location_stock")
+        self.customer_location = self.env.ref("stock.stock_location_customers")
         self.assigned_picking = self.env["stock.picking"].create(
             {
                 "name": "Picking to unassign",
                 "picking_type_id": self.env.ref("stock.picking_type_out").id,
-                "location_id": self.env.ref("stock.stock_location_stock").id,
-                "location_dest_id": self.env.ref("stock.stock_location_customers").id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
                 "move_lines": [
                     (
                         0,
                         0,
                         {
                             "name": self.product.name,
+                            "location_id": self.stock_location.id,
+                            "location_dest_id": self.customer_location.id,
                             "product_id": self.product.id,
                             "product_uom": self.product.uom_id.id,
                             "product_uom_qty": 42,
@@ -61,7 +65,7 @@ class TestStockPickingForceAssign(TransactionCase):
         """Test force assigning a done picking"""
         self.waiting_picking.action_assign()
         self.assigned_picking.move_line_ids.qty_done = 42
-        self.assigned_picking.action_done()
+        self.assigned_picking.button_validate()
         self.assertEqual(self.assigned_picking.state, "done")
         with self.assertRaises(UserError):
             self.waiting_picking.action_force_assign_pickings()
