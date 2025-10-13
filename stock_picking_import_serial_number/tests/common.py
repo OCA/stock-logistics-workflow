@@ -11,7 +11,7 @@ class CommonStockPickingImportSerial:
         elements = []
         for element in element_list:
             if element in elements:
-                raise Exception("Element %s is not unique in list" % element)
+                raise Exception(f"Element {element} is not unique in list")
             elements.append(element)
 
     @classmethod
@@ -20,8 +20,9 @@ class CommonStockPickingImportSerial:
         cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.picking_type_in.use_create_lots = True
-        cls.picking_type_in.show_reserved = True
+        cls.picking_type_out.use_create_lots = True
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
 
@@ -34,7 +35,8 @@ class CommonStockPickingImportSerial:
         name = f"{tracking}"
         vals = {
             "name": name,
-            "type": "product",
+            "type": "consu",
+            "is_storable": True,
             "tracking": tracking,
         }
         if reference:

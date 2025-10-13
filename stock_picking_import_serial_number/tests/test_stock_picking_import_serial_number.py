@@ -47,7 +47,7 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
                 default_filename=filename,
             )
         )
-        wizard_form.data_file = self._data_file("data/%s" % filename)
+        wizard_form.data_file = self._data_file(f"data/{filename}")
         return wizard_form.save()
 
     @mute_logger("odoo.models.unlink")
@@ -139,13 +139,13 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
     @mute_logger("odoo.models.unlink")
     def test_import_serial_number_no_show_reserved_01(self):
         # Full import: Lots + packages (SNImport-1.xls)
-        self.picking_in_01.picking_type_id.show_reserved = False
         picking = self.picking_in_01.copy()
+        picking.picking_type_id = self.picking_type_out
         picking.action_confirm()
         picking.action_assign()
         wiz = self._create_wizard(pickings=picking)
         wiz.action_import()
-        smls = picking.move_line_nosuggest_ids.filtered("lot_name")
+        smls = picking.move_line_ids.filtered("lot_name")
         self.assertEqual(len(smls), 6)
         lot_names = smls.mapped("lot_name")
         self.assertIn("LOT-1", lot_names)
@@ -165,13 +165,13 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
     @mute_logger("odoo.models.unlink")
     def test_import_serial_number_no_show_reserved_02(self):
         # Full import: Lots + packages (SNImport-2.xls)
-        self.picking_in_01.picking_type_id.show_reserved = False
         picking = self.picking_in_01.copy()
+        picking.picking_type_id = self.picking_type_out
         picking.action_confirm()
         picking.action_assign()
         wiz = self._create_wizard(pickings=picking, filename="SNImport-2.xls")
         wiz.action_import()
-        smls = picking.move_line_nosuggest_ids.filtered("lot_name")
+        smls = picking.move_line_ids.filtered("lot_name")
         self.assertEqual(len(smls), 6)
         lot_names = smls.mapped("lot_name")
         self.assertIn("LOT-1", lot_names)
@@ -191,14 +191,14 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
     @mute_logger("odoo.models.unlink")
     def test_import_serial_number_no_show_reserved_03(self):
         # Import only lots
-        self.picking_in_01.picking_type_id.show_reserved = False
         picking = self.picking_in_01.copy()
+        picking.picking_type_id = self.picking_type_out
         picking.action_confirm()
         picking.action_assign()
         wiz = self._create_wizard(pickings=picking)
         wiz.sn_package_column_index = 10
         wiz.action_import()
-        smls = picking.move_line_nosuggest_ids.filtered("lot_name")
+        smls = picking.move_line_ids.filtered("lot_name")
         self.assertEqual(len(smls), 6)
         lot_names = smls.mapped("lot_name")
         self.assertIn("LOT-1", lot_names)
