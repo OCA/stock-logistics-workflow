@@ -6,7 +6,7 @@ import base64
 
 import xlrd
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -49,13 +49,13 @@ class StockPickingImportSerialNumber(models.TransientModel):
     def action_import(self):
         if self.picking_ids.filtered(lambda p: not p.picking_type_id.use_create_lots):
             raise UserError(
-                _(
+                self.env._(
                     "You only can import S/N for picking operations with"
                     " creation lots checked"
                 )
             )
         if not self.data_file:
-            raise UserError(_("You must upload file to import records"))
+            raise UserError(self.env._("You must upload file to import records"))
         xl_workbook = False
         xl_sheet = False
         if self.filename.split(".")[1] in ["xls", "xlsx"]:
@@ -91,8 +91,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
             "location_dest_id": picking.location_dest_id.id,
             "product_id": product.id,
             "product_uom_id": product.uom_id.id,
-            "reserved_uom_qty": 0.0,
-            "qty_done": 1.0,
+            "quantity": 1.0,
         }
 
     def _import_serial_number(self, xl_sheet, stock_move_lines, picking):
@@ -115,14 +114,16 @@ class StockPickingImportSerialNumber(models.TransientModel):
         )
         for item in serial_list:
             product = products.filtered(
-                lambda p: p[self.sn_search_product_by_field] == item[0]
+                lambda p, item=item[0]: p[self.sn_search_product_by_field] == item
             )
-            if picking.picking_type_id.show_reserved:
-                smls = stock_move_lines.filtered(lambda ln: ln.product_id == product)
+            if picking.picking_type_code == "incoming":
+                smls = stock_move_lines.filtered(
+                    lambda ln, product=product: ln.product_id == product
+                )
                 for sml in smls:
                     if not sml.lot_name or self.overwrite_serial:
                         sml.lot_name = item[1]
-                        sml.qty_done = 1.0
+                        sml.quantity = 1.0
                         if item[2]:
                             sml.result_package_id = self._search_or_create_package(
                                 picking, item[2]
@@ -130,7 +131,8 @@ class StockPickingImportSerialNumber(models.TransientModel):
                         # Only assign one serial
                         break
             # TODO: Check if product is present on initial demand??
-            # elif product and picking.move_lines.filtered(lambda ln: ln.product_id == product)
+            # elif product and picking.move_lines.filtered(
+            # lambda ln: ln.product_id == product)
             elif product:
                 vals = self._prepare_stock_move_line_vals(picking, product)
                 vals.update(lot_name=item[1])
