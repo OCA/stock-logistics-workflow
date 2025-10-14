@@ -6,10 +6,11 @@
 
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockNoNegative(TransactionCase):
+class TestStockNoNegative(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -87,7 +88,6 @@ class TestStockNoNegative(TransactionCase):
 
         self.stock_move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.product.id,
                 "product_uom_qty": 100.0,
                 "product_uom": self.product.uom_id.id,
@@ -115,7 +115,6 @@ class TestStockNoNegative(TransactionCase):
 
         self.stock_move_with_lot = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.product_with_lot.id,
                 "product_uom_qty": 100.0,
                 "product_uom": self.product_with_lot.uom_id.id,
