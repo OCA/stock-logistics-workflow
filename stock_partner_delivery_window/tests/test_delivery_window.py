@@ -1,6 +1,8 @@
 # Copyright 2020 Camptocamp
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import datetime
+
 from freezegun import freeze_time
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -197,3 +199,23 @@ class TestPartnerDeliveryWindow(BaseCommon):
 
     def test_weekdays_time_window(self):
         self.assertEqual(self.customer_time_window.delivery_time_weekdays, {3, 5})
+
+    def test_is_in_delivery_window(self):
+        # window for Thu and Sat
+        self.customer_time_window.delivery_time_window_ids.write(
+            {"time_window_start": 10.0, "time_window_end": 16.0}
+        )
+        # Friday
+        date = datetime.date.fromisoformat("2020-04-03")
+        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
+        # Saturday
+        date = datetime.date.fromisoformat("2020-04-04")
+        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2020-04-04 09:00:00")
+        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2020-04-04 10:00:00")
+        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2020-04-04 16:00:00")
+        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2020-04-04 17:00:00")
+        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
