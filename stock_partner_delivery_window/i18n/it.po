@@ -100,11 +100,9 @@ msgstr "Ultimo aggiornamento il"
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"No scheduled delivery date is set on the picking, cannot check if it is in "
-"partner's delivery window."
+"No %(date_name)s is set on the picking, cannot check if it is in partner's "
+"delivery window."
 msgstr ""
-"Nessuna data di consegna schedulata è impostata nel prelievo, impossibile "
-"controllare se è nella finestra di consegna del partner."
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
@@ -135,23 +133,18 @@ msgstr "Intervalli orario consegna preferiti"
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer "
+"The %(date_name)s is %(date)s %(weekday)s, but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
-"La data schedulata è %(date)s %(weekday)s, ma il partner preferisce le "
-"consegne nei giorni lavorativi."
 
 #. module: stock_partner_delivery_window
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+"The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
 "deliveries on following time windows:\n"
 "%(window)s"
 msgstr ""
-"La data schedulata è %(date)s (%(tz)s), ma il partner ha impostato le "
-"consegne preferibilmente nei seguenti intervalli orario:\n"
-"%(window)s"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
@@ -192,6 +185,41 @@ msgstr ""
 "Se questo non è impostato, viene usato l'UTC (Coordinated Universal Time).\n"
 "In qualunque altra parte, l'orario è calcolato in base regolazione dell'ora "
 "del client web."
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "delivery date"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "scheduled date"
+msgstr ""
+
+#~ msgid ""
+#~ "No scheduled delivery date is set on the picking, cannot check if it is "
+#~ "in partner's delivery window."
+#~ msgstr ""
+#~ "Nessuna data di consegna schedulata è impostata nel prelievo, impossibile "
+#~ "controllare se è nella finestra di consegna del partner."
+
+#~ msgid ""
+#~ "The scheduled date is %(date)s %(weekday)s, but the partner is set to "
+#~ "prefer deliveries on working days."
+#~ msgstr ""
+#~ "La data schedulata è %(date)s %(weekday)s, ma il partner preferisce le "
+#~ "consegne nei giorni lavorativi."
+
+#~ msgid ""
+#~ "The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+#~ "deliveries on following time windows:\n"
+#~ "%(window)s"
+#~ msgstr ""
+#~ "La data schedulata è %(date)s (%(tz)s), ma il partner ha impostato le "
+#~ "consegne preferibilmente nei seguenti intervalli orario:\n"
+#~ "%(window)s"
 
 #, python-format
 #~ msgid "From %(start)s to %(end)s"

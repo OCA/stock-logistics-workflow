@@ -91,8 +91,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"No scheduled delivery date is set on the picking, cannot check if it is in "
-"partner's delivery window."
+"No %(date_name)s is set on the picking, cannot check if it is in partner's "
+"delivery window."
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -122,7 +122,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer "
+"The %(date_name)s is %(date)s %(weekday)s, but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
 
@@ -130,7 +130,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+"The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
 "deliveries on following time windows:\n"
 "%(window)s"
 msgstr ""
@@ -168,4 +168,16 @@ msgid ""
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
 "Anywhere else, time values are computed according to the time offset of your "
 "web client."
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "delivery date"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "scheduled date"
 msgstr ""
