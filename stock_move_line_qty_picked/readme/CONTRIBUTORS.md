@@ -1,1 +1,2 @@
-Akim Juillerat <akim.juillerat@camptocamp.com>
+- Akim Juillerat \<<akim.juillerat@camptocamp.com>\>
+- Jacques-Etienne Baudoux (BCIM) \<<je@bcim.be>\>

@@ -1,4 +1,5 @@
 # Copyright 2025 Camptocamp SA
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import fields, models
 from odoo.tools import float_compare
@@ -24,6 +25,13 @@ class StockMoveLine(models.Model):
                 continue
             # Pick full quantity when 'picked = True' and no qty were picked
             if not rec.qty_picked:
+                if not rec.quantity:
+                    # When making an inventory with a difference of 0, a move
+                    # and move line are created with a quantity of 0. The move
+                    # is flagged as picked which will flag the move line as
+                    # picked. As the quantity is 0, do not reset picked to
+                    # False otherwise it get's deleted on action_done.
+                    continue
                 rec._pick_qty(rec.quantity)
 
     def _inverse_qty_picked(self):
