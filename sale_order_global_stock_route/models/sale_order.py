@@ -31,19 +31,20 @@ class SaleOrder(models.Model):
             lines.write({"route_id": vals["route_id"]})
         return res
 
-    class SaleOrderLine(models.Model):
-        _inherit = "sale.order.line"
 
-        @api.onchange("product_id")
-        def global_stock_route_product_id_change(self):
-            if self.order_id.route_id:
-                self.route_id = self.order_id.route_id
+class SaleOrderLine(models.Model):
+    _inherit = "sale.order.line"
 
-        @api.model_create_multi
-        def create(self, vals_list):
-            for vals in vals_list:
-                if not vals.get("route_id", False):
-                    order = self.env["sale.order"].browse(vals["order_id"])
-                    if order.route_id:
-                        vals["route_id"] = order.route_id.id
-            return super().create(vals_list)
+    @api.onchange("product_id")
+    def global_stock_route_product_id_change(self):
+        if self.order_id.route_id:
+            self.route_id = self.order_id.route_id
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("route_id", False):
+                order = self.env["sale.order"].browse(vals["order_id"])
+                if order.route_id:
+                    vals["route_id"] = order.route_id.id
+        return super().create(vals_list)
