@@ -7,8 +7,8 @@
     "development_status": "Beta",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "author": "Camptocamp, Odoo Community Association (OCA)",
-    "maintainers": ["grindtildeath"],
+    "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
+    "maintainers": ["grindtildeath", "jbaudoux"],
     "license": "AGPL-3",
     "depends": [
         "stock",
