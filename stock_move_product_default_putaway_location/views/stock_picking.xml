@@ -10,7 +10,7 @@
                 expr="//field[@name='move_ids_without_package']//field[@name='location_final_id']"
                 position="after"
             >
-                <field name="from_putaway_final_location_id" />
+                <field name="from_putaway_final_location_id" optional="hide" />
             </xpath>
         </field>
     </record>
