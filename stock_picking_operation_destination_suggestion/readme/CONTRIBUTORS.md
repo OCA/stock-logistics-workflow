@@ -1,1 +1,2 @@
 - Denis Roussel <denis.roussel@acsone.eu>
+- Nicolas Delbovier <nicolas.delbovier@acsone.eu>
