@@ -7,59 +7,110 @@ from odoo.tests import Form, common
 
 
 class TestStockMove(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # Useful models
-        self.Picking = self.env["stock.picking"]
-        self.product_id_1 = self.env.ref("product.product_product_8")
-        self.product_id_2 = self.env.ref("product.product_product_11")
-        self.product_id_3 = self.env.ref("product.product_product_6")
-        self.picking_type_in = self.env.ref("stock.warehouse0").in_type_id
-        self.supplier_location = self.env.ref("stock.stock_location_suppliers")
-        self.customer_location = self.env.ref("stock.stock_location_customers")
-
-    def _create_picking(self):
-        """Create a Picking."""
-        picking = self.Picking.create(
+        cls.Picking = cls.env["stock.picking"]
+        cls.category_office = cls.env["product.category"].create(
             {
-                "picking_type_id": self.picking_type_in.id,
-                "location_id": self.supplier_location.id,
-                "location_dest_id": self.customer_location.id,
+                "name": "Office Furniture",
+            }
+        )
+
+        cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+
+        cls.product_large_desk = cls.env["product.product"].create(
+            {
+                "name": "Large Desk",
+                "categ_id": cls.category_office.id,
+                "standard_price": 1299.0,
+                "list_price": 1799.0,
+                "type": "consu",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "E-COM09",
+            }
+        )
+
+        cls.product_conference_chair = cls.env["product.product"].create(
+            {
+                "name": "Conference Chair",
+                "categ_id": cls.category_office.id,
+                "standard_price": 28.0,
+                "list_price": 33.0,
+                "type": "consu",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "E-COM12",
+            }
+        )
+
+        cls.product_large_cabinet = cls.env["product.product"].create(
+            {
+                "name": "Large Cabinet",
+                "categ_id": cls.category_office.id,
+                "standard_price": 800.0,
+                "list_price": 320.0,
+                "type": "consu",
+                "uom_id": cls.uom_unit.id,
+                "default_code": "E-COM07",
+            }
+        )
+
+        cls.main_partner = cls.env.ref("base.main_partner")
+
+        cls.warehouse0 = cls.env["stock.warehouse"].create(
+            {
+                "name": "Test Warehouse",
+                "code": "TWH",
+                "partner_id": cls.main_partner.id,
+                "company_id": cls.env.company.id,
+            }
+        )
+
+        cls.picking_type_in = cls.warehouse0.in_type_id
+
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
+
+    def _create_picking(cls):
+        """Create a Picking."""
+        picking = cls.Picking.create(
+            {
+                "picking_type_id": cls.picking_type_in.id,
+                "location_id": cls.supplier_location.id,
+                "location_dest_id": cls.customer_location.id,
                 "move_ids": [
                     (
                         0,
                         0,
                         {
-                            "name": "move 1",
-                            "product_id": self.product_id_1.id,
+                            "product_id": cls.product_large_desk.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": self.product_id_1.uom_id.id,
-                            "location_id": self.supplier_location.id,
-                            "location_dest_id": self.customer_location.id,
+                            "product_uom": cls.product_large_desk.uom_id.id,
+                            "location_id": cls.supplier_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "name": "move 2",
-                            "product_id": self.product_id_2.id,
+                            "product_id": cls.product_conference_chair.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": self.product_id_2.uom_id.id,
-                            "location_id": self.supplier_location.id,
-                            "location_dest_id": self.customer_location.id,
+                            "product_uom": cls.product_conference_chair.uom_id.id,
+                            "location_id": cls.supplier_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     ),
                     (
                         0,
                         0,
                         {
-                            "name": "move 3",
-                            "product_id": self.product_id_3.id,
+                            "product_id": cls.product_large_cabinet.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": self.product_id_3.uom_id.id,
-                            "location_id": self.supplier_location.id,
-                            "location_dest_id": self.customer_location.id,
+                            "product_uom": cls.product_large_cabinet.uom_id.id,
+                            "location_id": cls.supplier_location.id,
+                            "location_dest_id": cls.customer_location.id,
                         },
                     ),
                 ],
@@ -73,23 +124,23 @@ class TestStockMove(common.TransactionCase):
         self.picking.move_ids.write({"product_uom_qty": 10.0})
         self.picking2 = self.picking.copy()
         self.assertEqual(
-            self.picking2[0].move_ids[0].sequence,
+            self.picking2.move_ids[0].sequence,
             self.picking.move_ids[0].sequence,
             "The Sequence is not copied properly",
         )
         self.assertEqual(
-            self.picking2[0].move_ids[1].sequence,
+            self.picking2.move_ids[1].sequence,
             self.picking.move_ids[1].sequence,
             "The Sequence is not copied properly",
         )
         self.assertEqual(
-            self.picking2[0].move_ids[2].sequence,
+            self.picking2.move_ids[2].sequence,
             self.picking.move_ids[2].sequence,
             "The Sequence is not copied properly",
         )
         picking_form = Form(self.picking)
-        with picking_form.move_ids_without_package.new() as move_form:
-            move_form.product_id = self.product_id_1
+        with picking_form.move_ids.new() as move_form:
+            move_form.product_id = self.product_large_desk
             self.assertEqual(move_form.sequence, self.picking.max_line_sequence)
 
     def test_backorder(self):

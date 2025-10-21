@@ -7,5 +7,5 @@ def post_init_hook(env):
     """
     Fetches all the pickings and resets the sequence of the move lines
     """
-    stock = env["stock.picking"].search([])
+    stock = env["stock.picking"].search([("state", "not in", ("done", "cancel"))])
     stock.with_context(skip_update_line_ids=True)._reset_sequence()

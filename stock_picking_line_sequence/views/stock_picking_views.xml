@@ -6,14 +6,11 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="priority" eval="255" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//notebook/page/field[@name='move_ids_without_package']"
-                position="before"
-            >
+            <xpath expr="//notebook/page/field[@name='move_ids']" position="before">
                 <field name="max_line_sequence" invisible="1" />
             </xpath>
             <xpath
-                expr="//notebook/page/field[@name='move_ids_without_package']/list/field[@name='name']"
+                expr="//notebook/page/field[@name='move_ids']/list/field[@name='state']"
                 position="before"
             >
                 <field name="sequence" widget="handle" />
