@@ -10,7 +10,7 @@ from odoo import api, fields, models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.depends("move_ids_without_package")
+    @api.depends("move_ids")
     def _compute_max_line_sequence(self):
         """Allow to know the highest sequence entered in move lines.
         Then we add 1 to this value for the next sequence, this value is
@@ -20,7 +20,7 @@ class StockPicking(models.Model):
         """
         for picking in self:
             picking.max_line_sequence = (
-                max(picking.mapped("move_ids_without_package.sequence") or [0]) + 1
+                max(picking.mapped("move_ids.sequence") or [0]) + 1
             )
 
     max_line_sequence = fields.Integer(
@@ -30,7 +30,7 @@ class StockPicking(models.Model):
     def _reset_sequence(self):
         for rec in self:
             current_sequence = 1
-            for line in rec.move_ids_without_package:
+            for line in rec.move_ids:
                 # Check if the record ID is an integer (real ID)
                 # not NewId
                 if isinstance(line.id, int):
@@ -51,7 +51,7 @@ class StockPicking(models.Model):
     def get_view(self, view_id=None, view_type="form", **options):
         """Append the default sequence.
 
-        The context of `move_ids_without_package` is already overloaded
+        The context of `move_ids` is already overloaded
         and replacing it in a view does not scale across other extension
         modules.
         """
@@ -59,7 +59,7 @@ class StockPicking(models.Model):
 
         if res.get("arch") and view_type == "form":
             doc = etree.XML(res["arch"])
-            elements = doc.xpath("//field[@name='move_ids_without_package']")
+            elements = doc.xpath("//field[@name='move_ids']")
             if elements:
                 element = elements[0]
                 context = element.get("context", "{}")
