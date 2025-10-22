@@ -4,7 +4,7 @@
 {
     "name": "Stock Dynamic Routing Delivery Procurement Group Carrier",
     "summary": "Use the carrier set on the procurement group for propagation",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
     "maintainers": ["ivantodorovich", "jbaudoux"],
     "website": "https://github.com/OCA/stock-logistics-workflow",

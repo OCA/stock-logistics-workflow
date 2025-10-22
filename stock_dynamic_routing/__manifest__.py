@@ -6,7 +6,7 @@
     "maintainers": ["jbaudoux"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",
-    "version": "18.0.1.0.3",
+    "version": "18.0.1.1.0",
     "license": "AGPL-3",
     "depends": [
         # core
