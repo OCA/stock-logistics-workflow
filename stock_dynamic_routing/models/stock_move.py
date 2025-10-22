@@ -266,6 +266,9 @@ class StockMove(models.Model):
             (move, detail.rule) for move, detail in routing_details.items()
         ]
         for move, routing_rule in routing_to_apply:
+            # Add the routing rule to the context
+            move = move.with_context(__routing_rule=routing_rule)
+
             if not routing_rule:
                 move_ids_to_assign_nonrelocated.append(move.id)
                 continue
@@ -462,9 +465,11 @@ class StockMove(models.Model):
         pickings_to_check_for_emptiness = self.env["stock.picking"]
         for move in self:
             move_routing_details = routing_details[move]
+            routing_rule = move_routing_details.rule
+            # Add the routing details to the context
+            move = move.with_context(__routing_rule=routing_rule)
             # At this point, we should not have lines with different source
             # locations, they have been split by _routing_splits()
-            routing_rule = move_routing_details.rule
             if not routing_rule.method == "push":
                 continue
             if move.picking_id.picking_type_id == routing_rule.picking_type_id:

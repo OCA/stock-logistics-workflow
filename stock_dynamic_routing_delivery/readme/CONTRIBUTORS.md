@@ -1,0 +1,2 @@
+- Jacques-Etienne Baudoux (BCIM) \<je@bcim.be\>
+- Iván Todorovich \<ivan.todorovich@camptocamp.com\>
