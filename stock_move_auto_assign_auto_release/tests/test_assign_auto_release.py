@@ -108,7 +108,8 @@ class TestAssignAutoRelease(PromiseReleaseCommonCase):
                 self.unreleased_move.picking_id.auto_release_available_to_promise,
             )
             job.perform()
-        self.assertFalse(self.unreleased_move.need_release)
+        # Move is merged with the other move for same product and already released
+        self.assertFalse(self.unreleased_move.exists())
         self.assertEqual(1, len(self.picking.move_ids))
         self.assertEqual(10, self.picking.move_ids.product_qty)
 
