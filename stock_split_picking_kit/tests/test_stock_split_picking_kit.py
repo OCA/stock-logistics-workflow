@@ -60,6 +60,7 @@ class TestStockSplitPickingKit(TestStockSplitPickingCase):
                 ],
             }
         )
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
 
     @classmethod
     def _get_kit_quantity(cls, picking, bom):
@@ -72,6 +73,16 @@ class TestStockSplitPickingKit(TestStockSplitPickingCase):
             bom.product_id, max(picking.move_ids.mapped("product_qty")), bom, filters
         )
         return kit_quantity
+
+    @classmethod
+    def _set_quantity_in_stock(cls, location, product, qty=10):
+        cls.env["stock.quant"].create(
+            {
+                "location_id": location.id,
+                "product_id": product.id,
+                "inventory_quantity": qty,
+            }
+        ).action_apply_inventory()
 
     def _check_move_lines(self, picking, move_lines):
         moves = []
@@ -126,6 +137,34 @@ class TestStockSplitPickingKit(TestStockSplitPickingCase):
             1,
             "1 kit is left in the original picking",
         )
+
+    def test_split_assigned_picking_kit_single_split(self):
+        """Check reservation is decreased if needed.
+
+        Number of kits is 3 and the split limit is 2.
+
+        """
+        self._set_quantity_in_stock(
+            self.stock_location, self.product_garden_table_leg, qty=12
+        )
+        self._set_quantity_in_stock(
+            self.stock_location, self.product_garden_table_top, qty=3
+        )
+        picking = self._create_picking()
+        self._create_stock_move(self.product_garden_table, picking, qty=3)
+        picking.action_confirm()
+        picking.action_assign()
+        self.assertEqual(picking.state, "assigned")
+        self.assertEqual(picking.move_ids.mapped("quantity"), [12.0, 3.0])
+
+        with RecordCapturer(self.env["stock.picking"], []) as rc_picking:
+            self._split_picking(picking, mode="kit_quantity", kit_split_quantity=2)
+            new_picking = rc_picking.records
+
+        self.assertEqual(new_picking.state, "assigned", "New picking is assigned")
+        self.assertEqual(picking.state, "assigned", "Original picking is assigned")
+        self.assertEqual(picking.move_ids.mapped("quantity"), [4.0, 1.0])
+        self.assertEqual(new_picking.move_ids.mapped("quantity"), [8.0, 2.0])
 
     def test_split_picking_kit_with_no_kit(self):
         """Check split picking only has non kit product.

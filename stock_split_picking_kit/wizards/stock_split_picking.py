@@ -66,6 +66,9 @@ class StockSplitPicking(models.TransientModel):
                                 rounding_method="HALF-UP",
                             )
                         )
+                        # Update reserved quantity if needed
+                        if move.quantity > move.product_qty:
+                            move.quantity = move.product_qty
                     # If we got this far, we've consumed all the todo_qty
                     todo_qty = 0
                     break
@@ -96,6 +99,9 @@ class StockSplitPicking(models.TransientModel):
                                 rounding_method="HALF-UP",
                             )
                         )
+                        # Update reserved quantity if needed
+                        if move.quantity > move.product_qty:
+                            move.quantity = move.product_qty
                         # If we got this far, we've consumed all the todo_qty
                         todo_qty = 0
                         break
