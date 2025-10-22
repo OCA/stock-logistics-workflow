@@ -24,12 +24,20 @@ class StockPicking(models.Model):
             anytime_delivery = partner and partner.delivery_time_preference == "anytime"
             not_outgoing_picking = picking.picking_type_id.code != "outgoing"
 
+            delivery_date = picking._planned_delivery_date()
+
             if anytime_delivery or not_outgoing_picking:
                 continue
 
-            elif not partner.is_in_delivery_window(self._planned_delivery_date()):
-                self.partner_delivery_window_warning = (
-                    self._scheduled_date_no_delivery_window_match_msg()
+            elif not delivery_date:
+                picking.partner_delivery_window_warning = self.env._(
+                    "No scheduled delivery date is set on the picking, cannot check "
+                    "if it is in partner's delivery window."
+                )
+
+            elif not partner.is_in_delivery_window(delivery_date):
+                picking.partner_delivery_window_warning = (
+                    picking._scheduled_date_no_delivery_window_match_msg()
                 )
 
     def _scheduled_date_no_delivery_window_match_msg(self):
