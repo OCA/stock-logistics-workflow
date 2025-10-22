@@ -79,7 +79,7 @@ class StockRoutingRule(models.Model):
 
             if record.method == "pull" and (
                 not record.location_src_id
-                or not record.location_src_id.is_sublocation_of(base_location)
+                or not record.location_src_id._child_of(base_location)
             ):
                 raise exceptions.ValidationError(
                     self.env._(
@@ -89,7 +89,7 @@ class StockRoutingRule(models.Model):
                 )
             elif record.method == "push" and (
                 not record.location_dest_id
-                or not record.location_dest_id.is_sublocation_of(base_location)
+                or not record.location_dest_id._child_of(base_location)
             ):
                 raise exceptions.ValidationError(
                     self.env._(

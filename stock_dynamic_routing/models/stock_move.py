@@ -287,13 +287,19 @@ class StockMove(models.Model):
             # pull routing rules
             original_destination = move.location_dest_id
             current_picking_type = move.picking_id.picking_type_id
-            move.with_context(
-                __applying_routing_rule=True
-            ).location_id = routing_rule.location_src_id
-            move.picking_type_id = routing_rule.picking_type_id
-            dest_location = move.location_dest_id
-            rule_location = routing_rule.location_dest_id
-            if rule_location.is_sublocation_of(dest_location):
+
+            # Use the source location of the routing rule, if not already done
+            # If a sublocation is used, it's respected.
+            if not move.location_id._child_of(routing_rule.location_src_id):
+                move.with_context(
+                    __applying_routing_rule=True
+                ).location_id = routing_rule.location_src_id
+
+            # Use the picking type of the routing rule, if not already done
+            if move.picking_type_id != routing_rule.picking_type_id:
+                move.picking_type_id = routing_rule.picking_type_id
+
+            if routing_rule.location_dest_id._child_of(move.location_dest_id):
                 # The destination of the move, is a parent of the destination
                 # of the routing, goes to the correct place, but is not precise
                 # enough: set the new destination to match the rule's one.
@@ -304,8 +310,7 @@ class StockMove(models.Model):
                 next_moves_to_update |= move.move_dest_ids.filtered(
                     lambda r: r.state == "waiting"
                 )
-
-            elif not dest_location.is_sublocation_of(rule_location):
+            elif not move.location_dest_id._child_of(routing_rule.location_dest_id):
                 # The destination of the move is unrelated (nor identical, nor
                 # a parent or a child) to the routing destination: in this case
                 # we have to add a routing move after to reach the original destination
@@ -471,9 +476,7 @@ class StockMove(models.Model):
                 # routing move after this one
                 continue
 
-            rule_location = routing_rule.location_src_id
-            location = move.location_id
-            if location.is_sublocation_of(rule_location):
+            if move.location_id._child_of(routing_rule.location_src_id):
                 # The source is already correct (or more precise than the routing),
                 # but we still want to classify the move in the routing's picking
                 # type.
