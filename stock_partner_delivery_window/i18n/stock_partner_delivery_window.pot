@@ -87,6 +87,14 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid ""
+"No scheduled delivery date is set on the picking, cannot check if it is in "
+"partner's delivery window."
+msgstr ""
+
+#. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
 msgid "Partner"
 msgstr ""
