@@ -81,21 +81,9 @@ msgid "From"
 msgstr "Desde"
 
 #. module: stock_partner_delivery_window
-#. odoo-python
-#: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#, python-format
-msgid "From %(start)s to %(end)s"
-msgstr "Desde %(start)s hasta %(end)s"
-
-#. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__id
 msgid "ID"
 msgstr "ID (identificación)"
-
-#. module: stock_partner_delivery_window
-#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__write_uid
@@ -108,14 +96,26 @@ msgid "Last Updated on"
 msgstr "Última Actualización el"
 
 #. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid ""
+"No scheduled delivery date is set on the picking, cannot check if it is in "
+"partner's delivery window."
+msgstr ""
+
+#. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
 msgid "Partner"
 msgstr "Socio"
 
 #. module: stock_partner_delivery_window
+#: model:ir.model.fields,field_description:stock_partner_delivery_window.field_stock_picking__partner_delivery_window_warning
+msgid "Partner Delivery Window Warning"
+msgstr ""
+
+#. module: stock_partner_delivery_window
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/res_partner.py:0
-#, python-format
 msgid ""
 "Please define at least one delivery time window or change preference to Any "
 "time"
@@ -131,35 +131,19 @@ msgstr "Plazos de entrega preferidos"
 #. module: stock_partner_delivery_window
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
-#, python-format
-msgid "Scheduled date does not match partner's Delivery window preference."
-msgstr ""
-"La fecha programada no coincide con la ventana de entrega preferida por el "
-"socio."
-
-#. module: stock_partner_delivery_window
-#. odoo-python
-#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
-#, python-format
 msgid ""
-"The scheduled date is {date} ({tz}), but the partner is set to prefer "
-"deliveries on following time windows:\n"
-"{window}"
-msgstr ""
-"La fecha prevista es {date} ({tz}), pero el socio está configurado para "
-"preferir las entregas en las siguientes ventanas horarias:\n"
-"{window}"
-
-#. module: stock_partner_delivery_window
-#. odoo-python
-#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
-#, python-format
-msgid ""
-"The scheduled date is {date} ({weekday}), but the partner is set to prefer "
+"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
-"La fecha prevista es {date} ({weekday}), pero el contacto está configurado "
-"para preferir las entregas en días laborables."
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid ""
+"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+"deliveries on following time windows:\n"
+"%(window)s"
+msgstr ""
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
@@ -201,3 +185,34 @@ msgstr ""
 "Coordinado).\n"
 "En cualquier otro caso, los valores horarios se calculan de acuerdo con el "
 "desfase horario de su cliente web."
+
+#, python-format
+#~ msgid "From %(start)s to %(end)s"
+#~ msgstr "Desde %(start)s hasta %(end)s"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
+
+#, python-format
+#~ msgid "Scheduled date does not match partner's Delivery window preference."
+#~ msgstr ""
+#~ "La fecha programada no coincide con la ventana de entrega preferida por "
+#~ "el socio."
+
+#, python-format
+#~ msgid ""
+#~ "The scheduled date is {date} ({tz}), but the partner is set to prefer "
+#~ "deliveries on following time windows:\n"
+#~ "{window}"
+#~ msgstr ""
+#~ "La fecha prevista es {date} ({tz}), pero el socio está configurado para "
+#~ "preferir las entregas en las siguientes ventanas horarias:\n"
+#~ "{window}"
+
+#, python-format
+#~ msgid ""
+#~ "The scheduled date is {date} ({weekday}), but the partner is set to "
+#~ "prefer deliveries on working days."
+#~ msgstr ""
+#~ "La fecha prevista es {date} ({weekday}), pero el contacto está "
+#~ "configurado para preferir las entregas en días laborables."
