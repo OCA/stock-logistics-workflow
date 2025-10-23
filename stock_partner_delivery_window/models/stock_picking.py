@@ -62,11 +62,11 @@ class StockPicking(models.Model):
         partner = self.partner_id
         if partner.delivery_time_preference == "workdays":
             message = self.env._(
-                "The %(date_name)s is %(date)s %(weekday)s, but the partner is "
+                "The %(date_name)s is %(date)s (%(tz)s), but the partner is "
                 "set to prefer deliveries on working days.",
                 date_name=self._planned_delivery_date_name,
                 date=formatted_delivery_date,
-                weekday=delivery_date.weekday(),
+                tz=self.env.context.get("tz"),
             )
         else:
             delivery_windows_strings = []

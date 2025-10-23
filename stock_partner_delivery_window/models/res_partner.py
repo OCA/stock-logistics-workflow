@@ -4,11 +4,11 @@
 
 import datetime
 
+import pytz
+
 from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
-
-from odoo.addons.partner_tz.tools import tz_utils
 
 WORKDAYS = list(range(5))
 
@@ -101,6 +101,9 @@ class ResPartner(models.Model):
         :return: Boolean
         """
         self.ensure_one()
+        tz = pytz.timezone(self.tz or self.env.company.partner_id.tz or "UTC")
+        if isinstance(date, datetime.datetime):
+            date = date.astimezone(pytz.utc).astimezone(tz)
         if self.delivery_time_preference == "workdays":
             if date.weekday() > 4:
                 return False
@@ -112,13 +115,7 @@ class ResPartner(models.Model):
             for w in windows:
                 start_time = w.get_time_window_start_time()
                 end_time = w.get_time_window_end_time()
-                if self.tz:
-                    utc_start = tz_utils.tz_to_utc_time(self.tz, start_time)
-                    utc_end = tz_utils.tz_to_utc_time(self.tz, end_time)
-                else:
-                    utc_start = start_time
-                    utc_end = end_time
-                if utc_start <= date.time() <= utc_end:
+                if start_time <= date.time() <= end_time:
                     return True
         return False
 
