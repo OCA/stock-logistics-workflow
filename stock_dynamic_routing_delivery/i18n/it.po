@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dynamic_routing_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_dynamic_routing_delivery
+#: model:ir.model.fields,field_description:stock_dynamic_routing_delivery.field_stock_routing_rule__propagate_carrier
+msgid "Propagation of carrier"
+msgstr ""
+
+#. module: stock_dynamic_routing_delivery
+#: model:ir.model,name:stock_dynamic_routing_delivery.model_stock_routing_rule
+msgid "Stock Dynamic Routing Rule"
+msgstr ""
+
+#. module: stock_dynamic_routing_delivery
+#: model:ir.model,name:stock_dynamic_routing_delivery.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_dynamic_routing_delivery
+#: model:ir.model.fields,help:stock_dynamic_routing_delivery.field_stock_routing_rule__propagate_carrier
+msgid "When ticked, carrier of shipment will be propagated."
+msgstr ""
