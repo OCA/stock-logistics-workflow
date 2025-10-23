@@ -3,12 +3,17 @@
 {
     "name": "Stock Partner Delivery Window",
     "summary": "Define preferred delivery time windows for partners",
-    "version": "18.0.1.2.0",
+    "version": "18.0.1.2.1",
     "category": "Inventory",
-    "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
+    "author": "Camptocamp, ACSONE SA/NV, BCIM, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "depends": ["base_time_window", "partner_tz", "stock"],
+    "depends": [
+        "base_time_window",
+        "partner_tz",  # shows the tz field on the partner
+        "stock",
+    ],
+    "maintainers": ["jbaudoux"],
     "data": [
         "security/ir.model.access.csv",
         "views/res_partner.xml",

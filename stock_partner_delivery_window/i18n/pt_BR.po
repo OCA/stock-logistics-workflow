@@ -122,8 +122,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The %(date_name)s is %(date)s %(weekday)s, but the partner is set to prefer "
-"deliveries on working days."
+"The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
+"deliveries on following time windows:\n"
+"%(window)s"
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -131,8 +132,7 @@ msgstr ""
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
 "The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
-"deliveries on following time windows:\n"
-"%(window)s"
+"deliveries on working days."
 msgstr ""
 
 #. module: stock_partner_delivery_window
