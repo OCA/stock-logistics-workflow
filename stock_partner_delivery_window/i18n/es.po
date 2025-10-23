@@ -99,8 +99,8 @@ msgstr "Última Actualización el"
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"No scheduled delivery date is set on the picking, cannot check if it is in "
-"partner's delivery window."
+"No %(date_name)s is set on the picking, cannot check if it is in partner's "
+"delivery window."
 msgstr ""
 
 #. module: stock_partner_delivery_window
@@ -132,7 +132,7 @@ msgstr "Plazos de entrega preferidos"
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s %(weekday)s, but the partner is set to prefer "
+"The %(date_name)s is %(date)s %(weekday)s, but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
 
@@ -140,7 +140,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid ""
-"The scheduled date is %(date)s (%(tz)s), but the partner is set to prefer "
+"The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
 "deliveries on following time windows:\n"
 "%(window)s"
 msgstr ""
@@ -185,6 +185,18 @@ msgstr ""
 "Coordinado).\n"
 "En cualquier otro caso, los valores horarios se calculan de acuerdo con el "
 "desfase horario de su cliente web."
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "delivery date"
+msgstr ""
+
+#. module: stock_partner_delivery_window
+#. odoo-python
+#: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
+msgid "scheduled date"
+msgstr ""
 
 #, python-format
 #~ msgid "From %(start)s to %(end)s"
