@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-23 08:42+0000\n"
+"PO-Revision-Date: 2025-10-27 07:47+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -103,6 +103,8 @@ msgid ""
 "No %(date_name)s is set on the picking, cannot check if it is in partner's "
 "delivery window."
 msgstr ""
+"Nel prelievo manca l'impostazione di %(date_name)s, non si può verificare se "
+"è nella finestra di consegna del partner."
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__partner_id
@@ -136,6 +138,8 @@ msgid ""
 "The %(date_name)s is %(date)s %(weekday)s, but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
+"La %(date_name)s è %(date)s %(weekday)s, ma il partner preferisce le "
+"consegne nei giorni lavorativi."
 
 #. module: stock_partner_delivery_window
 #. odoo-python
@@ -145,6 +149,9 @@ msgid ""
 "deliveries on following time windows:\n"
 "%(window)s"
 msgstr ""
+"La %(date_name)s è %(date)s (%(tz)s), ma il partner preferisce le consegne "
+"nella finestra seguente:\n"
+"%(window)s"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
@@ -190,13 +197,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid "delivery date"
-msgstr ""
+msgstr "data consegna"
 
 #. module: stock_partner_delivery_window
 #. odoo-python
 #: code:addons/stock_partner_delivery_window/models/stock_picking.py:0
 msgid "scheduled date"
-msgstr ""
+msgstr "data schedulata"
 
 #~ msgid ""
 #~ "No scheduled delivery date is set on the picking, cannot check if it is "
