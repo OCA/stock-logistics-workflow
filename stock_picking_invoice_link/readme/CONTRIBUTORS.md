@@ -20,5 +20,6 @@
 - Aitor Bouzas Naveira \<<abouzas@softdil.com>\>
 - Carlos Lopez Mite \<<celm1990@gmail.com>\>
 - Joel Matías Zilli \<<joz@adhoc.com.ar>\>
-- [Trobz](https://trobz.com):  
+- [Trobz](https://trobz.com):
   - Thao Le \<<thaolt@trobz.com>\>
+- Nils Coenen \<<nils.coenen@nico-solutions.de>\>
