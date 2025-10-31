@@ -27,11 +27,15 @@ class TestStockPickingPortal(HttpCase):
 
         company_id = cls.env.ref("base.main_company").id
         cls.CustomerPortalController = CustomerPortal()
-        cls.operation_types = cls.env["stock.picking.type"].search(
-            [
-                ("code", "in", ["incoming", "outgoing"]),
-                ("warehouse_id.company_id", "=", company_id),
-            ]
+        cls.operation_types = (
+            cls.env["stock.picking.type"]
+            .sudo()
+            .search(
+                [
+                    ("code", "in", ["incoming", "outgoing"]),
+                    ("warehouse_id.company_id", "=", company_id),
+                ]
+            )
         )
         portal_group = cls.env.ref("base.group_portal")
         cls.product_a = cls.env["product.product"].create(
@@ -79,7 +83,7 @@ class TestStockPickingPortal(HttpCase):
         return so.picking_ids
 
     def test_get_report_base_filename(self):
-        """Check that the report base filename is correct"""
+        """Check that the report base filename is correct."""
         picking = self._get_picking()
         filename = picking._get_report_base_filename()
         self.assertEqual(
@@ -89,7 +93,7 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_picking_access_url(self):
-        """Ensure that the access token is created and the access url is correct"""
+        """Ensure that the access token is created and the access url is correct."""
         picking = self._get_picking()
         picking._portal_ensure_token()
         picking._compute_access_url()
@@ -101,31 +105,24 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_1(self):
-        """Ensure that it is possible to open Stock Operations,
-        either using the access token
-        or being connected as portal user"""
-
+        """Open stock operations by token (public) after config."""
         picking = self._get_picking()
         login = None
         picking_url = "/my/stock_operations/%s" % picking.id
         self.authenticate(login, login)
-        response = self.url_open(
-            url=picking_url,
-            allow_redirects=False,
-        )
+
+        response = self.url_open(url=picking_url, allow_redirects=False)
         self.assertEqual(
             response.status_code,
             303,
             "The access to the Stock Operations should be forbidden for portal users",
         )
+
         picking._portal_ensure_token()
         picking_token = picking.access_token
         picking_url = f"{picking_url}?access_token={picking_token}"
 
-        response = self.url_open(
-            url=picking_url,
-            allow_redirects=False,
-        )
+        response = self.url_open(url=picking_url, allow_redirects=False)
         self.assertEqual(
             response.status_code,
             403,
@@ -133,16 +130,11 @@ class TestStockPickingPortal(HttpCase):
         )
 
         config = self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         )
         config.execute()
 
-        response = self.url_open(
-            url=picking_url,
-            allow_redirects=False,
-        )
+        response = self.url_open(url=picking_url, allow_redirects=False)
         self.assertEqual(
             response.status_code,
             200,
@@ -150,19 +142,13 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_2(self):
-        """Check that it is possible to open Stock Operations, either
-        using the access token
-        or being connected as portal user"""
-
+        """Open stock operations by being logged as portal user after config."""
         picking = self._get_picking()
         login = self.portal_user_1.login
         picking_url = "/my/stock_operations/%s" % picking.id
         self.authenticate(login, login)
 
-        response = self.url_open(
-            url=picking_url,
-            allow_redirects=False,
-        )
+        response = self.url_open(url=picking_url, allow_redirects=False)
         self.assertEqual(
             response.status_code,
             403,
@@ -170,59 +156,44 @@ class TestStockPickingPortal(HttpCase):
         )
 
         config = self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         )
         config.execute()
 
         response = self.url_open(
-            url="/my/home",
-            data={"csrf_token": Request.csrf_token(self)},
+            url="/my/home", data={"csrf_token": Request.csrf_token(self)}
         )
         self.assertEqual(
-            response.status_code,
-            200,
-            msg="Portal users should be able to access the portal",
+            response.status_code, 200, msg="Portal users should be able to access"
         )
         counters = {"stock_operations_count": 0}
-        data = {}
-        expected_data = {
-            "stock_operations_count": 1,
-        }
+        expected_data = {"stock_operations_count": 1}
+
         with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
             data = self.CustomerPortalController._prepare_home_portal_values(counters)
-        self.assertEqual(
-            data,
-            expected_data,
-            msg="The counter should be correct",
-        )
+        self.assertEqual(data, expected_data, msg="The counter should be correct")
 
-        response = self.url_open(
-            url=picking_url,
-            allow_redirects=False,
-        )
+        response = self.url_open(url=picking_url, allow_redirects=False)
         self.assertEqual(
             response.status_code,
             200,
             "The access to the Stock Operations should be allowed for portal users",
         )
 
-        response = self.url_open(
-            url="/my/stock_operations",
-            allow_redirects=False,
-        )
+        response = self.url_open(url="/my/stock_operations", allow_redirects=False)
         self.assertEqual(
             response.status_code,
             200,
             "The access to the Stock Operations should be allowed for portal users",
         )
+
         date_begin = datetime.now() + relativedelta(days=-1)
         date_end = datetime.now() + relativedelta(days=1)
 
         response = self.url_open(
             url="/my/stock_operations?date_begin={}&date_end={}".format(
-                date_begin.strftime("%Y-%m-%d"), date_end.strftime("%Y-%m-%d")
+                date_begin.strftime("%Y-%m-%d"),
+                date_end.strftime("%Y-%m-%d"),
             ),
             allow_redirects=True,
         )
@@ -233,8 +204,7 @@ class TestStockPickingPortal(HttpCase):
         )
 
         response = self.url_open(
-            url=f"{picking_url}?report_type=pdf",
-            allow_redirects=True,
+            url=f"{picking_url}?report_type=pdf", allow_redirects=True
         )
         self.assertEqual(
             response.status_code,
@@ -243,17 +213,14 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_get_available_operations(self):
-        """Check that the portal_visible_operation_ids are correctly set"""
-
+        """Check that the portal_visible_operation_ids are correctly set."""
         self.assertFalse(
             self.stock_picking_obj._get_available_operations(),
             msg="No operations should be available",
         )
 
         config = self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         )
         config.execute()
         portal_visible_operation_ids = (
@@ -266,21 +233,18 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_accept_picking_authenticated(self):
-        """Check that the portal user can accept a picking"""
+        """Check that the portal user can accept a picking."""
         picking = self._get_picking()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = "/my/stock_operations/{}?access_token={}&message=sign_ok".format(
-            picking.id,
-            access_token,
-        )
+        redirect_url = (
+            "/my/stock_operations/{}?access_token={}&message=sign_ok"
+        ).format(picking.id, access_token)
         base_url = picking.get_base_url()
         url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
-        data = {
-            "params": {
-                "name": self.portal_user_1.name,
-            }
-        }
+
+        # Falta firma -> error
+        data = {"params": {"name": self.portal_user_1.name}}
         res = self.opener.post(base_url + url, json=data)
         result = res.json()
         self.assertEqual(
@@ -288,6 +252,8 @@ class TestStockPickingPortal(HttpCase):
             "Signature is missing.",
             msg="Should be a signature error",
         )
+
+        # Token inválido -> error
         e_url = "/my/stock_operations/%s/accept?" % picking.id
         res = self.opener.post(base_url + e_url, json={})
         result = res.json()
@@ -297,6 +263,7 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a signature error",
         )
 
+        # Firma válida -> redirect
         data = {
             "params": {
                 "signature": "R0lGODlhAQABAAD/ACwAAAAAAQABAAACAA==",
@@ -311,6 +278,7 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a redirect",
         )
 
+        # Firma corrupta -> error
         data = {
             "params": {
                 "signature": "R0lGODlhAQABAAD/ACwA",
@@ -326,12 +294,10 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_generate_signature_link(self):
-        """Check that the signature link is correctly generated"""
+        """Check that the signature link is correctly generated."""
         picking = self._get_picking()
         config = self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         )
         config.execute()
         picking_link = self.picking_link_wizard.create({"picking_id": picking.id})
@@ -345,7 +311,7 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_prepare_home_portal_values(self):
-        """Comprehensive test for _prepare_home_portal_values method"""
+        """Comprehensive test for _prepare_home_portal_values method."""
         self.stock_picking_obj.search(
             [("partner_id", "=", self.portal_user_1.partner_id.id)]
         ).unlink()
@@ -353,7 +319,6 @@ class TestStockPickingPortal(HttpCase):
         counters = {"stock_operations_count": 0}
         with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
             data = self.CustomerPortalController._prepare_home_portal_values(counters)
-
         self.assertEqual(
             data.get("stock_operations_count"),
             "0",
@@ -363,7 +328,6 @@ class TestStockPickingPortal(HttpCase):
         self._get_picking()
         with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
             data = self.CustomerPortalController._prepare_home_portal_values(counters)
-
         self.assertEqual(
             data.get("stock_operations_count"),
             "0",
@@ -371,37 +335,32 @@ class TestStockPickingPortal(HttpCase):
         )
 
         self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         ).execute()
 
         with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
             data = self.CustomerPortalController._prepare_home_portal_values(counters)
-
         self.assertIsInstance(
             data.get("stock_operations_count"),
             int,
             "Should return integer count when configured",
         )
         self.assertGreater(
-            data.get("stock_operations_count"), 0, "Count should be greater than 0"
+            data.get("stock_operations_count"),
+            0,
+            "Count should be greater than 0",
         )
 
     def test_prepare_home_portal_values_counter_not_included(self):
-        """Test when stock_operations_count is not in counters"""
+        """Test when stock_operations_count is not in counters."""
         self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         ).execute()
         self._get_picking()
 
         counters = {"other_counter": 0}
-
         with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
             data = self.CustomerPortalController._prepare_home_portal_values(counters)
-
         self.assertNotIn(
             "stock_operations_count",
             data,
@@ -409,24 +368,19 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_prepare_home_portal_values_calls_super(self):
-        """Verify parent method is called"""
+        """Verify parent method is called."""
         with patch.object(
             portal.CustomerPortal, "_prepare_home_portal_values"
         ) as mock_super:
             counters = {"stock_operations_count": 0}
-
             with MockRequest(self.stock_picking_obj.with_user(self.portal_user_1).env):
                 self.CustomerPortalController._prepare_home_portal_values(counters)
-
             mock_super.assert_called_once_with(counters)
 
     def test_prepare_stock_operations_rendering_values(self):
-        """Comprehensive test for _prepare_stock_operations_portal_rendering_values"""
-
+        """Comprehensive test for the rendering values method."""
         self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         ).execute()
 
         self._get_picking()
@@ -471,9 +425,7 @@ class TestStockPickingPortal(HttpCase):
         pickings = self._get_picking()
         picking = pickings[0]
         self.config_obj.create(
-            {
-                "portal_visible_operation_ids": self.operation_types.ids,
-            }
+            {"portal_visible_operation_ids": self.operation_types.ids}
         ).execute()
 
         picking._portal_ensure_token()
@@ -483,7 +435,9 @@ class TestStockPickingPortal(HttpCase):
 
         response = self.opener.get(url)
         self.assertEqual(
-            response.status_code, 200, "First GET with access_token should return 200."
+            response.status_code,
+            200,
+            "First GET with access_token should return 200.",
         )
 
         response2 = self.opener.get(url)
