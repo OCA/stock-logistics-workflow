@@ -1,7 +1,26 @@
 # Copyright (C) 2024 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import Command
 from odoo.tests.common import TransactionCase, tagged
+
+
+def _extract_ids(m2m_value):
+    if not m2m_value:
+        return []
+    first = m2m_value[0]
+
+    if isinstance(first, Command) or getattr(first, "operation", None) == 6:
+        ids = getattr(first, "ids", [])
+        return list(ids) if ids else []
+
+    if (
+        (isinstance(first, list) or isinstance(first, tuple))
+        and len(first) >= 3
+        and first[0] == 6
+    ):
+        return list(first[2])
+    return list(m2m_value)
 
 
 @tagged("post_install", "-at_install")
@@ -33,7 +52,8 @@ class TestPortalConfigSettings(TransactionCase):
             "Outgoing type should be visible after set_values()",
         )
         self.assertFalse(
-            self.type_incoming.portal_visible, "Incoming type should remain invisible"
+            self.type_incoming.portal_visible,
+            "Incoming type should remain invisible",
         )
 
         # Test switching to incoming
@@ -47,7 +67,8 @@ class TestPortalConfigSettings(TransactionCase):
             "Outgoing type should be invisible after update",
         )
         self.assertTrue(
-            self.type_incoming.portal_visible, "Incoming type should become visible"
+            self.type_incoming.portal_visible,
+            "Incoming type should become visible",
         )
 
     def test_get_values_reflects_portal_flags(self):
@@ -57,7 +78,7 @@ class TestPortalConfigSettings(TransactionCase):
         self.type_incoming.portal_visible = True
 
         values = self.Settings.get_values()
-        visible_ids = values.get("portal_visible_operation_ids", [])
+        visible_ids = _extract_ids(values.get("portal_visible_operation_ids", []))
 
         self.assertEqual(
             set(visible_ids),
@@ -68,7 +89,7 @@ class TestPortalConfigSettings(TransactionCase):
         # Set incoming invisible
         self.type_incoming.portal_visible = False
         values = self.Settings.get_values()
-        visible_ids = values.get("portal_visible_operation_ids", [])
+        visible_ids = _extract_ids(values.get("portal_visible_operation_ids", []))
 
         self.assertIn(
             self.type_outgoing.id,

@@ -14,7 +14,6 @@ from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 class CustomerPortal(portal.CustomerPortal):
     def _get_prepared_operation_domain(self, partner):
-        """Domain de operaciones visibles para el partner dado."""
         visible_ids = request.env["stock.picking"]._get_available_operations()
         visible_ids = visible_ids or [-1]
         return [
@@ -23,7 +22,6 @@ class CustomerPortal(portal.CustomerPortal):
         ]
 
     def _prepare_home_portal_values(self, counters):
-        """Valores para /my & /my/home, incluyendo badges."""
         values = super()._prepare_home_portal_values(counters)
         if "stock_operations_count" in counters:
             partner = request.env.user.partner_id
@@ -41,7 +39,6 @@ class CustomerPortal(portal.CustomerPortal):
         website=True,
     )
     def portal_my_stock_operations(self, **kwargs):
-        """Render de la vista de operaciones en portal."""
         values = self._prepare_stock_operations_portal_rendering_values(**kwargs)
         request.session["my_operation_history"] = values["stock_operation_ids"].ids[
             :100
@@ -80,7 +77,6 @@ class CustomerPortal(portal.CustomerPortal):
         filterby=None,
         **kwargs,
     ):
-        """Calcula dominio, orden y pagina para el listado en portal."""
         partner = request.env.user.partner_id
         StockPicking = request.env["stock.picking"]
         url = "/my/stock_operations"
@@ -151,7 +147,6 @@ class CustomerPortal(portal.CustomerPortal):
         download=False,
         **kw,
     ):
-        """Página de detalle de una operación de almacén en portal."""
         try:
             operation_sudo = self._document_check_access(
                 "stock.picking", operation_id, access_token=access_token
@@ -221,7 +216,6 @@ class CustomerPortal(portal.CustomerPortal):
     def portal_stock_operations_accept(
         self, operation_id, access_token=None, name=None, signature=None
     ):
-        """Aceptación de la operación por el usuario (firma)."""
         access_token = access_token or request.httprequest.args.get("access_token")
         try:
             operation_sudo = self._document_check_access(

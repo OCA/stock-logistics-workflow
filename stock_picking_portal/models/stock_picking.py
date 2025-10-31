@@ -12,6 +12,7 @@ class StockPick(models.Model):
     signed_on = fields.Datetime(copy=False)
     signature = fields.Binary(copy=False)
     is_signed = fields.Boolean(compute="_compute_is_signed", store=False)
+    access_url = fields.Char(compute="_compute_access_url", string="Portal Access URL")
 
     def _compute_is_signed(self):
         for p in self:
@@ -19,7 +20,6 @@ class StockPick(models.Model):
 
     @api.model
     def _get_available_operations(self):
-        """Devuelve SIEMPRE lista de IDs (enteros) de tipos visibles en portal."""
         picking_types = self.env["stock.picking.type"].search(
             [
                 ("portal_visible", "=", True),
