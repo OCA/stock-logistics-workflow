@@ -67,14 +67,14 @@
                         </td>
                         <td class="text-center">
                             <span
-                                t-field="operation.scheduled_date"
-                                t-options="{'widget': 'date'}"
-                            />
+                            t-field="operation.scheduled_date"
+                            t-options="{'widget': 'date'}"
+                        />
                             &amp;nbsp; <span
-                                class='d-none d-md-inline'
-                                t-field="operation.scheduled_date"
-                                t-options="{'time_only': True}"
-                            />
+                            class='d-none d-md-inline'
+                            t-field="operation.scheduled_date"
+                            t-options="{'time_only': True}"
+                        />
                         </td>
                         <td class="text-center">
                             <t t-out="operation.partner_id.name" />

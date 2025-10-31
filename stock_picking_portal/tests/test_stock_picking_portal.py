@@ -245,9 +245,7 @@ class TestStockPickingPortal(HttpCase):
         picking = self._get_picking()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = (
-            "/my/stock_operations/{}?access_token={}&message=sign_ok"
-        ).format(picking.id, access_token)
+        redirect_url = f"/my/stock_operations/{picking.id}?access_token={access_token}&message=sign_ok"
         base_url = picking.get_base_url()
         url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
 
@@ -308,9 +306,7 @@ class TestStockPickingPortal(HttpCase):
         picking_link._compute_link()
         self.assertEqual(
             picking_link.link,
-            "{}/my/stock_operations/{}?access_token={}".format(
-                picking.get_base_url(), picking.id, picking.access_token
-            ),
+            f"{picking.get_base_url()}/my/stock_operations/{picking.id}?access_token={picking.access_token}",
             msg="The signature link should be correctly generated",
         )
 

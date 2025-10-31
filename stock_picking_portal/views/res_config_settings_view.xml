@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <record id="res_config_settings_view_inherit_stock_picking_portal" model="ir.ui.view">
-    <field name="name">
+    <record
+        id="res_config_settings_view_inherit_stock_picking_portal"
+        model="ir.ui.view"
+    >
+        <field name="name">
       res.config.settings.view.form.inherit.stock_picking_portal
     </field>
-    <field name="model">res.config.settings</field>
-    <field name="inherit_id" ref="stock.res_config_settings_view_form" />
-    <field name="arch" type="xml">
-      <block id="production_lot_info" position="after">
-        <block title="Portal" name="stock_picking_portal_settings">
-          <setting
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block id="production_lot_info" position="after">
+                <block title="Portal" name="stock_picking_portal_settings">
+                    <setting
                         id="stock_picking_portal_visible_types"
                         help="Select which stock operation types should be visible to
                            portal users."
                     >
-            <label for="portal_visible_operation_ids" />
-            <field
+                        <label for="portal_visible_operation_ids" />
+                        <field
                             name="portal_visible_operation_ids"
                             widget="many2many_tags"
                             options="{'no_create_edit': true}"
                             placeholder="Select operation types..."
                         />
-            <div class="text-muted">
+                        <div class="text-muted">
               Only the selected operation types will be shown to portal users.
             </div>
-          </setting>
-        </block>
-      </block>
-    </field>
-  </record>
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
 </odoo>
