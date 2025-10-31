@@ -4,7 +4,7 @@
 import binascii
 
 from odoo import _, fields, http
-from odoo.exceptions import AccessDenied, AccessError, MissingError, UserError
+from odoo.exceptions import AccessError, MissingError, UserError
 from odoo.http import request
 
 from odoo.addons.portal.controllers import portal
@@ -79,10 +79,8 @@ class CustomerPortal(portal.CustomerPortal):
 
         domain = self._get_prepared_operation_domain(partner)
 
-        if not sortby:
-            sortby = "date"
-        if not filterby:
-            filterby = "all"
+        sortby = sortby or "date"
+        filterby = filterby or "all"
 
         searchbar_filters = self._get_stock_operations_searchbar_filters()
         domain += searchbar_filters[filterby]["domain"]
@@ -102,7 +100,12 @@ class CustomerPortal(portal.CustomerPortal):
             total=StockPicking.search_count(domain),
             page=page,
             step=self._items_per_page,
-            url_args={"date_begin": date_begin, "date_end": date_end, "sortby": sortby},
+            url_args={
+                "date_begin": date_begin,
+                "date_end": date_end,
+                "sortby": sortby,
+                "filterby": filterby,
+            },
         )
 
         operations = StockPicking.search(
@@ -123,6 +126,7 @@ class CustomerPortal(portal.CustomerPortal):
                 "searchbar_sortings": searchbar_sortings,
                 "sortby": sortby,
                 "searchbar_filters": searchbar_filters,
+                "filterby": filterby,
                 "page_name": "stock_operations",
             }
         )
@@ -160,8 +164,11 @@ class CustomerPortal(portal.CustomerPortal):
 
         visible_ids = request.env["stock.picking"].sudo()._get_available_operations()
         if not visible_ids or operation_sudo.picking_type_id.id not in visible_ids:
-            msg = _("You don't have the access rights to Stock Operations.")
-            raise AccessDenied(msg)
+            return request.make_response(
+                _("Operation not available in portal."),
+                headers=[("Content-Type", "text/plain; charset=utf-8")],
+                status=403,
+            )
 
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
