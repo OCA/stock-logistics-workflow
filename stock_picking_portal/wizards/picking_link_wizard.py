@@ -17,6 +17,8 @@ class PickingLinkWizard(models.TransientModel):
         res_model = self.env.context.get("active_model")
         if res_id and res_model:
             res.update({"res_model": res_model, "res_id": res_id})
+            if res_model == "stock.picking" and "picking_id" in fields_list:
+                res["picking_id"] = res_id
         return res
 
     picking_id = fields.Many2one(
@@ -28,15 +30,15 @@ class PickingLinkWizard(models.TransientModel):
 
     @api.depends("picking_id")
     def _compute_link(self):
-        """Generate signature link"""
         for picking_link in self:
             picking = picking_link.picking_id
+            if not picking:
+                picking_link.link = False
+                continue
             base_url = picking.get_base_url()
             picking._portal_ensure_token()
             picking._compute_access_url()
-            url_params = {
-                "access_token": picking.access_token,
-            }
+            url_params = {"access_token": picking.access_token}
             picking_link.link = (
                 f"{base_url}{picking.access_url}?{urls.url_encode(url_params)}"
             )
