@@ -4,7 +4,7 @@
 {
     "name": "Stock Picking Portal",
     "summary": "Show customer delivery orders in portal",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "depends": ["base_setup", "stock", "portal"],
     "author": "Cetmix OÜ, Odoo Community Association (OCA)",
     "license": "AGPL-3",

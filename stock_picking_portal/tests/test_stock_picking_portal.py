@@ -113,7 +113,7 @@ class TestStockPickingPortal(HttpCase):
         """Open stock operations by token (public) after config."""
         picking = self._get_picking()
         login = None
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
 
         response = self.url_open(url=picking_url, allow_redirects=False)
@@ -152,7 +152,7 @@ class TestStockPickingPortal(HttpCase):
         """Open stock operations by being logged as portal user after config."""
         picking = self._get_picking()
         login = self.portal_user_1.login
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
 
         response = self.url_open(url=picking_url, allow_redirects=False)
@@ -245,7 +245,10 @@ class TestStockPickingPortal(HttpCase):
         picking = self._get_picking()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = f"/my/stock_operations/{picking.id}?access_token={access_token}&message=sign_ok"
+        redirect_url = (
+            f"/my/stock_operations/{picking.id}"
+            f"?access_token={access_token}&message=sign_ok"
+        )
         base_url = picking.get_base_url()
         url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
 
@@ -258,7 +261,7 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a signature error",
         )
 
-        e_url = "/my/stock_operations/%s/accept?" % picking.id
+        e_url = f"/my/stock_operations/{picking.id}/accept?"
         res = self.opener.post(base_url + e_url, json={})
         payload = _unwrap_json_response(res)
         self.assertEqual(
@@ -306,7 +309,10 @@ class TestStockPickingPortal(HttpCase):
         picking_link._compute_link()
         self.assertEqual(
             picking_link.link,
-            f"{picking.get_base_url()}/my/stock_operations/{picking.id}?access_token={picking.access_token}",
+            (
+                f"{picking.get_base_url()}/my/stock_operations/"
+                f"{picking.id}?access_token={picking.access_token}"
+            ),
             msg="The signature link should be correctly generated",
         )
 

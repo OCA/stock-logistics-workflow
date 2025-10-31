@@ -8,7 +8,6 @@ from odoo.exceptions import AccessDenied, AccessError, MissingError, UserError
 from odoo.http import request
 
 from odoo.addons.portal.controllers import portal
-from odoo.addons.portal.controllers.mail import _message_post_helper
 from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 
@@ -26,12 +25,8 @@ class CustomerPortal(portal.CustomerPortal):
         if "stock_operations_count" in counters:
             partner = request.env.user.partner_id
             domain = self._get_prepared_operation_domain(partner)
-            stock_operations_count = (
-                request.env["stock.picking"].sudo().search_count(domain)
-            )
-            values["stock_operations_count"] = (
-                stock_operations_count if stock_operations_count > 0 else "0"
-            )
+            count_ = request.env["stock.picking"].sudo().search_count(domain)
+            values["stock_operations_count"] = count_ if count_ > 0 else "0"
         return values
 
     @http.route(
@@ -42,9 +37,8 @@ class CustomerPortal(portal.CustomerPortal):
     )
     def portal_my_stock_operations(self, **kwargs):
         values = self._prepare_stock_operations_portal_rendering_values(**kwargs)
-        request.session["my_operation_history"] = values["stock_operation_ids"].ids[
-            :100
-        ]
+        history = values["stock_operation_ids"].ids[:100]
+        request.session["my_operation_history"] = history
         return request.render("stock_picking_portal.portal_my_stock_operations", values)
 
     def _get_stock_operations_searchbar_sortings(self):
@@ -166,30 +160,23 @@ class CustomerPortal(portal.CustomerPortal):
 
         visible_ids = request.env["stock.picking"].sudo()._get_available_operations()
         if not visible_ids or operation_sudo.picking_type_id.id not in visible_ids:
-            raise AccessDenied(
-                _("You don't have the access rights to Stock Operations.")
-            )
+            msg = _("You don't have the access rights to Stock Operations.")
+            raise AccessDenied(msg)
 
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
-            session_obj_date = request.session.get(
-                "view_stock_operation_%s" % operation_sudo.id
-            )
+            session_key = f"view_stock_operation_{operation_sudo.id}"
+            session_obj_date = request.session.get(session_key)
             if session_obj_date != today:
-                request.session["view_stock_operation_%s" % operation_sudo.id] = today
-                msg = _(
-                    "Stock Operation viewed by customer %s",
-                    (
-                        operation_sudo.partner_id.name
-                        if request.env.user._is_public()
-                        else request.env.user.partner_id.name
-                    ),
+                request.session[session_key] = today
+                viewer = (
+                    operation_sudo.partner_id.name
+                    if request.env.user._is_public()
+                    else request.env.user.partner_id.name
                 )
-                _message_post_helper(
-                    "stock.picking",
-                    operation_sudo.id,
-                    message=msg,
-                    token=operation_sudo.access_token,
+                msg = _("Stock Operation viewed by customer %s") % viewer
+                operation_sudo.message_post(
+                    body=msg,
                     message_type="notification",
                     subtype_xmlid="mail.mt_note",
                     partner_ids=operation_sudo.user_id.sudo().partner_id.ids,
@@ -246,13 +233,12 @@ class CustomerPortal(portal.CustomerPortal):
             ._render_qweb_pdf("stock.action_report_delivery", [operation_sudo.id])[0]
         )
 
-        _message_post_helper(
-            "stock.picking",
-            operation_sudo.id,
-            _("Stock Operation signed by %s", name),
-            attachments=[("%s.pdf" % operation_sudo.name, pdf)],
-            token=access_token,
+        body = _("Stock Operation signed by %s") % name
+        operation_sudo.message_post(
+            body=body,
+            attachments=[(f"{operation_sudo.name}.pdf", pdf)],
         )
+
         query_string = "&message=sign_ok"
         return {
             "force_refresh": True,
