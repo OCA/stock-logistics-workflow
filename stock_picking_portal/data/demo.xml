@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-    <!-- Producto demo propio para no depender de demos de 'product' -->
-    <record id="product_template_portal_demo" model="product.template">
+    <!-- Producto demo propio (estilo Odoo 18) -->
+    <record id="product_portal_demo" model="product.product">
+        <field name="default_code">PORTAL_DEMO</field>
         <field name="name">Portal Demo Product</field>
-        <field name="type">product</field>
+        <field name="is_storable" eval="True" />
         <field name="uom_id" ref="uom.product_uom_unit" />
         <field name="uom_po_id" ref="uom.product_uom_unit" />
-        <field name="list_price">10.0</field>
+        <field name="lst_price">10.0</field>
         <field name="standard_price">5.0</field>
         <field name="categ_id" ref="product.product_category_all" />
         <field name="sale_ok">1</field>
         <field name="purchase_ok">1</field>
-    </record>
-
-    <record id="product_portal_demo" model="product.product">
-        <field name="product_tmpl_id" ref="product_template_portal_demo" />
     </record>
 
     <!-- Picking OUT (entrega a clientes) -->
@@ -47,7 +44,6 @@
         <field name="user_id" />
         <field name="scheduled_date" eval="DateTime.today()" />
         <field name="location_id" ref="stock.stock_location_suppliers" />
-        <!-- Reemplazo de stock.stock_location_shop0 por una ubicación existente -->
         <field name="location_dest_id" ref="stock.stock_location_stock" />
         <field name="partner_id" ref="base.partner_admin" />
         <field name="company_id" ref="base.main_company" />
