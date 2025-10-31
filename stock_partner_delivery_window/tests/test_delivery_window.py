@@ -47,19 +47,19 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
             time_window_picking.partner_delivery_window_warning,
         )
 
-    @freeze_time("2020-04-02 07:59:59")  # Thursday
-    def test_with_timezone_dst(self):
+    @freeze_time("2020-04-02")
+    def test_with_timezone_dst_date_dst(self):
+        """Test while we are in DST and scheduled date also in DST"""
         # Define customer to allow shipping only between 10.00am and 4.00pm
-        # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
+        # in tz 'Europe/Brussels' (UTC+1 or UTC+2 during DST)
         self.customer_time_window.tz = "Europe/Brussels"
         self.customer_time_window.delivery_time_window_ids.write(
             {"time_window_start": 10.0, "time_window_end": 16.0}
         )
-        # Test DST
-        #
+        picking = self._create_delivery_picking(self.customer_time_window)
         # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
-        picking = self._create_delivery_picking(self.customer_time_window)
+        picking.scheduled_date = "2020-04-02 07:59:59"  # Thursday
         picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
@@ -89,19 +89,106 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
             picking.partner_delivery_window_warning,
         )
 
-    @freeze_time("2020-03-26 08:59:59")  # Thursday
-    def test_with_timezone_no_dst(self):
+    @freeze_time("2020-03-26")
+    def test_with_timezone_no_dst_date_no_dst(self):
+        """Test while we are not in DST and scheduled date also not in DST"""
         # Define customer to allow shipping only between 10.00am and 4.00pm
-        # in tz 'Europe/Brussels' (GMT+1 or GMT+2 during DST)
+        # in tz 'Europe/Brussels' (UTC+1 or UTC+2 during DST)
         self.customer_time_window.tz = "Europe/Brussels"
         self.customer_time_window.delivery_time_window_ids.write(
             {"time_window_start": 10.0, "time_window_end": 16.0}
         )
-        # Test No-DST
-        #
+        picking = self._create_delivery_picking(self.customer_time_window)
         # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 08:59:59"  # Thursday
+        picking._compute_partner_delivery_window_warning()
+        self.assertIn(
+            "the partner is set to prefer deliveries on following time windows",
+            picking.partner_delivery_window_warning,
+        )
+        # Scheduled date is in UTC so 2020-03-26 09:00:00 == 2020-04-02 10:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 09:00:00"
+        picking._compute_partner_delivery_window_warning()
+        # No warning since we're in the timeframe
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-03-26 14:59:59 == 2020-04-02 15:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 14:59:59"
+        picking._compute_partner_delivery_window_warning()
+        # No warning since we're in the timeframe
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-03-26 15:00:00 == 2020-04-02 16:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 15:00:00"
+        picking._compute_partner_delivery_window_warning()
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-03-26 15:00:01 == 2020-04-02 16:00:01
+        #  in Brussels which is not preferred
+        picking.scheduled_date = "2020-03-26 15:00:01"
+        picking._compute_partner_delivery_window_warning()
+        self.assertIn(
+            "the partner is set to prefer deliveries on following time windows",
+            picking.partner_delivery_window_warning,
+        )
+
+    @freeze_time("2020-03-26")
+    def test_with_timezone_no_dst_date_dst(self):
+        """Test while we are not in DST and scheduled date is in DST"""
+        # Define customer to allow shipping only between 10.00am and 4.00pm
+        # in tz 'Europe/Brussels' (UTC+1 or UTC+2 during DST)
+        self.customer_time_window.tz = "Europe/Brussels"
+        self.customer_time_window.delivery_time_window_ids.write(
+            {"time_window_start": 10.0, "time_window_end": 16.0}
+        )
         picking = self._create_delivery_picking(self.customer_time_window)
+        # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 07:59:59"  # Thursday
+        picking._compute_partner_delivery_window_warning()
+        self.assertIn(
+            "the partner is set to prefer deliveries on following time windows",
+            picking.partner_delivery_window_warning,
+        )
+        # Scheduled date is in UTC so 2020-04-02 08:00:00 == 2020-04-02 10:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 08:00:00"
+        picking._compute_partner_delivery_window_warning()
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-04-02 13:59:59 == 2020-04-02 15:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 13:59:59"
+        picking._compute_partner_delivery_window_warning()
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-04-02 14:00:00 == 2020-04-02 16:00:00
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 14:00:00"
+        picking._compute_partner_delivery_window_warning()
+        self.assertFalse(picking.partner_delivery_window_warning)
+        # Scheduled date is in UTC so 2020-04-02 14:00:01 == 2020-04-02 16:00:01
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-04-02 14:00:01"
+        picking._compute_partner_delivery_window_warning()
+        self.assertIn(
+            "the partner is set to prefer deliveries on following time windows",
+            picking.partner_delivery_window_warning,
+        )
+        # Now test with a scheduled that is not in DST
+
+    @freeze_time("2020-04-02")
+    def test_with_timezone_dst_date_no_dst(self):
+        """Test while we are in DST and scheduled date not in DST"""
+        # Define customer to allow shipping only between 10.00am and 4.00pm
+        # in tz 'Europe/Brussels' (UTC+1 or UTC+2 during DST)
+        self.customer_time_window.tz = "Europe/Brussels"
+        self.customer_time_window.delivery_time_window_ids.write(
+            {"time_window_start": 10.0, "time_window_end": 16.0}
+        )
+        picking = self._create_delivery_picking(self.customer_time_window)
+        # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
+        #  in Brussels which is preferred
+        picking.scheduled_date = "2020-03-26 08:59:59"  # Thursday
         picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
