@@ -1,7 +1,7 @@
 # Copyright (C) 2024 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, Command
+from odoo import Command, api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
@@ -13,12 +13,12 @@ class ResConfigSettings(models.TransientModel):
     )
 
     def set_values(self):
-        """Guarda el M2M propagándolo al booleano en stock.picking.type."""
         res = super().set_values()
         selected = self.portal_visible_operation_ids
-        currently_visible = self.env["stock.picking.type"].search([("portal_visible", "=", True)])
+        currently_visible = self.env["stock.picking.type"].search(
+            [("portal_visible", "=", True)]
+        )
 
-        # Quita y pone el flag según corresponda
         (currently_visible - selected).write({"portal_visible": False})
         (selected - currently_visible).write({"portal_visible": True})
         return res
@@ -26,9 +26,12 @@ class ResConfigSettings(models.TransientModel):
     @api.model
     def get_values(self):
         res = super().get_values()
-        visible_ids = self.env["stock.picking.type"].search([("portal_visible", "=", True)]).ids
-        # OJO: usar comandos x2many, no lista de ints
-        res.update({
-            "portal_visible_operation_ids": [Command.set(visible_ids)],
-        })
+        visible_ids = (
+            self.env["stock.picking.type"].search([("portal_visible", "=", True)]).ids
+        )
+        res.update(
+            {
+                "portal_visible_operation_ids": [Command.set(visible_ids)],
+            }
+        )
         return res
