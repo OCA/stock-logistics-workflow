@@ -14,7 +14,7 @@ from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 class CustomerPortal(portal.CustomerPortal):
     def _get_prepared_operation_domain(self, partner):
-        visible_ids = request.env["stock.picking"]._get_available_operations()
+        visible_ids = request.env["stock.picking"].sudo()._get_available_operations()
         visible_ids = visible_ids or [-1]
         return [
             ("partner_id", "=", partner.id),
@@ -26,7 +26,9 @@ class CustomerPortal(portal.CustomerPortal):
         if "stock_operations_count" in counters:
             partner = request.env.user.partner_id
             domain = self._get_prepared_operation_domain(partner)
-            stock_operations_count = request.env["stock.picking"].search_count(domain)
+            stock_operations_count = (
+                request.env["stock.picking"].sudo().search_count(domain)
+            )
             values["stock_operations_count"] = (
                 stock_operations_count if stock_operations_count > 0 else "0"
             )
@@ -78,7 +80,7 @@ class CustomerPortal(portal.CustomerPortal):
         **kwargs,
     ):
         partner = request.env.user.partner_id
-        StockPicking = request.env["stock.picking"]
+        StockPicking = request.env["stock.picking"].sudo()
         url = "/my/stock_operations"
 
         domain = self._get_prepared_operation_domain(partner)
@@ -162,7 +164,7 @@ class CustomerPortal(portal.CustomerPortal):
                 download=download,
             )
 
-        visible_ids = request.env["stock.picking"]._get_available_operations()
+        visible_ids = request.env["stock.picking"].sudo()._get_available_operations()
         if not visible_ids or operation_sudo.picking_type_id.id not in visible_ids:
             raise AccessDenied(
                 _("You don't have the access rights to Stock Operations.")

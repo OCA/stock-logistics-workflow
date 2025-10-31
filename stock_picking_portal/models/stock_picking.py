@@ -20,11 +20,15 @@ class StockPick(models.Model):
 
     @api.model
     def _get_available_operations(self):
-        picking_types = self.env["stock.picking.type"].search(
-            [
-                ("portal_visible", "=", True),
-                ("company_id", "in", [False, self.env.company.id]),
-            ]
+        picking_types = (
+            self.env["stock.picking.type"]
+            .sudo()
+            .search(
+                [
+                    ("portal_visible", "=", True),
+                    ("company_id", "in", [False, self.env.company.id]),
+                ]
+            )
         )
         return picking_types.ids
 
