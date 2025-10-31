@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-    <!-- Producto demo propio (estilo Odoo 18) -->
     <record id="product_portal_demo" model="product.product">
         <field name="default_code">PORTAL_DEMO</field>
         <field name="name">Portal Demo Product</field>
@@ -14,7 +13,6 @@
         <field name="purchase_ok">1</field>
     </record>
 
-    <!-- Picking OUT (entrega a clientes) -->
     <record id="outgoing_shipment_stock_picking_portal" model="stock.picking">
         <field name="picking_type_id" ref="stock.picking_type_out" />
         <field name="origin">stock_picking_portal outgoing shipment</field>
@@ -37,7 +35,6 @@
         />
     </record>
 
-    <!-- Picking IN (recepción desde proveedores) -->
     <record id="incoming_stock_picking_portal" model="stock.picking">
         <field name="picking_type_id" ref="stock.picking_type_in" />
         <field name="origin">stock_picking_portal incoming shipment</field>
