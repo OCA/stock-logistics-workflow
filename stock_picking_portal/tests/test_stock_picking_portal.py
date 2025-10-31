@@ -120,7 +120,8 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             303,
-            "The access to the Stock Operations should be forbidden for portal users",
+            "The access to the Stock Operations should be forbidden for "
+            "portal users",
         )
 
         picking._portal_ensure_token()
@@ -131,7 +132,8 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             403,
-            "The access to the Stock Operations should be forbidden for portal users",
+            "The access to the Stock Operations should be forbidden for "
+            "portal users",
         )
 
         config = self.config_obj.create(
@@ -143,7 +145,7 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             200,
-            "The access to the Stock Operations should be allowed for portal users",
+            "The access to the Stock Operations should be allowed for " "portal users",
         )
 
     def test_SO_portal_access_2(self):
@@ -157,7 +159,8 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             403,
-            "The access to the Stock Operations should be forbidden for portal users",
+            "The access to the Stock Operations should be forbidden for "
+            "portal users",
         )
 
         config = self.config_obj.create(
@@ -182,14 +185,14 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             200,
-            "The access to the Stock Operations should be allowed for portal users",
+            "The access to the Stock Operations should be allowed for " "portal users",
         )
 
         response = self.url_open(url="/my/stock_operations", allow_redirects=False)
         self.assertEqual(
             response.status_code,
             200,
-            "The access to the Stock Operations should be allowed for portal users",
+            "The access to the Stock Operations should be allowed for " "portal users",
         )
 
         date_begin = datetime.now() + relativedelta(days=-1)
@@ -205,7 +208,7 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             200,
-            "The access to the Stock Operations should be allowed for portal users",
+            "The access to the Stock Operations should be allowed for " "portal users",
         )
 
         response = self.url_open(
@@ -214,7 +217,7 @@ class TestStockPickingPortal(HttpCase):
         self.assertEqual(
             response.status_code,
             200,
-            "The access to the Stock Operations should be allowed for portal users",
+            "The access to the Stock Operations should be allowed for " "portal users",
         )
 
     def test_get_available_operations(self):
@@ -248,7 +251,6 @@ class TestStockPickingPortal(HttpCase):
         base_url = picking.get_base_url()
         url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
 
-        # Falta firma -> error
         data = {"params": {"name": self.portal_user_1.name}}
         res = self.opener.post(base_url + url, json=data)
         payload = _unwrap_json_response(res)
@@ -258,7 +260,6 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a signature error",
         )
 
-        # Token inválido -> error
         e_url = "/my/stock_operations/%s/accept?" % picking.id
         res = self.opener.post(base_url + e_url, json={})
         payload = _unwrap_json_response(res)
@@ -268,7 +269,6 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a signature error",
         )
 
-        # Firma válida -> redirect
         data = {
             "params": {
                 "signature": "R0lGODlhAQABAAD/ACwAAAAAAQABAAACAA==",
@@ -283,10 +283,9 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a redirect",
         )
 
-        # Firma corrupta -> error
         data = {
             "params": {
-                "signature": "R0lGODlhAQABAAD/ACwA",
+                "signature": 123,
                 "name": self.portal_user_1.name,
             }
         }
