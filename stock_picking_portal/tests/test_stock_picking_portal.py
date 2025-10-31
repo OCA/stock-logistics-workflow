@@ -15,6 +15,11 @@ from odoo.addons.stock_picking_portal.controllers.portal import CustomerPortal
 from odoo.addons.website.tools import MockRequest
 
 
+def _unwrap_json_response(res):
+    data = res.json()
+    return data.get("result", data) if isinstance(data, dict) else {}
+
+
 @tagged("post_install", "-at_install")
 class TestStockPickingPortal(HttpCase):
     @classmethod
@@ -246,9 +251,9 @@ class TestStockPickingPortal(HttpCase):
         # Falta firma -> error
         data = {"params": {"name": self.portal_user_1.name}}
         res = self.opener.post(base_url + url, json=data)
-        result = res.json()
+        payload = _unwrap_json_response(res)
         self.assertEqual(
-            result["result"]["error"],
+            payload.get("error"),
             "Signature is missing.",
             msg="Should be a signature error",
         )
@@ -256,9 +261,9 @@ class TestStockPickingPortal(HttpCase):
         # Token inválido -> error
         e_url = "/my/stock_operations/%s/accept?" % picking.id
         res = self.opener.post(base_url + e_url, json={})
-        result = res.json()
+        payload = _unwrap_json_response(res)
         self.assertEqual(
-            result["result"]["error"],
+            payload.get("error"),
             "Invalid Stock Operation.",
             msg="Should be a signature error",
         )
@@ -271,9 +276,9 @@ class TestStockPickingPortal(HttpCase):
             }
         }
         res = self.opener.post(base_url + url, json=data)
-        result = res.json()
+        payload = _unwrap_json_response(res)
         self.assertEqual(
-            result["result"]["redirect_url"],
+            payload.get("redirect_url"),
             redirect_url,
             msg="Should be a redirect",
         )
@@ -286,9 +291,9 @@ class TestStockPickingPortal(HttpCase):
             }
         }
         res = self.opener.post(base_url + url, json=data)
-        result = res.json()
+        payload = _unwrap_json_response(res)
         self.assertEqual(
-            result["result"]["error"],
+            payload.get("error"),
             "Invalid signature data.",
             msg="Should be a signature error",
         )
