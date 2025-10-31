@@ -14,31 +14,16 @@ from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 class CustomerPortal(portal.CustomerPortal):
     def _get_prepared_operation_domain(self, partner):
-        """Returns a domain to search for operations for the given partner.
-
-        Args:
-            partner (res.partner): partner to search operations for.
-
-        Returns:
-            list: domain to search for operations for the given partner.
-
-        """
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
+        """Domain de operaciones visibles para el partner dado."""
+        visible_ids = request.env["stock.picking"]._get_available_operations()
+        visible_ids = visible_ids or [-1]
         return [
             ("partner_id", "=", partner.id),
-            ("picking_type_id", "in", portal_visible_operation_ids),
+            ("picking_type_id", "in", visible_ids),
         ]
 
     def _prepare_home_portal_values(self, counters):
-        """
-        Values for /my & /my/home routes template rendering.
-
-        Includes the record count for the displayed badges.
-        where 'counters' is the list of the displayed badges
-        and so the list to compute.
-        """
+        """Valores para /my & /my/home, incluyendo badges."""
         values = super()._prepare_home_portal_values(counters)
         if "stock_operations_count" in counters:
             partner = request.env.user.partner_id
@@ -56,15 +41,9 @@ class CustomerPortal(portal.CustomerPortal):
         website=True,
     )
     def portal_my_stock_operations(self, **kwargs):
-        """
-        Prepares the values required for rendering the stock operations
-        portal view using the `_prepare_stock_operations_portal_rendering_values`
-        method
-        """
+        """Render de la vista de operaciones en portal."""
         values = self._prepare_stock_operations_portal_rendering_values(**kwargs)
-        request.session["my_operation_history"] = values["stock_operation_ids"].ids[
-            :100
-        ]
+        request.session["my_operation_history"] = values["stock_operation_ids"].ids[:100]
         return request.render("stock_picking_portal.portal_my_stock_operations", values)
 
     def _get_stock_operations_searchbar_sortings(self):
@@ -99,45 +78,31 @@ class CustomerPortal(portal.CustomerPortal):
         filterby=None,
         **kwargs,
     ):
-        """
-        Prepares the value required for rendering the stock operations
-        portal view, including the domain for searching stock picking,
-        the sorting order, and the search bar filters and sorting.
-
-        Args:
-            page (int, optional): The current page number. Defaults to 1.
-            date_begin (str, optional): The start date for filtering stock pickings.
-                Defaults to None.
-            date_end (str, optional): The end date for filtering stock pickings.
-                Defaults to None.
-            sortby (str, optional): The field to sort the stock pickings by.
-                Defaults to "date".
-            filterby (str, optional): The filter to apply to the stock pickings.
-                Defaults to "all".
-            **kwargs: Additional keyword arguments.
-
-        Returns:
-            dict: A dictionary of values to be used for rendering the stock
-                operations portal view.
-        """
+        """Calcula dominio, orden y pagina para el listado en portal."""
         partner = request.env.user.partner_id
         StockPicking = request.env["stock.picking"]
         url = "/my/stock_operations"
+
         domain = self._get_prepared_operation_domain(partner)
+
         if not sortby:
             sortby = "date"
         if not filterby:
             filterby = "all"
+
         searchbar_filters = self._get_stock_operations_searchbar_filters()
         domain += searchbar_filters[filterby]["domain"]
+
         values = self._prepare_portal_layout_values()
         searchbar_sortings = self._get_stock_operations_searchbar_sortings()
         sort_order = searchbar_sortings[sortby]["order"]
+
         if date_begin and date_end:
             domain += [
                 ("scheduled_date", ">", date_begin),
                 ("scheduled_date", "<=", date_end),
             ]
+
         pager_values = portal_pager(
             url=url,
             total=StockPicking.search_count(domain),
@@ -145,6 +110,7 @@ class CustomerPortal(portal.CustomerPortal):
             step=self._items_per_page,
             url_args={"date_begin": date_begin, "date_end": date_end, "sortby": sortby},
         )
+
         operations = StockPicking.search(
             domain,
             order=sort_order,
@@ -153,6 +119,7 @@ class CustomerPortal(portal.CustomerPortal):
         )
         for item in operations:
             item._portal_ensure_token()
+
         values.update(
             {
                 "date": date_begin,
@@ -182,27 +149,14 @@ class CustomerPortal(portal.CustomerPortal):
         download=False,
         **kw,
     ):
-        """
-        Render the stock operation page for a given operation ID.
-
-        Args:
-            operation_id (int): The ID of the stock operation to render.
-            report_type (str, optional): The type of report to generate for the stock operation.
-                Can be "html", "pdf", or "text". Defaults to None.
-            access_token (str, optional): The access token for the stock operation.
-                                          Defaults to None.
-            message (bool or str, optional): A message to display on the page.
-                                           Defaults to False.
-            download (bool, optional): Whether to download the report.
-                                        Defaults to False.
-            **kw: Additional keyword arguments.
-        """
+        """Página de detalle de una operación de almacén en portal."""
         try:
             operation_sudo = self._document_check_access(
                 "stock.picking", operation_id, access_token=access_token
             )
         except (AccessError, MissingError):
             return request.redirect("/my")
+
         if report_type in ("html", "pdf", "text"):
             return self._show_report(
                 model=operation_sudo,
@@ -210,16 +164,11 @@ class CustomerPortal(portal.CustomerPortal):
                 report_ref="stock.action_report_delivery",
                 download=download,
             )
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
-        if (
-            not portal_visible_operation_ids
-            or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
-        ):
-            raise AccessDenied(
-                _("You don't have the access rights to Stock Operations.")
-            )
+
+        visible_ids = request.env["stock.picking"]._get_available_operations()
+        if not visible_ids or operation_sudo.picking_type_id.id not in visible_ids:
+            raise AccessDenied(_("You don't have the access rights to Stock Operations."))
+
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
             session_obj_date = request.session.get(
@@ -244,6 +193,7 @@ class CustomerPortal(portal.CustomerPortal):
                     subtype_xmlid="mail.mt_note",
                     partner_ids=operation_sudo.user_id.sudo().partner_id.ids,
                 )
+
         values = {
             "stock_operations": operation_sudo,
             "res_company": operation_sudo.company_id,
@@ -267,20 +217,7 @@ class CustomerPortal(portal.CustomerPortal):
     def portal_stock_operations_accept(
         self, operation_id, access_token=None, name=None, signature=None
     ):
-        """
-        Acceptance of the warehouse operation by the user signing the document.
-
-        Args:
-            operation_id (int): The ID of the stock operation to accept.
-            access_token (str, optional): The access token for the portal user.
-                If not provided, it will be retrieved from the query string.
-            name (str, optional): The name of the user accepting the operation.
-            signature (str, optional): The signature of the user accepting the operation.
-
-        Returns:
-            dict: A dictionary containing the URL to redirect the user to after accepting
-                the operation, and a flag to indicate whether to force a refresh of the
-                page."""
+        """Aceptación de la operación por el usuario (firma)."""
         access_token = access_token or request.httprequest.args.get("access_token")
         try:
             operation_sudo = self._document_check_access(
@@ -321,3 +258,4 @@ class CustomerPortal(portal.CustomerPortal):
             "force_refresh": True,
             "redirect_url": operation_sudo.get_portal_url(query_string=query_string),
         }
+ 

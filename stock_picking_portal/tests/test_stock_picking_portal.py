@@ -101,7 +101,8 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_1(self):
-        """Ensure that it is possible to open Stock Operations, either using the access token
+        """Ensure that it is possible to open Stock Operations,
+        either using the access token
         or being connected as portal user"""
 
         picking = self._get_picking()
@@ -119,7 +120,7 @@ class TestStockPickingPortal(HttpCase):
         )
         picking._portal_ensure_token()
         picking_token = picking.access_token
-        picking_url = "%s?access_token=%s" % (picking_url, picking_token)
+        picking_url = f"{picking_url}?access_token={picking_token}"
 
         response = self.url_open(
             url=picking_url,
@@ -149,7 +150,8 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_2(self):
-        """Check that it is possible to open Stock Operations, either using the access token
+        """Check that it is possible to open Stock Operations, either
+        using the access token
         or being connected as portal user"""
 
         picking = self._get_picking()
@@ -217,9 +219,11 @@ class TestStockPickingPortal(HttpCase):
         )
         date_begin = datetime.now() + relativedelta(days=-1)
         date_end = datetime.now() + relativedelta(days=1)
+
         response = self.url_open(
-            url="/my/stock_operations?date_begin=%s&date_end=%s"
-            % (date_begin.strftime("%Y-%m-%d"), date_end.strftime("%Y-%m-%d")),
+            url="/my/stock_operations?date_begin={}&date_end={}".format(
+                date_begin.strftime("%Y-%m-%d"), date_end.strftime("%Y-%m-%d")
+            ),
             allow_redirects=True,
         )
         self.assertEqual(
@@ -266,15 +270,12 @@ class TestStockPickingPortal(HttpCase):
         picking = self._get_picking()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = "/my/stock_operations/%s?access_token=%s&message=sign_ok" % (
+        redirect_url = "/my/stock_operations/{}?access_token={}&message=sign_ok".format(
             picking.id,
             access_token,
         )
         base_url = picking.get_base_url()
-        url = "/my/stock_operations/%s/accept?access_token=%s" % (
-            picking.id,
-            access_token,
-        )
+        url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
         data = {
             "params": {
                 "name": self.portal_user_1.name,
@@ -337,8 +338,9 @@ class TestStockPickingPortal(HttpCase):
         picking_link._compute_link()
         self.assertEqual(
             picking_link.link,
-            "%s/my/stock_operations/%s?access_token=%s"
-            % (picking.get_base_url(), picking.id, picking.access_token),
+            "{}/my/stock_operations/{}?access_token={}".format(
+                picking.get_base_url(), picking.id, picking.access_token
+            ),
             msg="The signature link should be correctly generated",
         )
 
