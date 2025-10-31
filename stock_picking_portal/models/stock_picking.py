@@ -20,16 +20,19 @@ class StockPick(models.Model):
     @api.model
     def _get_available_operations(self):
         """Devuelve SIEMPRE lista de IDs (enteros) de tipos visibles en portal."""
-        picking_types = self.env["stock.picking.type"].search([
-            ("portal_visible", "=", True),
-            ("company_id", "in", [False, self.env.company.id]),
-        ])
+        picking_types = self.env["stock.picking.type"].search(
+            [
+                ("portal_visible", "=", True),
+                ("company_id", "in", [False, self.env.company.id]),
+            ]
+        )
         return picking_types.ids
 
     def _compute_access_url(self):
-        super()._compute_access_url()
+        res = super()._compute_access_url()
         for picking in self:
             picking.access_url = "/my/stock_operations/%s" % (picking.id)
+        return res
 
     def _get_report_base_filename(self):
         self.ensure_one()

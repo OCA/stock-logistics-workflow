@@ -43,7 +43,9 @@ class CustomerPortal(portal.CustomerPortal):
     def portal_my_stock_operations(self, **kwargs):
         """Render de la vista de operaciones en portal."""
         values = self._prepare_stock_operations_portal_rendering_values(**kwargs)
-        request.session["my_operation_history"] = values["stock_operation_ids"].ids[:100]
+        request.session["my_operation_history"] = values["stock_operation_ids"].ids[
+            :100
+        ]
         return request.render("stock_picking_portal.portal_my_stock_operations", values)
 
     def _get_stock_operations_searchbar_sortings(self):
@@ -167,7 +169,9 @@ class CustomerPortal(portal.CustomerPortal):
 
         visible_ids = request.env["stock.picking"]._get_available_operations()
         if not visible_ids or operation_sudo.picking_type_id.id not in visible_ids:
-            raise AccessDenied(_("You don't have the access rights to Stock Operations."))
+            raise AccessDenied(
+                _("You don't have the access rights to Stock Operations.")
+            )
 
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
@@ -258,4 +262,3 @@ class CustomerPortal(portal.CustomerPortal):
             "force_refresh": True,
             "redirect_url": operation_sudo.get_portal_url(query_string=query_string),
         }
- 
