@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-27 07:47+0000\n"
+"PO-Revision-Date: 2025-11-03 08:14+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -150,6 +150,8 @@ msgid ""
 "The %(date_name)s is %(date)s (%(tz)s), but the partner is set to prefer "
 "deliveries on working days."
 msgstr ""
+"Il %(date_name)s è %(date)s (%(tz)s), ma il partner preferisce le consegne "
+"nei giorni lavorativi."
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields,field_description:stock_partner_delivery_window.field_partner_delivery_time_window__time_window_weekday_ids
