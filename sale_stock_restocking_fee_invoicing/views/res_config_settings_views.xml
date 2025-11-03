@@ -2,7 +2,6 @@
 <!-- Copyright 2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="res_config_settings_view_form">
         <field
             name="name"
@@ -30,5 +29,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

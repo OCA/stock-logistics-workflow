@@ -18,12 +18,13 @@ class StockReturnPicking(models.TransientModel):
     def default_get(self, fields):  # pylint: disable=redefined-outer-name
         res = super().default_get(fields)
         if not (
-            "charge_restocking_fee" in fields
+            not self.env.context.get("active_id")
+            or "charge_restocking_fee" in fields
             or "product_return_moves" in fields
             or "is_customer_return" in fields
         ):
             return res
-        picking = self.env["stock.picking"].browse(self.env.context["active_id"])
+        picking = self.env["stock.picking"].browse(self.env.context.get("active_id"))
         charge_restocking_fee = picking.partner_id.charge_restocking_fee
         if "is_customer_return" in fields:
             res["is_customer_return"] = picking.picking_kind == "customer_out"
@@ -40,11 +41,10 @@ class StockReturnPicking(models.TransientModel):
         for move in self.product_return_moves:
             move.charge_restocking_fee = self.charge_restocking_fee
 
-    def _create_returns(self):
-        new_picking_id, new_picking_type_id = super()._create_returns()
+    def _create_return(self):
+        new_picking = super()._create_return()
         self.ensure_one()
         if self.is_customer_return:
-            new_picking = self.env["stock.picking"].browse(new_picking_id)
             # we must update the stock moves after the creation since there is
             # no hooks where to enrich the data used to create the moves :-(
             new_move_by_returned_move = {
@@ -57,4 +57,4 @@ class StockReturnPicking(models.TransientModel):
                 new_move.charge_restocking_fee = return_line_by_returned_move[
                     returned_move
                 ].charge_restocking_fee
-        return new_picking_id, new_picking_type_id
+        return new_picking

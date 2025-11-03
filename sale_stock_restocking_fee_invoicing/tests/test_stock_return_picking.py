@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.fields import Command
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase
 
 
 class TestStockReturnPicking(TransactionCase):
@@ -20,10 +21,20 @@ class TestStockReturnPicking(TransactionCase):
         )
 
         cls.product_1 = cls.env["product.product"].create(
-            {"name": "test product 1", "list_price": 20, "type": "product"}
+            {
+                "name": "test product 1",
+                "list_price": 20,
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         cls.product_2 = cls.env["product.product"].create(
-            {"name": "test product 2", "list_price": 30, "type": "product"}
+            {
+                "name": "test product 2",
+                "list_price": 30,
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         cls.so = cls.env["sale.order"].create(
             {
@@ -73,7 +84,7 @@ class TestStockReturnPicking(TransactionCase):
 
     def _create_return_picking(self):
         wizard = self._create_return_wizard()
-        res = wizard.create_returns()
+        res = wizard.action_create_returns_all()
         return self.env["stock.picking"].browse(res["res_id"])
 
     def test_00(self):
@@ -174,7 +185,7 @@ class TestStockReturnPicking(TransactionCase):
         self.assertEqual(2, len(self.so.order_line))
         wizard = self._create_return_wizard()
         wizard.product_return_moves[0].charge_restocking_fee = False
-        res = wizard.create_returns()
+        res = wizard.action_create_returns_all()
         picking = self.env["stock.picking"].browse(res["res_id"])
         self.assertEqual(2, len(self.so.order_line))
         self._process_picking(picking)
@@ -199,7 +210,7 @@ class TestStockReturnPicking(TransactionCase):
         self.assertEqual(2, len(self.so.order_line))
         wizard = self._create_return_wizard()
         wizard.product_return_moves[0].charge_restocking_fee = True
-        res = wizard.create_returns()
+        res = wizard.action_create_returns_all()
         picking = self.env["stock.picking"].browse(res["res_id"])
         self.assertEqual(2, len(self.so.order_line))
         self._process_picking(picking)

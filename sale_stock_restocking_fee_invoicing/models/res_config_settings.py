@@ -15,6 +15,5 @@ class ResConfigSettings(models.TransientModel):
         "charged for returning goods. In the case where fees are to "
         "be applied, the product specified here is added to the sale"
         " order to charge these fees.",
-        default=lambda self: self.env.user.company_id.restocking_fee_product_id,
         readonly=False,
     )

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-
     <record id="product_restocking_fee" model="product.product">
         <field name="name">Restocking fee</field>
         <field name="list_price">100</field>
@@ -10,5 +9,4 @@
         <field name="invoice_policy">order</field>
         <field name="company_id" eval="False" />
     </record>
-
 </odoo>

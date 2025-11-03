@@ -2,7 +2,6 @@
 <!-- Copyright 2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="stock_return_picking_form_view">
         <field
             name="name"
@@ -17,7 +16,7 @@
                 </group>
             </xpath>
             <xpath
-                expr="//field[@name='product_return_moves']/tree/field[@name='quantity']"
+                expr="//field[@name='product_return_moves']/list/field[@name='quantity']"
                 position="after"
             >
                 <field name="is_customer_return" invisible="1" />
@@ -28,5 +27,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
