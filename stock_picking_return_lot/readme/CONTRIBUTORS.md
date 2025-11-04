@@ -8,3 +8,4 @@
   - Souheil Bejaoui \<<souheil.bejaoui@acsone.eu>\>
 - [APSL-Nagarro](https://apsl.tech):
   - Antoni Marroig \<<amarroig@apsl.net>\>
+- Stefan Rijnhart \<<stefan@opener.amsterdam>\>

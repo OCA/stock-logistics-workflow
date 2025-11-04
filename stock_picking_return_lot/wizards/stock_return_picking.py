@@ -4,89 +4,71 @@
 
 from collections import defaultdict
 
-from odoo import api, models
-from odoo.tools.float_utils import float_round
+from odoo import api, fields, models
+
+CONTEXT_KEY_FORCE_RECOMPUTE = "stock_picking_return_lot.force_recompute"
 
 
 class ReturnPicking(models.TransientModel):
     _inherit = "stock.return.picking"
 
-    def _get_qty_by_product_lot(self):
-        res = defaultdict(float)
-        for group in self.env["stock.move.line"].read_group(
-            [
-                ("picking_id", "=", self.picking_id.id),
-                ("state", "=", "done"),
-                ("move_id.scrapped", "=", False),
-            ],
-            ["quantity:sum"],
-            ["move_id", "lot_id"],
-            lazy=False,
-        ):
-            lot_id = group.get("lot_id")[0] if group.get("lot_id") else False
-            move_id = group.get("move_id")[0]
-            quantity = group.get("quantity")
-            res[(move_id, lot_id)] += quantity
-        return res
+    lots_visible = fields.Boolean(compute="_compute_lots_visible")
 
-    @api.depends("picking_id")
-    def _compute_moves_locations(self):
-        res = super()._compute_moves_locations()
-        product_return_moves = [(5,)]
-        line_fields = [f for f in self.env["stock.return.picking.line"]._fields.keys()]
-        product_return_moves_data_tmpl = self.env[
-            "stock.return.picking.line"
-        ].default_get(line_fields)
-        qty_by_product_lot = self._get_qty_by_product_lot()
-        for (move_id, lot_id), quantity in qty_by_product_lot.items():
-            product_return_moves_data = dict(product_return_moves_data_tmpl)
-            product_return_moves_data.update(
-                self._prepare_stock_return_picking_line_vals(move_id, lot_id, quantity)
+    @api.depends("product_return_moves.product_id.tracking")
+    def _compute_lots_visible(self):
+        """Only show the lots column in the wizard if applicable"""
+        for wiz in self:
+            wiz.lots_visible = any(
+                tracking != "none"
+                for tracking in wiz.product_return_moves.product_id.mapped("tracking")
             )
-            product_return_moves.append((0, 0, product_return_moves_data))
-        if self.picking_id:
-            self.product_return_moves = product_return_moves
-        return res
 
-    @api.model
-    def _prepare_stock_return_picking_line_vals(self, move_id, lot_id, quantity):
-        move = self.env["stock.move"].browse(move_id)
-        quantity = quantity
+    def _get_qty_by_lot(self, move):
+        """Get all quantities that were shipped out, per lot"""
+        qties = defaultdict(float)
+        for sml in move.move_line_ids:
+            qties[sml.lot_id] += sml.quantity
         for dest_move in move.move_dest_ids:
-            if (
-                not dest_move.origin_returned_move_id
-                or dest_move.origin_returned_move_id != move
-            ):
-                continue
+            if dest_move.origin_returned_move_id == move:
+                for sml in dest_move.move_line_ids:
+                    qties[sml.lot_id] -= sml.quantity
+        return qties
 
-            if (
-                dest_move.restrict_lot_id
-                and dest_move.restrict_lot_id.id == lot_id
-                or not lot_id
-            ):
-                if dest_move.state in ("partially_available", "assigned"):
-                    quantity -= sum(dest_move.move_line_ids.mapped("quantity"))
-                elif dest_move.state == "done":
-                    quantity -= dest_move.product_qty
-        quantity = float_round(
-            quantity, precision_rounding=move.product_id.uom_id.rounding
-        )
-        return {
-            "product_id": move.product_id.id,
-            "quantity": quantity,
-            "move_id": move.id,
-            "uom_id": move.product_id.uom_id.id,
-            "lot_id": lot_id,
-        }
+    def _compute_moves_locations(self):
+        # Split up moves by tracked quantities
+        res = super()._compute_moves_locations()
+        for wizard in self:
+            for line in wizard.product_return_moves:
+                qties = self._get_qty_by_lot(line.move_id)
+                first = True
+                for lot, qty in qties.items():
+                    if qty < 0:
+                        qty = 0
+                    if first:
+                        line.lot_id = lot
+                        first = False
+                    elif qty:
+                        line = line.copy({"lot_id": lot.id})
+                    line.quantity = qty
 
-    def _prepare_move_default_values(self, return_line, new_picking):
-        vals = super()._prepare_move_default_values(return_line, new_picking)
-        vals["restrict_lot_id"] = return_line.lot_id.id
-        return vals
-
-    def _create_returns(self):
-        res = super()._create_returns()
-        picking_returned = self.env["stock.picking"].browse(res[0])
-        for ml in picking_returned.move_line_ids:
-            ml.lot_id = ml.move_id.restrict_lot_id
         return res
+
+    def _reset_quantities(self):
+        """When asked to return all quantities, reset to restricted quantity per lot"""
+        for wizard in self:
+            for line in wizard.product_return_moves:
+                line.quantity = line.get_returned_restricted_quantity(line.move_id)
+
+    def action_create_returns_all(self):
+        """Force a reset to returnable quantities per lot"""
+        self = self.with_context(**{CONTEXT_KEY_FORCE_RECOMPUTE: True})
+        return super().action_create_returns_all()
+
+    def _create_return(self):
+        """Propagate restricted lot, and reset quantities if requested"""
+        if self.env.context.get(CONTEXT_KEY_FORCE_RECOMPUTE):
+            self._reset_quantities()
+        picking = super()._create_return()
+        for ml in picking.move_line_ids:
+            ml.lot_id = ml.move_id.restrict_lot_id
+        return picking
