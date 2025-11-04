@@ -14,6 +14,7 @@
         "views/reason_code_view.xml",
         "views/stock_scrap_views.xml",
         "views/stock_move_views.xml",
+        "views/stock_config_settings_views.xml",
     ],
     "maintainers": ["bodedra"],
     "installable": True,

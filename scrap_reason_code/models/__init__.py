@@ -3,3 +3,4 @@
 from . import reason_code
 from . import stock_move
 from . import stock_scrap
+from . import res_config_settings
