@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import Command
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
 
@@ -12,13 +13,21 @@ class StockPickingReturnLotTest(TransactionCase):
         cls.picking_obj = cls.env["stock.picking"]
         cls.partner = cls.env["res.partner"].create({"name": "Test"})
         cls.product = cls.env["product.product"].create(
-            {"name": "test_product", "type": "product", "tracking": "lot"}
+            {
+                "name": "test_product",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "lot",
+            }
         )
         cls.lot_1 = cls.env["stock.lot"].create(
             {"name": "000001", "product_id": cls.product.id}
         )
         cls.lot_2 = cls.env["stock.lot"].create(
             {"name": "000002", "product_id": cls.product.id}
+        )
+        cls.lot_3 = cls.env["stock.lot"].create(
+            {"name": "000003", "product_id": cls.product.id}
         )
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
@@ -55,11 +64,8 @@ class StockPickingReturnLotTest(TransactionCase):
 
     @classmethod
     def create_return_wiz(cls, picking):
-        return (
-            cls.env["stock.return.picking"]
-            .with_context(active_id=picking.id, active_model="stock.picking")
-            .create({})
-        )
+        wizard = cls.env["stock.return.picking"].create({"picking_id": picking.id})
+        return wizard
 
     def _create_picking(self, product=None):
         if not product:
@@ -104,6 +110,38 @@ class StockPickingReturnLotTest(TransactionCase):
         picking._action_done()
         return picking
 
+    def test_restrict_qty(self):
+        self.picking.picking_type_id.restrict_return_qty = True
+        wiz = self.create_return_wiz(self.picking)
+        return_line = wiz.product_return_moves.filtered(
+            lambda m, lot=self.lot_1: m.lot_id == lot
+        )
+        return_line.quantity = 2
+        with self.assertRaisesRegex(
+            UserError, "more quantities than delivered is not allowed"
+        ):
+            with self.env.cr.savepoint():
+                wiz.action_create_returns()
+
+        self.picking.picking_type_id.restrict_return_qty = False
+        wiz.action_create_returns()
+
+    def test_incorrect_lot(self):
+        self.picking.picking_type_id.restrict_return_qty = True
+        wiz = self.create_return_wiz(self.picking)
+        return_line = wiz.product_return_moves.filtered(
+            lambda m, lot=self.lot_1: m.lot_id == lot
+        )
+        return_line.lot_id = self.lot_3
+        with self.assertRaisesRegex(
+            UserError, "more quantities than delivered is not allowed"
+        ):
+            with self.env.cr.savepoint():
+                wiz.action_create_returns()
+
+        self.picking.picking_type_id.restrict_return_qty = False
+        wiz.action_create_returns()
+
     def test_partial_return(self):
         wiz = self.create_return_wiz(self.picking)
         self.assertEqual(len(wiz.product_return_moves), 2)
@@ -116,7 +154,7 @@ class StockPickingReturnLotTest(TransactionCase):
         self.assertEqual(return_line_1.quantity, 1)
         self.assertEqual(return_line_2.quantity, 2)
         return_line_2.quantity = 1
-        picking_returned_id = wiz._create_returns()[0]
+        picking_returned_id = wiz.action_create_returns()["res_id"]
         picking_returned = self.picking_obj.browse(picking_returned_id)
         move_1 = picking_returned.move_ids.filtered(
             lambda m, lot=self.lot_1: m.restrict_lot_id == lot
@@ -141,7 +179,7 @@ class StockPickingReturnLotTest(TransactionCase):
         )
         self.assertEqual(return_line_1.quantity, 0)
         self.assertEqual(return_line_2.quantity, 1)
-        picking_returned_id = wiz._create_returns()[0]
+        picking_returned_id = wiz.action_create_returns_all()["res_id"]
         picking_returned = self.picking_obj.browse(picking_returned_id)
         move_1 = picking_returned.move_ids.filtered(
             lambda m, lot=self.lot_1: m.restrict_lot_id == lot
@@ -171,7 +209,7 @@ class StockPickingReturnLotTest(TransactionCase):
         )
         self.assertEqual(return_line_1.quantity, 1)
         self.assertEqual(return_line_2.quantity, 1)
-        picking_returned_id = wiz._create_returns()[0]
+        picking_returned_id = wiz.action_create_returns_all()["res_id"]
         picking_returned = self.picking_obj.browse(picking_returned_id)
         move_1 = picking_returned.move_ids.filtered(
             lambda m, lot=self.lot_1: m.restrict_lot_id == lot
@@ -195,7 +233,7 @@ class StockPickingReturnLotTest(TransactionCase):
         )
         self.assertEqual(return_lines[0].quantity, 1)
         self.assertEqual(return_lines[1].quantity, 1)
-        picking_returned_id = wiz._create_returns()[0]
+        picking_returned_id = wiz.action_create_returns_all()["res_id"]
         picking_returned = self.picking_obj.browse(picking_returned_id)
         moves = picking_returned.move_ids.filtered(
             lambda m, lot=self.lot_1: m.restrict_lot_id == lot

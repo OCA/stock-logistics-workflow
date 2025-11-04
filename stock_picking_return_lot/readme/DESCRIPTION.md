@@ -7,6 +7,10 @@ delivery.
 This module enhances the return process by creating a separate return
 line for each product/lot and automatically pre-filling it with the lot
 from the original delivery. It relies on the [Stock Restrict
-Lot](https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_restrict_lot)
+Lot](https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_restrict_lot)
 module to enforce accurate tracking, ensuring that the reception order
 reflects the correct lot or serial number that should be received.
+
+This module also integrates with [Stock Picking Return Restricted Qty]
+(https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_return_restricted_qty)
+because the quantities are now split up per lot.
