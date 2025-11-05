@@ -1,105 +1,287 @@
-# @author Mourad EL HADJ MIMOUNE <mourad.elhadj.mimoune@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 from odoo.tests.common import TransactionCase
 
 
-class TestQuickPicking(TransactionCase):
+class TestStockPickingQuick(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.Picking = cls.env["stock.picking"]
+
         cls.Product = cls.env["product.product"]
+        cls.Picking = cls.env["stock.picking"]
         cls.StockMove = cls.env["stock.move"]
-        cls.location_id = cls.env.ref("stock.warehouse0").wh_output_stock_loc_id
-        cls.dest_loc = cls.env.ref("stock.stock_location_customers")
-        cls.product_id_1 = cls.env.ref("product.product_product_8")
-        cls.product_id_2 = cls.env.ref("product.product_product_11")
 
-    def setUp(self):
-        super().setUp()
-        # Useful models
-        picking_vals = {
-            "location_id": self.location_id.id,
-            "location_dest_id": self.dest_loc.id,
-            "picking_type_id": self.ref("stock.picking_type_out"),
-        }
-        self.picking = self.Picking.create(picking_vals)
-        self.default_cont = {
-            "parent_id": self.picking.id,
-            "parent_model": "stock.picking",
-        }
+        cls.company = cls.env.company
+        cls.location_stock = cls.env.ref("stock.stock_location_stock")
+        cls.location_customer = cls.env.ref("stock.stock_location_customers")
 
-    def test_quick_qty_to_process(self):
-        self.product_id_1.with_context(**self.default_cont).qty_to_process = 5.0
-
-        self.assertEqual(
-            self.product_id_1.with_context(**self.default_cont).qty_to_process, 5.0
-        )
-        self.assertEqual(self.product_id_1.qty_to_process, 0.0)
-
-    def test_quick_search(self):
-        context = self.default_cont
-        context["in_current_parent"] = True
-        self.StockMove.create(
+        cls.product_1 = cls.Product.create(
             {
-                "name": "test_quick",
-                "location_id": self.location_id.id,
-                "location_dest_id": self.location_id.id,
-                "product_id": self.product_id_1.id,
-                "picking_id": self.picking.id,
+                "name": "Test Product 1",
+                "type": "consu",
+                "standard_price": 100.0,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
+                "uom_po_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
-        res = self.Product.with_context(**context).search([])
 
-        self.assertEqual(len(res), 1)
+        cls.product_2 = cls.Product.create(
+            {
+                "name": "Test Product 2",
+                "type": "consu",
+                "standard_price": 200.0,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
+                "uom_po_id": cls.env.ref("uom.product_uom_unit").id,
+            }
+        )
 
-    def test_quick_picking(self):
-        # test add stock.move
-        self.product_id_1.with_context(**self.default_cont).qty_to_process = 5.0
+        cls.picking = cls.Picking.create(
+            {
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
+                "location_id": cls.location_stock.id,
+                "location_dest_id": cls.location_customer.id,
+            }
+        )
+
+    def test_get_product_catalog_record_lines(self):
+        """Existing stock moves are returned grouped by product."""
+        move_1 = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        move_2 = self.StockMove.create(
+            {
+                "name": self.product_2.display_name,
+                "product_id": self.product_2.id,
+                "product_uom_qty": 10.0,
+                "product_uom": self.product_2.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        result = self.picking._get_product_catalog_record_lines(
+            [self.product_1.id, self.product_2.id]
+        )
+
+        self.assertIn(self.product_1, result)
+        self.assertIn(self.product_2, result)
+
+        self.assertEqual(result[self.product_1], move_1)
+        self.assertEqual(result[self.product_2], move_2)
+
+    def test_get_product_catalog_order_data(self):
+        """Products without existing moves get their default price."""
+        result = self.picking._get_product_catalog_order_data(
+            self.product_1 | self.product_2
+        )
+
         self.assertEqual(
-            len(self.picking.move_ids_without_package),
+            result[self.product_1.id]["price"],
+            self.product_1.standard_price,
+        )
+        self.assertEqual(
+            result[self.product_2.id]["price"],
+            self.product_2.standard_price,
+        )
+
+    def test_get_product_catalog_lines_data(self):
+        """Existing move data is correctly returned to the catalog."""
+        move = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 7.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        result = move._get_product_catalog_lines_data(parent_record=self.picking)
+
+        self.assertEqual(result["quantity"], 7.0)
+        self.assertEqual(
+            result["price"],
+            self.product_1.standard_price,
+        )
+
+    def test_update_order_line_info_create_move(self):
+        """Adding a product creates a stock move."""
+        self.assertFalse(
+            self.picking.move_ids_without_package.filtered(
+                lambda move: move.product_id == self.product_1
+            )
+        )
+
+        result = self.picking._update_order_line_info(
+            self.product_1.id,
+            5.0,
+        )
+
+        self.assertEqual(result, 5.0)
+
+        move = self.picking.move_ids_without_package.filtered(
+            lambda move: move.product_id == self.product_1
+        )
+
+        self.assertEqual(len(move), 1)
+        self.assertEqual(move.product_uom_qty, 5.0)
+        self.assertEqual(move.product_id, self.product_1)
+        self.assertEqual(
+            move.location_id,
+            self.picking.location_id,
+        )
+        self.assertEqual(
+            move.location_dest_id,
+            self.picking.location_dest_id,
+        )
+
+    def test_update_order_line_info_update_move(self):
+        """Updating an existing product changes the move quantity."""
+        move = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        result = self.picking._update_order_line_info(
+            self.product_1.id,
+            12.0,
+        )
+
+        self.assertEqual(result, 12.0)
+        self.assertEqual(move.product_uom_qty, 12.0)
+
+        self.assertEqual(
+            len(
+                self.picking.move_ids_without_package.filtered(
+                    lambda m: m.product_id == self.product_1
+                )
+            ),
             1,
-            "Picking: no stock.move created",
         )
-        self.product_id_2.with_context(**self.default_cont).qty_to_process = 6.0
-        self.assertEqual(
-            len(self.picking.move_ids_without_package),
-            2,
-            "Stock move count must be 2",
-        )
-        # test stock move qty
-        for line in self.picking.move_ids_without_package:
-            if line.product_id == self.product_id_1:
-                self.assertEqual(line.product_qty, 5)
-            if line.product_id == self.product_id_2:
-                self.assertEqual(line.product_qty, 6)
 
-        # test update stock.move qty
-        self.product_id_1.with_context(**self.default_cont).qty_to_process = 3.0
-        self.product_id_2.with_context(**self.default_cont).qty_to_process = 2.0
-        self.assertEqual(
-            len(self.picking.move_ids_without_package),
-            2,
-            "Stock move count must be 2",
+    def test_update_order_line_info_delete_move(self):
+        """Setting quantity to zero removes the existing move."""
+        move = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
         )
-        # test stock move qty after update
-        for line in self.picking.move_ids_without_package:
-            if line.product_id == self.product_id_1:
-                self.assertEqual(line.product_qty, 3)
-            if line.product_id == self.product_id_2:
-                self.assertEqual(line.product_qty, 2)
 
-    def test_add_product_action_opened(self):
-        product_act_from_picking = self.picking.add_product()
-        self.assertEqual(product_act_from_picking["type"], "ir.actions.act_window")
-        self.assertEqual(product_act_from_picking["res_model"], "product.product")
-        self.assertEqual(product_act_from_picking["view_mode"], "tree")
-        self.assertEqual(product_act_from_picking["target"], "current")
+        self.picking._update_order_line_info(
+            self.product_1.id,
+            0,
+        )
+
+        self.assertFalse(move.exists())
+
+    def test_update_order_line_info_ignore_negative_quantity(self):
+        """A negative quantity does not create a move."""
+        result = self.picking._update_order_line_info(
+            self.product_1.id,
+            -5.0,
+        )
+
+        self.assertEqual(result, 0)
+
+        self.assertFalse(
+            self.picking.move_ids_without_package.filtered(
+                lambda move: move.product_id == self.product_1
+            )
+        )
+
+    def test_action_add_from_catalog_picking(self):
+        """The stock.move action uses the picking from the context."""
+        move = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        action = move.with_context(
+            picking_id=self.picking.id
+        ).action_add_from_catalog_picking()
+
+        self.assertEqual(action["type"], "ir.actions.act_window")
+
+    def test_get_product_catalog_order_line_info(self):
+        self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 8.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        result = self.picking._get_product_catalog_order_line_info(
+            [self.product_1.id, self.product_2.id],
+            child_field="move_ids_without_package",
+        )
+
+        # Existing move
         self.assertEqual(
-            product_act_from_picking["view_id"][0],
-            self.env.ref("stock_picking_quick.product_tree_view4picking").id,
+            result[self.product_1.id]["quantity"],
+            8.0,
         )
         self.assertEqual(
-            product_act_from_picking["context"]["parent_id"], self.picking.id
+            result[self.product_1.id]["price"],
+            self.product_1.standard_price,
         )
+        self.assertEqual(
+            result[self.product_1.id]["productType"],
+            self.product_1.type,
+        )
+
+        # Product without existing move
+        self.assertEqual(
+            result[self.product_2.id]["price"],
+            self.product_2.standard_price,
+        )
+
+    def test_action_add_from_catalog_picking_without_picking(self):
+        move = self.StockMove.create(
+            {
+                "name": self.product_1.display_name,
+                "product_id": self.product_1.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_1.uom_id.id,
+                "picking_id": self.picking.id,
+                "location_id": self.picking.location_id.id,
+                "location_dest_id": self.picking.location_dest_id.id,
+            }
+        )
+
+        self.assertFalse(move.action_add_from_catalog_picking())

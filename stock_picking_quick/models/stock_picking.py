@@ -1,64 +1,101 @@
-# © 2022 Today Akretion
-# @author Pierrick Brun <pierrick.brun@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from collections import defaultdict
 
-from odoo import _, models
+from odoo import models
 
 
 class StockPicking(models.Model):
     _name = "stock.picking"
-    _inherit = ["stock.picking", "product.mass.addition"]
+    _inherit = ["stock.picking", "product.catalog.mixin"]
 
-    def add_product(self):
+    def action_add_from_catalog(self):
         self.ensure_one()
-        res = self._common_action_keys()
-        res["context"].update(
+        return super().action_add_from_catalog()
+
+    def _get_product_catalog_domain(self):
+        self.ensure_one()
+        return super()._get_product_catalog_domain()
+
+    def _get_action_add_from_catalog_extra_context(self):
+        self.ensure_one()
+
+        res = super()._get_action_add_from_catalog_extra_context()
+
+        res.update(
             {
+                "order_id": self.id,
                 "search_default_consumable": 1,
                 "search_default_filter_to_pick": 1,
                 "search_default_filter_for_current_location": 1,
                 "location": [self.location_id.id],
             }
         )
-        res["name"] = "🔙 %s" % (_("Product Variants"))
-        res["view_id"] = (
-            self.env.ref("stock_picking_quick.product_tree_view4picking").id,
-        )
-        res["search_view_id"] = (
-            self.env.ref("stock_picking_quick.product_search_view4picking").id,
-        )
+
         return res
 
-    def _prepare_quick_line(self, product):
-        res = super()._prepare_quick_line(product)
-        res["location_id"] = self.location_id.id
-        res["location_dest_id"] = self.location_dest_id.id
-        return res
+    def _get_product_catalog_record_lines(
+        self,
+        product_ids,
+        *,
+        section_id=None,
+        **kwargs,
+    ):
+        self.ensure_one()
 
-    def _get_quick_line(self, product):
-        return self.env["stock.move"].search(
-            [("product_id", "=", product.id), ("picking_id", "=", self.id)],
-            limit=1,
-        )
+        grouped_lines = defaultdict(lambda: self.env["stock.move"])
 
-    def _get_quick_line_qty_vals(self, product):
+        for move in self.move_ids_without_package:
+            if move.product_id.id in product_ids:
+                grouped_lines[move.product_id] |= move
+
+        return grouped_lines
+
+    def _get_product_catalog_order_data(self, products, **kwargs):
         return {
-            "product_uom_qty": product.qty_to_process,
-            "product_uom": product.quick_uom_id.id,
+            product.id: {
+                "price": product.standard_price,
+                "productType": product.type,
+            }
+            for product in products
         }
 
-    def _complete_quick_line_vals(self, vals, lines_key=""):
-        vals.update(
+    def _update_order_line_info(
+        self,
+        product_id,
+        quantity,
+        *,
+        child_field="move_ids_without_package",
+        **kwargs,
+    ):
+        self.ensure_one()
+
+        move = self.move_ids_without_package.filtered(
+            lambda m: m.product_id.id == product_id
+        )[:1]
+
+        if move:
+            if quantity:
+                move.product_uom_qty = quantity
+            else:
+                move.unlink()
+
+            return quantity
+
+        if quantity <= 0:
+            return 0
+
+        product = self.env["product.product"].browse(product_id)
+
+        self.env["stock.move"].create(
             {
+                "name": product.display_name,
+                "product_id": product.id,
+                "product_uom_qty": quantity,
+                "product_uom": product.uom_id.id,
                 "picking_id": self.id,
+                "location_id": self.location_id.id,
+                "location_dest_id": self.location_dest_id.id,
+                "company_id": self.company_id.id,
             }
         )
-        res = super()._complete_quick_line_vals(
-            vals, lines_key="move_ids_without_package"
-        )
-        if "product_qty" in res:
-            res.pop("product_qty")
-        return res
 
-    def _add_quick_line(self, product, lines_key=""):
-        return super()._add_quick_line(product, lines_key="move_ids_without_package")
+        return quantity

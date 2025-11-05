@@ -4,13 +4,13 @@
 
 {
     "name": "Quick Stock Picking",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
     "category": "Stock",
-    "depends": ["base_product_mass_addition", "stock"],
-    "data": ["views/picking_view.xml", "views/product_view.xml"],
+    "depends": ["stock"],
+    "data": ["views/picking_view.xml"],
     "installable": True,
     "maintainers": ["PierrickBrun", "bealdav"],
 }

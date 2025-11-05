@@ -74,6 +74,7 @@ Akretion
 - Pierrick Brun <pierrick.brun@akretion.com>
 - David Béal <david.beal@akretion.com>
 - Kévin Roche <kevin.roche@akretion.com>
+- Mathieu Delva <mathieu.delva@akretion.com>
 
 Maintainers
 -----------
