@@ -2,7 +2,7 @@
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, models
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -20,10 +20,11 @@ class StockPicking(models.Model):
                 "location": [self.location_id.id],
             }
         )
-        res["name"] = "🔙 %s" % (_("Product Variants"))
+        res["name"] = f"🔙 {self.env._('Product Variants')}"
         res["view_id"] = (
             self.env.ref("stock_picking_quick.product_tree_view4picking").id,
         )
+        res["view_mode"] = "list"
         res["search_view_id"] = (
             self.env.ref("stock_picking_quick.product_search_view4picking").id,
         )

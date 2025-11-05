@@ -9,7 +9,7 @@
                     name="add_product"
                     string="Add"
                     type="object"
-                    attrs="{'invisible': [('state', '=', 'done')]}"
+                    invisible="state == 'done'"
                     class="oe_highlight"
                 />
             </field>

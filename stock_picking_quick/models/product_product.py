@@ -34,13 +34,11 @@ class ProductProduct(models.Model):
         return super()._default_quick_uom_id()
 
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None):
         if self.env.context.get("in_current_parent"):
             picking = self.env["stock.picking"].browse(
                 self.env.context.get("parent_id")
             )
             if picking:
                 args.append(("stock_move_ids.picking_id", "=", picking.id))
-        return super().search(
-            args, offset=offset, limit=limit, order=order, count=count
-        )
+        return super().search(args, offset=offset, limit=limit, order=order)
