@@ -1,10 +1,12 @@
 # Copyright 2022 ForgeFlow S.L.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests.common import TransactionCase
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockMoveForcedLot(TransactionCase):
+class TestStockMoveForcedLot(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -31,9 +33,10 @@ class TestStockMoveForcedLot(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product 1",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "serial",
-                "route_ids": [(6, 0, [route_auto.id])],
+                "route_ids": [Command.set(route_auto.ids)],
             }
         )
 
