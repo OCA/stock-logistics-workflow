@@ -17,5 +17,5 @@
 #
 ##############################################################################
 
-from . import stock_scrap_product_report_xlsx
-from . import stock_scrap_product_wizard
+from . import models
+from . import wizard

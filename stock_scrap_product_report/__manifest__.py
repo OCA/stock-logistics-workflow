@@ -20,20 +20,19 @@
 {
     "name": "Scrap Report",
     "summary": "Display scrap products.",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Warehouse",
     "website": "https://github.com/OCA/stock-logistics-workflow",
-    "author": "Trobz",
+    "author": "Trobz, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "depends": [
         "stock_account",
-        "stock_scrap_origin",
         "report_xlsx_helper",
     ],
     "data": [
-        "report_data.xml",
-        "scrap_report_menu.xml",
-        "stock_scrap_product_wizard_view.xml",
+        "security/ir.model.access.csv",
+        "views/report_data.xml",
+        "wizard/stock_scrap_product_wizard_view.xml",
     ],
     "installable": True,
 }

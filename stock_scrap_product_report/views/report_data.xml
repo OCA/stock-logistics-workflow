@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_stock_scrap_report_xlsx" model="ir.actions.report">
+        <field name="name">Scrap Product Report XLSX</field>
+        <field name="model">stock.scrap.product.wizard</field>
+        <field name="report_name">report_stock_scrap_product_report_xlsx</field>
+        <field name="report_type">xlsx</field>
+        <field name="binding_model_id" ref="model_stock_scrap_product_wizard" />
+    </record>
+</odoo>
