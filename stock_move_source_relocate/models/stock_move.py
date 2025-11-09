@@ -13,11 +13,11 @@ _logger = logging.getLogger(__name__)
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _action_assign(self):
+    def _action_assign(self, force_qty=False):
         unconfirmed_moves = self.filtered(
             lambda m: m.state in ["confirmed", "partially_available"]
         )
-        result = super()._action_assign()
+        result = super()._action_assign(force_qty=force_qty)
         # could not be (entirely) reserved
         unconfirmed_moves = unconfirmed_moves.filtered(
             lambda m: m.state in ["confirmed", "partially_available"]
