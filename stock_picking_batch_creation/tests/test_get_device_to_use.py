@@ -213,3 +213,67 @@ class TestGetDeviceToUse(ClusterPickingCommonFeatures):
         self.assertEqual(first_picking, self.pick1)
         device = make_picking_batch._compute_device_to_use(first_picking)
         self.assertEqual(device, self.device1)
+
+    def test_device_used_for_first_picking_splitting_00(self):
+        """Check the last device is used for splitting the first picking.
+
+        Default order is :: device3, device2, device1.
+        The last device (device1) can not manage the only picking.
+        So the picking will be split.
+
+        """
+        # Keep only one picking and a heavy one
+        self.pick1.action_cancel()
+        self.pick2.action_cancel()
+        product_big_1 = self._create_product("Unittest P1 voluminous", 10, 100, 1, 1)
+        self._set_quantity_in_stock(self.stock_location, product_big_1)
+        self._add_product_to_picking(self.pick3, product_big_1)
+        make_picking_batch = self.make_picking_batch.create(
+            {
+                "user_id": self.env.user.id,
+                "picking_type_ids": [(4, self.picking_type_1.id)],
+                "split_picking_exceeding_limits": True,
+                # Add the device not in their default sort order
+                "stock_device_type_ids": [
+                    (4, self.device1.id),
+                    (4, self.device2.id),
+                    (4, self.device3.id),
+                ],
+            }
+        )
+        first_picking = make_picking_batch._get_first_picking()
+        # A split picking has been created
+        self.assertTrue(first_picking != self.pick3)
+
+    def test_device_used_for_first_picking_splitting_01(self):
+        """Check the last device is used for splitting the first picking.
+
+        The last device (device2) can manage the only picking.
+        So picking will not be split.
+
+        """
+        # Keep only one picking and a heavy one.
+        self.pick1.action_cancel()
+        self.pick2.action_cancel()
+        product_big_1 = self._create_product("Unittest P1 voluminous", 10, 100, 1, 1)
+        self._set_quantity_in_stock(self.stock_location, product_big_1)
+        self._add_product_to_picking(self.pick3, product_big_1)
+        # Set the device order
+        self.device1.sequence = 10
+        self.device3.sequence = 20
+        self.device2.sequence = 30
+        make_picking_batch = self.make_picking_batch.create(
+            {
+                "user_id": self.env.user.id,
+                "picking_type_ids": [(4, self.picking_type_1.id)],
+                "split_picking_exceeding_limits": True,
+                # Add the device not in their default sort order
+                "stock_device_type_ids": [
+                    (4, self.device1.id),
+                    (4, self.device2.id),
+                    (4, self.device3.id),
+                ],
+            }
+        )
+        first_picking = make_picking_batch._get_first_picking()
+        self.assertEqual(first_picking, self.pick3)
