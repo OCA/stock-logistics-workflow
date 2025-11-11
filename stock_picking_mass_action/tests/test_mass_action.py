@@ -40,7 +40,6 @@ class TestMassAction(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 200,
                             "product_uom": cls.product.uom_id.id,
