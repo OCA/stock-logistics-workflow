@@ -53,7 +53,6 @@ class CommonStockPickingAutoCreateLot:
         location_dest = cls.picking.picking_type_id.default_location_dest_id
         cls.move = cls.env["stock.move"].create(
             {
-                "name": f"test-{product.name}",
                 "product_id": product.id,
                 "picking_id": cls.picking.id,
                 "picking_type_id": cls.picking.picking_type_id.id,
