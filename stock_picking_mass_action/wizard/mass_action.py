@@ -21,7 +21,7 @@ class StockPickingMassAction(TransientModel):
     confirm = fields.Boolean(
         string="Mark as Todo",
         default=True,
-        help="check this box if you want to mark as Todo the" " selected Pickings.",
+        help="check this box if you want to mark as Todo the selected Pickings.",
     )
     transfer = fields.Boolean(
         default=lambda self: self._default_transfer(),
