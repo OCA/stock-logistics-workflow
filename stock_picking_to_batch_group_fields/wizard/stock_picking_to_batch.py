@@ -59,8 +59,13 @@ class StockPickingToBatch(models.TransientModel):
     def create_multiple_batch(self, domain):
         """Create n batch pickings by grouped fields selected"""
         StockPicking = self.env["stock.picking"]
-        groupby = [f.field_id.name for f in self.group_field_ids]
-        pickings_grouped = StockPicking.read_group(domain, groupby, groupby, lazy=False)
+        groupby = [
+            f"{f.field_id.name}:day"
+            if f.field_id.ttype in ("date", "datetime")
+            else f.field_id.name
+            for f in self.group_field_ids
+        ]
+        pickings_grouped = StockPicking.read_group(domain, [], groupby, lazy=False)
         if not pickings_grouped:
             raise UserError(
                 _(

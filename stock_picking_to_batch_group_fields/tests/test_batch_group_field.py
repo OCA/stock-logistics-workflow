@@ -3,26 +3,20 @@
 
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.stock.tests.common import TestStockCommon
 
 
-class StockPickingToBatchGroupField(TransactionCase):
+class StockPickingToBatchGroupField(TestStockCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.Product = cls.env["product.product"]
-        cls.picking_model = cls.env["stock.picking"]
-        cls.batch_model = cls.env["stock.picking.batch"]
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.stock_loc = cls.env.ref("stock.stock_location_stock")
-        cls.customer_loc = cls.env.ref("stock.stock_location_customers")
-        cls.productA = cls.Product.create({"name": "Product A", "type": "consu"})
-        cls.productB = cls.Product.create({"name": "Product A", "type": "product"})
-        cls.pickingA = cls.picking_model.with_context(planned=True).create(
+        cls.BatchObject = cls.env["stock.picking.batch"]
+        cls.pickingA = cls.PickingObj.with_context(planned=True).create(
             {
-                "picking_type_id": cls.picking_type_out.id,
-                "location_id": cls.stock_loc.id,
-                "location_dest_id": cls.customer_loc.id,
+                "picking_type_id": cls.picking_type_out,
+                "location_id": cls.stock_location,
+                "location_dest_id": cls.customer_location,
                 "origin": "A",
                 "move_ids": [
                     (
@@ -32,18 +26,18 @@ class StockPickingToBatchGroupField(TransactionCase):
                             "name": "Test move",
                             "product_id": cls.productA.id,
                             "product_uom_qty": 1,
-                            "location_id": cls.stock_loc.id,
-                            "location_dest_id": cls.customer_loc.id,
+                            "location_id": cls.stock_location,
+                            "location_dest_id": cls.customer_location,
                         },
                     )
                 ],
             }
         )
-        cls.pickingB = cls.picking_model.with_context(planned=True).create(
+        cls.pickingB = cls.PickingObj.with_context(planned=True).create(
             {
-                "picking_type_id": cls.picking_type_out.id,
-                "location_id": cls.stock_loc.id,
-                "location_dest_id": cls.customer_loc.id,
+                "picking_type_id": cls.picking_type_out,
+                "location_id": cls.stock_location,
+                "location_dest_id": cls.customer_location,
                 "origin": "B",
                 "move_ids": [
                     (
@@ -53,15 +47,15 @@ class StockPickingToBatchGroupField(TransactionCase):
                             "name": "Test move",
                             "product_id": cls.productB.id,
                             "product_uom_qty": 1,
-                            "location_id": cls.stock_loc.id,
-                            "location_dest_id": cls.customer_loc.id,
+                            "location_id": cls.stock_location,
+                            "location_dest_id": cls.customer_location,
                         },
                     )
                 ],
             }
         )
         cls.pickings = cls.pickingA + cls.pickingB
-        cls.batch = cls.batch_model.create({})
+        cls.batch = cls.BatchObject.create({})
 
     def test_sptb_existing_batch(self):
         """Add pickings to existing batch"""

@@ -8,4 +8,4 @@ To use this module, you need to:
 6. Select the fields you want to group by.
 7. Click on **Confirm**.
 8. Multiple batches will be created by grouping the picking by the fields you selected.
-9. Fields you selected will be save for the next time.
+9. Fields you selected are saved and will be loaded for the next time.

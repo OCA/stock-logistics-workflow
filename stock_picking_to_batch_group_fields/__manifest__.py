@@ -4,8 +4,8 @@
 {
     "name": "Stock Picking To Batch Group Field",
     "summary": "Allows to create batches grouped by picking fields.",
-    "version": "16.0.1.0.1",
-    "development_status": "Alpha",
+    "version": "18.0.1.0.1",
+    "development_status": "Beta",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Moduon, Odoo Community Association (OCA)",
