@@ -15,7 +15,7 @@ class StockPicking(models.Model):
             move_lines = self.env["stock.move.line"].browse()
             for move in picking.move_ids:
                 # For assigned moves
-                move_lines |= move._get_move_lines()
+                move_lines |= move.move_line_ids
             move_lines_wo_expiration_date = move_lines.filtered_domain(
                 [
                     ("use_expiration_date", "=", True),
