@@ -3,7 +3,7 @@
 {
     "name": "Stock Move Line Expiration Date Required",
     "Summary": "Expiration date is required to enter manually on Move Lines.",
-    "version": "16.0.1.0.2",
+    "version": "18.0.1.0.0",
     "author": "Moduon, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",

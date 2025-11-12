@@ -9,11 +9,15 @@
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='expiration_date']" position="attributes">
-                <attribute name="attrs">{
-                    'column_invisible': ['|', ('parent.use_expiration_date', '!=', True), ('parent.picking_code', '!=', 'incoming')],
-                    'readonly': [('picking_type_use_existing_lots', '=', True)],
-                    'required': [('parent.use_expiration_date', '=', True), ('parent.picking_code', '=', 'incoming')]
-                }</attribute>
+                <attribute name="column_invisible">
+                    not parent.use_expiration_date or parent.picking_code != 'incoming'
+                </attribute>
+                <attribute name="readonly">
+                    picking_type_use_existing_lots
+                </attribute>
+                <attribute name="required">
+                   parent.use_expiration_date and parent.picking_code == 'incoming'
+                </attribute>
             </xpath>
         </field>
     </record>
