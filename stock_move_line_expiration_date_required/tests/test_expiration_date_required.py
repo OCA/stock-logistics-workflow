@@ -15,7 +15,7 @@ class TestExpirationDateRequired(common.TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Expiration Product",
-                "type": "product",
+                "type": "consu",
                 "use_expiration_date": True,
                 "expiration_time": 0,
                 "tracking": "lot",
@@ -39,11 +39,11 @@ class TestExpirationDateRequired(common.TransactionCase):
             view="stock.view_stock_move_operations",
         )
         with self.assertRaisesRegex(
-            AssertionError, "expiration_date is a required field"
+            AssertionError, "'expiration_date' is a required field"
         ):
-            with move_form.move_line_ids.new() as move_line_tree:
+            with move_form.move_line_ids.edit(0) as move_line_tree:
                 move_line_tree.lot_name = "TLE1"
-                move_line_tree.qty_done = 1
+                move_line_tree.quantity = 1
                 self.assertEqual(move_line_tree.expiration_date, False)
 
     def test_expiration_date_auto_caulculated(self):
@@ -55,9 +55,9 @@ class TestExpirationDateRequired(common.TransactionCase):
             self.picking.move_ids_without_package,
             view="stock.view_stock_move_operations",
         )
-        with move_form.move_line_ids.new() as move_line_tree:
+        with move_form.move_line_ids.edit(0) as move_line_tree:
             move_line_tree.lot_name = "TLE2"
-            move_line_tree.qty_done = 1
+            move_line_tree.quantity = 1
             self.assertNotEqual(move_line_tree.expiration_date, False)
         move_form.save()
 
@@ -76,9 +76,8 @@ class TestExpirationDateRequired(common.TransactionCase):
         picking.action_confirm()
         # Prepare serial generation
         move = picking.move_ids_without_package
-        move.next_serial = "001"
         move.next_serial_count = move.product_uom_qty
-        picking.move_ids_without_package._generate_serial_numbers()
+        picking.move_ids_without_package._generate_serial_numbers("001")
         # Check expiration date is empty
         for move_line in picking.move_line_ids:
             self.assertEqual(move_line.expiration_date, False)
@@ -95,9 +94,9 @@ class TestExpirationDateRequired(common.TransactionCase):
             self.picking.move_ids_without_package,
             view="stock.view_stock_move_operations",
         )
-        with move_form.move_line_ids.new() as move_line_tree:
+        with move_form.move_line_ids.edit(0) as move_line_tree:
             move_line_tree.lot_name = "TLE3"
-            move_line_tree.qty_done = 10
+            move_line_tree.quantity = 10
         move_form.save()
         self.picking.with_context(skip_sanity_check=False).button_validate()
 
@@ -116,7 +115,6 @@ class TestExpirationDateRequired(common.TransactionCase):
         picking.action_confirm()
         # Prepare serial generation
         move = picking.move_ids_without_package
-        move.next_serial = "001"
         move.next_serial_count = move.product_uom_qty
-        picking.move_ids_without_package._generate_serial_numbers()
+        picking.move_ids_without_package._generate_serial_numbers("001")
         picking.with_context(skip_sanity_check=False).button_validate()

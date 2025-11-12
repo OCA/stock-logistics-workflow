@@ -17,7 +17,7 @@ class StockMove(models.Model):
         """Check if all move lines have an expiration date set."""
         for record in self:
             record.all_expiry_dates_set = not record.use_expiration_date or all(
-                record.move_line_ids.filtered("qty_done").mapped("expiration_date")
+                record.move_line_ids.filtered("quantity").mapped("expiration_date")
             )
 
     def _generate_serial_move_line_commands(self, lot_names, origin_move_line=None):
