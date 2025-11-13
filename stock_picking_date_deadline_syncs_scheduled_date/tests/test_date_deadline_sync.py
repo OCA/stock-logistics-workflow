@@ -11,7 +11,7 @@ class TestDateDeadlineSync(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product"}
+            {"name": "Test Product", "type": "consu"}
         )
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         stock_location_id = cls.env.ref("stock.stock_location_stock").id
