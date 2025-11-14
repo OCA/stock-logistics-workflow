@@ -524,8 +524,13 @@ class StockMove(models.Model):
         goes to the correct place. For all other moves, the destination is the
         one of the picking type to respect the locations chain.
         """
-        self.location_dest_id = routing_rule.location_src_id
+        # Do not compute putaway for the new move location dest by first
+        # setting the new location on the move line because the putaway will
+        # not consider the package
         self.move_line_ids.location_dest_id = routing_rule.location_src_id
+        self.location_dest_id = routing_rule.location_src_id
+        # Recompute putaway considering the package if any
+        self.move_line_ids._apply_putaway_strategy()
         routing_move = self._insert_routing_moves(
             routing_rule.picking_type_id,
             routing_rule.location_src_id,
