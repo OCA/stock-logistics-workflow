@@ -6,7 +6,6 @@
 
 from odoo.exceptions import ValidationError
 from odoo.tests import Form, common, tagged
-from odoo.tools.safe_eval import safe_eval
 
 
 @tagged("post_install", "-at_install")
@@ -15,7 +14,7 @@ class TestStockLotScrap(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "type": "product"}
+            {"name": "Test product", "type": "consu", "is_storable": True}
         )
         cls.company = cls.env.ref("base.main_company")
         cls.lot010 = cls.env["stock.lot"].create(
@@ -48,7 +47,7 @@ class TestStockLotScrap(common.TransactionCase):
         Form(self.lot010)
         res = self.lot010.action_scrap_lot()
         self.assertIn("domain", res)
-        scrap = self.env["stock.scrap"].search(safe_eval(res["domain"]))
+        scrap = self.env["stock.scrap"].search(res["domain"])
         self.assertAlmostEqual(sum(scrap.mapped("scrap_qty")), 5325)
         self.assertTrue(
             all(scrap.mapped("move_ids").mapped(lambda x: x.state == "done"))
