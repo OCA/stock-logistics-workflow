@@ -51,7 +51,7 @@ class StockLot(models.Model):
         arch = eview  # Return the XML element directly
         return arch, view
 
-    def _prepare_scrap_vals(self, quant, scrap_location_id):
+    def _prepare_scrap_vals(self, quant):
         self.ensure_one()
         return {
             "origin": quant.lot_id.name,
@@ -59,7 +59,6 @@ class StockLot(models.Model):
             "product_uom_id": quant.product_id.uom_id.id,
             "scrap_qty": quant.quantity,
             "location_id": quant.location_id.id,
-            "scrap_location_id": scrap_location_id,
             "lot_id": self.id,
             "package_id": quant.package_id.id,
         }
@@ -67,7 +66,7 @@ class StockLot(models.Model):
     def action_scrap_lot(self):
         self.ensure_one()
         quants = self.quant_ids.filtered(
-            lambda x: x.location_id.usage == "internal",
+            lambda x: x.location_id.usage == "internal" and x.quantity > 0
         )
         if not quants:
             raise ValidationError(
@@ -75,26 +74,9 @@ class StockLot(models.Model):
             )
         scrap_obj = self.env["stock.scrap"]
         scraps = scrap_obj.browse()
-        # The data model has disappeared and right now is a function who creates the
-        # scrap location. That's why we have to search by company_id and scrap_location.
-        scrap_location_id = (
-            self.env["stock.location"]
-            .search(
-                [
-                    ("company_id", "=", self.company_id.id),
-                    (
-                        "scrap_location",
-                        "=",
-                        True,
-                    ),
-                ],
-                limit=1,
-            )
-            .id
-        )
         for quant in quants:
             scrap = scrap_obj.create(
-                self._prepare_scrap_vals(quant, scrap_location_id),
+                self._prepare_scrap_vals(quant),
             )
             scraps |= scrap
         result = self.env["ir.actions.act_window"]._for_xml_id(
@@ -102,9 +84,8 @@ class StockLot(models.Model):
         )
         result["context"] = self.env.context
         if len(scraps) != 1:
-            result["domain"] = "[('id', 'in', %s)]" % scraps.ids
+            result["domain"] = [("id", "in", scraps.ids)]
         else:  # pragma: no cover
-            res = self.env.ref("stock.stock_scrap_form_view", False)
-            result["views"] = [(res and res.id or False, "form")]
+            result["views"] = [(self.env.ref("stock.stock_scrap_form_view").id, "form")]
             result["res_id"] = scraps.id
         return result

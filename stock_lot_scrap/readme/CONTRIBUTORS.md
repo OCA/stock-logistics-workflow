@@ -6,3 +6,6 @@
   - Carlos Roca
   - Carolina Fernandez
 - [SodexisTeam](dev@sodexis.com)
+- [Moduon](https://www.moduon.team):
+  - Rafael Blasco
+  - Andrii Kompaniiets
