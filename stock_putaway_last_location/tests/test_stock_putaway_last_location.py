@@ -6,7 +6,7 @@ from odoo.tests.common import SavepointCase
 class TestStockPutawayLastLocation(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestStockPutawayLastLocation, cls).setUpClass()
+        super().setUpClass()
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
@@ -159,13 +159,13 @@ class TestStockPutawayLastLocation(SavepointCase):
     def test_putaway_last_location_last_location_other_product(self):
         self.stock_location.putaway_default_to_last_location = True
         self.previous_move.state = "draft"
-        self.previous_move.product_id = (
-            self.previous_move.move_line_ids.product_id
-        ) = self.env["product.product"].create(
-            {
-                "name": "Product B",
-                "type": "product",
-            }
+        self.previous_move.product_id = self.previous_move.move_line_ids.product_id = (
+            self.env["product.product"].create(
+                {
+                    "name": "Product B",
+                    "type": "product",
+                }
+            )
         )
         self.previous_move.state = "done"
 
