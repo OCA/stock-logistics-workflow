@@ -19,6 +19,15 @@
                     name="group_reservation_rate_max"
                     invisible="group_reservation_rate == False"
                 />
+                <field name="additional_group_reservation_rate" />
+                <field
+                    name="additional_group_reservation_rate_min"
+                    invisible="additional_group_reservation_rate == False"
+                />
+                <field
+                    name="additional_group_reservation_rate_max"
+                    invisible="additional_group_reservation_rate == False"
+                />
             </group>
         </field>
     </record>

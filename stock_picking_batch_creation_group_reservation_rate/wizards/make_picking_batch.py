@@ -17,9 +17,34 @@ class MakePickingBatch(models.TransientModel):
             ("type_group_reservation_rate", "<=", self.group_reservation_rate_max),
         ]
 
+    def _get_picking_domain_for_group_additional_reservation_rate(self):
+        """
+        Adds the delivery carrier in criteria for pickings selection
+        """
+        self.ensure_one()
+        return [
+            (
+                "additional_type_group_reservation_rate",
+                ">=",
+                self.additional_group_reservation_rate_min,
+            ),
+            (
+                "additional_type_group_reservation_rate",
+                "<=",
+                self.additional_group_reservation_rate_max,
+            ),
+        ]
+
     def _get_picking_domain_for_additional(self):
         domain = super()._get_picking_domain_for_additional()
         if self.group_reservation_rate:
+            domain = AND(
+                [
+                    domain,
+                    self._get_picking_domain_for_group_reservation_rate(),
+                ]
+            )
+        if self.additional_group_reservation_rate:
             domain = AND(
                 [
                     domain,
@@ -35,5 +60,12 @@ class MakePickingBatch(models.TransientModel):
         if self.group_reservation_rate:
             domain = AND(
                 [domain, self._get_picking_domain_for_group_reservation_rate()]
+            )
+        if self.additional_group_reservation_rate:
+            domain = AND(
+                [
+                    domain,
+                    self._get_picking_domain_for_group_additional_reservation_rate(),
+                ]
             )
         return domain
