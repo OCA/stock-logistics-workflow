@@ -39,13 +39,13 @@ class StockMoveLine(models.Model):
             ],
             order="quantity desc",
         )
-        # Favor lines from non-printed pickings.
-        other_lines.sorted(
-            lambda ml: (
-                ml.picking_id == self.picking_id or not ml.picking_id.printed,
-                -ml.quantity,
-            )
+        # collect and skip lines from the same picking
+        other_lines_same_picking = other_lines.filtered(
+            lambda x: x.picking_id == self.picking_id
         )
+        other_lines -= other_lines_same_picking
+        # Favor lines from non-printed pickings.
+        other_lines.sorted(lambda ml: (not ml.picking_id.printed, -ml.quantity))
         # Stop when required quantity is reached
         for line in other_lines:
             freed_quantity += line.quantity_product_uom
@@ -58,7 +58,15 @@ class StockMoveLine(models.Model):
             if not is_lesser(freed_quantity, need, rounding):
                 # We reached the required quantity
                 break
-
+        # Lines from the same picking should:
+        # * count qty as available
+        # * be swapped to original lot
+        # * re-assigned
+        freed_quantity += sum(other_lines_same_picking.mapped("quantity_product_uom"))
+        to_reassign_moves |= other_lines_same_picking.move_id
+        other_lines_same_picking.with_context(
+            bypass_reservation_update=True
+        ).lot_id = self.lot_id
         return (freed_quantity, to_reassign_moves)
 
     def write(self, vals):
@@ -159,15 +167,13 @@ class StockMoveLine(models.Model):
                     available_quantity, move_line.quantity_product_uom, rounding
                 ):
                     need = move_line.quantity_product_uom - available_quantity
-                    (
-                        freed_quantity,
-                        to_reassign_moves,
-                    ) = move_line._change_lot_free_other_lines(
-                        need, location, product, lot, package
+                    (freed_quantity, to_reassign_moves) = (
+                        move_line._change_lot_free_other_lines(
+                            need, location, product, lot, package
+                        )
                     )
                     available_quantity += freed_quantity
                     to_reassign_moves |= to_reassign_moves
-
                     if is_lesser(
                         available_quantity, move_line.quantity_product_uom, rounding
                     ) and is_bigger(available_quantity, 0, rounding):

@@ -256,6 +256,40 @@ class ChangeLotCase(TransactionCase):
             line2, lambda: line2.quantity_product_uom, lot=initial_lot
         )
 
+    def test_change_lot_reserved_qty_same_picking(self):
+        """Scan a lot already reserved by other lines in the same picking.
+
+        It should NOT unreserve the other line, use the lot for the current line,
+        and swap the lot to the other move.
+        """
+        initial_lot1 = self._create_lot(self.product_a)
+        initial_lot2 = self._create_lot(self.product_a)
+        self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=initial_lot1)
+        self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=initial_lot2)
+        picking = self._create_picking(lines=[(self.product_a, 20)])
+        picking.action_assign()
+        line1 = picking.move_line_ids[0]
+        line2 = picking.move_line_ids[1]
+        self.assertEqual(line1.lot_id, initial_lot1)
+        self.assertEqual(line2.lot_id, initial_lot2)
+
+        # swap lot 2 on line 1
+        self._change_lot(line1, initial_lot2)
+        self.assertRecordValues(
+            line1, [{"lot_id": initial_lot2.id, "quantity_product_uom": 10}]
+        )
+        # line 2 has been assigned to lot 1
+        self.assertRecordValues(
+            line2, [{"lot_id": initial_lot1.id, "quantity_product_uom": 10}]
+        )
+        # check that reservations have been updated
+        self.assert_quant_reserved_qty(
+            line1, lambda: line1.quantity_product_uom, lot=initial_lot2
+        )
+        self.assert_quant_reserved_qty(
+            line2, lambda: line2.quantity_product_uom, lot=initial_lot1
+        )
+
     def test_change_lot_reserved_partial_qty(self):
         """Scan a lot already reserved by other lines and can only be reserved
         partially
@@ -340,7 +374,7 @@ class ChangeLotCase(TransactionCase):
         )
 
     def test_change_lot_different_location(self):
-        "If the scanned lot is in a different location, we cannot process it"
+        """If the scanned lot is in a different location, we cannot process it"""
         initial_lot = self._create_lot(self.product_a)
         self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=initial_lot)
         picking = self._create_picking(lines=[(self.product_a, 10)])
