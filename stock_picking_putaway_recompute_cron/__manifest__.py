@@ -9,6 +9,6 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock_picking_putaway_recompute"],
-    "data": [],
+    "data": ["data/ir_cron.xml"],
     "demo": [],
 }
