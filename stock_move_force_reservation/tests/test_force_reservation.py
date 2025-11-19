@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
+from odoo import Command
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 
@@ -15,7 +16,8 @@ class TestForceReservation(TransactionCase):
         self.product = self.env["product.product"].create(
             {
                 "name": "TEST PRODUCT",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.partner_id = self.env.ref("base.res_partner_2")
@@ -89,7 +91,7 @@ class TestForceReservation(TransactionCase):
                 "move_id": picking_id2.move_ids_without_package.id,
                 "product_id": picking_id2.product_id.id,
                 "move_to_unreserve_ids": [
-                    (6, 0, [picking_id.move_ids_without_package.id])
+                    Command.set(picking_id.move_ids_without_package.ids)
                 ],
             }
         )

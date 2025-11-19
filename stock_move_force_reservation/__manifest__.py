@@ -5,7 +5,7 @@
 {
     "name": "Stock Move Force Reservation",
     "summary": "",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Inventory",
     "author": "Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",

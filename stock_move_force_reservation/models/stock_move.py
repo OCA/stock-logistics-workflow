@@ -11,14 +11,6 @@ class StockMove(models.Model):
     show_force_quantity = fields.Boolean(compute="_compute_show_force_quantity")
     qty_in_stock = fields.Float(compute="_compute_qty_in_stock")
     picking_state = fields.Selection(
-        [
-            ("draft", "Draft"),
-            ("waiting", "Waiting Another Operation"),
-            ("confirmed", "Waiting"),
-            ("assigned", "Ready"),
-            ("done", "Done"),
-            ("cancel", "Cancelled"),
-        ],
         related="picking_id.state",
         string="Picking Status",
     )
@@ -32,7 +24,7 @@ class StockMove(models.Model):
     def _compute_qty_in_stock(self):
         for record in self:
             record.qty_in_stock = record.product_id.with_context(
-                warehouse=record.location_id.get_warehouse().id
+                warehouse=record.location_id.warehouse_id.id
             ).qty_available
 
     def force_quantity(self):

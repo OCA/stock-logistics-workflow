@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 class StockMoveForceReservation(models.TransientModel):
     _name = "stock.move.force.reservation"
+    _description = "stock move force reservation"
 
     picking_id = fields.Many2one(
         comodel_name="stock.picking",
@@ -21,6 +22,10 @@ class StockMoveForceReservation(models.TransientModel):
     product_id = fields.Many2one(
         comodel_name="product.product",
         string="Current Product",
+        readonly=True,
+    )
+    warehouse_id = fields.Many2one(
+        comodel_name="stock.warehouse",
         readonly=True,
     )
 
@@ -41,6 +46,7 @@ class StockMoveForceReservation(models.TransientModel):
                 "move_id": stock_move,
                 "product_id": stock_move.product_id,
                 "picking_id": stock_move.picking_id,
+                "warehouse_id": stock_move.warehouse_id,
             }
         )
         return rec
@@ -51,21 +57,6 @@ class StockMoveForceReservation(models.TransientModel):
         for record in self.move_to_unreserve_ids:
             total_quantity += record.product_uom_qty
         self.total_quantity = total_quantity
-
-    @api.onchange("move_id", "product_id")
-    def onchange_move_id(self):
-        if self.move_id and self.product_id:
-            warehouse_id = self.picking_id.location_id.get_warehouse()
-            move_ids = self.env["stock.move"].search(
-                [
-                    ("product_id", "=", self.product_id.id),
-                    ("state", "in", ["assigned", "partially_available"]),
-                    ("id", "!=", self.move_id.id),
-                    ("warehouse_id", "=", warehouse_id.id),
-                ]
-            )
-            domain = {"move_to_unreserve_ids": [("id", "in", move_ids.ids)]}
-            return {"domain": domain}
 
     def validate(self):
         moves_to_unreserve = self.move_to_unreserve_ids

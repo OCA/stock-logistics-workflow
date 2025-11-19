@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="stock_move_view_tree" model="ir.ui.view">
-        <field name="name">stock.move.view.tree</field>
+    <record id="stock_move_view_list" model="ir.ui.view">
+        <field name="name">stock.move.view.list</field>
         <field name="model">stock.move</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="picking_id" />
                 <field name="partner_id" string="Partner" />
                 <field name="date" />
@@ -12,7 +12,7 @@
                 <field name="forecast_availability" string="reserved" />
                 <field name="state" />
                 <field name="picking_state" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -26,12 +26,13 @@
                         <field name="move_id" force_save="1" />
                         <field name="product_id" force_save="1" />
                         <field name="picking_id" force_save="1" />
+                        <field name="warehouse_id" force_save="1" />
                     </group>
                     <group>
                         <field
                             name="move_to_unreserve_ids"
-                            context="{'tree_view_ref':'stock_move_force_reservation.stock_move_view_tree'}"
-                            nolabel="1"
+                            context="{'list_view_ref':'stock_move_force_reservation.stock_move_view_list'}"
+                            domain="[('id', '!=', move_id), ('product_id', '=', product_id), ('state', 'in', ['assigned', 'partially_available', 'confirmed', 'waiting']), ('warehouse_id', '=', warehouse_id)]"
                         />
                     </group>
                     <group>
