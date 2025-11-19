@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-from odoo.tests.common import SavepointCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPutawayLastLocation(SavepointCase):
+class TestStockPutawayLastLocation(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -26,31 +26,27 @@ class TestStockPutawayLastLocation(SavepointCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
                 "categ_id": cls.env.ref("product.product_category_all").id,
+                "is_storable": True,
             }
         )
         cls.product_serial = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
                 "tracking": "serial",
                 "categ_id": cls.env.ref("product.product_category_all").id,
+                "is_storable": True,
             }
         )
         cls.product_lot = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
                 "tracking": "lot",
                 "categ_id": cls.env.ref("product.product_category_all").id,
-            }
-        )
-        cls.product_consu = cls.env["product.product"].create(
-            {
-                "name": "Product A",
-                "type": "consu",
-                "categ_id": cls.env.ref("product.product_category_all").id,
+                "is_storable": True,
             }
         )
         cls.shelf_1_location = cls.env["stock.location"].create(
@@ -82,9 +78,10 @@ class TestStockPutawayLastLocation(SavepointCase):
                 "product_id": cls.product.id,
                 "product_uom": cls.uom_unit.id,
                 "product_uom_qty": 10.0,
+                "picked": True,
             }
         )
-        cls.previous_move.quantity_done = 10.0
+        cls.previous_move.quantity = 10.0
         cls.previous_move._action_done()
 
     def test_putaway_last_location_respects_rules(self):
@@ -138,7 +135,7 @@ class TestStockPutawayLastLocation(SavepointCase):
 
     def test_putaway_last_location_last_location(self):
         self.stock_location.putaway_default_to_last_location = True
-
+        self.assertEqual(self.previous_move.state, "done")
         move = self.env["stock.move"].create(
             {
                 "name": "Test Putaway",
@@ -163,7 +160,7 @@ class TestStockPutawayLastLocation(SavepointCase):
             self.env["product.product"].create(
                 {
                     "name": "Product B",
-                    "type": "product",
+                    "type": "consu",
                 }
             )
         )
@@ -195,9 +192,10 @@ class TestStockPutawayLastLocation(SavepointCase):
                 "product_id": self.product.id,
                 "product_uom": self.uom_unit.id,
                 "product_uom_qty": 10.0,
+                "picked": True,
             }
         )
-        previous_previous_move.quantity_done = 10.0
+        previous_previous_move.quantity = 10.0
         previous_previous_move._action_done()
         self.assertEqual(previous_previous_move.state, "done")
         self.assertEqual(len(previous_previous_move.move_line_ids), 1)
