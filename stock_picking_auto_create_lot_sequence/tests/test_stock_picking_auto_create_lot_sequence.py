@@ -15,7 +15,6 @@ class TestStockPickingProductLotSequence(TransactionCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
                 "tracking": "serial",
                 "auto_create_lot": True,
             }
