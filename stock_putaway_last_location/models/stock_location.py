@@ -28,8 +28,17 @@ class StockLocation(models.Model):
             .location_dest_id
         )
 
-    def _get_putaway_strategy(self, product):
-        putaway_location = super()._get_putaway_strategy(product)
-        if not putaway_location and self.putaway_default_to_last_location:
-            putaway_location = self._get_last_putaway_location(product)
+    def _get_putaway_strategy(
+        self, product, quantity=0, package=None, packaging=None, additional_qty=None
+    ):
+        putaway_location = super()._get_putaway_strategy(
+            product, quantity, package, packaging, additional_qty
+        )
+        if putaway_location == self and self.putaway_default_to_last_location:
+            putaway_location = (
+                self._get_last_putaway_location(product)
+                if self._get_last_putaway_location(product)
+                else self
+            )
+
         return putaway_location
