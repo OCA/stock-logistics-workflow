@@ -14,3 +14,8 @@ class StockPicking(models.Model):
     def _get_stock_moves(self):
         self.ensure_one()
         return self.move_ids
+
+    def _create_backorder(self):
+        backorders = super()._create_backorder()
+        backorders.move_ids.filtered("actual_date_source").actual_date_source = False
+        return backorders

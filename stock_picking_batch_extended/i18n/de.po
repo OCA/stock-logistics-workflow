@@ -10,14 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-24 10:53+0000\n"
-"PO-Revision-Date: 2017-06-24 10:53+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2025-09-18 11:42+0000\n"
+"Last-Translator: Bastian Günther <mail@bastian-guenther.de>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
@@ -62,11 +63,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
 msgid "All undone pickings from this batch will be removed, are you sure?"
 msgstr ""
+"Sind sie sicher, dass alle unerledigten Liefervorgänge aus diesem Auftrag "
+"entfernt werden sollen?"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
 msgid "Apply OCA batch validation"
-msgstr ""
+msgstr "OCA-Stapelvalidierung anwenden"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
@@ -78,12 +81,12 @@ msgstr "Ersteller der Stapelkommissionierung"
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
 msgid "Batch Transfer"
-msgstr ""
+msgstr "Stapeltransfer"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_to_batch
 msgid "Batch Transfer Lines"
-msgstr ""
+msgstr "Stapeltransferzeilen"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
@@ -98,12 +101,12 @@ msgstr "Frachtführer"
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurationseinstellungen"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__batch_by_group
@@ -114,7 +117,7 @@ msgstr "Stapelkommissionierungen anlegen"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_to_batch_form
 msgid "Create multiple batch picking grouped by..."
-msgstr ""
+msgstr "Mehrere Stapel-Liefervorgänge erstellen, gruppiert nach..."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__create_uid
@@ -144,7 +147,7 @@ msgstr "Angezeigter Name"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
 msgid "Field to group"
-msgstr ""
+msgstr "Feld zum Gruppieren"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__notes
@@ -155,12 +158,12 @@ msgstr "Freitext-Bemerkungen"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__group_field_ids
 msgid "Group by field"
-msgstr ""
+msgstr "Nach Feld gruppieren"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Group by picking field"
-msgstr ""
+msgstr "Nach Liefervorgangs-Feld gruppieren"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__id
@@ -171,6 +174,8 @@ msgstr "ID"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__group_field_ids
 msgid "If set any, multiple batch picking will be created, one per group field"
 msgstr ""
+"Wenn festgelegt, werden mehrere Stapelkommissionierungen erstellt – jeweils "
+"eine pro Gruppierungsfeld."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
@@ -191,11 +196,13 @@ msgstr "Zuletzt aktualisiert am"
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 msgid "List of active picking managed by this batch."
 msgstr ""
+"Liste der aktiven Liefervorgänge, die von dieser Stapelkommissionierung "
+"verwaltet werden."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
 msgid "My batches"
-msgstr ""
+msgstr "Meine Stapelkommissionierungen"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__name
@@ -219,7 +226,7 @@ msgstr "Notizen"
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
 #, python-format
 msgid "Nothing to print."
-msgstr ""
+msgstr "Nichts zu drucken."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -229,7 +236,7 @@ msgstr "Kommissioniert durch"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
 msgid "Picking To Batch"
-msgstr ""
+msgstr "Liefervorgänge zur Stapelkommissionierung"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
@@ -244,7 +251,7 @@ msgstr "Kommissionierauftrag"
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_delivery_slip
 msgid "Print Delivery Slip"
-msgstr ""
+msgstr "Lieferschein drucken"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_picking_operations
@@ -255,7 +262,7 @@ msgstr "Eigenschaften Stapelkommissionierung"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
 msgid "Print Pickings"
-msgstr ""
+msgstr "Liefervorgänge drucken"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -265,7 +272,7 @@ msgstr "Produkt"
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariante"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -292,22 +299,22 @@ msgstr "Reserviere Alle"
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__user_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__user_id
 msgid "Responsible"
-msgstr ""
+msgstr "Verantwortlich"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Geplantes Datum"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Reihenfolge"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
-msgstr ""
+msgstr "Diese Notiz erscheint auf dem Ausdruck der Stapelkommissionierung."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
@@ -317,13 +324,13 @@ msgstr "Nicht zugeordnet"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings__use_oca_batch_validation
 msgid "Use OCA approach to validate Picking Batch"
-msgstr ""
+msgstr "Verwende den OCA-Ansatz zur Validierung der Stapelkommissionierung."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company__use_oca_batch_validation
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__use_oca_batch_validation
 msgid "Use Oca Batch Validation"
-msgstr ""
+msgstr "OCA-Stapelvalidierung verwenden"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking

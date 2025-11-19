@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-26 22:36+0000\n"
+"PO-Revision-Date: 2025-10-23 08:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_partner_delivery_window
 #: model:ir.model.fields.selection,name:stock_partner_delivery_window.selection__res_partner__delivery_time_preference__anytime
@@ -147,7 +147,7 @@ msgid ""
 "{window}"
 msgstr ""
 "La data schedulata è {date} ({tz}), ma il partner ha impostato le consegne "
-"preferibilmente nei sequenti intervalli orario:\n"
+"preferibilmente nei seguenti intervalli orario:\n"
 "{window}"
 
 #. module: stock_partner_delivery_window

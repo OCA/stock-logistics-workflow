@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="production_lot_info" position="after">
+                <h2>Stock Serial Lots</h2>
+                <div
+                    class="row mt16 o_settings_container"
+                    name="stock_lot_serial_sequence_setting_container"
+                >
+                    <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="stock_lot_serial_sequence_settings"
+                    >
+                        <div class="o_setting_right_pane">
+                            <label for="stock_lot_serial_sequence_id" />
+                            <div class="text-muted">
+                            Select stock lot sequence for current company.
+                                <div class="content-group">
+                                    <field
+                                        name="stock_lot_serial_sequence_id"
+                                        options="{'no_create': True, 'no_edit': True, 'no_create_edit': True}"
+                                    />
+                                    <div class="mt16">
+                                        <b>Add your Sequence:</b>
+                                    </div>
+                                    <div class="mt8">
+                                        <button
+                                            name="%(base.ir_sequence_form)d"
+                                            icon="fa-arrow-right"
+                                            type="action"
+                                            string="Sequences"
+                                            class="btn-link"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -9,78 +9,79 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2017-01-23 11:56+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2025-09-18 11:42+0000\n"
+"Last-Translator: Bastian Günther <mail@bastian-guenther.de>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_reversal
 msgid "Account Move Reversal"
-msgstr ""
+msgstr "Konto Buchungsstornierung"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.invoice_form
 msgid "Delivery"
-msgstr ""
+msgstr "Lieferung"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_picking_form
 msgid "Invoice"
-msgstr ""
+msgstr "Rechnung"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_move__invoice_line_ids
 msgid "Invoice Line"
-msgstr ""
+msgstr "Rechnungszeile"
 
 #. module: stock_picking_invoice_link
 #: model_terms:ir.ui.view,arch_db:stock_picking_invoice_link.view_move_form
 msgid "Invoice Lines"
-msgstr ""
+msgstr "Rechnungszeilen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_ids
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Journalbuchung"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Buchungszeile"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_stock_picking__invoice_count
 msgid "Number of Invoices"
-msgstr ""
+msgstr "Anzahl der Rechnungen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_count
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_count
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_count
 msgid "Pickings count"
-msgstr ""
+msgstr "Anzahl der Liefervorgänge"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move__picking_ids
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_payment__picking_ids
 msgid "Related Pickings"
-msgstr ""
+msgstr "Zugehörige Liefervorgänge"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,field_description:stock_picking_invoice_link.field_account_move_line__move_line_ids
 msgid "Related Stock Moves"
-msgstr ""
+msgstr "Zugehörige Lagerbewegungen"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_bank_statement_line__picking_ids
@@ -90,6 +91,8 @@ msgid ""
 "Related pickings (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"Zugehörige Liefervorgänge (nur wenn die Rechnung aus einem Verkaufsauftrag "
+"erzeugt wurde)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model.fields,help:stock_picking_invoice_link.field_account_move_line__move_line_ids
@@ -97,11 +100,13 @@ msgid ""
 "Related stock moves (only when the invoice has been generated from a sale "
 "order)."
 msgstr ""
+"Zugehörige Lagerbewegungen (nur wenn die Rechnung aus einem Verkaufsauftrag "
+"erzeugt wurde)."
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Verkaufsauftragszeile"
 
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_move
@@ -118,7 +123,7 @@ msgstr "Lieferung vornehmen"
 #: code:addons/stock_picking_invoice_link/models/stock_move.py:0
 #, python-format
 msgid "You can not modify an invoiced stock move"
-msgstr ""
+msgstr "Eine abgerechnete Lagerbewegung kann nicht bearbeitet werden."
 
 #~ msgid "Pickings"
 #~ msgstr "Pickaufträge"

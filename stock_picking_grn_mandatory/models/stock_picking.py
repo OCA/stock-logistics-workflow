@@ -9,7 +9,7 @@ class StockPicking(models.Model):
 
     _inherit = "stock.picking"
 
-    def button_validate(self) -> bool or dict:
+    def _check_grn_mandatory(self):
         """
         Check if the GRN is well set when validating picking
         """
@@ -18,4 +18,11 @@ class StockPicking(models.Model):
             for picking in self.filtered(lambda p: p.picking_type_id.is_grn_mandatory)
         ):
             raise UserError(_("The picking must be linked to a Goods Received Note"))
+
+    def button_validate(self) -> bool or dict:
+        self._check_grn_mandatory()
         return super().button_validate()
+
+    def _action_done(self):
+        self._check_grn_mandatory()
+        return super()._action_done()

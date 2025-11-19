@@ -51,6 +51,11 @@ msgstr "Código de barras"
 
 #. module: stock_picking_import_serial_number
 #: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
 msgid "Choose a file to import..."
 msgstr "Seleccione un archivo a importar..."
 
@@ -196,7 +201,5 @@ msgid ""
 "You only can import S/N for picking operations with creation lots checked"
 msgstr "Solo puede importar S/N para operaciones con creación de lotes marcado"
 
-#. module: stock_picking_import_serial_number
-#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
-msgid "_Cancel"
-msgstr "_Cancelar"
+#~ msgid "_Cancel"
+#~ msgstr "_Cancelar"

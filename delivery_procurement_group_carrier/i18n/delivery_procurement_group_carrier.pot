@@ -24,6 +24,11 @@ msgid "Procurement Group"
 msgstr ""
 
 #. module: delivery_procurement_group_carrier
+#: model:ir.model,name:delivery_procurement_group_carrier.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
+
+#. module: delivery_procurement_group_carrier
 #: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order
 msgid "Sales Order"
 msgstr ""

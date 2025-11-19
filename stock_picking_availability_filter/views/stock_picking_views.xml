@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    # Copyright 2025 ForgeFlow S.L. (https://www.forgeflow.com)
+    # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_picking_internal_search_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="products_availability" string="Products Availability" />
+                <filter
+                    string="Available"
+                    name="available"
+                    domain="[('products_availability', '=', 'available')]"
+                />
+                <filter
+                    string="Expected"
+                    name="expected"
+                    domain="[('products_availability', '=', 'expected')]"
+                />
+                <filter
+                    string="Not Available"
+                    name="not_available"
+                    domain="[('products_availability', '=', 'late')]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
