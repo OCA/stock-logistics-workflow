@@ -46,9 +46,7 @@ class PurchaseOrder(models.Model):
         for order in self:
             order_pickings = order.picking_ids - all_pickings
             if order_pickings:
-                order._create_picking_with_stock_landed_cost(
-                    fields.first(order_pickings)
-                )
+                order._create_picking_with_stock_landed_cost(order_pickings[:1])
         return res
 
     def action_view_stock_landed_cost(self):
@@ -68,7 +66,5 @@ class PurchaseOrderLine(models.Model):
         for order in self.mapped("order_id"):
             order_pickings = order.picking_ids - all_pickings
             if order_pickings:
-                order._create_picking_with_stock_landed_cost(
-                    fields.first(order_pickings)
-                )
+                order._create_picking_with_stock_landed_cost(order_pickings[:1])
         return res
