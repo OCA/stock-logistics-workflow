@@ -22,7 +22,7 @@
             <xpath expr="//field[@name='invoice_line_ids']//list" position="inside">
                 <field name="move_line_ids" force_save="1" column_invisible="1" />
             </xpath>
-            <xpath expr="//field[@name='journal_line_ids']//list" position="inside">
+            <xpath expr="//field[@name='line_ids']//list" position="inside">
                 <field name="move_line_ids" force_save="1" column_invisible="1" />
             </xpath>
         </field>
