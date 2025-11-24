@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-27 01:52+0000\n"
-"PO-Revision-Date: 2025-05-18 11:36+0000\n"
+"PO-Revision-Date: 2025-11-24 09:25+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/"
 "OCA-stock-logistics-workflow-8-0/language/sl/)\n"
@@ -149,7 +149,7 @@ msgstr "Sporočila"
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Število aktivnosti"
+msgstr "Število ukrepov"
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_has_error_counter
@@ -164,7 +164,7 @@ msgstr "Število sporočil, ki zahtevajo ukrepanje"
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Število sporočil, ki niso bila pravilno dostavljena"
+msgstr "Število sporočil z napako pri dostavi"
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_unread_counter
@@ -184,7 +184,7 @@ msgstr "Kategorija proizvoda"
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr "Premiki izdelkov (postavke premika zalog)"
+msgstr "Premiki proizvoda (postavka premika zaloge)"
 
 #. module: stock_lock_lot
 #: model:mail.message.subtype,description:stock_lock_lot.mt_lock_lot
