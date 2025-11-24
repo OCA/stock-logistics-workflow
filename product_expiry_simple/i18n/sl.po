@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-03 03:55+0000\n"
-"PO-Revision-Date: 2025-05-18 11:36+0000\n"
+"PO-Revision-Date: 2025-11-24 09:25+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -90,7 +90,7 @@ msgstr "En ali več proizvodov vsebuje <b>pretekle</b> lote"
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr "Premiki izdelkov (postavke premika zalog)"
+msgstr "Premiki proizvoda (postavka premika zaloge)"
 
 #. module: product_expiry_simple
 #: model:ir.model,name:product_expiry_simple.model_stock_quant
