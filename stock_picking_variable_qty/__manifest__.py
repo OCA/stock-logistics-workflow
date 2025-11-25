@@ -3,15 +3,17 @@
 {
     "name": "Stock Picking Variable Qty",
     "summary": "Handle variable quantity in multi-step deliveries/receptions",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Moduon, Odoo Community Association (OCA)",
-    "maintainers": ["rafaelbn", "chienandalu"],
+    "maintainers": ["rafaelbn", "chienandalu", "Andrii9090"],
     "license": "LGPL-3",
     "depends": [
         "sale_stock",
     ],
-    "data": [],
+    "data": [
+        "views/stock_picking_type_views.xml",
+    ],
 }

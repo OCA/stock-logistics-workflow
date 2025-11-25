@@ -17,13 +17,13 @@ Stock Picking Variable Qty
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_variable_qty
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_variable_qty
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_variable_qty
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_picking_variable_qty
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -40,13 +40,45 @@ Handle variable done quantity in multi-step deliveries.
 .. contents::
    :local:
 
+Use Cases / Context
+===================
+
+In multi-step deliveries that use pull rules, validating an upstream
+picking with a quantity different from the initial demand does not
+automatically propagate that variance to the next delivery step.
+
+As a result, the downstream moves can keep the original demanded
+quantity even though the previous operation was completed with a lower
+or higher actual quantity.
+
+This module keeps the stock flow aligned by updating the chained
+downstream moves to match the processed quantity.
+
+Configuration
+=============
+
+To enable the feature, go to *Inventory > Configuration > Operation
+Types* and open the picking type used for the upstream step of the
+delivery flow, such as *Pick* in a *Pick + Ship* route.
+
+Enable the *Variable Quantity* option on that operation type.
+
+Usage
+=====
+
+When the *Variable Quantity* option is enabled on a picking type,
+validate that operation with the actual processed quantity.
+
+If the validated quantity differs from the original demand, the module
+updates the chained downstream moves to match that new quantity.
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_variable_qty%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_variable_qty%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -54,17 +86,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Moduon
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* David Vidal 
+- David Vidal
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -82,11 +114,14 @@ promote its widespread use.
 .. |maintainer-chienandalu| image:: https://github.com/chienandalu.png?size=40px
     :target: https://github.com/chienandalu
     :alt: chienandalu
+.. |maintainer-Andrii9090| image:: https://github.com/Andrii9090.png?size=40px
+    :target: https://github.com/Andrii9090
+    :alt: Andrii9090
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-rafaelbn| |maintainer-chienandalu| 
+|maintainer-rafaelbn| |maintainer-chienandalu| |maintainer-Andrii9090| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_variable_qty>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_variable_qty>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

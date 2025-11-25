@@ -12,34 +12,68 @@ class StockMove(models.Model):
         return super()._action_done(cancel_backorder=cancel_backorder)
 
     def _adjust_variable_quantity(self):
-        """For moves where qty_done ≠ qty_demanded spread that new quantity across every
+        """For moves where quantity ≠ qty_demanded spread that new quantity across every
         move_dest_id.
         """
-        # TODO:
-        #   * Make this optionable (by operation or whatever)
-        #   * Handle correctly all the dest moves cases to spread or not the quantity
-        for move in self.filtered("move_dest_ids"):
+        moves = self.filtered(
+            lambda move: move.move_dest_ids and move.picking_type_id.variable_quantity
+        )
+        # A destination move can be linked to multiple origins, so it must be
+        # recomputed once from the whole connected chain.
+        processed_dest_moves = self.env["stock.move"]
+        for move in moves:
+            dest_moves = (move.move_dest_ids - processed_dest_moves).filtered(
+                lambda dest_move: dest_move.state not in {"done", "cancel"}
+            )
+            if not dest_moves:
+                continue
+            group_moves, group_dest_moves = move._get_variable_quantity_group(
+                dest_moves
+            )
+            processed_dest_moves |= group_dest_moves
             rounding = move.product_uom.rounding
+            new_quantity = sum(group_moves.mapped("quantity"))
+            demanded_quantity = sum(group_dest_moves.mapped("product_uom_qty"))
             if (
                 float_compare(
-                    move.quantity_done,
-                    move.product_uom_qty,
+                    new_quantity,
+                    demanded_quantity,
                     precision_rounding=rounding,
                 )
                 == 0
             ):
                 continue
-            qty_left = move.quantity_done
-            # Spread across dest moves
-            # FIXME: this won't be correct when the origin operations are split across
-            # lots, packages, etc...
-            for move_dest in move.move_dest_ids:
-                # Nothing left -> don't change anything
-                if float_compare(qty_left, 0.0, precision_rounding=rounding) <= 0:
-                    continue
-                assignable = min(move_dest.product_uom_qty, qty_left)
+            qty_left = new_quantity
+            original_quantities = {
+                move_dest.id: move_dest.product_uom_qty
+                for move_dest in group_dest_moves
+            }
+            for move_dest in group_dest_moves.sorted("id"):
+                assignable = 0.0
+                if float_compare(qty_left, 0.0, precision_rounding=rounding) > 0:
+                    assignable = min(original_quantities[move_dest.id], qty_left)
                 move_dest.product_uom_qty = assignable
                 qty_left -= assignable
-            # Assign the remaining to the first destination move
+            # Keeping any overflow on a single move avoids fabricating demand on
+            # extra moves that were not planned by the route.
             if float_compare(qty_left, 0.0, precision_rounding=rounding) > 0:
-                move.move_dest_ids[:1].product_uom_qty += qty_left
+                first_dest_move = group_dest_moves.sorted("id")[:1]
+                first_dest_move.product_uom_qty += qty_left
+
+    def _get_variable_quantity_group(self, dest_moves):
+        group_moves = self
+        group_dest_moves = dest_moves
+        previous_move_count = previous_dest_count = -1
+        while previous_move_count != len(group_moves) or previous_dest_count != len(
+            group_dest_moves
+        ):
+            previous_move_count = len(group_moves)
+            previous_dest_count = len(group_dest_moves)
+            group_moves |= group_dest_moves.move_orig_ids.filtered(
+                lambda move: move.picking_type_id.variable_quantity
+                and move.state != "cancel"
+            )
+            group_dest_moves |= group_moves.move_dest_ids.filtered(
+                lambda move: move.state not in {"done", "cancel"}
+            )
+        return group_moves, group_dest_moves

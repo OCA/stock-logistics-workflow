@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_variable_qty
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-07 14:57+0000\n"
+"PO-Revision-Date: 2026-04-07 14:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_variable_qty
+#: model:ir.model.fields,help:stock_picking_variable_qty.field_stock_picking_type__variable_quantity
+msgid ""
+"Adjust chained moves to match the quantity done when validating this "
+"operation type."
+msgstr ""
+
+#. module: stock_picking_variable_qty
+#: model:ir.model,name:stock_picking_variable_qty.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_variable_qty
+#: model:ir.model,name:stock_picking_variable_qty.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_variable_qty
+#: model:ir.model.fields,field_description:stock_picking_variable_qty.field_stock_picking_type__variable_quantity
+msgid "Variable Quantity"
+msgstr ""
