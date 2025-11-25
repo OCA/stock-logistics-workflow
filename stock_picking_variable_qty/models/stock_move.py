@@ -12,7 +12,7 @@ class StockMove(models.Model):
         return super()._action_done(cancel_backorder=cancel_backorder)
 
     def _adjust_variable_quantity(self):
-        """For moves where qty_done ≠ qty_demanded spread that new quantity across every
+        """For moves where quantity ≠ qty_demanded spread that new quantity across every
         move_dest_id.
         """
         # TODO:
@@ -22,14 +22,14 @@ class StockMove(models.Model):
             rounding = move.product_uom.rounding
             if (
                 float_compare(
-                    move.quantity_done,
+                    move.quantity,
                     move.product_uom_qty,
                     precision_rounding=rounding,
                 )
                 == 0
             ):
                 continue
-            qty_left = move.quantity_done
+            qty_left = move.quantity
             # Spread across dest moves
             # FIXME: this won't be correct when the origin operations are split across
             # lots, packages, etc...

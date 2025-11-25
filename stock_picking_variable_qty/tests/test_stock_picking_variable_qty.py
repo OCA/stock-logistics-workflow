@@ -10,7 +10,8 @@ class TestPickingVariableQuantity(TestStockCommon):
         cls.product_tv = cls.env["product.product"].create(
             {
                 "name": "Product Variable QTYs",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "categ_id": cls.env.ref("product.product_category_all").id,
             }
         )
@@ -23,7 +24,7 @@ class TestPickingVariableQuantity(TestStockCommon):
             lambda r: "(pick + ship)" in r.name
         )
         cls.pick_rule = cls.pick_ship_route.rule_ids.filtered(
-            lambda rule: "Stock → Output" in rule.name
+            lambda rule: "Stock → Customers" in rule.name
         )
         procurement_group = cls.env["procurement.group"].create({})
         cls.pick_rule.write(
@@ -108,14 +109,12 @@ class TestPickingVariableQuantity(TestStockCommon):
         pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 1.0)
         # Operations on PICK from scratch
         pick_picking.action_assign()
-        pick_picking.action_set_quantities_to_reservation()
-        pick_picking.move_line_ids[0].qty_done += 1.0
+        pick_picking.move_line_ids[0].quantity += 1.0
         pick_picking.button_validate()
         # Operations on SHIP from scratch
         ship_picking.do_unreserve()
         ship_picking.action_assign()
-        ship_picking.action_set_quantities_to_reservation()
-        self.assertEqual(ship_picking.move_line_ids[0].qty_done, 2.0)
+        self.assertEqual(ship_picking.move_line_ids[0].quantity, 2.0)
         ship_picking.button_validate()
 
     def test_pick_ship_qty_done_not_reached(self):
@@ -123,12 +122,11 @@ class TestPickingVariableQuantity(TestStockCommon):
         pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 2.0)
         # Operations on PICK from scratch
         pick_picking.action_assign()
-        pick_picking.action_set_quantities_to_reservation()
-        pick_picking.move_line_ids[0].qty_done -= 1.0
+        pick_picking.button_validate()
+        pick_picking.move_line_ids[0].quantity -= 1.0
         pick_picking.with_context(skip_sanity_check=True).button_validate()
         # Operations on SHIP from scratch
         ship_picking.do_unreserve()
         ship_picking.action_assign()
-        ship_picking.action_set_quantities_to_reservation()
-        self.assertEqual(ship_picking.move_line_ids[0].qty_done, 1.0)
+        self.assertEqual(ship_picking.move_line_ids[0].quantity, 1.0)
         ship_picking.with_context(skip_sanity_check=True).button_validate()
