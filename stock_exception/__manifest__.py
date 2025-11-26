@@ -7,7 +7,7 @@
     "version": "18.0.1.0.0",
     "category": "Generic Modules/Warehouse Management",
     "author": "Ecosoft, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/stock-logistics-warehouse",
+    "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "base_exception"],
     "license": "AGPL-3",
     "data": [
