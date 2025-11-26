@@ -38,7 +38,6 @@ class TestStockException(TransactionCase):
                         0,
                         0,
                         {
-                            "name": cls.product_1.name,
                             "product_id": cls.product_1.id,
                             "product_uom_qty": 1,
                             "product_uom": cls.product_1.uom_id.id,
