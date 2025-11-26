@@ -4,7 +4,7 @@
 {
     "name": "Stock Move Line Dates",
     "summary": "Add Date Scheduled and Deadline dates in move lines",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
