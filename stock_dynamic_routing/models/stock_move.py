@@ -242,7 +242,9 @@ class StockMove(models.Model):
                     new_move_vals = move._split(qty)
                 if new_move_vals:
                     new_move = self.env["stock.move"].create(new_move_vals)
-                    new_move._action_confirm(merge=False)
+                    new_move.with_context(
+                        exclude_apply_dynamic_routing=True
+                    )._action_confirm(merge=False)
                 else:
                     # If no split occurred keep the current move
                     new_move = move
@@ -437,7 +439,9 @@ class StockMove(models.Model):
                     split_move_vals = move._split(qty)
                 if split_move_vals:
                     split_move = self.create(split_move_vals)
-                    split_move._action_confirm(merge=False)
+                    split_move.with_context(
+                        exclude_apply_dynamic_routing=True
+                    )._action_confirm(merge=False)
                 if split_move != move:
                     # No split occurs if the quantity was the same.
                     # But if it did split, detach it from the move on which
@@ -559,7 +563,9 @@ class StockMove(models.Model):
         )
         if dest_moves:
             dest_moves.write({"move_orig_ids": [(3, self.id), (4, routing_move.id)]})
-        routing_move._action_confirm(merge=False)
+        routing_move.with_context(exclude_apply_dynamic_routing=True)._action_confirm(
+            merge=False
+        )
         return routing_move
 
     def _prepare_routing_move_values(self, picking_type, source, destination):
