@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_move_line_operation_tree_expiry" model="ir.ui.view">
+        <field name="name">stock.move.line.inherit.tree</field>
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="product_expiry.view_stock_move_line_operation_tree_expiry"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='expiration_date']" position="attributes">
+                <attribute name="column_invisible">
+                    not parent.use_expiration_date or parent.picking_code != 'incoming'
+                </attribute>
+                <attribute name="readonly">
+                    picking_type_use_existing_lots
+                </attribute>
+                <attribute name="required">
+                   parent.use_expiration_date and parent.picking_code == 'incoming'
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
