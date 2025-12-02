@@ -32,7 +32,10 @@ class SaleOrderLine(models.Model):
             if not stock_move.invoice_line_ids:
                 to_invoice -= (
                     stock_move.quantity
-                    if not stock_move.to_refund
+                    if not (
+                        stock_move.to_refund
+                        and stock_move.location_id.usage == "customer"
+                    )
                     else -stock_move.quantity
                 )
                 moves_linked += stock_move
@@ -43,7 +46,9 @@ class SaleOrderLine(models.Model):
                 break
             to_invoice -= (
                 stock_move.quantity
-                if not stock_move.to_refund
+                if not (
+                    stock_move.to_refund and stock_move.location_id.usage == "customer"
+                )
                 else -stock_move.quantity
             )
             moves_linked += stock_move
