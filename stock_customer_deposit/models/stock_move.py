@@ -10,9 +10,8 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _action_assign(self, force_qty=False):
-        if self.env.context.get("owner", False):
+        if self.env.context.get("owner"):
             return super()._action_assign(force_qty=force_qty)
-
         # Warehouse not configured to use customer deposits
         no_deposit_config_moves = self.filtered(
             lambda move: not move.warehouse_id.use_customer_deposits
@@ -50,7 +49,6 @@ class StockMove(models.Model):
             super(StockMove, move.with_context(owner=owner))._action_assign(
                 force_qty=force_qty
             )
-
         return super(
             StockMove, moves_push_deposit_route.with_context(owner=False)
         )._action_assign(force_qty=force_qty)

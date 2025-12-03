@@ -25,15 +25,9 @@
                 <field
                     name="customer_deposit_type_id"
                     readonly="1"
-                    attrs="{'invisible': ['|', ('customer_deposit_type_id', '=', False), ('use_customer_deposits', '=', False)]}"
+                    invisible="not customer_deposit_type_id or not use_customer_deposits"
                     groups="stock.group_tracking_owner"
                 />
-                <!-- <field
-                    name="put_customer_deposit_type_id"
-                    readonly="1"
-                    attrs="{'invisible': ['|', ('put_customer_deposit_type_id', '=', False), ('use_customer_deposits', '=', False)]}"
-                    groups="stock.group_tracking_owner"
-                /> -->
             </xpath>
         </field>
     </record>

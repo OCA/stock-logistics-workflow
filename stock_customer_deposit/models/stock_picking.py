@@ -14,7 +14,9 @@ class StockPicking(models.Model):
         for picking in pickings.filtered(lambda p: p.picking_type_id.assign_owner):
             picking.write(
                 {
-                    "location_dest_id": picking.picking_type_id.default_location_dest_id,
+                    "location_dest_id": (
+                        picking.picking_type_id.default_location_dest_id
+                    ),
                 }
             )
         return pickings
