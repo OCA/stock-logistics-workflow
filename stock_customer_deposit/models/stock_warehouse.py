@@ -1,13 +1,6 @@
 # Copyright 2024 Moduon Team S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
-
-
-from collections import namedtuple
-
 from odoo import _, api, fields, models
-
-# namedtuple used in helper methods generating values for routes
-Routing = namedtuple("Routing", ["from_loc", "dest_loc", "picking_type", "action"])
 
 
 class StockWarehouse(models.Model):
@@ -15,10 +8,12 @@ class StockWarehouse(models.Model):
 
     use_customer_deposits = fields.Boolean()
     customer_deposit_type_id = fields.Many2one(
-        "stock.picking.type", "Customer Deposit Type", check_company=True
+        comodel_name="stock.picking.type",
+        string="Customer Deposit Type",
+        check_company=True,
     )
     customer_deposit_route_id = fields.Many2one(
-        "stock.route", "Customer Deposit Route", ondelete="restrict"
+        comodel_name="stock.route", string="Customer Deposit Route", ondelete="restrict"
     )
 
     @api.model_create_multi
@@ -37,18 +32,15 @@ class StockWarehouse(models.Model):
 
     def write(self, vals):
         warehouses = self.with_context(active_test=False)
-
         if vals.get("code") or vals.get("name"):
             warehouses._update_customer_deposit_name_and_code(
                 vals.get("name"), vals.get("code")
             )
-
         res = super().write(vals)
-
         for warehouse in warehouses:
             if "use_customer_deposits" in vals:
                 if warehouse.use_customer_deposits:
-                    picking_type_vals = warehouse._create_or_update_deposit_sequences_and_picking_types()
+                    picking_type_vals = warehouse._create_or_update_deposit_sequences_and_picking_types()  # noqa: E501
                     if picking_type_vals:
                         warehouse.write(picking_type_vals)
                     warehouse._create_or_update_customer_deposit_route()
@@ -60,12 +52,9 @@ class StockWarehouse(models.Model):
         self.ensure_one()
         IrSequenceSudo = self.env["ir.sequence"].sudo()
         PickingType = self.env["stock.picking.type"]
-
         warehouse_data = {}
         sequence_data = self._get_customer_deposit_sequence_values()
-
         data = self._get_customer_deposit_picking_type_update_values()
-
         if self.customer_deposit_type_id:
             self.customer_deposit_type_id.sudo().sequence_id.write(sequence_data)
             self.customer_deposit_type_id.write(data)
@@ -91,12 +80,11 @@ class StockWarehouse(models.Model):
             )
             sequence = IrSequenceSudo.create(sequence_data)
             if existing_sequence:
-                sequence.name = _(
+                sequence.name = self.env._(
                     "%(name)s (copy)(%(id)s)", name=sequence.name, id=str(sequence.id)
                 )
             data.update(warehouse_id=self.id, sequence_id=sequence.id)
             warehouse_data["customer_deposit_type_id"] = PickingType.create(data).id
-
         return warehouse_data
 
     def _create_or_update_customer_deposit_route(self):
@@ -117,7 +105,6 @@ class StockWarehouse(models.Model):
                 )
             route = self.env["stock.route"].create(route_data["route_create_values"])
             self.customer_deposit_route_id = route
-
         # Get rules needed for the route
         routing_key = route_data.get("routing_key")
         rules = rules_dict[self.id][routing_key]
@@ -173,7 +160,7 @@ class StockWarehouse(models.Model):
                 sequence_data = warehouse._get_customer_deposit_sequence_values(
                     name=new_name, code=new_code
                 )
-                if self.user_has_groups("stock.group_stock_manager"):
+                if self.env.user.has_group("stock.group_stock_manager"):
                     warehouse = warehouse.sudo()
                 warehouse.customer_deposit_type_id.sequence_id.write(sequence_data)
 
@@ -187,21 +174,19 @@ class StockWarehouse(models.Model):
             "default_location_src_id": self.lot_stock_id.id,
             "default_location_dest_id": self.lot_stock_id.id,
             "barcode": self.code.replace(" ", "").upper() + "-DEPOSIT",
-            "show_reserved": False,
             "show_operations": True,
         }
 
     def _get_customer_deposit_picking_type_create_values(self, max_sequence):
         return {
             "code": "internal",
-            "name": _("Customer Deposit"),
+            "name": self.env._("Customer Deposit"),
             "use_create_lots": False,
             "use_existing_lots": True,
             "assign_owner": True,
             "default_location_src_id": self.lot_stock_id.id,
             "default_location_dest_id": self.lot_stock_id.id,
             "sequence": max_sequence + 1,
-            "show_reserved": False,
             "show_operations": True,
             "sequence_code": "DEPOSIT",
             "barcode": self.code.replace(" ", "").upper() + "-DEPOSIT",
@@ -212,7 +197,7 @@ class StockWarehouse(models.Model):
         name = name if name else self.name
         code = code if code else self.code
         return {
-            "name": _("%s Sequence Customer Deposit", name),
+            "name": self.env._("%s Sequence Customer Deposit", name),
             "prefix": code + "/DEPOSIT/",
             "padding": 5,
             "company_id": self.company_id.id,

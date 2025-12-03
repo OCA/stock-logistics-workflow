@@ -18,7 +18,7 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
             cls.productB: {False: 400, cls.partner1: 120},
             cls.productC: {False: 500},
         }
-        cls.update_availiable_quantity(cls, stock_dict)
+        cls.update_available_quantity(cls, stock_dict)
         cls.result_test = {
             "sale1": {
                 False: {
@@ -81,6 +81,16 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
                 },
             },
         }
+
+    @users("user_customer_deposit")
+    def test_qty_available_excludes_customer_deposits(self):
+        """Customer-owned stock must not count as company stock."""
+        self.assertEqual(
+            self.productA.with_context(
+                location=self.warehouse.lot_stock_id.id
+            ).qty_available,
+            300,
+        )
 
     @users("user_customer_deposit")
     def test_deliver_customer_deposit_with_error(self):
@@ -212,8 +222,8 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
         with self.assertRaises(
             ValidationError,
             msg="You can't add more than the quantity of Product A from the customer's"
-            " deposit. If the customer wants more, create a new order after confirming this "
-            "one.",
+            " deposit. If the customer wants more, create a new order after confirming "
+            "this one.",
         ):
             so.action_confirm()
 
@@ -311,7 +321,6 @@ class TestDeliverCustomerDeposits(TestStockCustomerDepositCommon):
         so.action_confirm()
         so.picking_ids.action_confirm()
         so.picking_ids.action_assign()
-        so.picking_ids.action_set_quantities_to_reservation()
         so.picking_ids.button_validate()
         # Check valuation layers has not been created
         self.assertFalse(so.picking_ids.move_ids.stock_valuation_layer_ids)

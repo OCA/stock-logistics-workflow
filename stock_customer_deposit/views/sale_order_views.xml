@@ -13,7 +13,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-cubes"
-                    attrs="{'invisible': [('customer_deposit_count', '=', 0)]}"
+                    invisible="customer_deposit_count == 0"
                     groups="stock.group_tracking_owner"
                 >
                     <field
@@ -24,21 +24,18 @@
                 </button>
             </xpath>
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="can_customer_deposit" invisible="1" />
-                <field name="customer_deposit_count" invisible="1" />
                 <field
                     name="customer_deposit"
                     widget="boolean_toggle"
-                    attrs="{'invisible': ['|', ('partner_id', '=', False), ('can_customer_deposit', '=', False)], 'readonly': [('state', 'not in', ('draft', 'sent'))]}"
+                    invisible="not partner_id or not can_customer_deposit"
+                    readonly="state not in ['draft', 'sent']"
                     groups="stock.group_tracking_owner"
                 />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/tree//field[@name='product_uom']"
+                expr="//field[@name='order_line']/list//field[@name='product_uom']"
                 position="before"
             >
-                <field name="deposit_available_qty" invisible="1" />
-                <field name="deposit_allowed_qty" invisible="1" />
                 <button
                     name="action_view_customer_deposits"
                     type="object"
@@ -46,7 +43,8 @@
                     title="Customer Deposits"
                     width="20px"
                     aria-label="Customer Deposits"
-                    attrs="{'invisible': ['|', ('deposit_available_qty', '&lt;=', 0), ('deposit_allowed_qty', '&lt;', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '=', 0)]}"
+                    invisible="deposit_available_qty &lt;= 0 or deposit_allowed_qty &lt; 0"
+                    column_invisible="parent.state not in ('draft', 'sent') or parent.customer_deposit_count == 0"
                 />
                 <button
                     name="action_view_customer_deposits"
@@ -55,7 +53,8 @@
                     title="Customer Deposits"
                     width="20px"
                     aria-label="Customer Deposits"
-                    attrs="{'invisible': ['|', ('deposit_available_qty', '&lt;=', 0),('deposit_allowed_qty', '&gt;=', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '=', 0)]}"
+                    invisible="deposit_available_qty &lt;= 0 or deposit_allowed_qty &gt;= 0"
+                    column_invisible="parent.state not in ('draft', 'sent') or parent.customer_deposit_count == 0"
                     groups="stock.group_tracking_owner,stock.group_stock_user"
                 />
             </xpath>
@@ -66,12 +65,12 @@
                 <label
                     for="deposit_available_qty"
                     string="Deposit Available Qty"
-                    attrs="{'invisible': ['|', '|', ('deposit_available_qty', '&lt;=', 0), ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '=', 0)]}"
+                    invisible="deposit_available_qty &lt;= 0 or parent.state not in ('draft', 'sent') or parent.customer_deposit_count == 0"
                     groups="stock.group_tracking_owner"
                 />
                 <div
                     class="o_row"
-                    attrs="{'invisible': ['|', '|', ('deposit_available_qty', '&lt;=', 0), ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '=', 0)]}"
+                    invisible="deposit_available_qty &lt;= 0 or parent.state not in ('draft', 'sent') or parent.customer_deposit_count == 0"
                     groups="stock.group_tracking_owner"
                 >
                     <field
@@ -79,9 +78,9 @@
                         class="oe_inline"
                         decoration-info="deposit_available_qty &gt;= product_uom_qty"
                         decoration-danger="deposit_available_qty &lt; product_uom_qty"
-                        attrs="{'invisible': [('deposit_available_qty', '&lt;=', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '=', 0)]}"
+                        invisible="deposit_available_qty &lt;= 0"
+                        column_invisible="parent.state not in ('draft', 'sent') or parent.customer_deposit_count == 0"
                     />
-                    <field name="deposit_allowed_qty" invisible="1" />
                     <button
                         name="action_view_customer_deposits"
                         type="object"
@@ -90,7 +89,8 @@
                         title="Customer Deposits"
                         width="0.1"
                         aria-label="Customer Deposits"
-                        attrs="{'invisible': ['|', ('deposit_available_qty', '&lt;=', 0), ('deposit_allowed_qty', '&lt;', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '&lt;=', 0)]}"
+                        invisible="deposit_available_qty &lt;= 0 or deposit_allowed_qty &lt; 0"
+                        column_invisible="parent.state not in ('draft', 'sent') or parent.customer_deposit_count &lt;= 0"
                         groups="stock.group_tracking_owner"
                     />
                     <button
@@ -101,7 +101,8 @@
                         title="Customer Deposits"
                         width="0.1"
                         aria-label="Customer Deposits"
-                        attrs="{'invisible': ['|', ('deposit_available_qty', '&lt;=', 0),('deposit_allowed_qty', '&gt;=', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '&lt;=', 0)]}"
+                        invisible="deposit_available_qty &lt;= 0 or deposit_allowed_qty &gt;= 0"
+                        column_invisible="parent.state not in ('draft', 'sent') or parent.customer_deposit_count &lt;= 0"
                         groups="stock.group_tracking_owner"
                     />
                 </div>
