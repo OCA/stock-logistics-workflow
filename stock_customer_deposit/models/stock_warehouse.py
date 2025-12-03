@@ -48,9 +48,7 @@ class StockWarehouse(models.Model):
         for warehouse in warehouses:
             if "use_customer_deposits" in vals:
                 if warehouse.use_customer_deposits:
-                    picking_type_vals = (
-                        warehouse._create_or_update_deposit_sequences_and_picking_types()
-                    )
+                    picking_type_vals = warehouse._create_or_update_deposit_sequences_and_picking_types()
                     if picking_type_vals:
                         warehouse.write(picking_type_vals)
                     warehouse._create_or_update_customer_deposit_route()
