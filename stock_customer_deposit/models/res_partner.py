@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
 
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class ResPartner(models.Model):
@@ -21,8 +21,6 @@ class ResPartner(models.Model):
             ("location_id.usage", "=", "internal"),
             ("quantity", ">", 0),
             "|",
-            "|",
-            ("owner_id", "=", self.id),
             ("owner_id", "parent_of", self.ids),
             ("owner_id", "child_of", self.ids),
         ]
@@ -33,5 +31,5 @@ class ResPartner(models.Model):
             .with_context(no_at_date=True, search_default_on_hand=True)
             ._get_quants_action(self._get_customer_deposit_domain())
         )
-        action["name"] = _("Customer Deposits")
+        action["name"] = self.env._("Customer Deposits")
         return action

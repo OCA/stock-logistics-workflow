@@ -13,7 +13,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-cubes"
-                    attrs="{'invisible': [('customer_deposit_count', '&lt;=', 0)]}"
+                    invisible="customer_deposit_count &lt;= 0"
                     groups="stock.group_tracking_owner"
                 >
                     <field

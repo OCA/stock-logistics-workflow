@@ -29,9 +29,9 @@ class StockQuant(models.Model):
         )
         if owner_id:
             return domain
-        if self.env.context.get("owner", False):
+        if self.env.context.get("owner"):
             domain = expression.AND(
-                [domain, [("owner_id", "parent_of", self.env.context.get("owner"))]]
+                [domain, [("owner_id", "parent_of", self.env.context["owner"])]]
             )
         else:
             domain = expression.AND([domain, [("owner_id", "=", False)]])
@@ -42,24 +42,25 @@ class StockQuant(models.Model):
         self,
         product_id,
         location_id,
-        quantity,
+        quantity=False,
+        reserved_quantity=False,
         lot_id=None,
         package_id=None,
         owner_id=None,
         in_date=None,
     ):
-        if float_compare(
-            quantity, 0.0, precision_rounding=product_id.uom_id.rounding
-        ) > 0 and self.env.context.get("owner", False):
-            owner_id = (
-                owner_id
-                or self.env["res.partner"].browse(self.env.context.get("owner"))
-                or False
-            )
+        if (
+            float_compare(quantity, 0.0, precision_rounding=product_id.uom_id.rounding)
+            > 0
+            and self.env.context.get("owner")
+            and not owner_id
+        ):
+            owner_id = self.env["res.partner"].browse(self.env.context["owner"])
         return super()._update_available_quantity(
             product_id,
             location_id,
             quantity,
+            reserved_quantity,
             lot_id=lot_id,
             package_id=package_id,
             owner_id=owner_id,

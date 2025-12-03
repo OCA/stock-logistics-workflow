@@ -33,19 +33,22 @@ class TestStockCustomerDepositCommon(ProductCommon, SalesTeamCommon):
         cls.productA = cls.env["product.product"].create(
             {
                 "name": "Product A",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         cls.productB = cls.env["product.product"].create(
             {
                 "name": "Product B",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         cls.productC = cls.env["product.product"].create(
             {
                 "name": "Product C",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         cls.partner1 = cls.env["res.partner"].create({"name": "Test Partner 1"})
@@ -54,7 +57,7 @@ class TestStockCustomerDepositCommon(ProductCommon, SalesTeamCommon):
         )
         cls.partner2 = cls.env["res.partner"].create({"name": "Test Partner3"})
 
-    def update_availiable_quantity(self, stock_dict):
+    def update_available_quantity(self, stock_dict):
         for product, dict_values in stock_dict.items():
             for owner, value in dict_values.items():
                 self.env["stock.quant"]._update_available_quantity(

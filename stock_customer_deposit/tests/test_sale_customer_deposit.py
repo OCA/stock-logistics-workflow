@@ -17,7 +17,7 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
             cls.productA: {False: 300},
             cls.productB: {False: 300},
         }
-        cls.update_availiable_quantity(cls, stock_dict)
+        cls.update_available_quantity(cls, stock_dict)
         cls.result_test = {
             False: {
                 cls.productA: 200,
@@ -106,7 +106,6 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
         )
         so.picking_ids.action_confirm()
         so.picking_ids.action_assign()
-        so.picking_ids.action_set_quantities_to_reservation()
         so.picking_ids.button_validate()
         # Check valuation layers has been created when creating a deposit
         self.assertTrue(so.picking_ids.move_ids.stock_valuation_layer_ids)
@@ -124,7 +123,6 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
         so_2.action_confirm()
         so_2.picking_ids.action_confirm()
         so_2.picking_ids.action_assign()
-        so_2.picking_ids.action_set_quantities_to_reservation()
         so_2.picking_ids.button_validate()
         for partner, products in self.result_test_second_deposit.items():
             for product, quantity in products.items():

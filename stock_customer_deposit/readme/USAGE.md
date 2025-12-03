@@ -2,7 +2,7 @@ To use this module, you need to:
 
 Create Customer deposits:
 
-1. Go to Sales > Quotations.
+1. Go to _Sales > Quotations_.
 2. Create new quotation to the desired customer.
 3. Activate **customer deposit** in quotation.
 4. Add storable product in order lines.
