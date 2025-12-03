@@ -11,7 +11,7 @@ class StockMove(models.Model):
 
     def _action_assign(self, force_qty=False):
         if self.env.context.get("owner", False):
-            return super(StockMove, self)._action_assign(force_qty=force_qty)
+            return super()._action_assign(force_qty=force_qty)
 
         # Warehouse not configured to use customer deposits
         no_deposit_config_moves = self.filtered(
