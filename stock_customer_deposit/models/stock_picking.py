@@ -27,4 +27,4 @@ class StockPicking(models.Model):
                     owner=self.partner_id.commercial_partner_id.id or self.partner_id.id
                 ),
             ).button_validate()
-        return super(StockPicking, self).button_validate()
+        return super().button_validate()
