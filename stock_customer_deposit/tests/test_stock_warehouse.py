@@ -9,7 +9,8 @@ from .common import TestStockCustomerDepositCommon
 class TestStockWareHoseCustomerDeposit(TestStockCustomerDepositCommon):
     @users("stock_manager")
     def test_warehouse_activate_customer_deposit(self):
-        """Create warehouse with use customer deposits, after deactivate and activate again."""
+        """Create warehouse with use customer deposits, after deactivate and activate
+        again."""
         warehouse = self.env["stock.warehouse"].create(
             {
                 "name": "Test Warehouse2",
@@ -31,7 +32,6 @@ class TestStockWareHoseCustomerDeposit(TestStockCustomerDepositCommon):
                     "assign_owner": True,
                     "default_location_src_id": warehouse.lot_stock_id.id,
                     "default_location_dest_id": warehouse.lot_stock_id.id,
-                    "show_reserved": False,
                     "show_operations": True,
                     "sequence_code": "DEPOSIT",
                     "barcode": "TST-DEPOSIT",
@@ -92,7 +92,6 @@ class TestStockWareHoseCustomerDeposit(TestStockCustomerDepositCommon):
                     "assign_owner": True,
                     "default_location_src_id": warehouse.lot_stock_id.id,
                     "default_location_dest_id": warehouse.lot_stock_id.id,
-                    "show_reserved": False,
                     "show_operations": True,
                     "barcode": "TST-DEPOSIT",
                 },
