@@ -63,7 +63,6 @@
                 expr="///page/field[@name='order_line']/form/group/group/field[@name='price_unit']"
                 position="before"
             >
-
                 <label
                     for="deposit_available_qty"
                     string="Deposit Available Qty"
@@ -94,7 +93,7 @@
                         attrs="{'invisible': ['|', ('deposit_available_qty', '&lt;=', 0), ('deposit_allowed_qty', '&lt;', 0)], 'column_invisible': ['|', ('parent.state', 'not in', ('draft', 'sent')), ('parent.customer_deposit_count', '&lt;=', 0)]}"
                         groups="stock.group_tracking_owner"
                     />
-                <button
+                    <button
                         name="action_view_customer_deposits"
                         type="object"
                         icon="fa-cubes"
