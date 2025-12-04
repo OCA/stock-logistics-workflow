@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_form_view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_ids_without_package']//field[@name='lot_ids']"
+                position="after"
+            >
+                <field name="next_picking_name" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

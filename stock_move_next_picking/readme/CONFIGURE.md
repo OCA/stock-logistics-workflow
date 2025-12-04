@@ -1,0 +1,2 @@
+- Go to Inventory > Configuration > Warehouse > Operation Types
+- Check the 'Show Next Picking Name' box for the desired operations
