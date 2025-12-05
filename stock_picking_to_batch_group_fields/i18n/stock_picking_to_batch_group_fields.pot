@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: stock_picking_to_batch_group_fields
 #. odoo-python
 #: code:addons/stock_picking_to_batch_group_fields/wizard/stock_picking_to_batch.py:0
-#, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong "
 "state."
@@ -86,11 +85,6 @@ msgstr ""
 #. module: stock_picking_to_batch_group_fields
 #: model:ir.model.fields,help:stock_picking_to_batch_group_fields.field_stock_picking_to_batch__batch_by_group
 msgid "If set, multiple batch picking will be created, one per group field"
-msgstr ""
-
-#. module: stock_picking_to_batch_group_fields
-#: model:ir.model.fields,field_description:stock_picking_to_batch_group_fields.field_stock_picking_batch_creator_group_field____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_picking_to_batch_group_fields
