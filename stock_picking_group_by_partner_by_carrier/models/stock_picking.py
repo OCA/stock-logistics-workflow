@@ -92,8 +92,8 @@ class StockPicking(models.Model):
             grouping_disabled[picking.id] = picking._is_grouping_disabled()
         context_update = {
             "picking_no_copy_if_can_group_dict": {
-                p.id: not disabled
-                for p, disabled in grouping_disabled.items()
+                pid: not disabled
+                for pid, disabled in grouping_disabled.items()
                 if not disabled
             }
         }
