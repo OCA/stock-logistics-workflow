@@ -86,6 +86,7 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self, backorder_moves=None):
+        # Reverted to original serialization to maintain compatibility
         backorders = self.browse()
         for picking in self:
             if not picking._is_grouping_disabled():
