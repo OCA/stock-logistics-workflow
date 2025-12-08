@@ -86,22 +86,29 @@ class StockPicking(models.Model):
             return super().action_cancel()
 
     def _create_backorder(self, backorder_moves=None):
-        backorders = self.browse()
+        # Prepare context for grouping
+        grouping_disabled = {}
         for picking in self:
-            if not picking._is_grouping_disabled():
-                picking = picking.with_context(picking_no_copy_if_can_group=1)
-            picking_backorder_moves = None
-            if backorder_moves:
-                picking_backorder_moves = backorder_moves.filtered(
-                    lambda x, picking=picking: x.picking_id == picking
-                )
-            backorder = super(StockPicking, picking)._create_backorder(
-                backorder_moves=picking_backorder_moves
-            )
-            if backorder and not picking._is_grouping_disabled():
+            grouping_disabled[picking.id] = picking._is_grouping_disabled()
+        context_update = {
+            "picking_no_copy_if_can_group_dict": {
+                p.id: not disabled
+                for p, disabled in grouping_disabled.items()
+                if not disabled
+            }
+        }
+        backorders = super(
+            StockPicking, self.with_context(**context_update)
+        )._create_backorder(backorder_moves)
+        # Apply grouping to backorders
+        for backorder in backorders:
+            original_picking = backorder.move_ids.move_orig_ids.picking_id
+            if (
+                original_picking
+                and not grouping_disabled.get(original_picking.id, True)
+            ):
                 backorder._merge_procurement_groups()
                 backorder._update_merged_origin()
-            backorders |= backorder
         return backorders
 
     def _prepare_merged_origin(self):
@@ -183,7 +190,10 @@ class StockPicking(models.Model):
         return False
 
     def copy(self, defaults=None):
-        if self.env.context.get("picking_no_copy_if_can_group") and self.move_ids:
+        if (
+            self.env.context.get("picking_no_copy_if_can_group_dict", {}).get(self.id)
+            and self.move_ids
+        ):
             # we are in the process of the creation of a backorder. If we can
             # find a suitable picking, then use it instead of copying the one
             # we are creating a backorder from
