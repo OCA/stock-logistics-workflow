@@ -37,6 +37,7 @@ addon | version | maintainers | summary
 [sale_stock_picking_invoice_link](sale_stock_picking_invoice_link/) | 18.0.1.0.0 |  | Adds link between pickings and invoices
 [scrap_reason_code](scrap_reason_code/) | 18.0.1.0.0 | <a href='https://github.com/bodedra'><img src='https://github.com/bodedra.png' width='32' height='32' style='border-radius:50%;' alt='bodedra'/></a> | Reason code for scrapping
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 18.0.1.0.1 |  | Add more flexibility in the run fifo method.
+[stock_account_show_automatic_valuation](stock_account_show_automatic_valuation/) | 18.0.1.0.0 |  | Allow automatic valuation for stock moves in community edition
 [stock_checkout_sync](stock_checkout_sync/) | 18.0.1.0.1 |  | Sync location for Checkout operations
 [stock_dangerous_goods](stock_dangerous_goods/) | 18.0.1.0.0 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> | Adds utility fields to manage dangerous goods
 [stock_dynamic_routing](stock_dynamic_routing/) | 18.0.1.1.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Dynamic routing of stock moves
