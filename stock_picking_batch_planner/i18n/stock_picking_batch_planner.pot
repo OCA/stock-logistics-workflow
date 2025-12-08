@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_planner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,field_description:stock_picking_batch_planner.field_stock_picking_type__auto_batch
+msgid "Automatic Batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,field_description:stock_picking_batch_planner.field_stock_picking_type__auto_batch_original
+msgid "Automatic Batches (original value)"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,help:stock_picking_batch_planner.field_stock_picking_type__auto_batch
+msgid ""
+"Automatically put pickings into batches as they are confirmed when possible."
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model,name:stock_picking_batch_planner.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,field_description:stock_picking_batch_planner.field_stock_picking_batch__can_plan_batches
+msgid "Can plan batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,help:stock_picking_batch_planner.field_stock_picking_type__auto_batch_original
+msgid "Field used to store the original value of `auto_batch` field."
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#. odoo-python
+#: code:addons/stock_picking_batch_planner/models/stock_picking_type.py:0
+msgid ""
+"If the Planned Batches feature is enabled, at least one 'Group by' option "
+"must be selected."
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,help:stock_picking_batch_planner.field_stock_picking_batch__origin_batches_count
+msgid "Number of Batches of the origin moves"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_planner.stock_picking_batch_form
+msgid "Origin Batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,field_description:stock_picking_batch_planner.field_stock_picking_batch__origin_batches_count
+msgid "Origin batches count"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model,name:stock_picking_batch_planner.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,help:stock_picking_batch_planner.field_stock_picking_type__plan_batch
+msgid ""
+"Place Stock Operations in Batches or Waves when planned from the Batch of the destiny moves.\n"
+"Uses same criteria as Auto-Batches to decide how to plan batches/waves."
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.actions.server,name:stock_picking_batch_planner.action_plan_selected_batches
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_planner.stock_picking_batch_form
+msgid "Plan Batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,field_description:stock_picking_batch_planner.field_stock_picking_type__plan_batch
+msgid "Planned Batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#. odoo-python
+#: code:addons/stock_picking_batch_planner/models/stock_picking_batch.py:0
+msgid "Planned Origin Batches"
+msgstr ""
+
+#. module: stock_picking_batch_planner
+#: model:ir.model.fields,help:stock_picking_batch_planner.field_stock_picking_batch__can_plan_batches
+msgid "Shows if this Batch can plan Batches"
+msgstr ""

@@ -1,0 +1,186 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_source_relocate
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_move_source_relocate
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+#, python-format
+msgid ""
+"<br/>This rule is applied only if the <strong>domain</strong> matches with "
+"the move."
+msgstr ""
+"<br/>Questa regola si applica solo se il <strong>dominio</strong> "
+"corrisponde al movimento."
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__active
+msgid "Active"
+msgstr "Attiva"
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.actions.act_window,help:stock_move_source_relocate.action_stock_source_relocate
+msgid "Add a Source Relocation"
+msgstr "Aggiungi una riallocazione sorgente"
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Applicability"
+msgstr "Applicabilità"
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_search
+msgid "Archived"
+msgstr "In archivio"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,help:stock_move_source_relocate.field_stock_source_relocate__rule_domain
+msgid ""
+"Domain based on Stock Moves, to define if the rule is applicable or not."
+msgstr ""
+"Dominio basato sui movimenti di magazzino, per definire se la regola è "
+"applicabile o meno."
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__location_id
+msgid "Location"
+msgstr "Ubicazione"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__picking_type_id
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__relocate_location_id
+msgid "Relocate Location"
+msgstr "Trasferisci ubicazione"
+
+#. module: stock_move_source_relocate
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+#, python-format
+msgid "Relocate location has to be a sub-location of '{}'."
+msgstr "L'ubicazione trasferimento deve essere una sotto ubicazione di '{}'."
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Relocation"
+msgstr "Trasferimento"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__rule_domain
+msgid "Rule Domain"
+msgstr "Dominio regola"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__rule_message
+msgid "Rule Message"
+msgstr "Messaggio regola"
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: stock_move_source_relocate
+#: model:ir.actions.act_window,name:stock_move_source_relocate.action_stock_source_relocate
+#: model:ir.ui.menu,name:stock_move_source_relocate.menu_stock_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Source Relocation"
+msgstr "Trasferimento origine"
+
+#. module: stock_move_source_relocate
+#: model:ir.model,name:stock_move_source_relocate.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_move_source_relocate
+#: model:ir.model,name:stock_move_source_relocate.model_stock_source_relocate
+msgid "Stock Move Source Relocate"
+msgstr "Movimento di magazzino trasferimento origine"
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_search
+msgid "Stock Reservation Rule"
+msgstr "Regola prenotazione magazzino"
+
+#. module: stock_move_source_relocate
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+#, python-format
+msgid ""
+"When a move with operation type <strong>{rule.picking_type_id.display_name}</"
+"strong> is inside the location <strong>{rule.location_id.display_name}</"
+"strong> and a check of availability returns no reservation, the move is "
+"relocated to the location <strong>{rule.relocate_location_id.display_name}</"
+"strong> (source location changed).<br/>If a move is partially unavailable, "
+"the move is split in two parts:<ul><li>the available part is adjusted to the "
+"reserved quantity, and its source location stays the same </li><li>the "
+"unavailable part is split in a new move in the relocation location</li></ul>"
+msgstr ""
+"Quando un movimento con tipo operazione <strong>{rule.picking_type_id."
+"display_name}</strong> è all'interno dell'ubicazione <strong>{rule."
+"location_id.display_name}</strong> e un controllo disponibilità non riporta "
+"prenotazioni, il movimento è trasferito all'ubicazione <strong>{rule."
+"relocate_location_id.display_name}</strong> (modifica ubicazione origine)."
+"<br/>Se un movimento è parzialmente non disponibile, il movimento è diviso "
+"in due parti:<ul><li>la parte disponibile è adeguata alla quantità "
+"prenotata, e la sua ubicazione origine rimane la stessa</li> <li>la parte "
+"non disponibile è modificata in un nuovo movimento nell'ubicazione di "
+"trasferimento</li></ul>"

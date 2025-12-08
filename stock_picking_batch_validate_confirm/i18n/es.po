@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_validate_confirm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-10 06:08+0000\n"
+"PO-Revision-Date: 2024-06-10 08:08+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid ""
+"<i>* You have not enough permissions to validate this batch as it is</i>"
+msgstr ""
+"<i>* No tienes suficientes permisos para Validar éste Batch tal y como está</"
+"i>"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__batch_id
+msgid "Batch"
+msgstr "Agrupación"
+
+#. module: stock_picking_batch_validate_confirm
+#. odoo-python
+#: code:addons/stock_picking_batch_validate_confirm/models/stock_picking_batch.py:0
+#, python-format
+msgid "Batch Confirm"
+msgstr "Confirmación Agrupación"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Agrupación de albarán"
+
+#. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__move_ids
+msgid "Moves"
+msgstr "Movimientos"
+
+#. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid ""
+"There are <i>pending origin moves</i> yet. By clickcing on <i>validate</i>, "
+"batch will be validated"
+msgstr ""
+"Hay <i>movimientos de origen pendientes</i> todavía. Al hacer clic en "
+"<i>validar</i> la agrupación de albarán será validada"
+
+#. module: stock_picking_batch_validate_confirm
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
+msgid "Validate"
+msgstr "Validar"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:res.groups,name:stock_picking_batch_validate_confirm.stock_picking_batch_validate_confirm_group
+msgid "Validate Incomplete Batches"
+msgstr "Validar Agrupaciones Incompletas"
+
+#. module: stock_picking_batch_validate_confirm
+#: model:ir.model,name:stock_picking_batch_validate_confirm.model_stock_picking_batch_confirm
+msgid "Wizard Batch Confirm"
+msgstr "Asistente Confirmación Lote"

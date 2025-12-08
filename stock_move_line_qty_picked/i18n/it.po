@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_line_qty_picked
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-08-02 16:25+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_move_line_qty_picked
+#: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__picked
+msgid "Picked"
+msgstr "Prelevato"
+
+#. module: stock_move_line_qty_picked
+#: model:ir.model,name:stock_move_line_qty_picked.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_move_line_qty_picked
+#: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__qty_picked
+msgid "Qty Picked"
+msgstr "Q.tà prelevata"
+
+#. module: stock_move_line_qty_picked
+#: model:ir.model,name:stock_move_line_qty_picked.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"

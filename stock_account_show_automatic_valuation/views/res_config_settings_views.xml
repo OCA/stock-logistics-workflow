@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.stock.account.show.automatic.valuation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock_account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block name="valuation_setting_container" position="inside">
+                <setting
+                    help="Enable automatic valuation for stock"
+                    id="stock_account_show_automatic_valuation"
+                >
+                    <field
+                        name="group_stock_accounting_automatic"
+                        string="Automatic Accounting"
+                    />
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,200 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_valuation_layer_usage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-27 19:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__dest_stock_valuation_layer_id
+msgid "Destination Stock Valuation Layer"
+msgstr "Capa de Valoración de Existencias de Destino"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.stock_valuation_layer_form
+msgid "Incoming Usage"
+msgstr "Utilización Entrante"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__incoming_usage_quantity
+msgid "Incoming Usage quantity"
+msgstr "Cantidad de Uso Entrante"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__incoming_usage_value
+msgid "Incoming Usage value"
+msgstr "Valor de Uso Entrante"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__incoming_usage_ids
+msgid "Incoming Valuation Usage"
+msgstr "Utilización de la Valoración Recibida"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.stock_valuation_layer_usage_tree
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model,name:stock_valuation_layer_usage.model_stock_move
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__stock_move_id
+msgid "Stock Move"
+msgstr "Movimiento de Almacén"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model,name:stock_valuation_layer_usage.model_stock_valuation_layer
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__stock_valuation_layer_id
+msgid "Stock Valuation Layer"
+msgstr "Nivel de Valoración de Existencias"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model,name:stock_valuation_layer_usage.model_stock_valuation_layer_usage
+msgid "Stock Valuation Layer Usage"
+msgstr "Uso del Nivel de Valoración de Existencias"
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.stock_valuation_layer_usage_pivot
+msgid "Stock Valuation Layer Usage Analysis"
+msgstr "Valoración de Existencias Análisis del Uso de Niveles"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.actions.act_window,name:stock_valuation_layer_usage.stock_valuation_layer_usage_action
+#: model:ir.ui.menu,name:stock_valuation_layer_usage.stock_valuation_layer_usage_menu
+msgid "Stock Valuation Layer Usages"
+msgstr "Usos del Nivel de Valoración de Existencias"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_valuation_layer_usage__stock_move_id
+msgid "Stock move that took the quantities and value from the layer"
+msgstr "Movimiento de existencias que tomó las cantidades y el valor del nivel"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__quantity
+msgid "Taken Quantity"
+msgstr "Cantidad Tomada"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer_usage__value
+msgid "Taken Value"
+msgstr "Valor Tomado"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_valuation_layer__incoming_usage_ids
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_valuation_layer__usage_ids
+msgid ""
+"Trace on what stock moves has the stock valuation been used in, including "
+"the quantities taken."
+msgstr ""
+"Rastree en qué movimientos de existencias se ha utilizado la valoración de "
+"existencias, incluidas las cantidades tomadas."
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_move__layer_usage_ids
+msgid ""
+"Trace what valuation layers have been used by this move, including the "
+"quantities taken."
+msgstr ""
+"Rastree qué capas de valoración se han utilizado en este traslado, incluidas "
+"las cantidades tomadas."
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.stock_valuation_layer_form
+msgid "Usage"
+msgstr "Utilización"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__usage_quantity
+msgid "Usage Quantity"
+msgstr "Cantidad de uso"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__usage_value
+msgid "Usage Value"
+msgstr "Valor de Utilización"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_move__layer_usage_ids
+msgid "Valuation Layer Usage"
+msgstr "Uso del Nivel de Valoración"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_valuation_layer_usage__dest_stock_valuation_layer_id
+#: model:ir.model.fields,help:stock_valuation_layer_usage.field_stock_valuation_layer_usage__stock_valuation_layer_id
+msgid "Valuation Layer that was used"
+msgstr "Nivel de valoración que se ha utilizado"
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.view_move_form_inherit
+msgid "Valuation Layers"
+msgstr "Niveles de Valoración"
+
+#. module: stock_valuation_layer_usage
+#: model:ir.model.fields,field_description:stock_valuation_layer_usage.field_stock_valuation_layer__usage_ids
+msgid "Valuation Usage"
+msgstr "Utilización de la Valoración"
+
+#. module: stock_valuation_layer_usage
+#: model_terms:ir.ui.view,arch_db:stock_valuation_layer_usage.stock_valuation_layer_usage_tree
+msgid "Value"
+msgstr "Valoración"
+
+#. module: stock_valuation_layer_usage
+#. odoo-python
+#: code:addons/stock_valuation_layer_usage/models/stock_valuation_layer_usage.py:0
+#, python-format
+msgid "You can't user same layer as origin and destination"
+msgstr "No se puede utilizar el mismo nivel como origen y destino"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"

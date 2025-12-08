@@ -1,0 +1,14 @@
+# Copyright 2024 Quartile (https://www.quartile.co)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo import models
+
+
+class ResCurrency(models.Model):
+    _inherit = "res.currency"
+
+    def _convert(self, from_amount, to_currency, company=None, date=None, round=True):
+        date = self.env.context.get("actual_date") or date
+        return super()._convert(
+            from_amount, to_currency, company=company, date=date, round=round
+        )

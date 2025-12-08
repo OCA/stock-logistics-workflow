@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_backorder_strategy
+#
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: stock-logistics-workflow (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-10 05:29+0000\n"
+"PO-Revision-Date: 2016-01-18 19:31+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-stock-logistics-"
+"workflow-8-0/language/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_backorder_strategy_cancel
+#: model:ir.model.fields.selection,name:stock_picking_backorder_strategy_cancel.selection__stock_picking_type__create_backorder__cancel
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: stock_picking_backorder_strategy_cancel
+#: model:ir.model.fields,field_description:stock_picking_backorder_strategy_cancel.field_stock_picking_type__create_backorder
+msgid "Create Backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy_cancel
+#: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking_type
+#, fuzzy
+msgid "Picking Type"
+msgstr "Kommissionierschein"
+
+#. module: stock_picking_backorder_strategy_cancel
+#: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_backorder_strategy_cancel
+#: model:ir.model.fields,help:stock_picking_backorder_strategy_cancel.field_stock_picking_type__create_backorder
+msgid ""
+"When validating a transfer:\n"
+" * Ask: users are asked to choose if they want to make a backorder for "
+"remaining products\n"
+" * Always: a backorder is automatically created for the remaining products\n"
+" * Never: remaining products are cancelled"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Backorder Strategy"
+#~ msgstr "Rückstands-Strategie"
+
+#~ msgid "Create"
+#~ msgstr "Anlegen"
+
+#~ msgid "Define what to do with backorder"
+#~ msgstr "Festlegen, was mit Rückständen passieren soll"
+
+#~ msgid "No create"
+#~ msgstr "Keine Anlage"
+
+#, fuzzy
+#~ msgid "The operation type determines the picking view"
+#~ msgstr "Die Art der Kommissionierung bestimmt die Sicht"

@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_restrict_cancel_printed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_printed.field_stock_picking_type__restrict_cancel_if_printed
+msgid "Restrict cancelation if printed"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model.fields,help:stock_picking_restrict_cancel_printed.field_stock_picking_type__restrict_cancel_if_printed
+msgid ""
+"When checked, the cancelation of a printed transfer will not be allowed"
+msgstr ""
+
+#. module: stock_picking_restrict_cancel_printed
+#. odoo-python
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_move.py:0
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_picking.py:0
+msgid "You cannot cancel a transfer that is already printed."
+msgstr ""

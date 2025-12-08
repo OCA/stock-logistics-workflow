@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_source_relocate
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_source_relocate
+#. odoo-python
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+msgid ""
+"<br/>This rule is applied only if the <strong>domain</strong> matches with "
+"the move."
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.actions.act_window,help:stock_move_source_relocate.action_stock_source_relocate
+msgid "Add a Source Relocation"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Applicability"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_search
+msgid "Archived"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,help:stock_move_source_relocate.field_stock_source_relocate__rule_domain
+msgid ""
+"Domain based on Stock Moves, to define if the rule is applicable or not."
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__location_id
+msgid "Location"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__picking_type_id
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__relocate_location_id
+msgid "Relocate Location"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#. odoo-python
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+msgid "Relocate location has to be a sub-location of '{}'."
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Relocation"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__rule_domain
+msgid "Rule Domain"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__rule_message
+msgid "Rule Message"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model.fields,field_description:stock_move_source_relocate.field_stock_source_relocate__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.actions.act_window,name:stock_move_source_relocate.action_stock_source_relocate
+#: model:ir.ui.menu,name:stock_move_source_relocate.menu_stock_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_form
+msgid "Source Relocation"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model,name:stock_move_source_relocate.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model:ir.model,name:stock_move_source_relocate.model_stock_source_relocate
+msgid "Stock Move Source Relocate"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#: model_terms:ir.ui.view,arch_db:stock_move_source_relocate.view_stock_source_relocate_search
+msgid "Stock Reservation Rule"
+msgstr ""
+
+#. module: stock_move_source_relocate
+#. odoo-python
+#: code:addons/stock_move_source_relocate/models/stock_source_relocate.py:0
+msgid ""
+"When a move with operation type "
+"<strong>{rule.picking_type_id.display_name}</strong> is inside the location "
+"<strong>{rule.location_id.display_name}</strong> and a check of availability"
+" returns no reservation, the move is relocated to the location "
+"<strong>{rule.relocate_location_id.display_name}</strong> (source location "
+"changed).<br/>If a move is partially unavailable, the move is split in two "
+"parts:<ul><li>the available part is adjusted to the reserved quantity, and "
+"its source location stays the same </li><li>the unavailable part is split in"
+" a new move in the relocation location</li></ul>"
+msgstr ""

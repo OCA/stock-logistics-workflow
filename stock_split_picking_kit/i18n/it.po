@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_split_picking_kit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-08-27 12:26+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields,field_description:stock_split_picking_kit.field_stock_split_picking__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields,field_description:stock_split_picking_kit.field_stock_split_picking__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields,field_description:stock_split_picking_kit.field_stock_split_picking____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields,field_description:stock_split_picking_kit.field_stock_split_picking__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields,field_description:stock_split_picking_kit.field_stock_split_picking__kit_split_quantity
+msgid "Number of kits by transfer"
+msgstr "Numero di kit per trasferimento"
+
+#. module: stock_split_picking_kit
+#: model:ir.model.fields.selection,name:stock_split_picking_kit.selection__stock_split_picking__mode__kit_quantity
+msgid "Quantity of kits"
+msgstr "Quantità di kit"
+
+#. module: stock_split_picking_kit
+#: model:ir.model,name:stock_split_picking_kit.model_stock_split_picking
+msgid "Split a picking"
+msgstr "Dividi un prevlievo"

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="action_scrap_all" model="ir.actions.server">
+        <field name="name">Scrap All</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            action = records.button_whole_scrap()</field>
+    </record>
+</odoo>

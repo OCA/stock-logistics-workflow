@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_batch_form_view">
+        <field
+            name="name"
+        >stock.picking.batch.form (in stock_picking_batch_creation)</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="picking_device_id" />
+                <field name="batch_weight" />
+                <field name="batch_volume" />
+                <field name="batch_nbr_bins" />
+                <field name="batch_nbr_lines" />
+            </field>
+        </field>
+    </record>
+</odoo>

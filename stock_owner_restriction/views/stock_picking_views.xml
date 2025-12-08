@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="owner_id" position="before">
+                <field name="owner_restriction" invisible="1" />
+            </field>
+            <field name="owner_id" position="attributes">
+                <attribute
+                    name="invisible"
+                >picking_type_code != 'incoming' and owner_restriction != 'picking_partner'</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

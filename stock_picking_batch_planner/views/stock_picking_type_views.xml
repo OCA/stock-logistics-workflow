@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Moduon Team S.L.
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_picking_type_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_type_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='auto_batch']" position="after">
+                <field name="auto_batch_original" invisible="1" />
+                <!-- If auto_batch_original is True,
+                 plan_batch should be true and readonly -->
+                <field name="plan_batch" readonly="auto_batch_original" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

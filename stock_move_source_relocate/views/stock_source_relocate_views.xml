@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_source_relocate_form" model="ir.ui.view">
+        <field name="name">stock.source.relocate.form</field>
+        <field name="model">stock.source.relocate</field>
+        <field name="arch" type="xml">
+            <form string="Source Relocation">
+                <sheet>
+                    <div class="oe_button_box" name="button_box" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <group string="Applicability" name="configuration">
+                        <group>
+                            <field name="location_id" />
+                            <field name="picking_type_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="rule_domain"
+                                widget="domain"
+                                options="{'model': 'stock.move', 'in_dialog': true}"
+                            />
+                        </group>
+                    </group>
+                    <group string="Relocation" name="relocation">
+                        <group>
+                            <field name="relocate_location_id" />
+                        </group>
+                        <group>
+                            <field name="rule_message" nolabel="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_stock_source_relocate_search" model="ir.ui.view">
+        <field name="name">stock.source.relocate.search</field>
+        <field name="model">stock.source.relocate</field>
+        <field name="arch" type="xml">
+            <search string="Stock Reservation Rule">
+                <field name="location_id" />
+                <field name="picking_type_id" />
+                <field name="relocate_location_id" />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="view_stock_source_relocate_tree" model="ir.ui.view">
+        <field name="name">stock.source.relocate</field>
+        <field name="model">stock.source.relocate</field>
+        <field name="arch" type="xml">
+            <list name="source-relocation">
+                <field name="sequence" widget="handle" />
+                <field name="location_id" />
+                <field name="picking_type_id" />
+                <field name="relocate_location_id" />
+                <field name="rule_domain" groups="base.group_no_one" />
+            </list>
+        </field>
+    </record>
+    <record id="action_stock_source_relocate" model="ir.actions.act_window">
+        <field name="name">Source Relocation</field>
+        <field name="res_model">stock.source.relocate</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_id" ref="view_stock_source_relocate_tree" />
+        <field name="search_view_id" ref="view_stock_source_relocate_search" />
+        <field name="context" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a Source Relocation
+            </p>
+        </field>
+    </record>
+    <menuitem
+        action="action_stock_source_relocate"
+        id="menu_stock_source_relocate"
+        parent="stock.menu_warehouse_config"
+        sequence="50"
+    />
+</odoo>

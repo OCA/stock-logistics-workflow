@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_device_type,access_stock_device_type,model_stock_device_type,base.group_user,1,1,1,1
+access_make_picking_batch,access_make_picking_batch,model_make_picking_batch,base.group_user,1,1,1,1

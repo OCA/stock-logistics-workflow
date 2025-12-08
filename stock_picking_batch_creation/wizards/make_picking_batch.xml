@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="make_picking_batch_form_view">
+        <field
+            name="name"
+        >make.picking.batch.form (in stock_picking_batch_creation)</field>
+        <field name="model">make.picking.batch</field>
+        <field name="arch" type="xml">
+            <form string="Make Picking Batch">
+                <group>
+                    <group string="Criteria" name="criteria" colspan="2">
+                        <field name="user_id" />
+                        <field name="picking_type_ids" widget="many2many_tags" />
+                        <field name="maximum_number_of_preparation_lines" />
+                    </group>
+                    <group name="devices">
+                        <label for="stock_device_type_ids" colspan="4" />
+                        <field name="stock_device_type_ids" nolabel="1" colspan="4">
+                            <list>
+                                <field name="name" />
+                                <field name="sequence" />
+                            </list>
+                        </field>
+                    </group>
+                    <group string="Advanced" name="advanced" colspan="4">
+                        <field name="group_pickings_by_partner" />
+                        <field name="restrict_to_same_partner" />
+                        <field name="restrict_to_same_priority" />
+                        <field name="split_picking_exceeding_limits" />
+                    </group>
+                    <group string="Diagnostic" name="debug" colspan="4">
+                        <field name="add_picking_list_in_error" />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="create_batch"
+                        string="Create batch picking"
+                        class="btn-primary"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="make_picking_batch_act_window">
+        <field name="name">Make Picking Batch</field>
+        <field name="res_model">make.picking.batch</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        action="make_picking_batch_act_window"
+        id="make_picking_batch"
+        parent="stock_picking_batch.menu_stock_jobs"
+        sequence="10"
+    />
+</odoo>

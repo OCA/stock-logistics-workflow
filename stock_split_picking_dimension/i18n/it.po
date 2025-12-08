@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_split_picking_dimension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-08-20 17:27+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_split_picking_dimension
+#. odoo-python
+#: code:addons/stock_split_picking_dimension/exceptions.py:0
+msgid "At least one dimension must be set"
+msgstr "Deve essere impostata almeno una dimensione"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields.selection,name:stock_split_picking_dimension.selection__stock_split_picking__mode__dimensions
+msgid "By dimensions"
+msgstr "Per dimensione"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_volume
+msgid "Max Volume"
+msgstr "Volume massimo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_weight
+msgid "Max Weight"
+msgstr "Peso massimo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_nbr_lines
+msgid "Max number of lines"
+msgstr "Numero massimo di righe"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_max_volume
+msgid "Maximum total net volume"
+msgstr "Volume netto totale massimo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_max_weight
+msgid "Maximum total net weight"
+msgstr "Peso netto totale massimo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_id
+msgid "Packaging volume unit of measure"
+msgstr "Unità di misura per il volume dell'imballaggio"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model,name:stock_split_picking_dimension.model_stock_split_picking
+msgid "Split a picking"
+msgstr "Dividi un prevlievo"
+
+#. module: stock_split_picking_dimension
+#. odoo-python
+#: code:addons/stock_split_picking_dimension/exceptions.py:0
+msgid "Value of '%(field_label)s' must be positive"
+msgstr "Il valore di '%(field_label)s' deve essere positivo"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_name
+msgid "Volume Unit of Measure label"
+msgstr "Etichetta unità di misura volume"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_id
+msgid "Volume Units of Measure"
+msgstr "Unità di misura del volume"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__max_volume
+msgid "Volume in default system volume unit of measure"
+msgstr "Volume nell'unità di misura del volume predefinita del sistema"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_id
+msgid "Weight Unit of Measure"
+msgstr "Unità di misura del peso"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_id
+msgid "Weight Units of Measure"
+msgstr "Unità di misura del peso"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__max_weight
+msgid "Weight in default system weight unit of measure"
+msgstr "Peso nell'unità di misura del peso predefinita del sistema"
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_name
+msgid "Weight unit of measure label"
+msgstr "Etichetta unità di misura del peso"

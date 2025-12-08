@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_set_add_from_picking_form_view" model="ir.ui.view">
+        <field name="name">stock.product.set.form</field>
+        <field name="model">stock.product.set.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main" colspan="4">
+                    <field
+                        name="picking_id"
+                        invisible="context.get('default_picking_id')"
+                    />
+                    <field name="partner_id" invisible="1" />
+                    <field
+                        name="product_set_id"
+                        domain="['|',('partner_id', '=', False),('partner_id', '=', partner_id)]"
+                    />
+                    <field name="quantity" />
+                </group>
+                <group name="lines">
+                    <field
+                        name="product_set_line_ids"
+                        nolabel="1"
+                        colspan="2"
+                        domain="[('product_set_id', '=', product_set_id)]"
+                    >
+                        <list>
+                            <field
+                                name="product_id"
+                                options="{'no_open': True, 'no_create': True}"
+                            />
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="add_set"
+                        string="Add set"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record
+        id="act_open_wizard_product_set_add_from_picking"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Add a set in a picking</field>
+        <field name="res_model">stock.product.set.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="product_set_add_from_picking_form_view" />
+        <field name="domain">[]</field>
+        <field name="context">{'default_picking_id': active_id}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

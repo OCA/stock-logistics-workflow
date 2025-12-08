@@ -1,0 +1,202 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_partner_note
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-01-19 14:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__active
+msgid "Active"
+msgstr "Attiva"
+
+#. module: stock_picking_partner_note
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.res_config_settings_view_form
+msgid ""
+"Add a constraint to check if the picking note is already in use on multiple "
+"partner"
+msgstr ""
+"Aggiungere un vincolo per verificare se la nota del prelievo è già in uso su "
+"più partner"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_company__check_note_already_in_use
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_config_settings__check_note_already_in_use
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.res_config_settings_view_form
+msgid "Check picking note already in use"
+msgstr "Contollo nota prelievo già in uso"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__create_uid
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__create_date
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__display_name
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__id
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__write_uid
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__write_date
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__name
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__note_type_id
+msgid "Note Type"
+msgstr "Tipo nota"
+
+#. module: stock_picking_partner_note
+#: model:ir.ui.menu,name:stock_picking_partner_note.stock_picking_note_types_menu
+msgid "Note Types"
+msgstr "Tipi nota"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking__note
+msgid "Notes"
+msgstr "Note"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_type__partner_note_type_ids
+msgid "Partner Note Type"
+msgstr "Tipo nota pertner"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_stock_picking_note
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.view_stock_picking_note_form
+msgid "Picking Note"
+msgstr "Nota prelievo"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_stock_picking_note_type
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.view_stock_picking_note_type_form
+msgid "Picking Note Type"
+msgstr "Tipo nota prelievo"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_partner__stock_picking_note_ids
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_res_users__stock_picking_note_ids
+#: model:ir.ui.menu,name:stock_picking_partner_note.stock_picking_notes_root
+#: model_terms:ir.ui.view,arch_db:stock_picking_partner_note.view_partner_form_inherit
+msgid "Picking Notes"
+msgstr "Note prelievo"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,help:stock_picking_partner_note.field_res_config_settings__check_note_already_in_use
+msgid ""
+"Prevent the update or deletion of a note that is already in use by more than "
+"one contact."
+msgstr ""
+"Previene l'aggiornamento o la cancellazione di una nota che è già in uso da "
+"più di un contatto."
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note__sequence
+#: model:ir.model.fields,field_description:stock_picking_partner_note.field_stock_picking_note_type__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: stock_picking_partner_note
+#: model:ir.actions.act_window,name:stock_picking_partner_note.stock_picking_note_types_act_window
+msgid "Stock Picking Note Types"
+msgstr "Tipi nota prelievo magazzino"
+
+#. module: stock_picking_partner_note
+#: model:ir.model,name:stock_picking_partner_note.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_picking_partner_note
+#: model:ir.model.fields,help:stock_picking_partner_note.field_stock_picking_type__partner_note_type_ids
+msgid ""
+"Type of note with customer preferences on how his products are prepared for "
+"delivery."
+msgstr ""
+"Tipo nota con preferenze cliente su come i suoi prodotti sono preparati per "
+"la spedizione."
+
+#. module: stock_picking_partner_note
+#. odoo-python
+#: code:addons/stock_picking_partner_note/models/stock_picking_note.py:0
+msgid ""
+"You cannot update or delete a note that is linked to multiple contacts: "
+"%(partner_ids)s"
+msgstr ""
+"Non si può modificare o cancellare una nota che è collegata a più contatti: "
+"%(partner_ids)s"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
+
+#~ msgid ""
+#~ "That must be activated if you want to prevent the update or deletion of a "
+#~ "note that is already in use by multiple contacts."
+#~ msgstr ""
+#~ "Questo deve essere attivato se si vuole prevenire la modifica o la "
+#~ "cancellazione di una nota che è già in uso da più contatti."
+
+#, python-format
+#~ msgid ""
+#~ "You cannot update or delete a note that linked to multiple contacts: "
+#~ "%(partner_ids)s"
+#~ msgstr ""
+#~ "Non si può modificare o cancellare una nota che è collegata a più "
+#~ "contatti: %(partner_ids)s"

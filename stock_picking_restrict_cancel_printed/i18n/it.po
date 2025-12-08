@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_restrict_cancel_printed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_printed.field_stock_picking_type__restrict_cancel_if_printed
+msgid "Restrict cancelation if printed"
+msgstr "Limita annullamento se stampato"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model,name:stock_picking_restrict_cancel_printed.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_picking_restrict_cancel_printed
+#: model:ir.model.fields,help:stock_picking_restrict_cancel_printed.field_stock_picking_type__restrict_cancel_if_printed
+msgid "When checked, the cancelation of a printed transfer will not be allowed"
+msgstr ""
+"Quando selezionata, la cancellazione di un trasferimento stampato non sarà "
+"consentita"
+
+#. module: stock_picking_restrict_cancel_printed
+#. odoo-python
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_move.py:0
+#: code:addons/stock_picking_restrict_cancel_printed/models/stock_picking.py:0
+#, python-format
+msgid "You cannot cancel a transfer that is already printed."
+msgstr "Non si può annullare un trasferimento che è già stato stampato."

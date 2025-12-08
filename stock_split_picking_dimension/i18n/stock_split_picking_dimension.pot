@@ -1,0 +1,106 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_split_picking_dimension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_split_picking_dimension
+#. odoo-python
+#: code:addons/stock_split_picking_dimension/exceptions.py:0
+msgid "At least one dimension must be set"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields.selection,name:stock_split_picking_dimension.selection__stock_split_picking__mode__dimensions
+msgid "By dimensions"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_volume
+msgid "Max Volume"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_weight
+msgid "Max Weight"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__max_nbr_lines
+msgid "Max number of lines"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_max_volume
+msgid "Maximum total net volume"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_max_weight
+msgid "Maximum total net weight"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__mode
+msgid "Mode"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_id
+msgid "Packaging volume unit of measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model,name:stock_split_picking_dimension.model_stock_split_picking
+msgid "Split a picking"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#. odoo-python
+#: code:addons/stock_split_picking_dimension/exceptions.py:0
+msgid "Value of '%(field_label)s' must be positive"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_name
+msgid "Volume Unit of Measure label"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_volume_uom_id
+msgid "Volume Units of Measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__max_volume
+msgid "Volume in default system volume unit of measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_id
+msgid "Weight Unit of Measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_id
+msgid "Weight Units of Measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,help:stock_split_picking_dimension.field_stock_split_picking__max_weight
+msgid "Weight in default system weight unit of measure"
+msgstr ""
+
+#. module: stock_split_picking_dimension
+#: model:ir.model.fields,field_description:stock_split_picking_dimension.field_stock_split_picking__user_weight_uom_name
+msgid "Weight unit of measure label"
+msgstr ""

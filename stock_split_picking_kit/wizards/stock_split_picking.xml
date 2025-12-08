@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_split_picking" model="ir.ui.view">
+        <field name="model">stock.split.picking</field>
+        <field name="inherit_id" ref="stock_split_picking.view_stock_split_picking" />
+        <field name="arch" type="xml">
+            <field name="move_ids" position="after">
+                <field
+                    name="kit_split_quantity"
+                    invisible="mode != 'kit_quantity'"
+                    required="mode == 'kit_quantity'"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

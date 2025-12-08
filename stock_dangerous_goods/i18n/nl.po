@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dangerous_goods
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-04-12 00:26+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_stock_quant_package__has_lq_products
+msgid "Has Lq Products"
+msgstr "Bevat LQ-Producten"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_product_product__is_lq_product
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_stock_move_line__has_lq_products
+msgid "Is Lq Product"
+msgstr "Is LQ-Product"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_stock_quant_package
+msgid "Packages"
+msgstr "Pakketten"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Productbewegingen (Voorraadmutatieregel)"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_product_product
+msgid "Product Variant"
+msgstr "Productvariant"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,help:stock_dangerous_goods.field_product_product__is_lq_product
+#: model:ir.model.fields,help:stock_dangerous_goods.field_stock_move_line__has_lq_products
+msgid "Whether this product is a Limited Quantity product or not"
+msgstr "Of dit product een Limited Quantity-product is of niet"
