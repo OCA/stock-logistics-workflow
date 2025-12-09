@@ -10,7 +10,11 @@ class StockMove(models.Model):
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
     restrict_lot_id = fields.Many2one(
-        "stock.lot", string="Restrict Lot", copy=False, index=True
+        "stock.lot",
+        string="Restrict Lot",
+        copy=False,
+        index=True,
+        domain="[('product_id', '=', product_id)]",
     )
 
     def _prepare_procurement_values(self):
@@ -134,6 +138,23 @@ class StockMove(models.Model):
         else:
             restrict_lot_id = vals.pop("restrict_lot_id")
             restrict_lot = self.env["stock.lot"].browse(restrict_lot_id)
+
+            # Check if any move has reservation and warn the user
+            moves_with_reservation = self.filtered(
+                lambda m: m.state in ["assigned", "partially_available"]
+                and m.move_line_ids
+            )
+            if moves_with_reservation:
+                raise UserError(
+                    _(
+                        "Cannot change the Lot/Serial number restriction on moves "
+                        "that already have stock reserved.\n\n"
+                        "Please unreserve the stock first (button 'Unreserve'), "
+                        "change the Lot/Serial number, and then reserve again "
+                        "(button 'Check Availability')."
+                    )
+                )
+
             chained_moves = OrderedSet(self.ids)
             self._rollup_move_dests(chained_moves)
             self._rollup_not_cancelled_move_origs(chained_moves)
