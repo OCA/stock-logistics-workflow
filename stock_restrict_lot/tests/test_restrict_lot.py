@@ -377,6 +377,177 @@ class TestRestrictLot(TransactionCase):
         orig_move.quantity_done = orig_move.product_uom_qty
         orig_move._action_done()
         self.assertEqual(orig_move.state, "done")
+        if move.move_line_ids:
+            move.move_line_ids.unlink()
         with self.assertRaises(ValidationError) as m:
             move.restrict_lot_id = new_lot.id
         self.assertIn("You can't modify the Lot/Serial number", m.exception.args[0])
+
+    def test_change_lot_before_done_reassigns_correctly(self):
+        lot2 = self.env["stock.lot"].create(
+            {
+                "name": "lot2",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+        self._update_product_stock(5, self.lot.id)
+        self._update_product_stock(5, lot2.id)
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.out_type_id.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_loc.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "name": "test move",
+                "product_id": self.product.id,
+                "product_uom_qty": 1,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_loc.id,
+                "restrict_lot_id": self.lot.id,
+            }
+        )
+        picking.action_confirm()
+        picking.action_assign()
+
+        self.assertEqual(picking.state, "assigned")
+        self.assertEqual(move.move_line_ids.lot_id, self.lot)
+
+        picking.do_unreserve()
+        move.restrict_lot_id = lot2
+        picking.action_assign()
+
+        self.assertEqual(move.move_line_ids.lot_id, lot2)
+
+    def test_internal_transfer_restrict_lot_quarantine(self):
+        quarantine_loc = self.env["stock.location"].create(
+            {
+                "name": "Quarantine",
+                "location_id": self.warehouse.view_location_id.id,
+                "usage": "internal",
+            }
+        )
+
+        lot_alert = self.env["stock.lot"].create(
+            {
+                "name": "LOT-ALERT-001",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+        lot_ok = self.env["stock.lot"].create(
+            {
+                "name": "LOT-OK-001",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+
+        self._update_product_stock(10, lot_alert.id)
+        self._update_product_stock(10, lot_ok.id)
+
+        internal_picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.int_type_id.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": quarantine_loc.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "name": "Quarantine move",
+                "product_id": self.product.id,
+                "product_uom_qty": 10,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": internal_picking.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": quarantine_loc.id,
+                "restrict_lot_id": lot_alert.id,
+            }
+        )
+
+        internal_picking.action_confirm()
+        internal_picking.action_assign()
+
+        self.assertEqual(internal_picking.state, "assigned")
+        self.assertEqual(len(move.move_line_ids), 1)
+        self.assertEqual(move.move_line_ids.lot_id, lot_alert)
+        self.assertEqual(move.move_line_ids.reserved_uom_qty, 10)
+
+        move.quantity_done = 10
+        internal_picking.button_validate()
+
+        self.assertEqual(internal_picking.state, "done")
+        quant_quarantine = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", quarantine_loc.id),
+                ("lot_id", "=", lot_alert.id),
+            ]
+        )
+        self.assertEqual(quant_quarantine.quantity, 10)
+
+        quant_stock = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", self.warehouse.lot_stock_id.id),
+                ("lot_id", "=", lot_ok.id),
+            ]
+        )
+        self.assertEqual(quant_stock.quantity, 10)
+
+    def test_13_cannot_change_lot_with_reservation(self):
+        self._update_product_stock(10, self.lot.id)
+
+        lot2 = self.env["stock.lot"].create(
+            {
+                "name": "lot_test_change",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.out_type_id.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_loc.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "name": "Test move",
+                "product_id": self.product.id,
+                "product_uom_qty": 5,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": self.warehouse.lot_stock_id.id,
+                "location_dest_id": self.customer_loc.id,
+                "restrict_lot_id": self.lot.id,
+            }
+        )
+
+        picking.action_confirm()
+        picking.action_assign()
+
+        self.assertEqual(move.state, "assigned")
+        self.assertTrue(move.move_line_ids)
+
+        with self.assertRaises(UserError) as context:
+            move.restrict_lot_id = lot2.id
+
+        self.assertIn("unreserve", str(context.exception).lower())
+        self.assertIn("check availability", str(context.exception).lower())
+
+        picking.do_unreserve()
+        self.assertEqual(move.state, "confirmed")
+        self.assertFalse(move.move_line_ids)
+
+        move.restrict_lot_id = lot2.id
+        self.assertEqual(move.restrict_lot_id, lot2)
