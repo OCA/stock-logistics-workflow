@@ -10,7 +10,7 @@ class TestStockPickingType(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product"}
+            {"name": "Test Product", "is_storable": True}
         )
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
         cls.picking_type_out = cls.env["stock.picking.type"].browse(
@@ -54,4 +54,4 @@ class TestStockPickingType(TransactionCase):
         picking = self._create_picking()
         picking.action_confirm()
         self.assertEqual(picking.state, "assigned")
-        self.assertEqual(picking.move_line_ids[0].reserved_uom_qty, 1.0)
+        self.assertEqual(picking.move_line_ids[0].quantity, 1.0)
