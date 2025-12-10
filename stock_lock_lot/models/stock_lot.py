@@ -38,22 +38,25 @@ class StockLot(models.Model):
 
     @api.constrains("locked")
     def _check_lock_unlock(self):
-        if not self.user_has_groups(
-            "stock_lock_lot.group_lock_lot"
-        ) and not self.env.context.get("bypass_lock_permission_check"):
+        has_lock_group = self.user_has_groups("stock_lock_lot.group_lock_lot")
+        can_bypass_check = self.env.context.get("bypass_lock_permission_check")
+        if not (has_lock_group or can_bypass_check):
             raise exceptions.AccessError(
                 _("You are not allowed to block/unblock Serial Numbers/Lots")
             )
-        reserved_quants = self.env["stock.quant"].search(
-            [("lot_id", "in", self.ids), ("reserved_quantity", "!=", 0.0)]
-        )
-        if reserved_quants:
-            raise exceptions.ValidationError(
-                _(
-                    "You are not allowed to block/unblock, there are"
-                    " reserved quantities for these Serial Numbers/Lots"
-                )
+        # The reserved check is kept for backward compatibility
+        reserved_check = self.env.context.get("reserved_lock_permission_check")
+        if reserved_check:
+            reserved_quants = self.env["stock.quant"].search(
+                [("lot_id", "in", self.ids), ("reserved_quantity", "!=", 0.0)]
             )
+            if reserved_quants:
+                raise exceptions.ValidationError(
+                    _(
+                        "You are not allowed to block/unblock, there are"
+                        " reserved quantities for these Serial Numbers/Lots"
+                    )
+                )
 
     @api.model_create_multi
     def create(self, vals_list):
