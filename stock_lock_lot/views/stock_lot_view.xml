@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <field name="ref" position="after">
                 <field name="locked" />
+                <field name="locked_reservation" invisible="not locked" />
             </field>
         </field>
     </record>
@@ -17,6 +18,7 @@
         <field name="arch" type="xml">
             <field name="create_date" position="after">
                 <field name="locked" />
+                <field name="locked_reservation" optional="hide" />
             </field>
         </field>
     </record>
@@ -27,10 +29,16 @@
         <field name="arch" type="xml">
             <group position="before">
                 <field name="locked" />
+                <field name="locked_reservation" />
                 <filter
                     string="Locked"
                     name="locked_filter"
                     domain="[('locked', '=', True)]"
+                />
+                <filter
+                    string="Allow Reservation When Locked"
+                    name="reserve_locked_filter"
+                    domain="[('locked_reservation', '=', False)]"
                 />
             </group>
             <filter name="group_by_product" position="before">

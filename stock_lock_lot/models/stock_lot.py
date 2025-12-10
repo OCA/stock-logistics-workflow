@@ -13,7 +13,16 @@ class StockLot(models.Model):
     locked = fields.Boolean(
         string="Blocked",
         tracking=True,
+        copy=False,
         help="Indicates whether this lot is blocked for use.",
+    )
+    locked_reservation = fields.Boolean(
+        string="Block reservation when locked",
+        tracking=True,
+        copy=False,
+        help="If checked, this lot will be blocked for reservation when locked. "
+        "If unchecked, this lot can be reserved even when locked. "
+        "This overrides the category setting.",
     )
     product_id = fields.Many2one(tracking=True)
 
@@ -31,29 +40,44 @@ class StockLot(models.Model):
             categ = categ.parent_id
         return _locked
 
+    def _get_product_reserve_locked(self, product):
+        """Should block reservation when locked?
+
+        @param product: browse-record for product.product
+        @return True when the category of the product
+                blocks reservation of locked lots
+        """
+        if not product or not product.categ_id:
+            return False
+        return product.categ_id.lot_reserve_locked
+
     @api.onchange("product_id")
     def _onchange_product_id(self):
         """Instruct the client to lock/unlock a lot on product change"""
         self.locked = self._get_product_locked(self.product_id)
+        self.locked_reservation = self._get_product_reserve_locked(self.product_id)
 
     @api.constrains("locked")
     def _check_lock_unlock(self):
-        if not self.user_has_groups(
-            "stock_lock_lot.group_lock_lot"
-        ) and not self.env.context.get("bypass_lock_permission_check"):
+        has_lock_group = self.user_has_groups("stock_lock_lot.group_lock_lot")
+        can_bypass_check = self.env.context.get("bypass_lock_permission_check")
+        if not (has_lock_group or can_bypass_check):
             raise exceptions.AccessError(
                 _("You are not allowed to block/unblock Serial Numbers/Lots")
             )
-        reserved_quants = self.env["stock.quant"].search(
-            [("lot_id", "in", self.ids), ("reserved_quantity", "!=", 0.0)]
-        )
-        if reserved_quants:
-            raise exceptions.ValidationError(
-                _(
-                    "You are not allowed to block/unblock, there are"
-                    " reserved quantities for these Serial Numbers/Lots"
-                )
+        # The reserved check is kept for backward compatibility
+        reserved_check = self.env.context.get("reserved_lock_permission_check")
+        if reserved_check:
+            reserved_quants = self.env["stock.quant"].search(
+                [("lot_id", "in", self.ids), ("reserved_quantity", "!=", 0.0)]
             )
+            if reserved_quants:
+                raise exceptions.ValidationError(
+                    _(
+                        "You are not allowed to block/unblock, there are"
+                        " reserved quantities for these Serial Numbers/Lots"
+                    )
+                )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -68,6 +92,7 @@ class StockLot(models.Model):
             )
             product = self.env["product.product"].browse(product_id)
             vals["locked"] = self._get_product_locked(product)
+            vals["locked_reservation"] = self._get_product_reserve_locked(product)
         lots = super(
             StockLot, self.with_context(bypass_lock_permission_check=True)
         ).create(vals_list)
@@ -78,6 +103,7 @@ class StockLot(models.Model):
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
+            values["locked_reservation"] = self._get_product_reserve_locked(product)
         return super().write(values)
 
     def _track_subtype(self, init_values):
