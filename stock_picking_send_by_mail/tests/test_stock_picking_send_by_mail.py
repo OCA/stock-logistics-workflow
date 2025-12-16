@@ -26,7 +26,6 @@ class TestStockPickingSendByMail(common.TransactionCase):
                         0,
                         0,
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom": cls.product.uom_id.id,
                             "location_id": cls.location_id.id,

@@ -2,7 +2,7 @@
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, models
+from odoo import models
 
 
 class StockPicking(models.Model):
@@ -24,7 +24,7 @@ class StockPicking(models.Model):
             user_id=self.env.user.id,
         )
         return {
-            "name": _("Compose Email"),
+            "name": self.env._("Compose Email"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
             "res_model": "mail.compose.message",
