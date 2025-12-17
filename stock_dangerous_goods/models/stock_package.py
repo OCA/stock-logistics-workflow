@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class StockQuantPackage(models.Model):
-    _inherit = "stock.quant.package"
+class StockPackage(models.Model):
+    _inherit = "stock.package"
 
     has_lq_products = fields.Boolean(compute="_compute_has_lq_products")
 

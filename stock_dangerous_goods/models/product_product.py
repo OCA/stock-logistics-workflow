@@ -12,12 +12,13 @@ class ProductProduct(models.Model):
         help="Whether this product is a Limited Quantity product or not",
     )
 
-    @api.depends("limited_amount_id", "is_dangerous")
+    @api.depends("adr_limited_amount_id", "is_dangerous")
     def _compute_is_lq_product(self):
         limited_amount_lq = self.env.ref(
-            "l10n_eu_product_adr_dangerous_goods.limited_amount_1"
+            "l10n_eu_product_adr_dangerous_goods.adr_limited_amount_1"
         )
         for record in self:
             record.is_lq_product = (
-                record.is_dangerous and record.limited_amount_id == limited_amount_lq
+                record.is_dangerous
+                and record.adr_limited_amount_id == limited_amount_lq
             )

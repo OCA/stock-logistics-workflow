@@ -7,14 +7,14 @@ class TestProductProduct(TransactionCase):
         super().setUpClass()
         # Create a reference for the limited amount
         cls.limited_amount_lq = cls.env.ref(
-            "l10n_eu_product_adr_dangerous_goods.limited_amount_1"
+            "l10n_eu_product_adr_dangerous_goods.adr_limited_amount_1"
         )
         # Create a product that is dangerous and has the limited amount
         cls.dangerous_product = cls.env["product.product"].create(
             {
                 "name": "Dangerous Product",
                 "is_dangerous": True,
-                "limited_amount_id": cls.limited_amount_lq.id,
+                "adr_limited_amount_id": cls.limited_amount_lq.id,
                 "is_storable": True,
             }
         )
@@ -31,7 +31,7 @@ class TestProductProduct(TransactionCase):
             {
                 "name": "Dangerous Product No Limit",
                 "is_dangerous": True,
-                "limited_amount_id": False,
+                "adr_limited_amount_id": False,
             }
         )
 
@@ -98,8 +98,8 @@ class TestProductProduct(TransactionCase):
         self.picking.action_confirm()
         self.picking.action_assign()
 
-        # Create a stock.quant.package
-        package = self.env["stock.quant.package"].create(
+        # Create a stock.package
+        package = self.env["stock.package"].create(
             {
                 "name": "Test Package",
             }
