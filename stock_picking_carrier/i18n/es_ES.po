@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_carrier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-09 16:56+0000\n"
+"PO-Revision-Date: 2025-12-09 16:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_carrier
+#: model:ir.model.fields,help:stock_picking_carrier.field_stock_pi      cking_type__carrier_auto_assign_picking
+msgid ""
+"Assign the carrier in the picking when the partner or the main partner has "
+"the shipping method assigned."
+msgstr ""
+"Asignar el transportista en las recepciones y entregas, cuando el socio o su socio principal tenga asignado el método de envío."
+
+#. module: stock_picking_carrier
+#: model:ir.model.fields,field_description:stock_picking_carrier.field_stock_picking_type__carrier_auto_assign_picking
+msgid "Carrier auto assign"
+msgstr "Asignación automática de transportista"
+
+#. module: stock_picking_carrier
+#: model:ir.model,name:stock_picking_carrier.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_picking_carrier
+#: model:ir.model,name:stock_picking_carrier.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
