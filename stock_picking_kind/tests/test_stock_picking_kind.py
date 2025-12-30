@@ -10,12 +10,17 @@ class TestStockReturnPicking(TransactionCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
-        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
-        cls.customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
-        cls.output_location = cls.env.ref("stock.stock_location_output")
-        cls.picking_type_in = cls.env.ref("stock.picking_type_in")
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.supplier_location = cls.env["stock.location"].create(
+            {"name": "Vendors", "usage": "supplier"}
+        )
+        cls.customer_location = cls.env["stock.location"].create(
+            {"name": "Customers", "usage": "customer"}
+        )
+        cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.stock_location = cls.warehouse.lot_stock_id
+        cls.output_location = cls.warehouse.wh_output_stock_loc_id
+        cls.picking_type_in = cls.warehouse.in_type_id
+        cls.picking_type_out = cls.warehouse.out_type_id
 
     @classmethod
     def _create_picking(cls, location, destination_location, picking_type):
