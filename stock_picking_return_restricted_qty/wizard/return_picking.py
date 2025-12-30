@@ -35,35 +35,3 @@ class ReturnPicking(models.TransientModel):
                     self.env._("Return more quantities than delivered is not allowed.")
                 )
         return super()._create_return()
-
-
-class ReturnPickingLine(models.TransientModel):
-    _inherit = "stock.return.picking.line"
-
-    @api.onchange("quantity")
-    def _onchange_quantity(self):
-        restrict_return_qty = (
-            self.move_id.picking_id.picking_type_id.restrict_return_qty
-        )
-
-        qty = self.get_returned_restricted_quantity(self.move_id)
-
-        if restrict_return_qty and self.quantity > qty:
-            raise UserError(
-                self.env._("Return more quantities than delivered is not allowed.")
-            )
-
-    def get_returned_restricted_quantity(self, stock_move):
-        """This function is created to know how many products
-        have the person who tries to create a return picking
-        on his hand."""
-        qty = stock_move.product_qty
-        for line in stock_move.move_dest_ids.mapped("move_line_ids"):
-            if (
-                line.move_id.origin_returned_move_id
-                and line.move_id.origin_returned_move_id != stock_move
-            ):
-                continue
-            if line.state in {"partially_available", "assigned", "done"}:
-                qty -= line.quantity
-        return max(qty, 0.0)

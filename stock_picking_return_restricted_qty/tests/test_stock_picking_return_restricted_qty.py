@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
-from odoo.tests import Form
+from odoo.tests import Command, Form
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -25,17 +25,15 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
                 "location_id": stock_location.id,
                 "location_dest_id": customer_location.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "name": product.name,
+                            "reference": product.name,
                             "product_id": product.id,
                             "product_uom_qty": 20,
                             "product_uom": product.uom_id.id,
                             "location_id": stock_location.id,
                             "location_dest_id": customer_location.id,
-                        },
+                        }
                     )
                 ],
             }
@@ -61,9 +59,8 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         self.picking.picking_type_id.restrict_return_qty = True
         return_picking = self.get_return_picking_wizard(self.picking)
         self.assertEqual(return_picking.product_return_moves.quantity, 20)
-        return_picking.product_return_moves.quantity = 30
         with self.assertRaises(UserError):
-            return_picking._create_return()
+            return_picking.product_return_moves.quantity = 30
 
     def test_return_without_restriction(self):
         """On this test we create a return picking with more quantity
@@ -89,9 +86,8 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         wiz = self.get_return_picking_wizard(self.picking)
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
-        wiz.product_return_moves.quantity = 80
         with self.assertRaises(UserError):
-            wiz.product_return_moves._onchange_quantity()
+            wiz.product_return_moves.quantity = 80
 
     def test_multiple_return_without_restriction(self):
         """On this test we are going to follow a sequence that a client
@@ -109,5 +105,4 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         self.assertEqual(wiz.product_return_moves.quantity, 10)
 
         wiz.product_return_moves.quantity = 80
-        wiz.product_return_moves._onchange_quantity()
         self.assertEqual(wiz.product_return_moves.quantity, 80)
