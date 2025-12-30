@@ -128,7 +128,7 @@
 
     <record id="action_report_stock_return_request" model="ir.actions.report">
         <field name="name">Stock Return Request Report</field>
-        <field name="model">report.stock.card.report</field>
+        <field name="model">stock.return.request</field>
         <field name="report_type">qweb-pdf</field>
         <field
             name="report_name"
