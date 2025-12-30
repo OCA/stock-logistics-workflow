@@ -9,7 +9,6 @@ class StockPickingType(models.Model):
     restrict_return_qty = fields.Boolean(
         string="Restrict Return Quantity",
         help=(
-            "Enable this option to restrict returning more quantities "
-            "than delivered."
+            "Enable this option to restrict returning more quantities than delivered."
         ),
     )
