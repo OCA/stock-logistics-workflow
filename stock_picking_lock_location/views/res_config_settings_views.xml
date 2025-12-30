@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <setting id="reception_report" position="after">
+                <setting
+                    id="lock_location"
+                    string="Lock Location"
+                    help="Configure your source and destination lock locations."
+                >
+                    <div class="content-group w-100">
+                        <div class="row mt16">
+                            <label
+                                for="lock_location_id"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <div class="col-lg-8">
+                                <field name="lock_location_id" class="w-100" />
+                            </div>
+                        </div>
+
+                        <div class="row mt8">
+                            <label
+                                for="lock_location_dest_id"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <div class="col-lg-8">
+                                <field name="lock_location_dest_id" class="w-100" />
+                            </div>
+                        </div>
+                    </div>
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>
