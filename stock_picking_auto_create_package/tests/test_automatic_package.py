@@ -17,19 +17,14 @@ class TestAutomaticPackage(BaseCommon):
                 "is_storable": True,
             }
         )
-        cls.product_packaging = cls.env["product.packaging"].create(
+        cls.product_packaging = cls.env["uom.uom"].create(
             {
-                "name": "Box",
-                "qty": "2",
-                "product_id": cls.product.id,
+                "name": "Box of 2",
+                "relative_factor": 2,
+                "relative_uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
-        cls.product_delivery = cls.env["product.product"].create(
-            {
-                "name": "Delivery Test",
-                "type": "service",
-            }
-        )
+        cls.product.uom_ids |= cls.product_packaging
         cls.stock = cls.env.ref("stock.stock_location_stock")
         cls.customers = cls.env.ref("stock.stock_location_customers")
         cls.env["stock.quant"]._update_available_quantity(
@@ -51,7 +46,6 @@ class TestAutomaticPackage(BaseCommon):
                     0,
                     0,
                     {
-                        "name": "Product Test",
                         "location_id": cls.stock.id,
                         "location_dest_id": cls.customers.id,
                         "product_id": cls.product.id,
@@ -104,7 +98,7 @@ class TestAutomaticPackage(BaseCommon):
 
     def test_automatic_packaging_with_qty_zero_on_packaging(self):
         self.picking.picking_type_id.automatic_package_creation_mode = "packaging"
-        self.product_packaging.qty = 0
+        self.product_packaging.relative_factor = 0
         self.picking._action_done()
         self.assertTrue(self.picking.move_line_ids.result_package_id)
         self.assertEqual(len(self.picking.move_line_ids.result_package_id), 5)
