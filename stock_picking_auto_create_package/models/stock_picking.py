@@ -40,13 +40,13 @@ class StockPicking(models.Model):
                     continue
                 qty_to_pack = move_line.quantity
                 max_pack_qty = 1
-                packagings = move_line.product_id.packaging_ids.filtered(
-                    lambda pack: pack.qty > 0
+                packagings = move_line.product_id.uom_ids.filtered(
+                    lambda pack: pack.relative_factor > 0
                 )
                 package_type = False
                 if packagings:
-                    smallest_packaging = packagings.sorted("qty")[0]
-                    max_pack_qty = smallest_packaging.qty
+                    smallest_packaging = packagings.sorted("relative_factor")[0]
+                    max_pack_qty = smallest_packaging.relative_factor
                     package_type = smallest_packaging.package_type_id
                 current_line = move_line
                 new_line = None
@@ -55,9 +55,8 @@ class StockPicking(models.Model):
                     new_line = current_line._split_move_line_package_qty(pack_qty)
                     qty_to_pack -= pack_qty
                     current_line.quantity = pack_qty
-                    package = current_line.picking_id._put_in_pack(current_line)
-                    if package_type:
-                        package.package_type_id = package_type
+                    package_type_id = package_type and package_type.id or False
+                    current_line._put_in_pack(package_type_id=package_type_id)
                     current_line = new_line
 
     def _auto_create_delivery_package_single(self) -> None:
@@ -69,7 +68,7 @@ class StockPicking(models.Model):
                 picking.move_line_ids
             )
             if move_lines:
-                picking._put_in_pack(move_lines)
+                move_lines._put_in_pack()
 
     def button_auto_create_delivery_package(self):
         """
