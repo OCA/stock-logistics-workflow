@@ -8,7 +8,7 @@
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='show_entire_packs']" position="after">
+            <xpath expr="//field[@name='set_package_type']" position="after">
                 <field name="automatic_package_creation_mode" />
             </xpath>
         </field>
