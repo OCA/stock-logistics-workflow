@@ -1,6 +1,7 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 import math
 import threading
 from collections import defaultdict
@@ -14,6 +15,8 @@ from ..exceptions import (
     PickingCandidateNumberLineExceedError,
     PickingSplitNotPossibleError,
 )
+
+_logger = logging.getLogger(__name__)
 
 
 class MakePickingBatch(models.TransientModel):
@@ -263,7 +266,7 @@ class MakePickingBatch(models.TransientModel):
         )
 
     def _split_first_picking_for_limit(self, picking):
-        last_device = self.stock_device_type_ids[-1]
+        last_device = self._get_sorted_devices()[-1]
         if last_device.split_mode == "dimension":
             return (
                 self.env["stock.split.picking"]
@@ -291,7 +294,7 @@ class MakePickingBatch(models.TransientModel):
         ):
             return True
         # Then, check the device limits
-        last_device = self.stock_device_type_ids[-1]
+        last_device = self._get_sorted_devices()[-1]
         if last_device.split_mode == "dimension":
             if last_device.max_volume and picking.volume > last_device.max_volume:
                 return True
@@ -316,23 +319,32 @@ class MakePickingBatch(models.TransientModel):
             for device in self.stock_device_type_ids:
                 device_domains.append(self._get_picking_domain_for_device(device))
             domain = AND([domain, OR(device_domains)])
-        picking = self._execute_search_pickings(domain, limit=1)
-        if not picking and not no_limit and raise_if_not_found:
-            self._raise_create_batch_not_possible()
+            picking = self._execute_search_pickings(domain, limit=1)
+            if not picking and raise_if_not_found:
+                self._raise_create_batch_not_possible()
+            return picking
+        pickings = self._execute_search_pickings(domain)
         # at this stage we have the first picking to add to the batch but it could
         # exceed the limits of the available devices. In this case we split the
         # picking and return the picking to add to the batch. The split is done only
         # if the split_picking_exceeding_limits is set to True.
-        if (
-            picking
-            and self.split_picking_exceeding_limits
-            and self._is_picking_exceeding_limits(picking)
-        ):
-            split_picking = self._split_first_picking_for_limit(picking)
-            if not split_picking and raise_if_not_found:
-                raise PickingSplitNotPossibleError(picking)
-            picking = split_picking
-        return picking
+        selected_picking = self.env["stock.picking"]
+        for picking in pickings:
+            if self._is_picking_exceeding_limits(picking):
+                split_picking = self._split_first_picking_for_limit(picking)
+                if not split_picking:
+                    if raise_if_not_found:
+                        raise PickingSplitNotPossibleError(picking)
+                    _logger.warning(
+                        f"The picking {picking.name} could not be split "
+                        "for batch creation."
+                    )
+                    continue
+                selected_picking = split_picking
+            else:
+                selected_picking = picking
+            break
+        return selected_picking
 
     def _get_additional_picking(self):
         """Get the next picking to add to the batch."""
@@ -363,10 +375,17 @@ class MakePickingBatch(models.TransientModel):
         return remaining_volume
 
     def _compute_device_to_use(self, picking):
-        for device in self.stock_device_type_ids.sorted("sequence"):
+        for device in self._get_sorted_devices():
             if picking.filtered_domain(self._get_picking_domain_for_device(device)):
                 return device
         return self.env["stock.device.type"]
+
+    def _get_sorted_devices(self):
+        """Return the devices sorted in their default order.
+
+        Because it will not be done by default with the Many2many
+        """
+        return self.stock_device_type_ids.sorted()
 
     def _volume_condition_for_device_choice(
         self, min_volume, picking_volume, max_volume

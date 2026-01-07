@@ -3,7 +3,7 @@
 {
     "name": "Stock Split Picking Kit",
     "summary": "Split a picking by a number of kits.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Inventory",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA),",
     "license": "AGPL-3",
