@@ -2,9 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tests import TransactionCase, tagged
 
 
+@tagged("-at_install", "post_install")
 class TestPickingBackToDraft(TransactionCase):
     def _create_picking(self, partner, p_type, src=None, dest=None):
         picking = self.env["stock.picking"].create(
