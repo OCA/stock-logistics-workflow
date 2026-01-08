@@ -10,6 +10,7 @@ from odoo.tools.misc import format_date, format_datetime
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
+
     partner_delivery_window_warning = fields.Text(
         compute="_compute_partner_delivery_window_warning"
     )
@@ -30,7 +31,7 @@ class StockPicking(models.Model):
         for picking in self:
             partner = picking.partner_id
             picking.partner_delivery_window_warning = False
-            if not partner:
+            if not partner:  # pragma: no cover
                 continue
 
             anytime_delivery = partner and partner.delivery_time_preference == "anytime"
@@ -48,7 +49,7 @@ class StockPicking(models.Model):
                     date_name=picking._planned_delivery_date_name,
                 )
 
-            elif not partner.is_in_delivery_window(delivery_date):
+            elif not partner._is_in_delivery_window(delivery_date):
                 picking.partner_delivery_window_warning = (
                     picking._scheduled_date_no_delivery_window_match_msg()
                 )
@@ -71,7 +72,7 @@ class StockPicking(models.Model):
         else:
             delivery_windows_strings = []
             if partner:
-                for w in partner.get_delivery_windows().get(partner.id):
+                for w in partner._get_delivery_windows().get(partner):
                     delivery_windows_strings.append(
                         f"  * {w.display_name} ({partner.tz})"
                     )

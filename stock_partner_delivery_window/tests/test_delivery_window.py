@@ -2,6 +2,7 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import datetime
+from unittest import mock
 
 from freezegun import freeze_time
 
@@ -40,12 +41,15 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
             time_window_picking.partner_delivery_window_warning,
         )
         # Warning when no scheduled date
-        time_window_picking.scheduled_date = False
-        time_window_picking._compute_partner_delivery_window_warning()
-        self.assertIn(
-            "No scheduled date is set on the picking, cannot check",
-            time_window_picking.partner_delivery_window_warning,
-        )
+        with mock.patch(
+            "odoo.addons.stock_partner_delivery_window.models.stock_picking.StockPicking._planned_delivery_date",
+            return_value=False,
+        ):
+            time_window_picking._compute_partner_delivery_window_warning()
+            self.assertIn(
+                "No delivery date is set on the picking, cannot check",
+                time_window_picking.partner_delivery_window_warning,
+            )
 
     @freeze_time("2020-04-02")
     def test_with_timezone_dst_date_dst(self):
@@ -247,15 +251,15 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         )
         # Friday
         date = datetime.date.fromisoformat("2020-04-03")
-        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
+        self.assertFalse(self.customer_time_window._is_in_delivery_window(date))
         # Saturday
         date = datetime.date.fromisoformat("2020-04-04")
-        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
         date = datetime.datetime.fromisoformat("2020-04-04 09:00:00")
-        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
+        self.assertFalse(self.customer_time_window._is_in_delivery_window(date))
         date = datetime.datetime.fromisoformat("2020-04-04 10:00:00")
-        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
         date = datetime.datetime.fromisoformat("2020-04-04 16:00:00")
-        self.assertTrue(self.customer_time_window.is_in_delivery_window(date))
+        self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
         date = datetime.datetime.fromisoformat("2020-04-04 17:00:00")
-        self.assertFalse(self.customer_time_window.is_in_delivery_window(date))
+        self.assertFalse(self.customer_time_window._is_in_delivery_window(date))

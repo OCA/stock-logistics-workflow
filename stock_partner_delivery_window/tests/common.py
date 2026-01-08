@@ -45,7 +45,7 @@ class PartnerDeliveryWindowCommon(BaseCommon):
                 ],
             }
         )
-        cls.product = cls.env.ref("product.product_product_9")
+        cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.picking_type_delivery = cls.env.ref("stock.picking_type_out")
         cls.location_stock = cls.env.ref("stock.stock_location_stock")
         cls.location_customers = cls.env.ref("stock.stock_location_customers")

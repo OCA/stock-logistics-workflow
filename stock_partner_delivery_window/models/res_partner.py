@@ -8,7 +8,7 @@ import pytz
 
 from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 WORKDAYS = list(range(5))
 
@@ -50,32 +50,23 @@ class ResPartner(models.Model):
                     )
                 )
 
-    def get_delivery_windows(self, day_name=None):
+    def _get_delivery_windows(self, day_name=None):
         """
         Return the list of delivery windows by partner id for the given day
 
         :param day: The day name (see time.weekday, ex: 0,1,2,...)
-        :return: dict partner_id: delivery_window recordset
+        :return: dict partner: delivery_window recordset
         """
-        res = {}
-        domain = [("partner_id", "in", self.ids)]
+        domain = Domain("partner_id", "in", self.ids)
         if day_name is not None:
             week_day_id = self.env["time.weekday"]._get_id_by_name(day_name)
-            domain = expression.AND(
-                [domain, [("time_window_weekday_ids", "in", [week_day_id])]]
-            )
+            domain &= Domain("time_window_weekday_ids", "in", [week_day_id])
         windows = self.env["partner.delivery.time.window"].search(domain)
-        for window in windows:
-            if not res.get(window.partner_id.id):
-                res[window.partner_id.id] = self.env[
-                    "partner.delivery.time.window"
-                ].browse()
-            res[window.partner_id.id] |= window
-        return res
+        return windows.grouped("partner_id")
 
     @property
     def delivery_time_weekdays(self):
-        if not self:
+        if not self:  # pragma: no cover
             return set()
         self.ensure_one()
         if self.delivery_time_preference == "anytime":
@@ -93,7 +84,7 @@ class ResPartner(models.Model):
             )
         return weekdays
 
-    def is_in_delivery_window(self, date):
+    def _is_in_delivery_window(self, date):
         """
         Checks if provided date is in a delivery window for actual partner
 
@@ -108,7 +99,7 @@ class ResPartner(models.Model):
             if date.weekday() > 4:
                 return False
             return True
-        windows = self.get_delivery_windows(date.weekday()).get(self.id)
+        windows = self._get_delivery_windows(date.weekday()).get(self)
         if windows:
             if not isinstance(date, datetime.datetime):
                 return True
@@ -136,5 +127,5 @@ class ResPartner(models.Model):
             }
             for window_id in self.delivery_time_window_ids
         ]
-        result["delivery_time_window_ids"] = [(0, 0, val) for val in values]
+        result["delivery_time_window_ids"] = [Command.create(val) for val in values]
         return [result]

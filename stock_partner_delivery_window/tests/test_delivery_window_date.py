@@ -1,8 +1,9 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from unittest import mock
+
 from freezegun import freeze_time
-from odoo_test_helper import FakeModelLoader
 
 from .common import PartnerDeliveryWindowCommon
 
@@ -11,16 +12,12 @@ class TestPartnerDeliveryWindowDate(PartnerDeliveryWindowCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        from .models.planned_delivery_date import StockPicking
-
-        cls.loader.update_registry((StockPicking,))
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        return super().tearDownClass()
+        cls.startClassPatcher(
+            mock.patch(
+                "odoo.addons.stock_partner_delivery_window.models.stock_picking.StockPicking._planned_delivery_date",
+                new=lambda self: self.scheduled_date and self.scheduled_date.date(),
+            )
+        )
 
     @freeze_time("2020-04-02")  # Thursday
     def test_delivery_window_warning(self):
@@ -53,9 +50,12 @@ class TestPartnerDeliveryWindowDate(PartnerDeliveryWindowCommon):
             time_window_picking.partner_delivery_window_warning,
         )
         # Warning when no scheduled date
-        time_window_picking.scheduled_date = False
-        time_window_picking._compute_partner_delivery_window_warning()
-        self.assertIn(
-            "No scheduled date is set on the picking, cannot check",
-            time_window_picking.partner_delivery_window_warning,
-        )
+        with mock.patch(
+            "odoo.addons.stock_partner_delivery_window.models.stock_picking.StockPicking._planned_delivery_date",
+            return_value=False,
+        ):
+            time_window_picking._compute_partner_delivery_window_warning()
+            self.assertIn(
+                "No delivery date is set on the picking, cannot check",
+                time_window_picking.partner_delivery_window_warning,
+            )
