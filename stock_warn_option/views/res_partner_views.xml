@@ -12,7 +12,7 @@
                     name="picking_warn_option"
                     domain="[('allowed_warning_type', '=', picking_warn), ('allowed_warning_usage', 'in', ('all', 'partner_picking_warn'))]"
                     context="{'default_allowed_warning_usage': 'partner_picking_warn', 'default_allowed_warning_type': picking_warn}"
-                    attrs="{'invisible':[('picking_warn', 'in', (False, 'no-message'))]}"
+                    invisible="picking_warn in (False, 'no-message')"
                     placeholder="Select a warning option"
                     nolabel="1"
                     colspan="2"
