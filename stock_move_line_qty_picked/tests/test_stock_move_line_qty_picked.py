@@ -65,6 +65,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
+        self.assertEqual(move.qty_picked, 0)
         self.assertEqual(self.quant.reserved_quantity, 5)
         # Pick partial qty
         move_line.qty_picked = 4
@@ -72,6 +73,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 4)
         self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 4)
         self.assertEqual(self.quant.reserved_quantity, 5)
         # Decrease picked qty on move line
         move_line.qty_picked = 3
@@ -79,6 +81,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 3)
         self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 3)
         self.assertEqual(self.quant.reserved_quantity, 5)
         # Decrease reserved qty on move
         move.quantity = 2
@@ -87,6 +90,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(self.quant.reserved_quantity, 2)
         self.assertEqual(move_line.qty_picked, 3)
         self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 3)
         # When validating, only the picked qty is moved, quantity is updated on
         #  stock.move and another move line is created to match qty_picked
         move.picking_id.with_context(skip_backorder=True).button_validate()
@@ -105,10 +109,12 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 10)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
+        self.assertEqual(move.qty_picked, 0)
         move_line.qty_picked = 5
         self.assertEqual(move_line.quantity, 10)
         self.assertEqual(move_line.qty_picked, 5)
         self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 5)
         move_form = Form(move, view="stock.view_stock_move_operations")
         with move_form.move_line_ids.new():
             pass
@@ -117,6 +123,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         new_line = move.move_line_ids - move_line
         new_line.qty_picked = 3
         self.assertEqual(sum(ml.quantity for ml in move.move_line_ids), 10)
+        self.assertEqual(move.qty_picked, 8)
         move.picking_id.with_context(skip_backorder=True).button_validate()
         self.assertEqual(move.quantity, 8)
 
@@ -129,16 +136,19 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
+        self.assertEqual(move.qty_picked, 0)
         # Pick
         move_line.picked = True
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 5)
         self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 5)
         # Unpick
         move_line.picked = False
         self.assertEqual(move_line.quantity, 5)
         self.assertEqual(move_line.qty_picked, 0)
         self.assertFalse(move_line.picked)
+        self.assertEqual(move.qty_picked, 0)
 
     def test_mls_picked_and_not_picked(self):
         product = self.env["product.product"].create(
@@ -172,6 +182,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         #  - mark picked on both move and move lines through compute and inverse
         #  - set qty_picked = quantity
         move.picked = True
+        self.assertEqual(move.qty_picked, 40)
 
         # Remove picked flag on LOT-001
         lot_1_line = move.move_line_ids.filtered(lambda li: li.lot_id.name == "LOT-001")
@@ -206,6 +217,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         #  - LOT-002: 8pces moved according to qty_picked
         #  - LOT-003: 10pces moved because picked is True and qty_picked
         #  - LOT-004: not moved because qty_picked = 0
+        self.assertEqual(move.qty_picked, 18)
         move.picking_id.with_context(skip_backorder=True).button_validate()
 
         lot_1_quant = self.env["stock.quant"]._gather(
