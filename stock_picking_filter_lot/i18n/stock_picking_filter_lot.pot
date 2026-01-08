@@ -14,6 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_filter_lot
+#: model:ir.model.fields,help:stock_picking_filter_lot.field_stock_move_line__picking_type_use_filter_lots
+#: model:ir.model.fields,help:stock_picking_filter_lot.field_stock_picking_type__use_filter_lots
+msgid ""
+"If this is checked, only lots available in source location             would"
+" be displayed in drop down list for selecting lot."
+msgstr ""
+
+#. module: stock_picking_filter_lot
 #: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_production_lot__location_ids
 msgid "Location"
 msgstr ""
@@ -21,4 +29,20 @@ msgstr ""
 #. module: stock_picking_filter_lot
 #: model:ir.model,name:stock_picking_filter_lot.model_stock_production_lot
 msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_picking_filter_lot
+#: model:ir.model,name:stock_picking_filter_lot.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_filter_lot
+#: model:ir.model,name:stock_picking_filter_lot.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_filter_lot
+#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_move_line__picking_type_use_filter_lots
+#: model:ir.model.fields,field_description:stock_picking_filter_lot.field_stock_picking_type__use_filter_lots
+msgid "Use only available lots"
 msgstr ""
