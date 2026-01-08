@@ -1,16 +1,29 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import models
+from odoo import api, fields, models
 from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    qty_picked = fields.Float(compute="_compute_qty_picked")
+
+    @api.depends(
+        "move_line_ids.picked",
+        "move_line_ids.product_uom_id",
+        "move_line_ids.qty_picked",
+        "move_line_ids.quantity",
+        "product_uom",
+    )
+    def _compute_qty_picked(self):
+        for move in self:
+            move.qty_picked = move._sum_ml_qty_picked()
+
     def _get_picked_quantity(self):
         if self._ml_has_qty_picked():
-            return self._sum_ml_qty_picked()
+            return self.qty_picked
         return super()._get_picked_quantity()
 
     def _ml_has_qty_picked(self):
