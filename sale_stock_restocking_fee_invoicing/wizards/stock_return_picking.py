@@ -24,6 +24,8 @@ class StockReturnPicking(models.TransientModel):
             or "is_customer_return" in fields
         ):
             return res
+        if "active_id" not in self.env.context:
+            return res
         picking = self.env["stock.picking"].browse(self.env.context["active_id"])
         charge_restocking_fee = picking.partner_id.charge_restocking_fee
         if "is_customer_return" in fields:
