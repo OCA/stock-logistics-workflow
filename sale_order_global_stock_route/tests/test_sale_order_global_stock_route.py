@@ -33,7 +33,7 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
                                 "name": cls.product1.name,
                                 "product_id": cls.product1.id,
                                 "product_uom_qty": 1,
-                                "product_uom": cls.product1.uom_id.id,
+                                "product_uom_id": cls.product1.uom_id.id,
                             },
                         ),
                         (
@@ -43,7 +43,7 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
                                 "name": cls.product2.name,
                                 "product_id": cls.product2.id,
                                 "product_uom_qty": 1,
-                                "product_uom": cls.product2.uom_id.id,
+                                "product_uom_id": cls.product2.uom_id.id,
                             },
                         ),
                     ],
@@ -52,16 +52,16 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
         )
 
     def test_global_route(self):
-        self.order["route_id"] = self.route1.id
-        self.order._onchange_route_id()
+        self.order["route_ids"] = [(6, 0, [self.route1.id])]
+        self.order._onchange_route_ids()
         for line in self.order.order_line:
-            self.assertTrue(line.route_id == self.route1)
+            self.assertTrue(line.route_ids == self.route1)
 
     def test_global_route02(self):
-        self.order["route_id"] = self.route1.id
+        self.order["route_ids"] = [(6, 0, [self.route1.id])]
         for line in self.order.order_line:
             line.global_stock_route_product_id_change()
-            self.assertEqual(line.route_id, self.order.route_id)
+            self.assertEqual(line.route_ids, self.order.route_ids)
 
     def test_routes_without_onchange(self):
         new_order = self.env["sale.order"].create(
@@ -76,7 +76,7 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
                                 "name": self.product1.name,
                                 "product_id": self.product1.id,
                                 "product_uom_qty": 1,
-                                "product_uom": self.product1.uom_id.id,
+                                "product_uom_id": self.product1.uom_id.id,
                             },
                         ),
                         (
@@ -86,28 +86,28 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
                                 "name": self.product2.name,
                                 "product_id": self.product2.id,
                                 "product_uom_qty": 1,
-                                "product_uom": self.product2.uom_id.id,
+                                "product_uom_id": self.product2.uom_id.id,
                             },
                         ),
                     ],
-                    "route_id": self.route1.id,
+                    "route_ids": [(6, 0, [self.route1.id])],
                 },
             ]
         )
         for line in new_order.order_line:
-            self.assertTrue(line.route_id == self.route1)
-        new_order.order_line[0].route_id = self.route2
+            self.assertTrue(line.route_ids == self.route1)
+        new_order.order_line[0].route_ids = [(6, 0, [self.route2.id])]
         new_order.write({})
-        self.assertTrue(new_order.order_line[0].route_id == self.route2)
-        new_order.write({"route_id": self.route2.id})
+        self.assertTrue(new_order.order_line[0].route_ids == self.route2)
+        new_order.write({"route_ids": [(6, 0, [self.route2.id])]})
         for line in new_order.order_line:
-            self.assertTrue(line.route_id == self.route2)
+            self.assertTrue(line.route_ids == self.route2)
 
-    def test_create_order_line_inherits_route_id(self):
+    def test_create_order_line_inherits_route_ids(self):
         sale_order = self.env["sale.order"].create(
             {
                 "partner_id": self.partner.id,
-                "route_id": self.route1.id,
+                "route_ids": [(6, 0, [self.route1.id])],
             }
         )
         order_line = self.env["sale.order.line"].create(
@@ -118,4 +118,44 @@ class SaleOrderGlobalStockRouteTest(TransactionCase):
                 }
             ]
         )
-        self.assertEqual(order_line.route_id, sale_order.route_id)
+        self.assertEqual(order_line.route_ids, sale_order.route_ids)
+
+    def test_create_multi_orders_with_different_routes(self):
+        orders = self.env["sale.order"].create(
+            [
+                {
+                    "partner_id": self.partner.id,
+                    "order_line": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": self.product1.name,
+                                "product_id": self.product1.id,
+                                "product_uom_qty": 1,
+                                "product_uom_id": self.product1.uom_id.id,
+                            },
+                        )
+                    ],
+                    "route_ids": [(6, 0, [self.route1.id])],
+                },
+                {
+                    "partner_id": self.partner.id,
+                    "order_line": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": self.product2.name,
+                                "product_id": self.product2.id,
+                                "product_uom_qty": 1,
+                                "product_uom_id": self.product2.uom_id.id,
+                            },
+                        )
+                    ],
+                    "route_ids": [(6, 0, [self.route2.id])],
+                },
+            ]
+        )
+        self.assertEqual(orders[0].order_line.route_ids, self.route1)
+        self.assertEqual(orders[1].order_line.route_ids, self.route2)

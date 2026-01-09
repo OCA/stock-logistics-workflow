@@ -7,10 +7,15 @@
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
                 <!-- Security group sale_stock.group_route_so_lines
-                     disappear  in v13. So we use the same group that route_id
+                     disappear  in v13. So we use the same group that route_ids
                      field in sale order lines.
                  -->
-                <field name="route_id" groups="stock.group_adv_location" />
+                <field
+                    name="route_ids"
+                    groups="stock.group_adv_location"
+                    widget="many2many_tags"
+                    options="{'no_create': True}"
+                />
             </field>
         </field>
     </record>
