@@ -23,8 +23,8 @@
         <field name="inherit_id" ref="stock_picking_batch.vpicktree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="picking_device_id" />
-                <field name="nbr_picking_lines" />
+                <field name="picking_device_id" optional="hide" />
+                <field name="nbr_picking_lines" optional="hide" />
             </field>
         </field>
     </record>
