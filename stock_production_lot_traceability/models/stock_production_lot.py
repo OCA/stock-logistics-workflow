@@ -2,7 +2,7 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class StockProductionLot(models.Model):
@@ -161,7 +161,7 @@ class StockProductionLot(models.Model):
         )
         action["context"] = {}
         action["domain"] = [("id", "in", self.produce_lot_ids.ids)]
-        action["name"] = _("Produced Lots")
+        action["name"] = self.env._("Produced Lots")
         return action
 
     def action_view_consume_lots(self):
@@ -170,5 +170,5 @@ class StockProductionLot(models.Model):
         )
         action["context"] = {}
         action["domain"] = [("id", "in", self.consume_lot_ids.ids)]
-        action["name"] = _("Consumed Lots")
+        action["name"] = self.env._("Consumed Lots")
         return action

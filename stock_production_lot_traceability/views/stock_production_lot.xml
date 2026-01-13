@@ -5,7 +5,6 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
     <record model="ir.ui.view" id="view_production_lot_form">
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
@@ -38,5 +37,4 @@
             </div>
         </field>
     </record>
-
 </odoo>
