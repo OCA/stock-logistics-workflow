@@ -512,7 +512,8 @@ class MakePickingBatch(models.TransientModel):
         :param picking: picking to add to the batch
         """
         self._selected_picking_ids.append(picking.id)
-        self._remaining_weight -= picking.weight
+        if self._remaining_weight is not None:
+            self._remaining_weight -= picking.weight
         self._remaining_nbr_picking_lines -= picking.nbr_picking_lines
         nbr_bins = self._get_nbr_bins_for_picking(picking)
         self._remaining_nbr_bins -= nbr_bins
