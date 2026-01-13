@@ -339,7 +339,7 @@ class MakePickingBatch(models.TransientModel):
                 if not split_picking:
                     if raise_if_not_found:
                         raise PickingSplitNotPossibleError(picking)
-                    _logger.warning(
+                    _logger.debug(
                         f"The picking {picking.name} could not be split "
                         "for batch creation."
                     )
