@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Stock Production Lot Traceability",
+    "name": "Stock Lot Traceability",
     "summary": "Drill down/up the lots produced or consumed",
     "version": "19.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
@@ -12,5 +12,5 @@
     "license": "AGPL-3",
     "category": "Stock",
     "depends": ["stock"],
-    "data": ["views/stock_production_lot.xml"],
+    "data": ["views/stock_lot_views.xml"],
 }
