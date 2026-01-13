@@ -1,4 +1,5 @@
 # Copyright 2021 ACSONE SA/NV
+# Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form, RecordCapturer
@@ -88,10 +89,12 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
                 "sequence": 10,
             }
         )
-        self.make_picking_batch.write({
-            "maximum_number_of_preparation_lines": 0,
-            "stock_device_type_ids": [(4, device.id)],
-        })
+        self.make_picking_batch.write(
+            {
+                "maximum_number_of_preparation_lines": 0,
+                "stock_device_type_ids": [(4, device.id)],
+            }
+        )
         batch = self.make_picking_batch._create_batch()
         self.assertEqual(device, batch.picking_device_id)
         self.assertEqual(self.pick3 | self.pick2 | self.pick1, batch.picking_ids)
