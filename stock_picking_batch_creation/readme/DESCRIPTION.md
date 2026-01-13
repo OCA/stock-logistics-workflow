@@ -26,7 +26,7 @@ job will be different. A this stage, 3 main criteria are considered:
 - The number of bins/compartments available on the device
 
 In addition to these criteria, 2 others criteria can be defined that
-will be evaluated to select the appropriate device type a the start of
+will be evaluated to select the appropriate device type at the start of
 the batch creation process if more than one device type is available:
 
 - A minimum picking volume to consider the device type,

@@ -12,15 +12,15 @@ class StockDeviceType(models.Model):
     name = fields.Char(required=True)
     min_volume = fields.Float(
         string="Minimum total net volume for this device",
-        help="Volume in default system volume unit of measure",
+        help="Volume in default system volume unit of measure. Set to 0 to disable.",
     )
     max_volume = fields.Float(
         string="Maximum total net volume for this device",
-        help="Volume in default system volume unit of measure",
+        help="Volume in default system volume unit of measure. Set to 0 to disable.",
     )
     max_weight = fields.Float(
         string="Maximum total net weight for this device",
-        help="Weight in default system weight unit of measure",
+        help="Weight in default system weight unit of measure. Set to 0 to disable.",
     )
     user_min_volume = fields.Float(
         string="Minimum total net volume for electing this device",
