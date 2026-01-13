@@ -27,6 +27,7 @@ msgid "Product Moves (Stock Move Line)"
 msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: stock_move_line_qty_picked
+#: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move__qty_picked
 #: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__qty_picked
 msgid "Qty Picked"
 msgstr "Q.tà prelevata"
