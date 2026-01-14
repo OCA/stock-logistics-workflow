@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_picking_type_form_inherit" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_type_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <div name="batch_contact" position="after">
+                <span invisible="not auto_batch" />
+                <div name="batch_date" class="o_row" invisible="not auto_batch">
+                    <field name="batch_group_by_date" />
+                    <label for="batch_group_by_date" />
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>
