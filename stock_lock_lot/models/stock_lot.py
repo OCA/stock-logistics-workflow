@@ -2,7 +2,7 @@
 # Copyright 2015 AvanzOsc (http://www.avanzosc.es)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 
 class StockLot(models.Model):
@@ -42,14 +42,14 @@ class StockLot(models.Model):
             "stock_lock_lot.group_lock_lot"
         ) and not self.env.context.get("bypass_lock_permission_check"):
             raise exceptions.AccessError(
-                _("You are not allowed to block/unblock Serial Numbers/Lots")
+                self.env._("You are not allowed to block/unblock Serial Numbers/Lots")
             )
         reserved_quants = self.env["stock.quant"].search(
             [("lot_id", "in", self.ids), ("reserved_quantity", "!=", 0.0)]
         )
         if reserved_quants:
             raise exceptions.ValidationError(
-                _(
+                self.env._(
                     "You are not allowed to block/unblock, there are"
                     " reserved quantities for these Serial Numbers/Lots"
                 )

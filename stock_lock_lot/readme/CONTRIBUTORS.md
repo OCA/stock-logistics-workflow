@@ -7,3 +7,5 @@
   - Pedro M. Baeza
   - Ernesto Tejeda
 - Henry Backman \<<henry.backman@camptocamp.com>\>
+- [Studio73](https://www.studio73.es):
+  - Eugenio Micó \<<eugenio@studio73.es>>
