@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-27 12:26+0000\n"
+"PO-Revision-Date: 2026-01-19 13:50+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_batch_creation
 #. odoo-python
@@ -413,6 +413,8 @@ msgstr "Unità di misura del volume"
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__min_volume
 msgid "Volume in default system volume unit of measure. Set to 0 to disable."
 msgstr ""
+"Volume nell'unità di misura predefinita del volume del sistema. Impostare a "
+"zero per disabilitare."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__user_weight_uom_id
@@ -428,6 +430,8 @@ msgstr "Unità di misura del peso"
 #: model:ir.model.fields,help:stock_picking_batch_creation.field_stock_device_type__max_weight
 msgid "Weight in default system weight unit of measure. Set to 0 to disable."
 msgstr ""
+"Peso nell'unità di misura predefinita del peso del sistema. Impostare a zero "
+"per disabilitare."
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_weight_uom_name
