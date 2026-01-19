@@ -26,7 +26,6 @@ class TestStockMoveLine(BaseCommon):
         )
         cls.move = cls.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": cls.product.id,
                 "product_uom_qty": 10,
                 "location_id": cls.location_src.id,

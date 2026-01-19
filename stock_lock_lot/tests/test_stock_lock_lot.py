@@ -39,7 +39,7 @@ class TestStockLockLot(BaseCommon):
         self.assertTrue(lot.locked)
 
     def test_lock_permissions(self):
-        self.env.user.groups_id -= self.env.ref("stock_lock_lot.group_lock_lot")
+        self.env.user.group_ids -= self.env.ref("stock_lock_lot.group_lock_lot")
         # This should work correctly
         lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         with self.assertRaises(exceptions.AccessError):
@@ -83,3 +83,30 @@ class TestStockLockLot(BaseCommon):
         init_values = {"locked": True}
         subtype = lot._track_subtype(init_values)
         self.assertEqual(subtype, self.env.ref("stock_lock_lot.mt_unlock_lot"))
+
+    def test_get_product_locked_with_parent_category(self):
+        parent_category = self.env["product.category"].create(
+            {"name": "Parent category", "lot_default_locked": True}
+        )
+        child_category = self.env["product.category"].create(
+            {
+                "name": "Child category",
+                "parent_id": parent_category.id,
+                "lot_default_locked": False,
+            }
+        )
+        product = self.env["product.product"].create(
+            {
+                "name": "Product with parent category",
+                "categ_id": child_category.id,
+                "is_storable": True,
+            }
+        )
+        lot_model = self.env["stock.lot"]
+        locked = lot_model._get_product_locked(product)
+        self.assertTrue(locked)
+
+    def test_track_subtype_without_locked(self):
+        lot = self.env["stock.lot"].create(self._get_lot_default_vals())
+        result = lot._track_subtype({})
+        self.assertIn(result, (None, False))
