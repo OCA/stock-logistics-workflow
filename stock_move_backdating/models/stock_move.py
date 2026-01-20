@@ -47,7 +47,6 @@ class StockMove(models.Model):
             moves_todo_ids.update(move_todo.ids)
 
             # overwrite date field where applicable
-            date_backdating = move_line.date_backdating
             if date_backdating:
                 check_date(date_backdating)
                 move.date = date_backdating
