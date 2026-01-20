@@ -2,7 +2,7 @@
 # Copyright 2020 Sergio Teruel - Tecnativa
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class StockQuant(models.Model):
@@ -55,7 +55,7 @@ class StockQuant(models.Model):
     ):
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if restricted_owner_id is not None:
-            domain = expression.AND([domain, [("owner_id", "=", restricted_owner_id)]])
+            domain = Domain(domain) & Domain("owner_id", "=", restricted_owner_id)
         return super()._read_group(
             domain,
             groupby=groupby,
