@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_sku_trailing" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sku.trailing</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@id='production_lot_info']/setting[@id='full_traceability']"
+                position="inside"
+            >
+                <div
+                    class="row mt-2 align-items-start"
+                    invisible="not group_stock_production_lot"
+                >
+                    <div class="col ps-0 ms-4">
+                        <label for="sku_based_numbers_trailing" class="o_form_label" />
+                        <div class="text-muted">
+                            Number of leading zeroes for SKU-based lot/serial suffix (e.g. 3 -> 001).
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <field
+                            name="sku_based_numbers_trailing"
+                            class="o_input o_field_integer text-end"
+                        />
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

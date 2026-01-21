@@ -22,17 +22,17 @@ class CommonStockPickingAutoCreateLot:
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})
 
     @classmethod
-    def _create_product(cls, tracking="lot", auto=True):
-        name = f"{tracking} - {auto}"
-        return cls.env["product.product"].create(
-            {
-                "name": name,
-                "type": "consu",
-                "tracking": tracking,
-                "auto_create_lot": auto,
-                "is_storable": True,
-            }
-        )
+    def _create_product(cls, tracking="lot", option=False, sku=None):
+        vals = {
+            "name": f"{tracking} - {option}",
+            "type": "consu",
+            "tracking": tracking,
+            "is_storable": True,
+            "auto_create_lot_option": option,
+        }
+        if sku:
+            vals["default_code"] = sku
+        return cls.env["product.product"].create(vals)
 
     @classmethod
     def _create_picking(cls):

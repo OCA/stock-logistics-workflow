@@ -5,3 +5,6 @@
 - Valentin Vinagre \<<valentin.vinagre@sygel.es>\>
 - [Quartile](https://www.quartile.co):
   - Aung Ko Ko Lin
+- [Cetmix](https://cetmix.com/)
+  - Ivan Sokolov
+  - Dmitry Meita
