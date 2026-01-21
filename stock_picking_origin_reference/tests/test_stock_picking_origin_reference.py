@@ -21,7 +21,7 @@ class TestStockPickingOriginReference(TransactionCase):
         # TO BE USED IN CHILDREN TESTS
         cls.partner_model = cls.env["res.partner"]
 
-        cls.product = cls.env.ref("product.product_product_3")
+        cls.product = cls.env["product.product"].create({"name": "Test Product"})
 
         cls.partner = cls.partner_model.create({"name": "Test Partner"})
 
