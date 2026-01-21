@@ -27,9 +27,9 @@ class TestStockPickingOriginReferencePurchase(
                             "name": product.name,
                             "product_id": product.id,
                             "product_qty": 5,
-                            "product_uom": product.uom_id.id,
+                            "product_uom_id": product.uom_id.id,
                             "price_unit": 500,
-                            "date_planned": fields.datetime.now(),
+                            "date_planned": fields.Datetime.now(),
                         },
                     )
                 ],
