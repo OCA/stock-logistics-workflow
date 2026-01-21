@@ -58,5 +58,5 @@ class TestStockPickingOriginReference(TransactionCase):
         self.assertEqual(
             self.picking_out.origin_reference,
             self.picking_in,
-            "The " "Origin Reference should point to the IN transfer.",
+            "The Origin Reference should point to the IN transfer.",
         )
