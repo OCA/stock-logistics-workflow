@@ -17,6 +17,7 @@ class StockMoveLine(models.Model):
             ("state", "not in", ("done", "cancel")),
             ("can_recompute_putaways", "=", True),
             ("qty_done", "=", 0),
+            ("picking_id", "!=", False),
         ]
         return domain
 

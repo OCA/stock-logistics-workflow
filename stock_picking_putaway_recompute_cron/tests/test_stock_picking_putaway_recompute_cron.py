@@ -124,3 +124,27 @@ class TestStockPickingPutawayRecomputeCron(TransactionCase):
 
         self.env["stock.move.line"].cron_auto_recompute_putaways()
         self.assertEqual(ml_b.location_dest_id, self.sub_loc)
+
+    def test_filter_no_picking_move_lines(self):
+        """
+        Ensures that move lines not linked to any picking are filtered
+        out from the putaway recomputation (such move lines cause an error)
+        """
+        StockMoveLine = self.env["stock.move.line"]
+
+        invalid_move_line = StockMoveLine.create(
+            {
+                "product_id": self.product_1.id,
+                "product_uom_id": self.product_1.uom_id.id,
+                "location_id": self.stock_loc.id,
+                "location_dest_id": self.main_loc.id,
+                "qty_done": 0,
+                "company_id": self.env.company.id,
+            }
+        )
+        self.assertFalse(invalid_move_line.picking_id)
+
+        move_lines_for_putaway = StockMoveLine.search(
+            StockMoveLine._get_putaway_recompute_domain()
+        )
+        self.assertNotIn(invalid_move_line, move_lines_for_putaway)
