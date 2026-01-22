@@ -112,6 +112,7 @@ addon | version | maintainers | summary
 [stock_split_picking_dimension](stock_split_picking_dimension/) | 18.0.1.0.0 |  | Split a picking in two not transferred pickings to ensure that the first one doesn't exceed given dimensions (nbr lines, volume, weight)
 [stock_split_picking_kit](stock_split_picking_kit/) | 18.0.1.0.1 |  | Split a picking by a number of kits.
 [stock_valuation_layer_usage](stock_valuation_layer_usage/) | 18.0.1.0.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
+[stock_warn_option](stock_warn_option/) | 18.0.1.0.1 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Add Options to Stock Warn Messages
 
 [//]: # (end addons)
 
