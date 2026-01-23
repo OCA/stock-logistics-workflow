@@ -1,10 +1,13 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form
+from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestRestrictLot(TransactionCase):
+class TestRestrictLot(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -165,6 +168,7 @@ class TestRestrictLot(TransactionCase):
         self.assertEqual(move.state, "assigned")
         self.assertEqual(move.move_line_ids.lot_id.id, self.lot.id)
 
+    @mute_logger("odoo.models.unlink")
     def test_procurement_with_2_steps_output(self):
         # make warehouse output in two step
         self.env["res.config.settings"].write(
@@ -277,6 +281,18 @@ class TestRestrictLot(TransactionCase):
 
         assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
         assert_move_qty_per_lot(delivery.move_ids_without_package, lot2, 30)
+        # Return picking
+        return_picking_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=pick.ids, active_id=pick.id, active_model=pick._name
+            )
+        )
+        return_picking_form = return_picking_form.save()
+        return_picking_action = return_picking_form.action_create_returns_all()
+        return_pick = self.env["stock.picking"].browse(return_picking_action["res_id"])
+        lots = return_pick.move_ids_without_package.restrict_lot_id
+        self.assertIn(self.lot, lots)
+        self.assertIn(lot2, lots)
 
     def test_compute_quantites(self):
         move = self.env["stock.move"].create(
