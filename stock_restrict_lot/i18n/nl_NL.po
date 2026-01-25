@@ -42,6 +42,11 @@ msgid "Restrict Lot"
 msgstr "Lot Beperken"
 
 #. module: stock_restrict_lot
+#: model:ir.model,name:stock_restrict_lot.model_stock_return_picking_line
+msgid "Return Picking Line"
+msgstr ""
+
+#. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
 msgid "Stock Move"
 msgstr "Voorraadmutatie"
