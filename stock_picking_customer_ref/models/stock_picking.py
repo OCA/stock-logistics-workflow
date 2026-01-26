@@ -9,5 +9,8 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     client_order_ref = fields.Char(
-        string="Customer Reference", related="sale_id.client_order_ref", store=True
+        string="Customer Reference",
+        related="sale_id.client_order_ref",
+        store=True,
+        index="btree_not_null",
     )
