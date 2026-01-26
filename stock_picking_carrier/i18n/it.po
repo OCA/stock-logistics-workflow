@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-01-26 16:09+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_carrier
 #: model:ir.model.fields,help:stock_picking_carrier.field_stock_picking_type__carrier_auto_assign_picking
@@ -20,6 +22,8 @@ msgid ""
 "Assign the carrier in the picking when the partner or the main partner has "
 "the shipping method assigned."
 msgstr ""
+"Assegna il corriere nel prelievo quando il partner o il partner principale "
+"ha il metodo di spedizione assegnato."
 
 #. module: stock_picking_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_carrier.res_config_settings_view_form
@@ -27,30 +31,32 @@ msgid ""
 "Automatically assign the delivery carrier when creating a picking or when "
 "selecting a partner in a created one."
 msgstr ""
+"Assegna automaticamente il corriere di consegna quando si crea un prelievo o "
+"quando si seleziona un partner in uno esistente."
 
 #. module: stock_picking_carrier
 #: model:ir.model.fields,field_description:stock_picking_carrier.field_res_company__carrier_auto_assign_picking
 #: model:ir.model.fields,field_description:stock_picking_carrier.field_res_config_settings__carrier_auto_assign_picking
 #: model:ir.model.fields,field_description:stock_picking_carrier.field_stock_picking_type__carrier_auto_assign_picking
 msgid "Carrier auto assign"
-msgstr ""
+msgstr "Auto assegnazione corriere"
 
 #. module: stock_picking_carrier
 #: model:ir.model,name:stock_picking_carrier.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: stock_picking_carrier
 #: model:ir.model,name:stock_picking_carrier.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: stock_picking_carrier
 #: model:ir.model,name:stock_picking_carrier.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo prelievo"
 
 #. module: stock_picking_carrier
 #: model:ir.model,name:stock_picking_carrier.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
