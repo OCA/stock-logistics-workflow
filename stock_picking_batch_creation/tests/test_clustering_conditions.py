@@ -1,4 +1,5 @@
 # Copyright 2021 ACSONE SA/NV
+# Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import Form, RecordCapturer
@@ -46,7 +47,59 @@ class TestClusteringConditions(ClusterPickingCommonFeatures):
         self.make_picking_batch.group_pickings_by_partner = True
         self.make_picking_batch._create_batch()
 
-    def test_put_3_pickings_in_one_cluster(self):
+    def test_put_3_pickings_in_one_cluster_no_limit(self):
+        """
+        Data: 3 picks of type 1, total of 4 products for a volume of 60m3
+            pick1: 1 line
+            pick2: 1 line
+            pick3: 3 lines
+        Test case:
+            Disable the maximum number of preparation lines
+            Create a device without any limit
+        Expected result:
+            The device without limit is used
+            The batch should contain pick3, pick2 and pick1
+        """
+        self._set_quantity_in_stock(self.stock_location, self.p5)
+        self.p1.write(
+            {
+                "volume": 5.0,
+                "product_length": 5,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
+        )
+        self.p2.write(
+            {
+                "volume": 5.0,
+                "product_length": 5,
+                "product_height": 1,
+                "product_width": 1,
+                "weight": 1,
+            }
+        )
+        device = self.env["stock.device.type"].create(
+            {
+                "name": "test no limit device",
+                "min_volume": 0,
+                "max_volume": 0,
+                "max_weight": 0,
+                "nbr_bins": 6,
+                "sequence": 10,
+            }
+        )
+        self.make_picking_batch.write(
+            {
+                "maximum_number_of_preparation_lines": 0,
+                "stock_device_type_ids": [(4, device.id)],
+            }
+        )
+        batch = self.make_picking_batch._create_batch()
+        self.assertEqual(device, batch.picking_device_id)
+        self.assertEqual(self.pick3 | self.pick2 | self.pick1, batch.picking_ids)
+
+    def test_put_3_pickings_in_one_cluster_max_lines(self):
         """
         Data: 3 picks of type 1, total of 4 products for a volume of 60m3
             pick1: 1 line

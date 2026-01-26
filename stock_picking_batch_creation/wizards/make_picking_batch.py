@@ -1,4 +1,5 @@
 # Copyright 2021 ACSONE SA/NV
+# Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
@@ -44,7 +45,8 @@ class MakePickingBatch(models.TransientModel):
     )
     maximum_number_of_preparation_lines = fields.Integer(
         default=20,
-        string="Maximum number of preparation lines for the batch",
+        string="Maximum number of preparation lines for the batch.",
+        help="Set to 0 to disable.",
         required=True,
     )
     group_pickings_by_partner = fields.Boolean(
@@ -135,7 +137,7 @@ class MakePickingBatch(models.TransientModel):
         self._volume_by_partners = defaultdict(lambda: 0)
         self._device = None
         self._remaining_weight = None  # None means unlimited
-        self._remaining_nbr_picking_lines = 0
+        self._remaining_nbr_picking_lines = None  # None means unlimited
         self._selected_picking_ids = []
         self._first_picking = None
         self._remaining_nbr_bins = None
@@ -170,7 +172,7 @@ class MakePickingBatch(models.TransientModel):
         picking_domain_first = [
             ("picking_type_id", "in", self.picking_type_ids.ids),
         ]
-        if apply_limit_on_nbr_lines:
+        if apply_limit_on_nbr_lines and self.maximum_number_of_preparation_lines:
             picking_domain_first.append(
                 (
                     "nbr_picking_lines",
@@ -196,14 +198,13 @@ class MakePickingBatch(models.TransientModel):
         """
         excluded_ids = self._selected_picking_ids
         domain = [
-            (
-                "nbr_picking_lines",
-                "<=",
-                self._remaining_nbr_picking_lines,
-            ),
             ("id", "not in", excluded_ids),
             ("picking_type_id", "=", self._first_picking.picking_type_id.id),
         ]
+        if self._remaining_nbr_picking_lines is not None:  # None means unlimited
+            domain.append(
+                ("nbr_picking_lines", "<=", self._remaining_nbr_picking_lines)
+            )
         if self._remaining_weight is not None:  # None means unlimited
             domain.append(("weight", "<=", self._remaining_weight))
         previous_picking = self._previous_selected_picking
@@ -211,30 +212,33 @@ class MakePickingBatch(models.TransientModel):
             domain.append(("priority", "=", previous_picking.priority))
         if self.restrict_to_same_partner:
             domain.append(("partner_id", "=", previous_picking.partner_id.id))
-        volume_domains = [
-            [
-                ("volume", "<=", self._get_remaining_volume()),
-            ]
-        ]
-        if self.group_pickings_by_partner:
-            # in case of grouping by partner, we allow to group picking into
-            # the same bins. That means that the volume available for the
-            # partner does not depend on the volume of remaining bins only
-            # but also on the remaining volume into the bins already used by
-            # the partner. Since results are sorted by partner, the search
-            # takes as partner the partner of the previous picking.
-            previous_partner = previous_picking.partner_id
-            volume_domains.append(
+        remaining_volume = self._get_remaining_volume()
+        if remaining_volume is not None:  # None means unlimited
+            volume_domains = [
                 [
-                    ("partner_id", "=", previous_partner.id),
-                    (
-                        "volume",
-                        "<=",
-                        self._get_remaining_volume(previous_partner),
-                    ),
+                    ("volume", "<=", remaining_volume),
                 ]
-            )
-        return AND([domain, OR(volume_domains)])
+            ]
+            if self.group_pickings_by_partner:
+                # in case of grouping by partner, we allow to group picking into
+                # the same bins. That means that the volume available for the
+                # partner does not depend on the volume of remaining bins only
+                # but also on the remaining volume into the bins already used by
+                # the partner. Since results are sorted by partner, the search
+                # takes as partner the partner of the previous picking.
+                previous_partner = previous_picking.partner_id
+                volume_domains.append(
+                    [
+                        ("partner_id", "=", previous_partner.id),
+                        (
+                            "volume",
+                            "<=",
+                            self._get_remaining_volume(previous_partner),
+                        ),
+                    ]
+                )
+            domain = AND([domain, OR(volume_domains)])
+        return domain
 
     def _execute_search_pickings(self, domain, limit=None):
         """Hook to allow to override the search of pickings
@@ -335,7 +339,7 @@ class MakePickingBatch(models.TransientModel):
                 if not split_picking:
                     if raise_if_not_found:
                         raise PickingSplitNotPossibleError(picking)
-                    _logger.warning(
+                    _logger.debug(
                         f"The picking {picking.name} could not be split "
                         "for batch creation."
                     )
@@ -359,8 +363,10 @@ class MakePickingBatch(models.TransientModel):
         :param partner: if set, the remaining volume will add to the volume available
         if free bins the volume remaining in the bins already used by the partner
         """
+        if not self._device.volume_per_bin:
+            return None
         remaining_volume = self._remaining_nbr_bins * self._device.volume_per_bin
-        if partner and self._device.volume_per_bin:
+        if partner:
             # for a partner we must take into account the remaining volume in
             # bins already used by the partner and the volume of the remaining
             # bins
@@ -463,7 +469,13 @@ class MakePickingBatch(models.TransientModel):
             else None  # None means unlimited
         )
         self._remaining_nbr_picking_lines = (
-            self.maximum_number_of_preparation_lines - first_picking.nbr_picking_lines
+            max(
+                self.maximum_number_of_preparation_lines
+                - first_picking.nbr_picking_lines,
+                0,
+            )
+            if self.maximum_number_of_preparation_lines
+            else None  # None means unlimited
         )
         self._selected_picking_ids = [first_picking.id]
         self._first_picking = first_picking
@@ -514,7 +526,8 @@ class MakePickingBatch(models.TransientModel):
         self._selected_picking_ids.append(picking.id)
         if self._remaining_weight is not None:
             self._remaining_weight -= picking.weight
-        self._remaining_nbr_picking_lines -= picking.nbr_picking_lines
+        if self._remaining_nbr_picking_lines is not None:
+            self._remaining_nbr_picking_lines -= picking.nbr_picking_lines
         nbr_bins = self._get_nbr_bins_for_picking(picking)
         self._remaining_nbr_bins -= nbr_bins
         self._previous_selected_picking = picking
