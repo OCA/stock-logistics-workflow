@@ -241,8 +241,8 @@ msgstr "Volume max par bac"
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_make_picking_batch__maximum_number_of_preparation_lines
-msgid "Maximum number of preparation lines for the batch"
-msgstr "Nombre maximum de lignes de préparation pour la vague"
+msgid "Maximum number of preparation lines for the batch."
+msgstr ""
 
 #. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__user_max_volume
@@ -357,6 +357,11 @@ msgid "SQL FOR UPDATE SKIP LOCKED"
 msgstr "SQL FOR UPDATE SKIP LOCKED"
 
 #. module: stock_picking_batch_creation
+#: model:ir.model.fields,help:stock_picking_batch_creation.field_make_picking_batch__maximum_number_of_preparation_lines
+msgid "Set to 0 to disable."
+msgstr ""
+
+#. module: stock_picking_batch_creation
 #: model:ir.model.fields,field_description:stock_picking_batch_creation.field_stock_device_type__split_mode
 msgid "Split Mode"
 msgstr ""
@@ -439,6 +444,9 @@ msgstr "ex: Transpalette"
 #: code:addons/stock_picking_batch_creation/exceptions.py:0
 msgid "no candidate pickings to batch"
 msgstr "aucun transfert candidat à la création de la vague de préparation"
+
+#~ msgid "Maximum number of preparation lines for the batch"
+#~ msgstr "Nombre maximum de lignes de préparation pour la vague"
 
 #~ msgid "Volume in default system volume unit of measure"
 #~ msgstr "Volume dans l'unité de mesure de volume par défaut du système"
