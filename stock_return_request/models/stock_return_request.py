@@ -266,7 +266,7 @@ class StockReturnRequest(models.Model):
                     return_move = done_moves[move]
                     return_move.product_uom_qty += qty
                 done_moves.setdefault(move, self.env["stock.move"])
-                done_moves[move] += return_move
+                done_moves[move] |= return_move
                 return_move._action_confirm()
                 # We need to be deterministic with lots to avoid autoassign
                 # thus we create manually the line
