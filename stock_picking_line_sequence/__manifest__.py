@@ -18,6 +18,7 @@
     "data": [
         "views/stock_picking_views.xml",
         "report/report_deliveryslip.xml",
+        "report/report_picking.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,
