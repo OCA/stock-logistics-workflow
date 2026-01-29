@@ -2,6 +2,7 @@
 #     (<https://www.forgeflow.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.tests.common import TransactionCase
 
 
@@ -13,12 +14,11 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
         self.computer_SC234.write(
             {
                 "seller_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "name": self.agrolait.id,
+                            "partner_id": self.agrolait.id,
                             "product_code": "test_agrolait",
+                            "product_name": "Test Agrolait",
                         },
                     )
                 ],
@@ -32,17 +32,15 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 "picking_type_id": self.env.ref("stock.picking_type_in").id,
             }
         )
-        reception_picking.onchange_picking_type()
+        reception_picking._onchange_picking_type()
         reception_picking = self.env["stock.picking"].create(
             {
                 "partner_id": reception_picking.partner_id.id,
                 "picking_type_id": reception_picking.picking_type_id.id,
                 "location_id": reception_picking.location_id.id,
                 "location_dest_id": reception_picking.location_dest_id.id,
-                "move_lines": [
-                    (
-                        0,
-                        0,
+                "move_ids": [
+                    Command.create(
                         {
                             "name": self.computer_SC234.partner_ref,
                             "product_id": self.computer_SC234.id,
@@ -53,6 +51,7 @@ class TestProductSupplierinfoForCustomerPicking(TransactionCase):
                 ],
             }
         )
-        move = reception_picking.move_lines[0]
-        move._compute_product_supplier_code()
+        move = reception_picking.move_ids[0]
+        move._compute_product_supplierinfo()
         self.assertEqual(move.product_supplier_code, "test_agrolait")
+        self.assertEqual(move.product_supplier_name, "Test Agrolait")
