@@ -32,7 +32,11 @@
             <field name="product_id" position="after">
                 <field
                     name="product_supplier_name"
-                    filter_domain="['|', ('product_supplier_name', 'ilike', self), ('product_supplier_code', 'ilike', self)]"
+                    filter_domain="[
+                        '|',
+                        ('product_supplier_name', 'ilike', self),
+                        ('product_supplier_code', 'ilike', self)
+                    ]"
                     string="Product Vendor Reference"
                 />
             </field>

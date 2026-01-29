@@ -28,8 +28,8 @@ Product Supplierinfo Picking
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module loads in every Stock move the supplier code defined in the
-product.
+This module loads, in every stock move, the vendor's product code and
+product name defined in the product's supplier infos tab.
 
 **Table of contents**
 
@@ -41,10 +41,11 @@ Usage
 
 In a stock move created inside a stock picking that has a partner
 specified, if the product has that partner as a supplier, it will add
-the partner product code and partner product name to the stock move. The
-product supplier code and name can be visualized in the form view from
-the stock picking when you click on a move and also in the Stock Moves
-menu in Inventory.
+the partner product code and partner product name to the stock move.
+
+The product supplier code and name can be visualized in the form view
+from the stock picking when you click on a move and also in the Stock
+Moves menu in Inventory.
 
 Bug Tracker
 ===========
@@ -68,6 +69,7 @@ Contributors
 ------------
 
 - Adrià Gil Sorribes <adria.gil@forgeflow.com>
+- Yann Papouin <ypa@decgroupe.com>
 
 Maintainers
 -----------
