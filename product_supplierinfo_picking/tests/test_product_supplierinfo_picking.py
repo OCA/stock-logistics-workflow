@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 
 class TestProductSupplierinfoForCustomerPicking(TransactionCase):
     def setUp(self):
-        super(TestProductSupplierinfoForCustomerPicking, self).setUp()
+        super().setUp()
         self.computer_SC234 = self.browse_ref("product.product_product_3")
         self.agrolait = self.browse_ref("base.res_partner_2")
         self.computer_SC234.write(
