@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block id="production_lot_info" position="after">
+                <block title="Import S/N">
+                    <setting>
+                        <span class="o_form_label">Field to search products</span>
+                        <div class="text-muted">
+                                Select the field to search products
+                            </div>
+                        <div class="text-muted">
+                            <field name="default_sn_search_product_by_field" />
+                        </div>
+                    </setting>
+                    <setting>
+                        <span class="o_form_label">File column index for products</span>
+                        <div class="text-muted">
+                                Select the index file column which contains the product info
+                            </div>
+                        <div class="text-muted">
+                            <field name="default_sn_product_column_index" />
+                        </div>
+                    </setting>
+                    <setting>
+                        <span
+                            class="o_form_label"
+                        >File column index for serial number</span>
+                        <div class="text-muted">
+                                Select the index file column which contains the serial numbers info
+                            </div>
+                        <div class="text-muted">s
+                                <field name="default_sn_serial_column_index" />
+                            </div>
+                    </setting>
+                    <setting>
+                        <span class="o_form_label">File column index for package</span>
+                        <div class="text-muted">
+                                Select the index file column which contains the package info
+                            </div>
+                        <div class="text-muted">
+                            <field name="default_sn_package_column_index" />
+                        </div>
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>
