@@ -4,6 +4,7 @@
 from collections import defaultdict
 
 from odoo import models
+from odoo.tools import groupby
 
 
 class StockMove(models.Model):
@@ -47,22 +48,26 @@ class StockMove(models.Model):
                 StockMove,
                 moves_to_assign.with_context(force_restricted_owner_id=owner_id),
             )._action_assign()
-            if (
-                owner_id
-                and moves_to_assign.picking_type_id.owner_restriction
-                == "partner_or_unassigned"
-                and sum(
-                    [
-                        move.reserved_availability - move.product_uom_qty
-                        for move in moves_to_assign
-                    ]
-                )
-                < 0
-            ):
-                super(
-                    StockMove,
-                    moves_to_assign.with_context(force_restricted_owner_id=False),
-                )._action_assign()
+            if not owner_id:
+                continue
+            moves_by_type = groupby(moves_to_assign, lambda move: move.picking_type_id)
+            for picking_type, moves_of_type in moves_by_type:
+                if picking_type.owner_restriction != "partner_or_unassigned":
+                    continue
+                moves_of_type = self.browse().union(*moves_of_type)
+                if (
+                    sum(
+                        [
+                            move.reserved_availability - move.product_uom_qty
+                            for move in moves_of_type
+                        ]
+                    )
+                    < 0
+                ):
+                    super(
+                        StockMove,
+                        moves_of_type.with_context(force_restricted_owner_id=False),
+                    )._action_assign()
 
     def _update_reserved_quantity(
         self,
