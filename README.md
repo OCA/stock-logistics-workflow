@@ -1,4 +1,6 @@
+[![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
 
+# stock-logistics-workflow
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0)
 [![Pre-commit Status](https://github.com/OCA/stock-logistics-workflow/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/stock-logistics-workflow/actions/workflows/pre-commit.yml?query=branch%3A18.0)
 [![Build Status](https://github.com/OCA/stock-logistics-workflow/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/stock-logistics-workflow/actions/workflows/test.yml?query=branch%3A18.0)
@@ -7,6 +9,7 @@
 
 <!-- /!\ do not modify above this line -->
 
+<<<<<<< before updating
 # Stock Workflow
 
 Enhance the way flows and processes are working. Find here modules that do not have their place in the other more specialized repositories.
@@ -14,6 +17,9 @@ Enhance the way flows and processes are working. Find here modules that do not h
 Are you looking for modules related to logistics? Or would like to contribute
 to? There are many repositories with specific purposes. Have a look at this
 [README](https://github.com/OCA/wms/blob/18.0/README.md).
+=======
+stock-logistics-workflow
+>>>>>>> after updating
 
 <!-- /!\ do not modify below this line -->
 
