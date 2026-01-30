@@ -86,6 +86,7 @@ Contributors
 
 - David Vidal (`Moduon <https://www.moduon.team/>`__)
 - Jairo Llopis (`Moduon <https://www.moduon.team/>`__)
+- Andrii Kompaniiets (`Moduon <https://www.moduon.team/>`__)
 
 Maintainers
 -----------

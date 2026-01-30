@@ -6,7 +6,7 @@
         <field name="priority">99</field>
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='move_ids_without_package']//button[@name='action_show_details']"
+                expr="//field[@name='move_ids_without_package']//field[@name='lot_ids']"
                 position="after"
             >
                 <field
