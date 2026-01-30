@@ -5,7 +5,7 @@
         inherit_id="stock.report_delivery_document"
         priority="99"
     >
-        <xpath expr="//tr[@t-foreach='o.move_line_ids']" position="attributes">
+        <xpath expr="//tr[@t-foreach='o.move_ids.move_line_ids']" position="attributes">
             <attribute name="t-if">move_line.display_in_report</attribute>
         </xpath>
         <xpath expr="//tr[@t-foreach='lines']" position="attributes">
