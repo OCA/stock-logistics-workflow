@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-27 01:52+0000\n"
-"PO-Revision-Date: 2026-02-01 08:09+0000\n"
+"PO-Revision-Date: 2026-02-01 11:09+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/sl/)\n"
@@ -139,7 +139,7 @@ msgstr "Glavna priponka"
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_has_error
 msgid "Message Delivery error"
-msgstr "Napaka pri dostavi sporočila"
+msgstr "Napaka ob dostavi sporočila"
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_production_lot__message_ids
