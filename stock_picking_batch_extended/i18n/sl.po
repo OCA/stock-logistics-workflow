@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2025-11-24 09:25+0000\n"
+"PO-Revision-Date: 2026-02-01 08:09+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
@@ -117,7 +117,7 @@ msgstr "Zadolži uslužbenca za upravljanje dobavnic"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__message_attachment_count
 msgid "Attachment Count"
-msgstr "Število prilog"
+msgstr "Št. priponk"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields.selection,name:stock_picking_batch_extended.selection__stock_picking_batch__state__assigned
@@ -347,7 +347,7 @@ msgstr "Ikona za prikaz izjem pri aktivnostih."
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_needaction
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_unread
 msgid "If checked, new messages require your attention."
-msgstr "Označba pomeni, da nova sporočila zahtevajo vašo pozornost."
+msgstr "Če je označeno, nova sporočila zahtevajo vašo pozornost."
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__message_has_error
@@ -424,7 +424,7 @@ msgstr "Sporočila"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Rok mojih aktivnosti"
+msgstr "Rok moje aktivnosti"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
@@ -667,7 +667,7 @@ msgstr "Premestitev"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Vrsta dejavnosti izjeme na zapisu."
+msgstr "Tip izjeme pri aktivnosti na zapisu."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_batch_picking_search
@@ -724,7 +724,7 @@ msgstr "Opis skladišča"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__website_message_ids
 msgid "Website Messages"
-msgstr "Sporočila iz spleta"
+msgstr "Sporočila spletne strani"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__website_message_ids
