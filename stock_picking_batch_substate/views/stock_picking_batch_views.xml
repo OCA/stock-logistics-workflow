@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="stock_picking_batch_form" model="ir.ui.view">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <header position="after">
+                <header name="substate">
+                    <field
+                        name="substate_id"
+                        widget="statusbar"
+                        options="{'clickable': '1',}"
+                        domain="[('model', '=', 'stock.picking.batch'),('target_state_value_id.target_state_value', '=', state)]"
+                    />
+                </header>
+            </header>
+        </field>
+    </record>
+
+    <record id="stock_picking_batch_tree" model="ir.ui.view">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="substate_id" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_picking_batch_filter" model="ir.ui.view">
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="substate_id" />
+            </field>
+            <filter name="state" position="after">
+                <filter
+                    string="Substate"
+                    name="substate"
+                    domain="[]"
+                    context="{'group_by': 'substate_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>

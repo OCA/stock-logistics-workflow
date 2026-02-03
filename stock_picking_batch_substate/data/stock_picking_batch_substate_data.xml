@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="base_substate_type_stock_picking_batch" model="base.substate.type">
+        <field name="name">Batch transfer Substate</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="target_state_field">state</field>
+    </record>
+    <!-- Batch transfer related substate -->
+    <record id="target_state_value_batch_draft" model="target.state.value">
+        <field name="name">Draft</field>
+        <field
+            name="base_substate_type_id"
+            ref="base_substate_type_stock_picking_batch"
+        />
+        <field name="target_state_value">draft</field>
+    </record>
+    <record id="target_state_value_batch_in_progress" model="target.state.value">
+        <field name="name">In progress</field>
+        <field
+            name="base_substate_type_id"
+            ref="base_substate_type_stock_picking_batch"
+        />
+        <field name="target_state_value">in_progress</field>
+    </record>
+    <record id="target_state_value_batch_done" model="target.state.value">
+        <field name="name">Done</field>
+        <field
+            name="base_substate_type_id"
+            ref="base_substate_type_stock_picking_batch"
+        />
+        <field name="target_state_value">done</field>
+    </record>
+</odoo>
