@@ -7,6 +7,15 @@
         <div class="page" position="before">
             <t t-set="report_lines" t-value="o.get_delivery_report_lines()" />
         </div>
+
+        <!-- make origin one line as it can be long -->
+        <xpath
+            expr="//div[@id='informations']/div[@name='div_origin']"
+            position="attributes"
+        >
+            <attribute name="class">col mw-100 mb-2</attribute>
+        </xpath>
+
         <!-- overrides when the picking is not done -->
         <xpath
             expr='//table[@name="stock_move_table"]/tbody/t[@t-set="lines"]'
@@ -95,20 +104,23 @@
                         t-if="o.state == 'done'"
                         class="remaining-to-deliver-separator"
                     >Remaining to deliver:</p>
-                    <table class="table table-sm" name="remaining_to_deliver_table">
+                    <table
+                        class="table table-borderless table-sm"
+                        name="remaining_to_deliver_table"
+                    >
                         <tbody>
                             <tr t-foreach="remainings" t-as="remaining">
                                 <td>
                                     <span
-                                        t-att-class="'font-weight-bold' if remaining['is_header'] else None"
+                                        t-att-class="'fw-bold' if remaining['is_header'] else None"
                                         t-esc="remaining['concept']"
                                     />
                                 </td>
-                                <td style="text-align: right">
+                                <td class="text-end text-nowrap">
                                     <t t-if="not remaining['is_header']">
                                         <span
                                             t-esc="remaining['qty']"
-                                            t-options="{'widget': 'float',                                                           'precision': rounding_to_precision(remaining['uom'].rounding)}"
+                                            t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"
                                         />
                                         <span
                                             class="remaining_uom_name"
