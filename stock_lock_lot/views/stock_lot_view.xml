@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+
     <record id="view_production_lot_form" model="ir.ui.view">
         <field name="name">view.production.lot.form.inherit.lock.lot</field>
         <field name="model">stock.lot</field>
@@ -8,18 +9,30 @@
             <field name="ref" position="after">
                 <field name="locked" />
             </field>
+            <notebook position="inside">
+                <page string="Audit" name="audit">
+                    <group string="Unlock Tracking">
+                        <field name="last_unlocked_by" />
+                        <field name="last_unlocked_at" />
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
+
     <record id="view_production_lot_tree" model="ir.ui.view">
         <field name="name">view.production.lot.tree.inh.locklot</field>
         <field name="model">stock.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_tree" />
         <field name="arch" type="xml">
             <field name="create_date" position="after">
-                <field name="locked" />
+                <field name="locked" optional="show" />
+                <field name="last_unlocked_by" optional="hide" />
+                <field name="last_unlocked_at" optional="hide" />
             </field>
         </field>
     </record>
+
     <record id="search_product_lot_filter" model="ir.ui.view">
         <field name="name">search.product.lot.filter.inh.locklot</field>
         <field name="model">stock.lot</field>

@@ -17,6 +17,17 @@ class StockLot(models.Model):
     )
     product_id = fields.Many2one(tracking=True)
 
+    # For improved auditability, the last unlocker and time are stored
+    last_unlocked_by = fields.Many2one(
+        "res.users",
+        readonly=True,
+        help="User who last unlocked this lot",
+    )
+    last_unlocked_at = fields.Datetime(
+        readonly=True,
+        help="Date and time when this lot was last unlocked",
+    )
+
     def _get_product_locked(self, product):
         """Should create locked? (including categories and parents)
 
@@ -79,6 +90,15 @@ class StockLot(models.Model):
         if "product_id" in values:
             product = self.env["product.product"].browse(values["product_id"])
             values["locked"] = self._get_product_locked(product)
+
+        # Track unlock operations
+        if "locked" in values and not values["locked"]:
+            values.update(
+                {
+                    "last_unlocked_by": self.env.uid,
+                    "last_unlocked_at": fields.Datetime.now(),
+                }
+            )
         return super().write(values)
 
     def _track_subtype(self, init_values):
