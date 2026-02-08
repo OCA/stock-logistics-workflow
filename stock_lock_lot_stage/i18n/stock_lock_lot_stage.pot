@@ -1,0 +1,265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_lock_lot_stage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-20 12:38+0000\n"
+"PO-Revision-Date: 2026-02-20 12:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__approve_full_qty
+msgid "Approve Full Qty"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:stock.lot.stage,name:stock_lock_lot_stage.lot_stage_approved
+msgid "Approved"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__locked
+msgid "Blocked"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Cannot validate this stock operation because the total quantity of lot '%(lot)s' (%(total).2f) in locations that don't allow locked lots exceeds the partial approved quantity (%(approved).2f).\n"
+"Location: %(location)s\n"
+"Move excess quantities to locations that allow locked lots or increase the partial approved quantity."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot__last_unlocked_at
+msgid "Date and time when this lot was last unlocked"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__fold
+msgid "Fold"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot_stage.py:0
+#, python-format
+msgid "Full approval can only be allowed on unlocked stages."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot_stage__approve_full_qty
+msgid ""
+"If checked, lots in this stage are fully approved and cannot have partial "
+"quantities. Only available for unlocked stages."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot_stage__locked
+msgid "If checked, lots in this stage are locked for use."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot_stage__fold
+msgid "If checked, this stage will be folded in kanban views."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot__locked
+msgid "Indicates whether this lot is blocked for use."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__last_unlocked_at
+msgid "Last Unlocked At"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__last_unlocked_by
+msgid "Last Unlocked By"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__locked
+msgid "Locked"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model,name:stock_lock_lot_stage.model_stock_lot_stage
+msgid "Lot Stage"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.actions.act_window,name:stock_lock_lot_stage.stock_lot_stage_action
+#: model:ir.ui.menu,name:stock_lock_lot_stage.menu_stock_lot_stage
+msgid "Lot Stages"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model,name:stock_lock_lot_stage.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Lots in stage '%(stage)s' must have a partial approved quantity set. Please "
+"set a partial approved quantity or move the lot to a different stage."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot__partial_approved_qty
+msgid ""
+"Maximum quantity allowed in locations that don't allow locked lots.Leave "
+"zero to approve the full quantity."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__partial_approved_qty
+msgid "Partial Approved Quantity"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot.py:0
+#, python-format
+msgid "Partial approved quantity cannot be negative."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot.py:0
+#, python-format
+msgid ""
+"Partial approved quantity cannot be set on lots in stages that require full "
+"approval. Lot '%(lot)s' has a partial approved quantity but is in stage "
+"'%(stage)s' which requires full approval. Either clear the partial approved "
+"quantity or move the lot to a stage that allows partial approval."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:stock.lot.stage,name:stock_lock_lot_stage.lot_stage_partially_approved
+msgid "Partially Approved"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:stock.lot.stage,name:stock_lock_lot_stage.lot_stage_pending
+msgid "Pending"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model_terms:ir.ui.view,arch_db:stock_lock_lot_stage.view_production_lot_form
+msgid "Quality Control"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model,name:stock_lock_lot_stage.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:stock.lot.stage,name:stock_lock_lot_stage.lot_stage_rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot_stage__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__stage_id
+#: model_terms:ir.ui.view,arch_db:stock_lock_lot_stage.search_product_lot_filter
+msgid "Stage"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.constraint,message:stock_lock_lot_stage.constraint_stock_lot_stage_name_unique
+msgid "Stage name must be unique!"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:stock.lot.stage,name:stock_lock_lot_stage.lot_stage_testing
+msgid "Testing"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot__usable_location_qty
+msgid "Total quantity in locations where locked lots are not allowed."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,field_description:stock_lock_lot_stage.field_stock_lot__usable_location_qty
+msgid "Usable Location Qty"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#: model:ir.model.fields,help:stock_lock_lot_stage.field_stock_lot__last_unlocked_by
+msgid "User who last unlocked this lot"
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot.py:0
+#, python-format
+msgid "You are not allowed to change lot stages."
+msgstr ""
+
+#. module: stock_lock_lot_stage
+#. odoo-python
+#: code:addons/stock_lock_lot_stage/models/stock_lot.py:0
+#, python-format
+msgid "You are not allowed to change the partial approved quantity."
+msgstr ""
