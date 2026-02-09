@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="select_reusable_package_view_form" model="ir.ui.view">
+        <field name="name">select.reusable.package.form</field>
+        <field name="model">select.reusable.package</field>
+        <field name="arch" type="xml">
+            <form string="Select Reusable Package">
+                <group>
+                    <field name="picking_id" invisible="1" />
+                    <field name="warehouse_id" invisible="1" />
+                    <field
+                        name="package_id"
+                        options="{'no_create': True, 'no_open': True}"
+                        placeholder="Select an existing reusable package"
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
