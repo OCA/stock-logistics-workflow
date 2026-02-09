@@ -1,5 +1,6 @@
 # Copyright 2025 Camptocamp SA
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2025 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import fields, models
 from odoo.tools import float_compare
@@ -57,3 +58,12 @@ class StockMoveLine(models.Model):
             values["quantity"] = qty
         self.with_context(move_line_pick_qty=True).update(values)
         return True
+
+    def _align_quantity_with_qty_picked(self):
+        for line in self:
+            if line.picked and float_compare(
+                line.qty_picked,
+                line.quantity,
+                precision_rounding=line.product_uom_id.rounding,
+            ):
+                line.quantity = line.qty_picked

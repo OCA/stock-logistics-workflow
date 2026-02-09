@@ -1,8 +1,8 @@
 # Copyright 2025 Camptocamp SA
+# Copyright 2025 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
-from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -38,13 +38,26 @@ class StockMove(models.Model):
             )
         return quantity
 
-    def _action_done(self, cancel_backorder=False):
-        for move in self:
-            for line in move.move_line_ids:
-                if line.picked and float_compare(
-                    line.qty_picked,
-                    line.quantity,
-                    precision_rounding=line.product_uom_id.rounding,
-                ):
-                    line.quantity = line.qty_picked
-        return super()._action_done(cancel_backorder=cancel_backorder)
+    def _align_quantity_with_qty_picked(self):
+        self.move_line_ids._align_quantity_with_qty_picked()
+
+    def _register_hook(self):
+        super()._register_hook()
+
+        def _patched__action_done(self, cancel_backorder=False):
+            self._align_quantity_with_qty_picked()
+            return _patched__action_done.origin(self, cancel_backorder)
+
+        ModelClass = self.env.registry[self._name]
+        method = _patched__action_done
+        method.origin = ModelClass._action_done
+        ModelClass._action_done = _patched__action_done
+
+    def _unregister_hook(self):
+        # pylint: disable=missing-return, except-pass
+        super()._unregister_hook()
+        try:
+            ModelClass = self.env.registry[self._name]
+            delattr(ModelClass, "_action_done")
+        except AttributeError:
+            pass
