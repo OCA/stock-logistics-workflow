@@ -107,7 +107,7 @@ addon | version | maintainers | summary
 [stock_restrict_expiration_date](stock_restrict_expiration_date/) | 14.0.1.3.1 | <a href='https://github.com/petrus-v'><img src='https://github.com/petrus-v.png' width='32' height='32' style='border-radius:50%;' alt='petrus-v'/></a> | Add concept of restrict lot on stock move based on specific expiration date
 [stock_restrict_lot](stock_restrict_lot/) | 14.0.1.4.1 | <a href='https://github.com/florian-dacosta'><img src='https://github.com/florian-dacosta.png' width='32' height='32' style='border-radius:50%;' alt='florian-dacosta'/></a> | Base module that add back the concept of restrict lot on stock move
 [stock_restrict_lot_update](stock_restrict_lot_update/) | 14.0.1.0.0 | <a href='https://github.com/aleuffre'><img src='https://github.com/aleuffre.png' width='32' height='32' style='border-radius:50%;' alt='aleuffre'/></a> <a href='https://github.com/renda-dev'><img src='https://github.com/renda-dev.png' width='32' height='32' style='border-radius:50%;' alt='renda-dev'/></a> | Only apply lot restriction on products in a domain
-[stock_return_request](stock_return_request/) | 14.0.1.0.3 |  | Stock Return Request
+[stock_return_request](stock_return_request/) | 14.0.1.0.4 |  | Stock Return Request
 [stock_scheduler_assignation_horizon](stock_scheduler_assignation_horizon/) | 14.0.1.1.0 |  | Set a timeframe limit to the delivery scheduler
 [stock_split_picking](stock_split_picking/) | 14.0.1.1.2 |  | Split a picking in two not transferred pickings
 [stock_split_picking_kit](stock_split_picking_kit/) | 14.0.1.0.1 |  | Split a picking by a number of kits.
