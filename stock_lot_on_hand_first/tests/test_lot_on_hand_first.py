@@ -9,6 +9,7 @@ class TestLotOnHandFirst(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.uom_precision = cls.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
         )

@@ -5,9 +5,6 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='lot_id']" position="after">
-                <field name="display_lots_on_hand_first" column_invisible="True" />
-            </xpath>
             <xpath expr="//field[@name='lot_id']" position="attributes">
                 <attribute
                     name="context"
@@ -30,9 +27,6 @@
             ref="stock.view_stock_move_line_detailed_operation_tree"
         />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='lot_id']" position="after">
-                <field name="display_lots_on_hand_first" column_invisible="True" />
-            </xpath>
             <xpath expr="//field[@name='lot_id']" position="attributes">
                 <attribute
                     name="context"

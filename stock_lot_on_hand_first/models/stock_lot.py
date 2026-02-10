@@ -8,7 +8,7 @@ class StockLot(models.Model):
     _inherit = "stock.lot"
 
     @api.model
-    def _name_search(self, name, domain=None, operator="ilike", limit=None, order=None):
+    def search_fetch(self, domain, field_names, offset=0, limit=None, order=None):
         """Move lots without a qty on hand at the end of the list"""
 
         if self.env.context.get("name_search_qty_on_hand_first"):
@@ -22,34 +22,27 @@ class StockLot(models.Model):
             if with_quantity_count >= limit:
                 domain = with_quantity_domain
             else:
-                with_quantity_ids = super()._name_search(
-                    name=name,
+                with_quantity_ids = self._search(
                     domain=with_quantity_domain,
-                    operator=operator,
+                    offset=offset,
                     limit=limit,
                     order=order,
                 )
-                without_quantity_ids = super()._name_search(
-                    name=name,
+                without_quantity_ids = self._search(
                     domain=AND([domain, [("product_qty", "=", 0)]]),
-                    operator=operator,
+                    offset=0,
                     limit=limit - with_quantity_count,
                     order=order,
                 )
-                # _name_search is supposed to return a odoo.osv.query.Query object that
-                # will be evaluated as a list of ids when used in the browse function.
-                # Since we cannot merge the Query objects to respect the intended order
-                # in which we want to display the results,  we return the list of ids
-                # that will be used by browse in the name_search implementation.
-                return (
+                return self.browse(
                     self.browse(with_quantity_ids).ids
                     + self.browse(without_quantity_ids).ids
                 )
 
-        return super()._name_search(
-            name=name,
+        return super().search_fetch(
             domain=domain,
-            operator=operator,
+            field_names=field_names,
+            offset=offset,
             limit=limit,
             order=order,
         )
