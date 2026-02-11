@@ -11,30 +11,95 @@ class TestReusablePacking(TestPackingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # Supplier Location
+        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
 
-        # 1. Create Reusable Packages
-        cls.reusable_box_in = cls.env["stock.quant.package"].create(
+        # Create valid reusable packages
+        cls.reusable_pkg_in = cls.env["stock.quant.package"].create(
             {
                 "name": "Reusable Box IN",
                 "package_use": "reusable",
                 "location_id": cls.stock_location.id,
             }
         )
-
-        cls.reusable_box_out = cls.env["stock.quant.package"].create(
+        cls.reusable_pkg_out = cls.env["stock.quant.package"].create(
             {
                 "name": "Reusable Box OUT",
                 "package_use": "reusable",
                 "location_id": cls.stock_location.id,
             }
         )
+        # Create **invalid** disposable/reusable packages
+        # Disposable package in internal stock.location
+        cls.disposable_pkg = cls.env["stock.quant.package"].create(
+            {
+                "name": "Disposable Box",
+                "package_use": "disposable",
+                "location_id": cls.stock_location.id,
+            }
+        )
+        # Reusable package in external stock.location
+        cls.external_pkg = cls.env["stock.quant.package"].create(
+            {
+                "name": "External Box",
+                "package_use": "reusable",
+                "location_id": cls.customer_location.id,
+            }
+        )
+        # Reusable Package in other stock.warehouse
+        warehouse2 = cls.env["stock.warehouse"].create({"name": "WH2", "code": "WH2"})
+        cls.wh2_pkg = cls.env["stock.quant.package"].create(
+            {
+                "name": "WH2 Box",
+                "package_use": "reusable",
+                "location_id": warehouse2.lot_stock_id.id,
+            }
+        )
 
-        # 2. Enable Feature on Picking Types initially
+        # Enable Reusable Pack on Picking Types
         cls.warehouse.in_type_id.use_reusable_pack = True
         cls.warehouse.out_type_id.use_reusable_pack = True
 
-        # 3. Supplier Location
-        cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
+    def test_00_package_domain(self):
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.out_type_id.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
+        wizard = self.env["select.reusable.package"].create(
+            {
+                "picking_id": picking.id,
+                "package_id": self.reusable_pkg_out.id,
+            }
+        )
+        expected_domain = [
+            ("package_use", "=", "reusable"),
+            ("location_id.usage", "=", "internal"),
+            ("location_id", "child_of", wizard.warehouse_view_location_id.id),
+        ]
+        available_packages = self.env["stock.quant.package"].search(expected_domain)
+        # Should contain our valid packages
+        self.assertIn(self.reusable_pkg_in, available_packages)
+        self.assertIn(self.reusable_pkg_out, available_packages)
+
+        # Should NOT contain invalid packages
+        self.assertNotIn(
+            self.disposable_pkg,
+            available_packages,
+            "Disposable packages should be filtered out",
+        )
+        self.assertNotIn(
+            self.external_pkg,
+            available_packages,
+            "Packages in external locations should be filtered out",
+        )
+        self.assertNotIn(
+            self.wh2_pkg,
+            available_packages,
+            "Packages in other warehouses should be filtered out",
+        )
 
     def test_01_receipt_flow(self):
         # Create Receipt
@@ -80,7 +145,7 @@ class TestReusablePacking(TestPackingCommon):
         wizard = Wizard.create(
             {
                 "picking_id": picking.id,
-                "package_id": self.reusable_box_in.id,
+                "package_id": self.reusable_pkg_in.id,
             }
         )
         self.assertEqual(
@@ -97,7 +162,7 @@ class TestReusablePacking(TestPackingCommon):
         move_line = picking.move_line_ids[0]
         self.assertEqual(
             move_line.result_package_id,
-            self.reusable_box_in,
+            self.reusable_pkg_in,
             "Receipt items should be packed into Reusable Box IN",
         )
 
@@ -153,7 +218,7 @@ class TestReusablePacking(TestPackingCommon):
         wizard = Wizard.create(
             {
                 "picking_id": picking.id,
-                "package_id": self.reusable_box_out.id,
+                "package_id": self.reusable_pkg_out.id,
             }
         )
         self.assertEqual(
@@ -167,7 +232,7 @@ class TestReusablePacking(TestPackingCommon):
         move_line = picking.move_line_ids[0]
         self.assertEqual(
             move_line.result_package_id,
-            self.reusable_box_out,
+            self.reusable_pkg_out,
             "Delivery items should be packed into Reusable Box OUT",
         )
 
@@ -216,7 +281,7 @@ class TestReusablePacking(TestPackingCommon):
         )
         self.assertNotEqual(
             move_line_in.result_package_id,
-            self.reusable_box_in,
+            self.reusable_pkg_in,
             "Should not reuse the existing box",
         )
 
@@ -267,6 +332,6 @@ class TestReusablePacking(TestPackingCommon):
         )
         self.assertNotEqual(
             move_line_out.result_package_id,
-            self.reusable_box_out,
+            self.reusable_pkg_out,
             "Should not reuse the existing box",
         )

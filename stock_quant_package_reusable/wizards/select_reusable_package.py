@@ -7,7 +7,12 @@ class SelectReusablePackage(models.TransientModel):
 
     picking_id = fields.Many2one("stock.picking", required=True)
     warehouse_id = fields.Many2one(
+        "stock.warehouse",
         related="picking_id.picking_type_id.warehouse_id",
+    )
+    warehouse_view_location_id = fields.Many2one(
+        "stock.location",
+        related="warehouse_id.view_location_id",
     )
     package_id = fields.Many2one(
         "stock.quant.package",
@@ -15,7 +20,7 @@ class SelectReusablePackage(models.TransientModel):
         required=True,
         domain="[('package_use', '=', 'reusable'), "
         "('location_id.usage', '=', 'internal'), "
-        "('location_id', 'child_of', warehouse_id)]",
+        "('location_id', 'child_of', warehouse_view_location_id)]",
     )
 
     def action_confirm(self):
