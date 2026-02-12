@@ -120,6 +120,7 @@ class StockPicking(models.Model):
         when quantity alerts exist"""
         for picking in self:
             groups_ids = picking.picking_type_id.groups_ids
+            picking._compute_has_quantity_alert()
             if (
                 picking.picking_type_id.display_quantity_alert_percentage
                 and groups_ids
