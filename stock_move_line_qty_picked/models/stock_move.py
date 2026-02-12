@@ -8,7 +8,9 @@ from odoo.tools import float_compare
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    qty_picked = fields.Float(compute="_compute_qty_picked")
+    qty_picked = fields.Float(
+        compute="_compute_qty_picked", digits="Product Unit of Measure"
+    )
 
     @api.depends(
         "move_line_ids.picked",
