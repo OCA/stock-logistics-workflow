@@ -13,7 +13,9 @@ class StockMoveLine(models.Model):
         inverse="_inverse_picked",
         copy=False,
     )
-    qty_picked = fields.Float(inverse="_inverse_qty_picked", copy=False)
+    qty_picked = fields.Float(
+        inverse="_inverse_qty_picked", copy=False, digits="Product Unit of Measure"
+    )
 
     def _inverse_picked(self):
         if self.env.context.get("move_line_pick_qty"):
