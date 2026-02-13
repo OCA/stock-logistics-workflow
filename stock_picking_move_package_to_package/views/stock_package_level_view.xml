@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record
-        id="package_level_tree_view_picking_move_package_to_package"
-        model="ir.ui.view"
-    >
-        <field name="name">Package Level Tree Picking Move Package To Package</field>
-        <field name="model">stock.package_level</field>
-        <field name="inherit_id" ref="stock.package_level_tree_view_picking" />
+    <record id="stock_move_line_tree_view_move_package_to_package" model="ir.ui.view">
+        <field name="name">Stock Move Line Tree Move Package To Package</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
         <field name="arch" type="xml">
-            <field name="package_id" position="after">
+            <field name="result_package_id" position="after">
                 <field
                     name="package_dest_id"
-                    attrs="{'readonly': [('state', 'in', ('confirmed', 'assigned', 'done', 'cancel'))]}"
+                    readonly="state in ('confirmed', 'assigned', 'done', 'cancel')"
                     options="{'no_create': True}"
                 />
             </field>
