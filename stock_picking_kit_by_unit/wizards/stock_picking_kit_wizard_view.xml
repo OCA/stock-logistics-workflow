@@ -35,11 +35,11 @@
 
                 <footer>
                 <button
-                        name="action_apply"
-                        class="btn btn-primary"
-                        string="Done"
-                        type="object"
-                    />
+                    name="action_apply"
+                    class="btn btn-primary"
+                    string="Done"
+                    type="object"
+                />
                 or
                 <button special="cancel" class="btn btn-secondary" string="Cancel" />
             </footer>
