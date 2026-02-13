@@ -378,13 +378,17 @@ ul.auto-toc {
 <p>Handle boxes/kits of components, that can be moved as a package, but
 have the stock managed at the individual components. This allows, for
 example, to track the serial numbers for the individual components.</p>
+<p>Adds a “Kit Ops” button on stock pickings that opens a dedicated Kit
+Operations list view. This view shows the move lines for kit components
+sorted per kit unit (box) instead of per component, making it easy to
+process each box sequentially.</p>
 <p>Example:</p>
 <ul class="simple">
 <li>“Widget” is received in a box, containing Parts A, B and C. Parts A
 and B are serial number controlled, but part C is not. The serial
 numbers are barcoded and in the box labels.</li>
-<li>When receiving, we want to select the Kit product, type the quantity
-to receive, and then scan the barcodes for each box.</li>
+<li>When receiving, open Kit Operations to see all components grouped per
+box, enter the serial numbers for each box, and then pack them.</li>
 </ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
@@ -409,19 +413,20 @@ components may be tracked by serial number or lot.</p>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
 <p>To receive, on the Stock Receipt:</p>
-<ul class="simple">
-<li>On the “Stock Receipt”, click on “Receive Kit” button to open the
-“Receive Kit” wizard.</li>
-<li>On the “Receive Kit” form header, select the Kit Product and the
-Quantity to receive. This will populate the lines with the components
-to be received, with the received quantity already populated.</li>
-<li>On the “Receive Kit” form lines, enter the serial/lot number for each
-line. This is done processing each box, and then each component in
-each box.</li>
-<li>Finally, click “Done” to add the received items to the Stock Receipt.
-Each Kit will automatically be put in a box. The box name is the
-serial/lot number of the first component, if it is tracked.</li>
-</ul>
+<ol class="arabic simple">
+<li>On the picking form, click the “Kit Ops” button to open the Kit
+Operations list view. This shows the move lines for kit components
+sorted per box (kit unit), with the first line of each box displayed
+in bold.</li>
+<li>Enter the serial/lot numbers for each component, processing one box
+at a time.</li>
+<li>Click “Put in Pack” to manually pack selected lines, or use “Pack All
+Kits” to automatically group all kit lines per box and create a
+package for each.</li>
+<li>When validating the picking, any unpacked kit lines are automatically
+packed. Each package is named after the first serial number in the
+box.</li>
+</ol>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>

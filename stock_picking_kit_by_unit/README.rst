@@ -36,13 +36,18 @@ Handle boxes/kits of components, that can be moved as a package, but
 have the stock managed at the individual components. This allows, for
 example, to track the serial numbers for the individual components.
 
+Adds a "Kit Ops" button on stock pickings that opens a dedicated Kit
+Operations list view. This view shows the move lines for kit components
+sorted per kit unit (box) instead of per component, making it easy to
+process each box sequentially.
+
 Example:
 
 -  "Widget" is received in a box, containing Parts A, B and C. Parts A
    and B are serial number controlled, but part C is not. The serial
    numbers are barcoded and in the box labels.
--  When receiving, we want to select the Kit product, type the quantity
-   to receive, and then scan the barcodes for each box.
+-  When receiving, open Kit Operations to see all components grouped per
+   box, enter the serial numbers for each box, and then pack them.
 
 **Table of contents**
 
@@ -61,17 +66,18 @@ Usage
 
 To receive, on the Stock Receipt:
 
--  On the "Stock Receipt", click on "Receive Kit" button to open the
-   "Receive Kit" wizard.
--  On the "Receive Kit" form header, select the Kit Product and the
-   Quantity to receive. This will populate the lines with the components
-   to be received, with the received quantity already populated.
--  On the "Receive Kit" form lines, enter the serial/lot number for each
-   line. This is done processing each box, and then each component in
-   each box.
--  Finally, click "Done" to add the received items to the Stock Receipt.
-   Each Kit will automatically be put in a box. The box name is the
-   serial/lot number of the first component, if it is tracked.
+1. On the picking form, click the "Kit Ops" button to open the Kit
+   Operations list view. This shows the move lines for kit components
+   sorted per box (kit unit), with the first line of each box displayed
+   in bold.
+2. Enter the serial/lot numbers for each component, processing one box
+   at a time.
+3. Click "Put in Pack" to manually pack selected lines, or use "Pack All
+   Kits" to automatically group all kit lines per box and create a
+   package for each.
+4. When validating the picking, any unpacked kit lines are automatically
+   packed. Each package is named after the first serial number in the
+   box.
 
 Bug Tracker
 ===========
