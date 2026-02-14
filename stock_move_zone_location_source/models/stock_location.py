@@ -25,9 +25,24 @@ class StockLocation(models.Model):
         )
 
     def _get_source_zone(self):
-        if self.is_considered_as_source:
-            return self
-        elif self.location_id:  # check parent
-            return self.location_id._get_source_zone()
-        else:
-            return self.browse()
+        """
+        Return all parents from this recordset considered as source.
+
+        Do it through a search on the whole recordset for performance reasons,
+        then, manage the result with filtered() or...
+        """
+        zones = self.search(
+            [("id", "parent_of", self.ids), ("is_considered_as_source", "=", True)]
+        )
+        source_zones = self.browse()
+        for location in self:
+            location_zones = zones.filtered_domain([("id", "parent_of", location.id)])
+            the_zone = self.browse()
+            for location_zone in location_zones:
+                if the_zone:
+                    if len(location_zone.parent_path) > len(the_zone.parent_path):
+                        the_zone = location_zone
+                else:
+                    the_zone = location_zone
+            source_zones |= the_zone
+        return source_zones
