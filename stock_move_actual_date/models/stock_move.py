@@ -40,6 +40,39 @@ class StockMove(models.Model):
                 self.with_context(tz=tz), rec.date
             )
 
+    @api.model
+    def _read_group(
+        self,
+        domain,
+        groupby=(),
+        aggregates=(),
+        having=(),
+        offset=0,
+        limit=None,
+        order=None,
+    ):
+        if self.env.context.get("use_actual_date"):
+            tz = self._get_timezone()
+            domain = [
+                (
+                    "actual_date",
+                    condition[1],
+                    fields.Date.context_today(self.with_context(tz=tz), condition[2]),
+                )
+                if isinstance(condition, list | tuple) and condition[0] == "date"
+                else condition
+                for condition in domain
+            ]
+        return super()._read_group(
+            domain,
+            groupby,
+            aggregates,
+            having,
+            offset=offset,
+            limit=limit,
+            order=order,
+        )
+
     def _action_done(self, cancel_backorder=False):
         moves = super()._action_done(cancel_backorder)
         # i.e. Inventory adjustments with actual date

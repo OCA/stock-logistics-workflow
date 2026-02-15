@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ======================
 Stock Move Actual Date
 ======================
@@ -17,7 +13,7 @@ Stock Move Actual Date
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -41,10 +37,14 @@ It also adds an Actual Date field to the Stock Valuation Layer model,
 enabling reporting based on this field. This field is computed and
 stored according to the following logic:
 
-- If a posted journal entry exists, its date is used.
-- If there is no journal entry, the stock move's actual date is used
-- Otherwise, convert create_date (datetime) of the stock.valuation.layer
-  record to date, with consideration to user's timezone.
+-  If a posted journal entry exists, its date is used.
+-  If there is no journal entry, the stock move's actual date is used
+-  Otherwise, convert create_date (datetime) of the
+   stock.valuation.layer record to date, with consideration to user's
+   timezone.
+
+It also provides stock quantity history reporting based on the actual
+date.
 
 **Table of contents**
 
@@ -54,25 +54,25 @@ stored according to the following logic:
 Configuration
 =============
 
-- Go to Settings > Users & Companies > Groups.
-- Open 'Modify Actual Date' and add the users who are allowed to edit
-  the actual date of completed records (e.g., pickings, scraps).
+-  Go to Settings > Users & Companies > Groups.
+-  Open 'Modify Actual Date' and add the users who are allowed to edit
+   the actual date of completed records (e.g., pickings, scraps).
 
 Usage
 =====
 
 Use the Actual Date field in the following transfer and scrap scenarios:
 
-- If you are late in processing a transfer or scrap in Odoo and wish to
-  record the transaction with the actual transfer date, fill in the
-  Actual Date field in the picking or scrap form. The Actual Date of the
-  picking or scrap is then propagated to its corresponding stock moves
-  and stock move lines, and is also passed to the journal entry as the
-  date.
-- You can also update the Actual Date of a completed picking or scrap if
-  you belong to the 'Modify Actual Date' group. This operation updates
-  the date of the related journal entries, re-proposing a new sequence
-  to them as necessary.
+-  If you are late in processing a transfer or scrap in Odoo and wish to
+   record the transaction with the actual transfer date, fill in the
+   Actual Date field in the picking or scrap form. The Actual Date of
+   the picking or scrap is then propagated to its corresponding stock
+   moves and stock move lines, and is also passed to the journal entry
+   as the date.
+-  You can also update the Actual Date of a completed picking or scrap
+   if you belong to the 'Modify Actual Date' group. This operation
+   updates the date of the related journal entries, re-proposing a new
+   sequence to them as necessary.
 
 Use the Actual Date field in the following stock valuation reporting
 scenarios:
@@ -82,6 +82,17 @@ scenarios:
 2. In the wizard, select a date in 'Inventory at Date', and click
    'Valuation as of Accounting Date' (note that 'hh:mm:ss' part of the
    selection in 'Inventory at Date' is ignored in this context).
+
+Use the Actual Date field in the following stock quantity history
+reporting scenarios:
+
+1. Go to *Inventory > Reporting > Stock* and click 'Inventory at Date'.
+2. In the wizard, select a date in 'Inventory at Date', and click
+   'Inventory as of Actual Date' (note that the 'hh:mm:ss' part of the
+   selection in 'Inventory at Date' is ignored in this context).
+
+Note: You can also use this feature along with
+stock_quantity_history_location.
 
 Known issues / Roadmap
 ======================
@@ -117,10 +128,10 @@ Authors
 Contributors
 ------------
 
-- `Quartile <https://www.quartile.co>`__:
+-  `Quartile <https://www.quartile.co>`__:
 
-  - Aung Ko Ko Lin
-  - Yoshi Tashiro
+   -  Aung Ko Ko Lin
+   -  Yoshi Tashiro
 
 Maintainers
 -----------
