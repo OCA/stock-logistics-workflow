@@ -46,6 +46,11 @@ msgid ""
 msgstr ""
 
 #. module: stock_move_actual_date
+#: model_terms:ir.ui.view,arch_db:stock_move_actual_date.view_stock_quantity_history
+msgid "Inventory as of Actual Date"
+msgstr ""
+
+#. module: stock_move_actual_date
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_actual_date_mixin__is_editable_actual_date
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_picking__is_editable_actual_date
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_scrap__is_editable_actual_date
