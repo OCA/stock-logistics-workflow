@@ -7,13 +7,17 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _action_done(self, cancel_backorder=False):
-        origin_returned_moves = self.browse()
-        for move in self:
-            if move._is_out():
-                origin_returned_moves |= move.origin_returned_move_id
-        # We cannot assign origin returned move context to individual moves, therefore
-        # assign them all to self
-        if origin_returned_moves:
-            self = self.with_context(origin_returned_moves=origin_returned_moves)
-        return super()._action_done(cancel_backorder)
+    def _get_out_svl_vals(self, forced_quantity):
+        return_moves = self.filtered(lambda m: m.origin_returned_move_id)
+        other_moves = self - return_moves
+        svl_vals_list = (
+            super(StockMove, other_moves)._get_out_svl_vals(forced_quantity)
+            if other_moves
+            else []
+        )
+        for move in return_moves:
+            svl_vals_list += super(
+                StockMove,
+                move.with_context(origin_returned_move=move.origin_returned_move_id),
+            )._get_out_svl_vals(forced_quantity)
+        return svl_vals_list

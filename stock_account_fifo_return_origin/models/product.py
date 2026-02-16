@@ -7,14 +7,12 @@ from odoo import models
 class Product(models.Model):
     _inherit = "product.product"
 
-    def _get_fifo_candidates(self, company):
-        candidates = super()._get_fifo_candidates(company)
-        returned_moves = self.env.context.get("origin_returned_moves")
-        if not returned_moves:
+    def _get_fifo_candidates(self, company, lot=False):
+        candidates = super()._get_fifo_candidates(company, lot=lot)
+        origin_move = self.env.context.get("origin_returned_move")
+        if not origin_move:
             return candidates
-        returned_moves = returned_moves.filtered(lambda x: x.product_id == self)
-        origin_svl = returned_moves.stock_valuation_layer_ids.filtered(
+        origin_svl = origin_move.stock_valuation_layer_ids.filtered(
             lambda x: x.remaining_qty > 0.00
         )
-        candidates = origin_svl | candidates
-        return candidates
+        return origin_svl | candidates

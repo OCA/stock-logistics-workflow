@@ -10,5 +10,5 @@ class StockMoveLine(models.Model):
     @api.model
     def _create_correction_svl(self, move, diff):
         if move._is_in() and diff < 0:
-            move = move.with_context(origin_returned_moves=move)
+            move = move.with_context(origin_returned_move=move)
         return super()._create_correction_svl(move, diff)
