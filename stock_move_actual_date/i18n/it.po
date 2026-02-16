@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-22 12:08+0000\n"
+"PO-Revision-Date: 2026-02-16 15:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_actual_date
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_actual_date_mixin__actual_date
@@ -53,7 +53,7 @@ msgstr ""
 #. module: stock_move_actual_date
 #: model_terms:ir.ui.view,arch_db:stock_move_actual_date.view_stock_quantity_history
 msgid "Inventory as of Actual Date"
-msgstr ""
+msgstr "Inventario alla data effettiva"
 
 #. module: stock_move_actual_date
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_actual_date_mixin__is_editable_actual_date
