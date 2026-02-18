@@ -4,7 +4,7 @@
 {
     "name": "Stock Production Lot Active",
     "summary": "Allow to archive/unarchive lots/serial numbers",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "development_status": "Production/Stable",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",

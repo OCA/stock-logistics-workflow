@@ -9,8 +9,12 @@ class TestLotActive(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product = cls.env.ref("product.product_product_16")
-        cls.product.write({"tracking": "lot"})
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Product Lot Active",
+                "tracking": "lot",
+            }
+        )
         cls.warehouse = cls.env.ref("stock.warehouse0")
 
     def test_duplicate_inactive_lot(self):
