@@ -9,8 +9,10 @@
         <field name="arch" type="xml">
             <xpath expr="//group/group" position='inside'>
                 <field name="reason_code_id" readonly="state == 'done'" />
-                <field name="allowed_reason_code_ids" invisible="True" />
             </xpath>
+            <field name="scrap_reason_tag_ids" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
         </field>
     </record>
     <record id="stock_scrap_tree_reason_code" model="ir.ui.view">
@@ -20,7 +22,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_uom_id']" position='after'>
                 <field name="reason_code_id" readonly="state == 'done'" />
-                <field name="allowed_reason_code_ids" invisible="True" />
             </xpath>
         </field>
     </record>
@@ -31,8 +32,10 @@
         <field name="arch" type="xml">
             <xpath expr="//group/group" position='inside'>
                 <field name="reason_code_id" readonly="state == 'done'" />
-                <field name="allowed_reason_code_ids" invisible="True" />
             </xpath>
+            <field name="scrap_reason_tag_ids" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
         </field>
     </record>
 </odoo>

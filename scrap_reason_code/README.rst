@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =================
 Scrap Reason Code
 =================
@@ -17,7 +13,7 @@ Scrap Reason Code
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -50,15 +46,28 @@ Create a required scrap reason code and provide scrap location.
 Usage
 =====
 
-- Go to Inventory > Operations > Scrap
-- Create a scarp order and select reason code.
-- A scrap location will be readonly and auto fill based on selected
-  reason code.
+-  Go to Inventory > Operations > Scrap
+-  Create a scarp order and select reason code.
+-  A scrap location will be readonly and auto fill based on selected
+   reason code.
 
 Known issues / Roadmap
 ======================
 
+Roadmap
+-------
 
+v18.0
+~~~~~
+
+-  The standard Odoo field ``scrap_reason_tag_ids`` has been made
+   invisible to prevent functional overlap with this module.
+
+v19.0 (pending)
+~~~~~~~~~~~~~~~
+
+-  Functional adaptation will be required due to overlap with Odoo’s
+   native implementation.
 
 Bug Tracker
 ===========
@@ -81,20 +90,20 @@ Authors
 Contributors
 ------------
 
-- Michael Allen <mallen@opensourceintegrators.com>
-- Bhavesh Odedra <bodedra@opensourceintegrators.com>
-- Balaji Kannan <bkannan@opensourceintegrators.com>
-- Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
-- Chandresh Thakkar <cthakkar@opensourceintegrators.com>
-- Hughes Damry <hughes.damry@acsone.eu>
-- Lois Rilo <lois.rilo@forgeflow.com>
+-  Michael Allen <mallen@opensourceintegrators.com>
+-  Bhavesh Odedra <bodedra@opensourceintegrators.com>
+-  Balaji Kannan <bkannan@opensourceintegrators.com>
+-  Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+-  Chandresh Thakkar <cthakkar@opensourceintegrators.com>
+-  Hughes Damry <hughes.damry@acsone.eu>
+-  Lois Rilo <lois.rilo@forgeflow.com>
 
 Other credits
 -------------
 
 The development of this module has been financially supported by:
 
-- Open Source Integrators
+-  Open Source Integrators
 
 Maintainers
 -----------
