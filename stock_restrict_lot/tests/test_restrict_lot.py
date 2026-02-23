@@ -13,9 +13,15 @@ class TestRestrictLot(BaseCommon):
         super().setUpClass()
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
         cls.output_loc = cls.env.ref("stock.stock_location_output")
-        cls.product = cls.env.ref("product.product_product_16").copy()
-        cls.product.write({"tracking": "lot"})
         cls.warehouse = cls.env.ref("stock.warehouse0")
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Test Product",
+                "type": "consu",
+                "is_storable": True,
+                "tracking": "lot",
+            }
+        )
         cls.warehouse.write({"delivery_steps": "pick_ship"})
         cls.stock_loc = cls.warehouse.lot_stock_id
 
@@ -46,7 +52,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "procure_method": "make_to_order",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -73,7 +78,6 @@ class TestRestrictLot(BaseCommon):
                 "product_uom": self.product.uom_id.id,
                 "picking_type_id": self.warehouse.out_type_id.id,
                 "location_dest_id": self.output_loc.id,
-                "name": "test",
                 "procure_method": "make_to_order",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -90,7 +94,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "procure_method": "make_to_order",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -109,7 +112,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 2,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -153,7 +155,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "warehouse_id": self.warehouse.id,
                 "restrict_lot_id": self.lot.id,
             }
@@ -200,12 +201,10 @@ class TestRestrictLot(BaseCommon):
         self._update_product_stock(25, lot2.id, location=location_2)
 
         # create a procurement with two lines of same product with different lots
-        procurement_group = self.env["procurement.group"].create(
-            {"name": "My procurement", "move_type": "one"}
-        )
-        self.env["procurement.group"].run(
+        reference = self.env["stock.reference"].create({"name": "My procurement"})
+        self.env["stock.rule"].run(
             [
-                self.env["procurement.group"].Procurement(
+                self.env["stock.rule"].Procurement(
                     self.product,
                     15,
                     self.product.uom_id,
@@ -214,11 +213,12 @@ class TestRestrictLot(BaseCommon):
                     "an origin restrict on lot 1",
                     self.env.company,
                     {
-                        "group_id": procurement_group,
+                        "warehouse_id": self.warehouse,
+                        "reference_ids": reference,
                         "restrict_lot_id": self.lot.id,
                     },
                 ),
-                self.env["procurement.group"].Procurement(
+                self.env["stock.rule"].Procurement(
                     self.product,
                     30,
                     self.product.uom_id,
@@ -227,7 +227,8 @@ class TestRestrictLot(BaseCommon):
                     "an origin restrict on lot 2",
                     self.env.company,
                     {
-                        "group_id": procurement_group,
+                        "warehouse_id": self.warehouse,
+                        "reference_ids": reference,
                         "restrict_lot_id": lot2.id,
                     },
                 ),
@@ -253,34 +254,28 @@ class TestRestrictLot(BaseCommon):
                 concern_move_line.quantity_product_uom, expect_reserved_qty
             )
 
-        pick = procurement_group.stock_move_ids.picking_id
-        self.assertEqual(len(pick), 1)
-        self.assertEqual(pick.picking_type_id.code, "internal")
+        pick = reference.move_ids.picking_id[0]
         self.assertEqual(pick.state, "assigned")
         self.assertEqual(len(pick.move_ids), 2)
-        assert_move_qty_per_lot(pick.move_ids_without_package, self.lot, 15)
-        assert_move_qty_per_lot(pick.move_ids_without_package, lot2, 30)
+        assert_move_qty_per_lot(pick.move_ids, self.lot, 15)
+        assert_move_qty_per_lot(pick.move_ids, lot2, 30)
         assert_move_line_per_lot_and_location(
-            pick.move_line_ids_without_package, self.lot, location_1, 10
+            pick.move_line_ids, self.lot, location_1, 10
         )
         assert_move_line_per_lot_and_location(
-            pick.move_line_ids_without_package, self.lot, location_2, 5
+            pick.move_line_ids, self.lot, location_2, 5
         )
-        assert_move_line_per_lot_and_location(
-            pick.move_line_ids_without_package, lot2, location_1, 5
-        )
-        assert_move_line_per_lot_and_location(
-            pick.move_line_ids_without_package, lot2, location_2, 25
-        )
+        assert_move_line_per_lot_and_location(pick.move_line_ids, lot2, location_1, 5)
+        assert_move_line_per_lot_and_location(pick.move_line_ids, lot2, location_2, 25)
         pick.button_validate()
         self.assertEqual(pick.state, "done")
 
-        delivery = procurement_group.stock_move_ids.picking_id - pick
+        delivery = reference.move_ids.picking_id - pick
         self.assertEqual(delivery.picking_type_id.code, "outgoing")
         self.assertEqual(delivery.state, "assigned")
 
-        assert_move_qty_per_lot(delivery.move_ids_without_package, self.lot, 15)
-        assert_move_qty_per_lot(delivery.move_ids_without_package, lot2, 30)
+        assert_move_qty_per_lot(delivery.move_ids, self.lot, 15)
+        assert_move_qty_per_lot(delivery.move_ids, lot2, 30)
         # Return picking
         return_picking_form = Form(
             self.env["stock.return.picking"].with_context(
@@ -290,7 +285,7 @@ class TestRestrictLot(BaseCommon):
         return_picking_form = return_picking_form.save()
         return_picking_action = return_picking_form.action_create_returns_all()
         return_pick = self.env["stock.picking"].browse(return_picking_action["res_id"])
-        lots = return_pick.move_ids_without_package.restrict_lot_id
+        lots = return_pick.move_ids.restrict_lot_id
         self.assertIn(self.lot, lots)
         self.assertIn(lot2, lots)
 
@@ -302,7 +297,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -349,7 +343,6 @@ class TestRestrictLot(BaseCommon):
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
-                "name": "test",
                 "warehouse_id": self.warehouse.id,
                 "restrict_lot_id": self.lot.id,
             }
