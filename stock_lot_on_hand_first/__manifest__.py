@@ -4,7 +4,7 @@
     "name": "Stock Lot On Hand First",
     "summary": "Allows to display lots on hand first in M2o fields",
     "version": "18.0.1.0.0",
-    "development_status": "Alpha",
+    "development_status": "Production/Stable",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Camptocamp, Odoo Community Association (OCA)",
