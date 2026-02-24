@@ -26,6 +26,10 @@ class StockPicking(models.Model):
             and ml.state not in ("cancel", "done")
             and ml.quantity
             and (not ml.move_id.picked or ml.picked)
+            and (
+                ml.product_id.uom_ids
+                or not ml.picking_type_id.auto_pack_requires_packaging
+            )
         )
 
     def _auto_create_delivery_package_per_smallest_packaging(self) -> None:

@@ -10,6 +10,10 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='set_package_type']" position="after">
                 <field name="automatic_package_creation_mode" />
+                <field
+                    name="auto_pack_requires_packaging"
+                    invisible="not automatic_package_creation_mode"
+                />
             </xpath>
         </field>
     </record>
