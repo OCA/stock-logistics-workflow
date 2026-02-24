@@ -1,0 +1,1 @@
+odoo-addon-stock_picking_auto_create_package @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2215/head#subdirectory=stock_picking_auto_create_package
