@@ -7,8 +7,12 @@
             ref="stock_picking_batch.stock_picking_to_batch_form"
         />
         <field name="arch" type="xml">
-            <field name="batch_id" position="before">
-                <field name="name" invisible="mode == 'existing'" />
+            <field name="description" position="before">
+                <field
+                    name="name"
+                    invisible="mode == 'existing'"
+                    placeholder="Keep empty for automatic sequence"
+                />
             </field>
             <xpath expr="//field[@name='user_id']/.." position="after">
                 <label for="notes" invisible="mode == 'existing'" />

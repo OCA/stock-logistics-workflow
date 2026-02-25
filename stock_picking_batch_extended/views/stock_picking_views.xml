@@ -18,4 +18,19 @@
             </field>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="view_picking_internal_search">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <filter name="activities_exception" position="after">
+                <separator />
+                <filter
+                    string="Without batch"
+                    name="without_batch"
+                    domain="[('batch_id', '=', False)]"
+                />
+            </filter>
+        </field>
+    </record>
 </odoo>
