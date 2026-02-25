@@ -29,6 +29,12 @@ class StockPickingToBatch(models.TransientModel):
         help="If set any, multiple batch picking will be created, one per "
         "group field",
     )
+    batch_max_pickings = fields.Integer(
+        "Maximum transfers",
+        help="A transfer will not be added to batches that will exceed this number of "
+        "transfers.\n"
+        "Leave this value as '0' if no transfer limit.",
+    )
 
     @api.onchange("batch_by_group")
     def onchange_batch_by_group(self):
@@ -117,11 +123,28 @@ class StockPickingToBatch(models.TransientModel):
             raise UserError(self._raise_message_error())
         batchs = self.env["stock.picking.batch"].browse()
         for group in pickings_grouped:
-            batchs += self.create_batch_picking()
-            new_batch = batchs[-1:]
-            StockPicking.search(group["__domain"]).write({"batch_id": new_batch.id})
-            self.confirm_batch_picking(new_batch)
+            batchs += self._assign_to_batch(group)
         return batchs
+
+    def _get_pickings_group(self, group):
+        return self.env["stock.picking"].search(group["__domain"])
+
+    def _assign_to_batch(self, group):
+        all_pickings = self._get_pickings_group(group)
+        batches = self.env["stock.picking.batch"].browse()
+        for pickings in self.split_chunks(all_pickings):
+            batch = self.create_batch_picking()
+            pickings.write({"batch_id": batch.id})
+            self.confirm_batch_picking(batch)
+            batches += batch
+        return batches
+
+    def split_chunks(self, pickings):
+        """Split pickings in n chunks"""
+        pickings_count = len(pickings)
+        max_pickings = self.batch_max_pickings or pickings_count
+        for i in range(0, pickings_count, max_pickings):
+            yield pickings[i : i + max_pickings]
 
     def action_create_batch(self):
         """
@@ -138,7 +161,7 @@ class StockPickingToBatch(models.TransientModel):
             ("batch_id", "=", False),
             ("state", "not in", ("cancel", "done")),
         ]
-        if self.batch_by_group and self.group_field_ids:
+        if self.batch_max_pickings or (self.batch_by_group and self.group_field_ids):
             batchs = self.create_multiple_batch(domain)
         else:
             batchs = self.create_simple_batch(domain)
