@@ -388,7 +388,6 @@ class TestBatchPicking(BaseCommon):
         self.picking.origin = "A"
         self.picking2.origin = "B"
         pickings = self.picking + self.picking2
-
         wiz = Wiz.with_context(active_ids=pickings.ids).create(
             {"name": "Unittest wizard", "mode": "new"}
         )
@@ -420,3 +419,17 @@ class TestBatchPicking(BaseCommon):
         # Test if group field create_date has been stored into config
         # parameters
         self.assertEqual(origin_field, wiz.load_store_fields())
+
+    def test_wizard_batch_max_pickings(self):
+        Wiz = self.env["stock.picking.to.batch"]
+        pickings = self.picking + self.picking2
+        pickings.batch_id = False
+        wiz = Wiz.with_context(active_ids=pickings.ids).create(
+            {
+                "name": "Unittest wizard",
+                "mode": "new",
+                "batch_max_pickings": 1,
+            }
+        )
+        batch_action = wiz.action_create_batch()
+        self.assertEqual(len(batch_action.get("domain")[0][2]), 2)

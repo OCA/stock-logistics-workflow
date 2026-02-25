@@ -16,7 +16,8 @@
             </xpath>
             <xpath expr="//field[@name='user_id']/../.." position="after">
                 <group invisible="mode == 'existing'">
-                    <group>
+                    <group string="Options">
+                        <field name="batch_max_pickings" />
                         <field name="batch_by_group" />
                     </group>
                 </group>
