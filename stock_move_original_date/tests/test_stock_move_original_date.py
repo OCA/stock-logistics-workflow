@@ -3,6 +3,7 @@
 
 from datetime import datetime, timedelta as td
 
+from odoo import Command
 from odoo.tests import common
 
 
@@ -34,10 +35,8 @@ class TestStockMoveOriginalDate(common.TransactionCase):
                 "location_id": cls.supplier_location.id,
                 "location_dest_id": cls.stock_location.id,
                 "scheduled_date": date_move,
-                "move_lines": [
-                    (
-                        0,
-                        0,
+                "move_ids": [
+                    Command.create(
                         {
                             "name": "Test move",
                             "product_id": product.id,
@@ -46,7 +45,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
                             "product_uom_qty": qty,
                             "location_id": cls.supplier_location.id,
                             "location_dest_id": cls.stock_location.id,
-                        },
+                        }
                     )
                 ],
             }
@@ -55,7 +54,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
 
     @classmethod
     def _validate_picking(cls, picking):
-        for line in picking.move_lines:
+        for line in picking.move_ids:
             line.quantity_done = line.product_uom_qty
         picking._action_done()
 
@@ -63,7 +62,7 @@ class TestStockMoveOriginalDate(common.TransactionCase):
         picking = self.create_picking_in(self.product_1, self.tomorrow)
         self.assertTrue(picking.scheduled_date)
         self.assertFalse(picking.original_scheduled_date)
-        move = picking.move_lines
+        move = picking.move_ids
         self.assertTrue(move.date)
         self.assertFalse(move.original_date)
         picking.action_confirm()

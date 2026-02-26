@@ -4,7 +4,7 @@
 {
     "name": "Stock Move Original Scheduled Date",
     "summary": "adds the Original Date Scheduled to stock moves.",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Warehouse Management",
     "maintainers": ["LoisRForgeFlow"],
     "website": "https://github.com/OCA/stock-logistics-workflow",
