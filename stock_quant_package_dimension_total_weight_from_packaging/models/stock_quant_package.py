@@ -17,7 +17,7 @@ class StockQuantPackage(models.Model):
         # 'get_total_weight_from_packaging' method supplied by the
         # 'product_total_weight_from_packaging' module
         return sum(
-            ml.product_id.get_total_weight_from_packaging(ml.qty_done)
+            ml.product_id.get_total_weight_from_packaging(ml.quantity)
             for ml in move_lines
         )
 
