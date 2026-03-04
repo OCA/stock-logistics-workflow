@@ -1,5 +1,6 @@
 # Copyright 2015 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+import markupsafe
 
 from odoo import api, fields, models
 
@@ -46,6 +47,9 @@ class StockGrn(models.Model):
     supplier_id = fields.Many2one(
         "res.partner", string="Supplier", related="picking_ids.partner_id", store=True
     )
+    supplier_name_markup = fields.Char(
+        compute="_compute_supplier_name_markup",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -53,3 +57,8 @@ class StockGrn(models.Model):
             if vals.get("name", "/") == "/":
                 vals["name"] = self.env["ir.sequence"].next_by_code("stock.grn") or "/"
         return super().create(vals_list)
+
+    @api.depends("supplier_id.display_name")
+    def _compute_supplier_name_markup(self):
+        for grn in self:
+            grn.supplier_name_markup = markupsafe.Markup(grn.supplier_id.display_name)
