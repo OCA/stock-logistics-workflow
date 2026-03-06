@@ -1,0 +1,4 @@
+On the warehouse form, once the 'Enable Expired Lot Auto Remove' checkbox is checked, some additional fields will appear to configure the automatic removal of past removal date quants:
+- 'Expired Lot Origin Location': This field allows you to select the origin location from which the past removal date quants will be removed. It is a required field. (Defaults to the warehouse's stock location)
+- 'Expired Lot Destination Location': This field allows you to select the destination location where the past removal date quants will be moved. It is a required field. (Defaults to the warehouse's quality control location)
+- 'Expired Lot Move Picking Type': This field allows you to select the picking type that will be used for the automatic removal of past removal date quants. It is a required field. (Defaults to the warehouse's 'Expired Lot Removal' picking type)

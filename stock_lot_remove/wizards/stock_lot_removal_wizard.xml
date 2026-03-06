@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_lot_removal_wizard_form_view">
+        <field name="model">stock.lot.removal.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Expired Lot Move Wizard">
+                <group>
+                    <field name="warehouse_id" />
+                    <field name="removal_date" />
+                    <field name="description" />
+                </group>
+                <footer>
+                    <button
+                        name="button_action_run"
+                        string="OK"
+                        class="btn-primary"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="stock_lot_removal_wizard_act_window">
+        <field name="name">Remove Expired Lots</field>
+        <field name="res_model">stock.lot.removal.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_stock_lot_removal_act_window" model="ir.actions.act_window">
+        <field name="name">Remove Expired Lots</field>
+        <field name="res_model">stock.lot.removal.wizard</field>
+        <field name="binding_model_id" ref="stock.model_stock_warehouse" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_lot_removal_wizard_form_view" />
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_manager'))]" />
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.ui.menu" id="stock_lot_removal_wizard_menu">
+        <field name="name">Remove Expired Lots</field>
+        <field name="parent_id" ref="stock.menu_stock_warehouse_mgmt" />
+        <field name="action" ref="stock_lot_removal_wizard_act_window" />
+        <field name="sequence" eval="99" />
+    </record>
+</odoo>

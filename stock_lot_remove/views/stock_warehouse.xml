@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_warehouse_form_view">
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse" />
+        <field name="arch" type="xml">
+            <group name="group_resupply" position="after">
+                <group name="expired_lot_move" string="Expired Lots Auto Move">
+                    <field name="lot_remove_enabled" />
+                    <field
+                        name="lot_remove_orig_location_ids"
+                        widget="many2many_tags"
+                        attrs="{'invisible': [('lot_remove_enabled', '=', False)]}"
+                    />
+                    <field
+                        name="lot_remove_picking_type_id"
+                        attrs="{'invisible': [('lot_remove_enabled', '=', False)]}"
+                        context="{'default_code': 'internal', 'default_active': True}"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

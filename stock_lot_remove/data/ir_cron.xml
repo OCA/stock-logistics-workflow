@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="cron_stock_lot_remove" model="ir.cron">
+        <field name="name">Remove Expired Lots</field>
+        <field name="model_id" ref="stock.model_stock_warehouse" />
+        <field name="state">code</field>
+        <field name="code">model._cron_remove_expired_lots()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+         <field
+            name="nextcall"
+            eval="(DateTime.now().replace(hour=1, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+
+</odoo>
