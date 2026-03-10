@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="stock_move_form_view">
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_form" />
@@ -13,5 +12,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
