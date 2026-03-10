@@ -8,49 +8,67 @@ from .common import TestStockMovePickingTypeOrigin
 
 class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
     def test_pull_two_steps(self):
-        self.env["stock.quant"]._update_available_quantity(
-            self.product, self.loc_stock, 10.0
-        )
-        self.warehouse.delivery_steps = "pick_ship"
-        pg_inter = self.env["procurement.group"].create({"name": "PG Inter"})
-        pg_out = self.env["procurement.group"].create({"name": "PG Out"})
-        routes = self.env["stock.route"].create(
+        """
+        Stock -> Output -> Customer
+        """
+        self.env["stock.route"].create(
             {
-                "name": "Route",
+                "name": "Stock -> Output -> Customer",
+                "warehouse_selectable": True,
+                "warehouse_ids": [Command.link(self.warehouse.id)],
                 "sequence": 1,
                 "rule_ids": [
                     Command.create(
                         {
-                            "name": "Stock -> output rule",
+                            "name": "Stock -> Output",
                             "action": "pull",
+                            "procure_method": "make_to_stock",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_stock.id,
                             "location_dest_id": self.loc_out.id,
-                            "group_propagation_option": "fixed",
-                            "group_id": pg_inter.id,
+                            "location_dest_from_rule": True,
                         },
-                    )
+                    ),
+                    Command.create(
+                        {
+                            "name": "Output -> Customer",
+                            "action": "pull",
+                            "procure_method": "make_to_order",
+                            "picking_type_id": self.picking_type_out.id,
+                            "location_src_id": self.loc_out.id,
+                            "location_dest_id": self.loc_customer.id,
+                        }
+                    ),
                 ],
             }
         )
-        self.product.route_ids = routes
-        self.env["procurement.group"].run(
+        move_ship = self.env["stock.move"].create(
+            {
+                "name": "delivery product A",
+                "product_id": self.product.id,
+                "product_uom_qty": 2.0,
+                "procure_method": "make_to_order",
+                "product_uom": self.product.uom_id.id,
+                "location_id": self.loc_out.id,
+                "location_dest_id": self.loc_customer.id,
+                "picking_type_id": self.picking_type_out.id,
+            }
+        )
+        move_ship._action_confirm()
+        move_pick = self.env["stock.move"].search(
             [
-                pg_out.Procurement(
-                    self.product,
-                    2.0,
-                    self.product.uom_id,
-                    self.loc_customer,
-                    "delivery product A",
-                    "delivery product A",
-                    self.warehouse.company_id,
-                    {"warehouse_id": self.warehouse, "group_id": pg_out},
-                )
+                ("location_id", "=", self.loc_stock.id),
+                ("location_dest_id", "=", self.loc_out.id),
             ]
         )
-        move_pick = self.stock_model.search([("group_id", "=", pg_inter.id)])
-        move_ship = self.stock_model.search([("group_id", "=", pg_out.id)])
-
+        move_ship = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.loc_out.id),
+                ("location_dest_id", "=", self.loc_customer.id),
+            ]
+        )
+        self.assertEqual(len(move_pick), 1)
+        self.assertEqual(len(move_ship), 1)
         self.assertEqual(move_pick.first_picking_type_id, self.picking_type_out)
         self.assertEqual(move_pick.first_move_id, move_ship)
         self.assertEqual(move_pick.picking_type_id, self.picking_type_inter)
@@ -60,86 +78,93 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
         self.assertEqual(move_ship.picking_type_id, self.picking_type_out)
 
     def test_pull_three_steps(self):
-        self.env["stock.quant"]._update_available_quantity(
-            self.product, self.loc_stock, 10.0
-        )
-        loc_out_2 = self.loc_out.copy({"name": "Output 2"})
-        pg_inter_1 = self.env["procurement.group"].create({"name": "PG Inter 1"})
-        pg_inter_2 = self.env["procurement.group"].create({"name": "PG Inter 2"})
-        pg_out = self.env["procurement.group"].create({"name": "PG Out"})
-        routes = self.env["stock.route"].create(
+        """
+        Stock -> Output -> Output2 -> Customer
+        """
+        self.env["stock.route"].create(
             {
-                "name": "Route",
+                "name": "Stock -> Output -> Output2 -> Customer",
+                "warehouse_selectable": True,
+                "warehouse_ids": [Command.link(self.warehouse.id)],
                 "sequence": 1,
                 "rule_ids": [
                     Command.create(
                         {
-                            "sequence": 1,
-                            "name": "Stock -> output rule",
+                            "name": "Stock -> Output",
                             "action": "pull",
+                            "procure_method": "make_to_stock",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_stock.id,
                             "location_dest_id": self.loc_out.id,
-                            "group_propagation_option": "fixed",
-                            "group_id": pg_inter_1.id,
-                            "procure_method": "make_to_stock",
+                            "location_dest_from_rule": True,
                         },
                     ),
                     Command.create(
                         {
-                            "sequence": 2,
-                            "name": "output -> output 2 rule",
+                            "name": "Output -> Output 2",
                             "action": "pull",
+                            "procure_method": "make_to_order",
                             "picking_type_id": self.picking_type_inter.id,
                             "location_src_id": self.loc_out.id,
-                            "location_dest_id": loc_out_2.id,
-                            "group_propagation_option": "fixed",
-                            "group_id": pg_inter_2.id,
-                            "procure_method": "make_to_order",
-                        },
+                            "location_dest_id": self.loc_out_2.id,
+                            "location_dest_from_rule": True,
+                        }
                     ),
                     Command.create(
                         {
-                            "sequence": 3,
-                            "name": "output 2 -> customer rule",
+                            "name": "Output -> Customer",
                             "action": "pull",
-                            "picking_type_id": self.picking_type_out.id,
-                            "location_src_id": loc_out_2.id,
-                            "location_dest_id": self.loc_customer.id,
-                            "group_propagation_option": "fixed",
-                            "group_id": pg_out.id,
                             "procure_method": "make_to_order",
-                        },
+                            "picking_type_id": self.picking_type_out.id,
+                            "location_src_id": self.loc_out_2.id,
+                            "location_dest_id": self.loc_customer.id,
+                        }
                     ),
                 ],
             }
         )
-        self.product.route_ids = routes
-        self.env["procurement.group"].run(
+        move_ship = self.env["stock.move"].create(
+            {
+                "name": "delivery product A",
+                "product_id": self.product.id,
+                "product_uom_qty": 2.0,
+                "procure_method": "make_to_order",
+                "product_uom": self.product.uom_id.id,
+                "location_id": self.loc_out_2.id,
+                "location_dest_id": self.loc_customer.id,
+                "picking_type_id": self.picking_type_out.id,
+            }
+        )
+        move_ship._action_confirm()
+        move_pick1 = self.env["stock.move"].search(
             [
-                pg_out.Procurement(
-                    self.product,
-                    2.0,
-                    self.product.uom_id,
-                    self.loc_customer,
-                    "delivery product A",
-                    "delivery product A",
-                    self.warehouse.company_id,
-                    {"warehouse_id": self.warehouse, "group_id": pg_out},
-                )
+                ("location_id", "=", self.loc_stock.id),
+                ("location_dest_id", "=", self.loc_out.id),
             ]
         )
-        move_ship = self.stock_model.search([("group_id", "=", pg_out.id)])
-        move_pick_1 = self.stock_model.search([("group_id", "=", pg_inter_1.id)])
-        move_pick_2 = self.stock_model.search([("group_id", "=", pg_inter_2.id)])
+        move_pick2 = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.loc_out.id),
+                ("location_dest_id", "=", self.loc_out_2.id),
+            ]
+        )
+        move_ship = self.env["stock.move"].search(
+            [
+                ("location_id", "=", self.loc_out_2.id),
+                ("location_dest_id", "=", self.loc_customer.id),
+            ]
+        )
+        self.assertEqual(len(move_ship), 1)
+        self.assertEqual(len(move_pick1), 1)
+        self.assertEqual(len(move_pick2), 1)
 
-        self.assertEqual(move_pick_1.first_picking_type_id, self.picking_type_out)
-        self.assertEqual(move_pick_1.picking_type_id, self.picking_type_inter)
-        self.assertEqual(move_pick_1.first_move_id, move_ship)
+        self.assertEqual(move_pick1.first_picking_type_id, self.picking_type_out)
+        self.assertEqual(move_pick1.first_move_id, move_ship)
+        self.assertEqual(move_pick1.picking_type_id, self.picking_type_inter)
 
-        self.assertEqual(move_pick_2.first_picking_type_id, self.picking_type_out)
-        self.assertEqual(move_pick_2.picking_type_id, self.picking_type_inter)
-        self.assertEqual(move_pick_2.first_move_id, move_ship)
+        self.assertEqual(move_pick2.first_picking_type_id, self.picking_type_out)
+        self.assertEqual(move_pick2.first_move_id, move_ship)
+        self.assertEqual(move_pick2.picking_type_id, self.picking_type_inter)
 
         self.assertEqual(move_ship.first_move_id, move_ship)
         self.assertEqual(move_ship.first_picking_type_id, self.picking_type_out)

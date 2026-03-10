@@ -13,10 +13,13 @@ class TestStockMovePickingTypeOrigin(TransactionCase):
         ) | cls.env.ref("stock.group_adv_location")
         cls.product_model = cls.env["product.product"]
         cls.stock_model = cls.env["stock.move"]
-        cls.product = cls.product_model.create({"name": "product", "type": "product"})
+        cls.product = cls.product_model.create(
+            {"name": "product", "type": "consu", "is_storable": True}
+        )
         cls.warehouse = cls.env["stock.warehouse"].search([], limit=1)
         cls.loc_stock = cls.warehouse.lot_stock_id
         cls.loc_out = cls.env.ref("stock.stock_location_output")
+        cls.loc_out_2 = cls.loc_out.copy({"name": "Output 2"})
         cls.loc_in_1 = cls.warehouse.wh_input_stock_loc_id
         cls.loc_in_2 = cls.loc_out.copy({"name": "Input 2"})
         cls.loc_customer = cls.env.ref("stock.stock_location_customers")
