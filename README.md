@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [stock_move_line_qty_picked](stock_move_line_qty_picked/) | 17.0.1.0.0 | <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | Separate quantity picked from the reserved quantity
 [stock_move_line_reference_link](stock_move_line_reference_link/) | 17.0.1.0.0 |  | Add link in stock move line references.
 [stock_move_planned_consumed_date](stock_move_planned_consumed_date/) | 17.0.1.0.0 |  | Stock Move planned consumed date
+[stock_move_propagate_first_move](stock_move_propagate_first_move/) | 17.0.1.0.0 |  | This addon propagate the picking type of the original move to all next moves created from procurement
 [stock_move_quantity_product_uom](stock_move_quantity_product_uom/) | 17.0.1.0.0 |  | computes stock.move's quantity in the uom of the product.
 [stock_no_negative](stock_no_negative/) | 17.0.1.0.0 |  | Disallow negative stock levels by default
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 17.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Auto create lots for incoming pickings
