@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_dangerous_goods
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-02-05 12:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_stock_quant_package__has_lq_products
+msgid "Has Lq Products"
+msgstr "Ha prodotti con ql"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_product_product__is_lq_product
+#: model:ir.model.fields,field_description:stock_dangerous_goods.field_stock_move_line__has_lq_products
+msgid "Is Lq Product"
+msgstr "È un prodotto con ql"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_stock_quant_package
+msgid "Packages"
+msgstr "Colli"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_dangerous_goods
+#: model:ir.model,name:stock_dangerous_goods.model_product_product
+msgid "Product Variant"
+msgstr "Variante prodotto"
+
+#. module: stock_dangerous_goods
+#: model:ir.model.fields,help:stock_dangerous_goods.field_product_product__is_lq_product
+#: model:ir.model.fields,help:stock_dangerous_goods.field_stock_move_line__has_lq_products
+msgid "Whether this product is a Limited Quantity product or not"
+msgstr "Se questo prodotto ha quantità limitata o meno"
