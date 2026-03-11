@@ -76,7 +76,8 @@ class StockMoveLineDevaluationWizard(models.TransientModel):
 
     def _get_analytic_account_id(self, move_line):
         """Extract the main analytic account from analytic_distribution."""
-        distribution = move_line.move_id.analytic_distribution
+        move = move_line.move_id
+        distribution = getattr(move, "analytic_distribution", None)
         if not distribution:
             return False
         if isinstance(distribution, str):
