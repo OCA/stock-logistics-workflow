@@ -15,7 +15,6 @@ class StockMoveLineDevaluationWizard(models.TransientModel):
     partner_id = fields.Many2one(
         comodel_name="res.partner",
         string="Customer",
-        domain=[("customer_rank", ">", 0)],
     )
     pricelist_id = fields.Many2one(
         comodel_name="product.pricelist",

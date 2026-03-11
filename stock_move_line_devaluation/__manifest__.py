@@ -6,7 +6,7 @@
     "author": "PopSolutions, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "AGPL-3",
-    "depends": ["stock"],
+    "depends": ["stock", "analytic"],
     "data": [
         "security/ir.model.access.csv",
         "views/stock_move_line_devaluation_wizard_views.xml",
