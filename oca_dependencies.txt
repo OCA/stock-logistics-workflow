@@ -1,0 +1,3 @@
+# List of OCA repository dependencies
+# format: repo_name url branch
+account-analytic https://github.com/OCA/account-analytic.git 16.0
