@@ -8,23 +8,35 @@ class TestStockMoveLineDevaluation(TransactionCase):
         super().setUpClass()
 
         cls.partner = cls.env["res.partner"].create(
-            {"name": "Test Customer", "customer_rank": 1}
+            {"name": "Test Devaluation Customer", "customer_rank": 1}
         )
-        cls.pricelist = cls.env["product.pricelist"].create({"name": "Test Pricelist"})
+        cls.pricelist = cls.env["product.pricelist"].create(
+            {"name": "Test Devaluation Pricelist"}
+        )
         cls.partner.property_product_pricelist = cls.pricelist
 
-        cls.product = cls.env["product.product"].search(
-            [("detailed_type", "=", "product")], limit=1
-        ) or cls.env["product.product"].search([("type", "=", "product")], limit=1)
-        if not cls.product:
-            raise AssertionError(
-                "No stockable product found in database for test setup."
-            )
+        cls.product = cls.env["product.product"].create(
+            {
+                "name": "Test Devaluation Product",
+                "detailed_type": "product",
+                "lst_price": 10.0,
+            }
+        )
 
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
+
+        # Ensure stock availability
+        cls.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": cls.product.id,
+                "location_id": cls.stock_location.id,
+                "inventory_quantity": 100.0,
+            }
+        ).action_apply_inventory()
 
     def _create_outgoing_picking(self, qty=5.0):
         """Helper to create a confirmed and done outgoing picking."""
@@ -36,7 +48,7 @@ class TestStockMoveLineDevaluation(TransactionCase):
                 "location_dest_id": self.customer_location.id,
             }
         )
-        move = self.env["stock.move"].create(
+        self.env["stock.move"].create(
             {
                 "name": self.product.display_name,
                 "product_id": self.product.id,
@@ -45,7 +57,6 @@ class TestStockMoveLineDevaluation(TransactionCase):
                 "picking_id": picking.id,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.customer_location.id,
-                "picking_type_id": self.picking_type_out.id,
             }
         )
         picking.action_confirm()
@@ -53,7 +64,24 @@ class TestStockMoveLineDevaluation(TransactionCase):
         for ml in picking.move_line_ids:
             ml.qty_done = ml.reserved_uom_qty or qty
         picking._action_done()
-        return picking, move
+        return picking
+
+    def _create_return(self, picking, qty):
+        """Create a return for a picking using the stock return wizard."""
+        return_wizard = (
+            self.env["stock.return.picking"]
+            .with_context(active_id=picking.id, active_model="stock.picking")
+            .create({})
+        )
+        for line in return_wizard.product_return_moves:
+            if line.product_id == self.product:
+                line.quantity = qty
+        result = return_wizard.create_returns()
+        return_picking = self.env["stock.picking"].browse(result["res_id"])
+        for ml in return_picking.move_line_ids:
+            ml.qty_done = qty
+        return_picking._action_done()
+        return return_picking
 
     def test_wizard_onchange_partner(self):
         """Test that selecting a partner sets the pricelist."""
@@ -74,7 +102,6 @@ class TestStockMoveLineDevaluation(TransactionCase):
     def test_report_generation(self):
         """Test that report lines are created from outgoing moves."""
         self._create_outgoing_picking(qty=5.0)
-
         wizard = self.env["stock.move.line.devaluation.wizard"].create(
             {
                 "partner_id": self.partner.id,
@@ -82,7 +109,6 @@ class TestStockMoveLineDevaluation(TransactionCase):
             }
         )
         action = wizard.action_generate_report()
-
         report_lines = self.env["stock.move.line.devaluation.report"].search(
             action.get("domain", [])
         )
@@ -93,30 +119,8 @@ class TestStockMoveLineDevaluation(TransactionCase):
 
     def test_return_reduces_net_qty(self):
         """Test that returns reduce the net quantity in the report."""
-        picking, move = self._create_outgoing_picking(qty=5.0)
-
-        # Create return
-        return_picking = picking.copy(
-            {
-                "location_id": self.customer_location.id,
-                "location_dest_id": self.stock_location.id,
-            }
-        )
-        move.copy(
-            {
-                "picking_id": return_picking.id,
-                "location_id": self.customer_location.id,
-                "location_dest_id": self.stock_location.id,
-                "product_uom_qty": 2.0,
-                "origin_returned_move_id": move.id,
-            }
-        )
-        return_picking.action_confirm()
-        return_picking.action_assign()
-        for ml in return_picking.move_line_ids:
-            ml.qty_done = ml.reserved_uom_qty or 2.0
-        return_picking._action_done()
-
+        picking = self._create_outgoing_picking(qty=5.0)
+        self._create_return(picking, 2.0)
         wizard = self.env["stock.move.line.devaluation.wizard"].create(
             {
                 "partner_id": self.partner.id,
@@ -124,7 +128,6 @@ class TestStockMoveLineDevaluation(TransactionCase):
             }
         )
         action = wizard.action_generate_report()
-
         report_lines = self.env["stock.move.line.devaluation.report"].search(
             action.get("domain", [])
         )
@@ -134,30 +137,8 @@ class TestStockMoveLineDevaluation(TransactionCase):
 
     def test_full_return_excluded(self):
         """Test that fully returned moves are excluded from report."""
-        picking, move = self._create_outgoing_picking(qty=5.0)
-
-        # Create full return
-        return_picking = picking.copy(
-            {
-                "location_id": self.customer_location.id,
-                "location_dest_id": self.stock_location.id,
-            }
-        )
-        move.copy(
-            {
-                "picking_id": return_picking.id,
-                "location_id": self.customer_location.id,
-                "location_dest_id": self.stock_location.id,
-                "product_uom_qty": 5.0,
-                "origin_returned_move_id": move.id,
-            }
-        )
-        return_picking.action_confirm()
-        return_picking.action_assign()
-        for ml in return_picking.move_line_ids:
-            ml.qty_done = ml.reserved_uom_qty or 5.0
-        return_picking._action_done()
-
+        picking = self._create_outgoing_picking(qty=5.0)
+        self._create_return(picking, 5.0)
         wizard = self.env["stock.move.line.devaluation.wizard"].create(
             {
                 "partner_id": self.partner.id,
