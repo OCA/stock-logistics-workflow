@@ -89,8 +89,7 @@ class StockMove(models.Model):
         for move_vals in move_vals_list:
             move_vals["location_id"] = relocation.relocate_location_id.id
         new_move = self.create(move_vals_list)
-        new_move._action_confirm()
-        return new_move
+        return new_move._action_confirm()
 
     def _after_apply_source_relocate_rule(self):
         # Hook for stock_dynamic_routing
