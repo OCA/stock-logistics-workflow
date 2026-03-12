@@ -77,8 +77,11 @@ class TestPickingRestrict(BaseCommon):
             f"You cannot put the reusable package ({self.package.name}) "
             f"in picking ({pack_move.picking_id.name})! Check with your administrator."
         )
+
         with self.assertLogs(_logger, level="WARNING") as log_catcher:
-            pack_move.move_line_ids.result_package_id = self.package
+            pack_move.move_line_ids.write({"result_package_id": self.package.id})
+            pack_move.move_line_ids.invalidate_recordset()
+
         self.assertTrue(any(message in log.message for log in log_catcher.records))
 
     def test_package_exception(self):
@@ -102,3 +105,19 @@ class TestPickingRestrict(BaseCommon):
         with self.assertRaises(ValidationError) as exc_raises:
             pack_move.move_line_ids.result_package_id = self.package
         self.assertEqual(exc_raises.exception.args[0], message)
+
+    def test_package_no_exception(self):
+        self._create_procurement()
+        move = self.env["stock.move"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", self.warehouse.lot_stock_id.id),
+            ]
+        )
+        move.move_line_ids.picked = True
+        move.move_line_ids.result_package_id = self.package
+        move.picking_id._action_done()
+        pack_move = move.move_dest_ids
+        self.assertEqual(self.package, pack_move.move_line_ids.package_id)
+        self.package.package_use = "disposable"
+        pack_move.move_line_ids.result_package_id = self.package

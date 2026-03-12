@@ -3,7 +3,7 @@
 import logging
 import traceback
 
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -12,11 +12,32 @@ _logger = logging.getLogger(__name__)
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
+    has_reusable_destination_restriction = fields.Boolean(
+        compute="_compute_has_reusable_destination_restriction",
+    )
+    has_reusable_destination_warning = fields.Boolean(
+        compute="_compute_has_reusable_destination_warning",
+    )
+
+    @api.depends("result_package_id")
+    def _compute_has_reusable_destination_restriction(self):
+        for line in self:
+            line.has_reusable_destination_restriction = bool(
+                line.picking_type_id.restrict_reusable_package_in_destination
+                and line.result_package_id.package_use == "reusable"
+            )
+
+    @api.depends("result_package_id")
+    def _compute_has_reusable_destination_warning(self):
+        for line in self:
+            line.has_reusable_destination_warning = bool(
+                line.picking_type_id.log_warning_reusable_package_in_destination
+                and line.result_package_id.package_use == "reusable"
+            )
+
     @api.constrains("result_package_id")
     def _check_reusable_package_restriction(self):
-        for line in self.filtered(
-            "picking_type_id.restrict_reusable_package_in_destination"
-        ):
+        for line in self.filtered("has_reusable_destination_restriction"):
             package_name = line.result_package_id.name
             picking_name = line.picking_id.name
             raise ValidationError(
@@ -28,9 +49,7 @@ class StockMoveLine(models.Model):
                 )
             )
 
-        for line in self.filtered(
-            "picking_type_id.log_warning_reusable_package_in_destination"
-        ):
+        for line in self.filtered("has_reusable_destination_warning"):
             package_name = line.result_package_id.name
             picking_name = line.picking_id.name
             warning_message = _(
