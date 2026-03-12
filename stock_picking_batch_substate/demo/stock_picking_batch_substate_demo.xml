@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!--Batch transfer Substate -->
+    <record id="base_substate_waiting_booking" model="base.substate">
+        <field name="name">Waiting booking</field>
+        <field name="sequence">1</field>
+        <field name="target_state_value_id" ref="target_state_value_batch_draft" />
+    </record>
+    <record id="base_substate_waiting_shipment" model="base.substate">
+        <field name="name">Waiting shipment</field>
+        <field name="sequence">2</field>
+        <field name="target_state_value_id" ref="target_state_value_batch_draft" />
+    </record>
+    <record id="base_substate_in_transit" model="base.substate">
+        <field name="name">In transit</field>
+        <field name="sequence">3</field>
+        <field
+            name="target_state_value_id"
+            ref="target_state_value_batch_in_progress"
+        />
+    </record>
+    <record id="base_substate_customs_clearance" model="base.substate">
+        <field name="name">Customs clearance</field>
+        <field name="sequence">4</field>
+        <field
+            name="target_state_value_id"
+            ref="target_state_value_batch_in_progress"
+        />
+    </record>
+</odoo>
