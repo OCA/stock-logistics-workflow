@@ -38,7 +38,7 @@ class SourceRelocateCommon(common.TransactionCase):
             {"name": "Product2", "type": "consu", "is_storable": True}
         )
 
-    def _create_single_move(self, product, picking_type):
+    def _create_single_move(self, product, picking_type, custom_vals=None):
         move_vals = {
             "name": product.name,
             "picking_type_id": picking_type.id,
@@ -47,10 +47,13 @@ class SourceRelocateCommon(common.TransactionCase):
             "product_uom": product.uom_id.id,
             "location_id": picking_type.default_location_src_id.id,
             "location_dest_id": picking_type.default_location_dest_id.id,
-            "state": "confirmed",
             "procure_method": "make_to_stock",
         }
-        return self.env["stock.move"].create(move_vals)
+        if custom_vals:
+            move_vals.update(custom_vals)
+        move = self.env["stock.move"].create(move_vals)
+        move._action_confirm()
+        return move
 
     def _create_relocate_rule(self, location, relocation, picking_type, domain=None):
         self.env["stock.source.relocate"].create(

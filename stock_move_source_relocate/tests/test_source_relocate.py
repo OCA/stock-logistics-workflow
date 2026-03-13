@@ -52,9 +52,7 @@ class TestSourceRelocate(SourceRelocateCommon):
         )
         self._update_qty_in_location(self.loc_shelf_1, self.product, 3)
         move = self._create_single_move(self.product, self.wh.pick_type_id)
-        move._assign_picking()
-        move._action_assign()
-
+        # Move is split after partial assignation
         self.assertRecordValues(
             move,
             [
@@ -78,6 +76,42 @@ class TestSourceRelocate(SourceRelocateCommon):
                 }
             ],
         )
+        # Remove stock must remove the reservation and merge back the moves together
+        inventory_quant = (
+            self.env["stock.quant"].sudo()._gather(self.product, self.loc_shelf_1)
+        )
+        inventory_quant.inventory_quantity = 0
+        inventory_quant.action_apply_inventory()
+        self.assertEqual(len((move | new_move).exists()), 1)
+
+    def test_relocate_partial_merge_new_move(self):
+        self._create_relocate_rule(
+            self.wh.lot_stock_id, self.loc_replenish, self.wh.pick_type_id
+        )
+        self._update_qty_in_location(self.loc_shelf_1, self.product, 5)
+        group = self.env["procurement.group"].create({"name": "Test merge"})
+
+        replenish_move = self._create_single_move(
+            self.product,
+            self.wh.pick_type_id,
+            custom_vals={
+                "location_id": self.loc_replenish.id,
+                "group_id": group.id,
+            },
+        )
+        pick_move = self._create_single_move(
+            self.product,
+            self.wh.pick_type_id,
+            custom_vals={
+                "group_id": group.id,
+                "picking_id": replenish_move.picking_id.id,
+            },
+        )
+
+        self.assertEqual(pick_move.state, "assigned")
+        self.assertEqual(pick_move.product_uom_qty, 5)
+        self.assertEqual(replenish_move.state, "confirmed")
+        self.assertEqual(replenish_move.product_uom_qty, 15)
 
     def test_relocate_ignore_available(self):
         self._create_relocate_rule(

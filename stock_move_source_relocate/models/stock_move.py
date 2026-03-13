@@ -70,6 +70,7 @@ class StockMove(models.Model):
             # move on the specific relocation (for replenishment), so
             # update it's source location
             self.location_id = relocation.relocate_location_id
+            self._action_confirm(merge=True)
             return self
 
         missing_reserved_uom_quantity = self.product_uom_qty - qty_reserved
@@ -84,11 +85,11 @@ class StockMove(models.Model):
         # A part of the quantity could be reserved in the original
         # location, so keep this part in the move and split the rest
         # in a new move, where will take the goods in the relocation
-        new_move = self.create(self._split(need))
-        new_move._action_confirm(merge=False)
-        new_move.location_id = relocation.relocate_location_id
-        self._action_assign()
-        return new_move
+        move_vals_list = self._split(need)
+        for move_vals in move_vals_list:
+            move_vals["location_id"] = relocation.relocate_location_id.id
+        new_move = self.create(move_vals_list)
+        return new_move._action_confirm()
 
     def _after_apply_source_relocate_rule(self):
         # Hook for stock_dynamic_routing

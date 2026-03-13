@@ -74,7 +74,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
             self.env["stock.picking"]
             .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
             .move_ids
-        )[0]
+        ) - move_a
         self.assertRecordValues(
             move_a | move_b | move_c,
             [
@@ -214,7 +214,7 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
             self.env["stock.picking"]
             .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
             .move_ids
-        )[0]
+        ) - move_a
         self.assertRecordValues(
             move_a | move_b | move_c | move_d,
             [
