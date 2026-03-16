@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Move Quantity Product UOM",
-    "version": "18.0.1.0.2",
+    "version": "19.0.1.0.0",
     "category": "Inventory/Inventory",
     "license": "LGPL-3",
     "development_status": "Production/Stable",
