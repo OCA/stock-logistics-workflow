@@ -5,7 +5,6 @@ from odoo import _, fields, models
 
 
 class StockWarehouse(models.Model):
-
     _inherit = "stock.warehouse"
 
     use_loss_picking = fields.Boolean(
@@ -136,7 +135,7 @@ class StockWarehouse(models.Model):
             {
                 "loss_type_id": {
                     "name": name + " " + _("Loss Sequence"),
-                    "prefix": code + "/LOSS/",
+                    "prefix": code + "/" + (self.loss_type_id.code or "LOSS") + "/",
                     "padding": 5,
                     "company_id": self.company_id.id,
                 },
