@@ -10,7 +10,6 @@ _logger = logging.getLogger(__name__)
 
 
 class StockQuant(models.Model):
-
     _inherit = "stock.quant"
 
     def _lock_quants_for_loss(self):

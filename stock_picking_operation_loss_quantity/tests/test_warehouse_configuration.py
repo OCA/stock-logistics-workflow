@@ -1,11 +1,9 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.tests import TransactionCase
-
 from .common import OperationLossQuantityCommon
 
 
-class TestWarehouseConfiguration(OperationLossQuantityCommon, TransactionCase):
+class TestWarehouseConfiguration(OperationLossQuantityCommon):
     def test_warehouse_configuration(self):
         # Check loss location configuration
         self.assertTrue(self.warehouse.loss_location_id)
