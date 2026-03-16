@@ -57,47 +57,47 @@ assigned picking, confirm or cancel loss in a second time.
 Configuration
 =============
 
--  Go to Inventory > Configuration > Settings > Warehouse
--  Enable 'Storage Locations' and 'Multi-Step Routes'.
--  Go To Inventory > Configuration > Warehouse Management > Warehouses
--  On the selected Warehouse, check the 'Enable the Loss feature' under
-   'Loss' section.
+- Go to Inventory > Configuration > Settings > Warehouse
+- Enable 'Storage Locations' and 'Multi-Step Routes'.
+- Go To Inventory > Configuration > Warehouse Management > Warehouses
+- On the selected Warehouse, check the 'Enable the Loss feature' under
+  'Loss' section.
 
 Usage
 =====
 
--  You need to have enabled the 'Show Detailed Operations' on the
-   Picking type(s) you want.
+- You need to have enabled the 'Show Detailed Operations' on the Picking
+  type(s) you want.
 
--  Go to Inventory > Operations > Transfers
+- Go to Inventory > Operations > Transfers
 
--  Choose the one you want to manage.
+- Choose the one you want to manage.
 
--  In the 'Detailed Operations' tab, fill in the done quantities as
-   usual.
+- In the 'Detailed Operations' tab, fill in the done quantities as
+  usual.
 
--  If for one line, you don't find physically the whole product
-   quantity, you'll be able to declare the loss for the difference
-   between the reserved one and the done one.
+- If for one line, you don't find physically the whole product quantity,
+  you'll be able to declare the loss for the difference between the
+  reserved one and the done one.
 
--  To do so, fill in the found quantity in Done column, then click on
-   'Loss' button.
+- To do so, fill in the found quantity in Done column, then click on
+  'Loss' button.
 
--  The reserved quantity will be equal to the done quantity and a Loss
-   picking is waiting for a check on the 'Loss' picking type.
+- The reserved quantity will be equal to the done quantity and a Loss
+  picking is waiting for a check on the 'Loss' picking type.
 
--  That loss picking is now reserving the possible missing quantity in
-   order to avoid another picking that want to take a quantity that
-   possibly does not exist anymore.
+- That loss picking is now reserving the possible missing quantity in
+  order to avoid another picking that want to take a quantity that
+  possibly does not exist anymore.
 
--  Then, an operator can decide to validate the inventory loss or to
-   cancel the picking.
+- Then, an operator can decide to validate the inventory loss or to
+  cancel the picking.
 
 Known issues / Roadmap
 ======================
 
--  Enable loss feature on stock.move level too if 'Detailed Operations'
-   feature is disabled.
+- Enable loss feature on stock.move level too if 'Detailed Operations'
+  feature is disabled.
 
 Bug Tracker
 ===========
@@ -122,9 +122,10 @@ Authors
 Contributors
 ------------
 
--  Jacques-Etienne Baudoux je@bcim.be
--  Sylvain Van Hoof sylvain@okia.be
--  Denis Roussel denis.roussel@acsone.eu
+- Jacques-Etienne Baudoux je@bcim.be
+- Sylvain Van Hoof sylvain@okia.be
+- Denis Roussel denis.roussel@acsone.eu
+- Nicolas Delbovier nicolas.delbovier@acsone.eu
 
 Maintainers
 -----------
