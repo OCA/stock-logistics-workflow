@@ -11,13 +11,13 @@
         />
         <field name="arch" type="xml">
             <field name="product_uom_id" position="after">
-                <field name="is_action_loss_qty_allowed" invisible="1" />
+                <field name="is_action_lose_quantity_allowed" invisible="1" />
                 <button
-                    name="action_loss_quantity"
+                    name="action_lose_quantity"
                     string="Loss"
                     type="object"
                     icon="fa-step-forward "
-                    attrs="{'invisible': [('is_action_loss_qty_allowed', '=', False)]}"
+                    attrs="{'invisible': [('is_action_lose_quantity_allowed', '=', False)]}"
                     confirm="Are you sure the product is out of stock?"
                 />
             </field>
