@@ -85,7 +85,10 @@ class StockMoveLine(models.Model):
         loss_picking = first(similar_loss_lines.picking_id)
 
         if loss_picking:
-            loss_picking.move_ids = [Command.create(new_loss_move_vals)]
+            new_loss_move = self.env["stock.move"].create(
+                {**new_loss_move_vals, "picking_id": loss_picking.id}
+            )
+            new_loss_move._action_confirm(merge=False)
         else:
             loss_picking = self.env["stock.picking"].create(
                 {
@@ -95,7 +98,6 @@ class StockMoveLine(models.Model):
                     "move_ids": [Command.create(new_loss_move_vals)],
                 }
             )
-            loss_picking.action_confirm()
 
         loss_picking.action_assign()
         return loss_picking

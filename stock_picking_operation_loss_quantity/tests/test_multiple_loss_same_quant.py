@@ -50,3 +50,4 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
+        self.assertEqual(len(loss_picking.move_line_ids), 3)
