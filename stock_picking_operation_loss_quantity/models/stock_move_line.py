@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.fields import Command, float_compare
+from odoo.fields import Command, first, float_compare
 
 
 class StockMoveLine(models.Model):
@@ -29,10 +29,10 @@ class StockMoveLine(models.Model):
             raise UserError(_("You are not allowed to declare loss quantities"))
         return self._lose_quantity()
 
-    def _create_loss_picking(self, unprocessed_qty: float):
+    def _create_loss_move_line(self, unprocessed_qty: float):
         self.ensure_one()
-        pick_type_id = self.location_id.warehouse_id.loss_type_id
-        if not pick_type_id:
+        loss_pick_type = self.location_id.warehouse_id.loss_type_id
+        if not loss_pick_type:
             raise ValidationError(
                 _(
                     "You don't have a Loss picking type enabled on your Warehouse! "
@@ -40,7 +40,7 @@ class StockMoveLine(models.Model):
                     "configuration."
                 )
             )
-        if not pick_type_id.default_location_dest_id:
+        if not loss_pick_type.default_location_dest_id:
             raise ValidationError(
                 _(
                     "You don't have any default destination set on your Loss picking type!"
@@ -55,30 +55,48 @@ class StockMoveLine(models.Model):
             raise ValidationError(
                 _("You try to create a Loss picking without any loss quantity!")
             )
+        new_loss_move_vals = {
+            "name": self.product_id.display_name,
+            "product_id": self.product_id.id,
+            "product_uom_qty": unprocessed_qty,  # This is the "demand"
+            "product_uom": self.product_uom_id.id,
+            "location_id": self.location_id.id,
+            "location_dest_id": loss_pick_type.default_location_dest_id.id,
+            "lot_ids": [Command.set(self.lot_id.ids)] if self.lot_id else False,
+        }
 
-        loss_picking = self.env["stock.picking"].create(
-            {
-                "picking_type_id": pick_type_id.id,
-                "location_id": self.location_id.id,
-                "location_dest_id": pick_type_id.default_location_dest_id.id,
-                "move_ids": [
-                    Command.create(
-                        {
-                            "name": self.product_id.display_name,
-                            "product_id": self.product_id.id,
-                            "product_uom_qty": unprocessed_qty,  # This is the "demand"
-                            "product_uom": self.product_uom_id.id,
-                            "location_id": self.location_id.id,
-                            "location_dest_id": pick_type_id.default_location_dest_id.id,
-                            "lot_ids": [Command.set(self.lot_id.ids)]
-                            if self.lot_id
-                            else False,
-                        }
-                    )
-                ],
-            }
-        )
-        loss_picking.action_confirm()
+        # Search for an already existing LOSS picking for this quant
+        search_domain = [
+            ("reserved_uom_qty", ">", 0.0),
+            ("product_id", "=", self.product_id.id),
+            ("location_id", "=", self.location_id.id),
+            ("lot_id", "=", self.lot_id.id),
+            ("package_id", "=", self.package_id.id),
+            ("owner_id", "=", self.owner_id.id),
+            ("state", "not in", ("done", "cancel")),
+            ("picking_type_id", "=", loss_pick_type.id),
+            (
+                "location_dest_id",
+                "=",
+                loss_pick_type.default_location_dest_id.id,
+            ),
+        ]
+        similar_loss_lines = self.env["stock.move.line"].search(search_domain)
+        loss_picking = first(similar_loss_lines.picking_id)
+
+        if loss_picking:
+            loss_picking.move_ids = [Command.create(new_loss_move_vals)]
+        else:
+            loss_picking = self.env["stock.picking"].create(
+                {
+                    "picking_type_id": loss_pick_type.id,
+                    "location_id": self.location_id.id,
+                    "location_dest_id": loss_pick_type.default_location_dest_id.id,
+                    "move_ids": [Command.create(new_loss_move_vals)],
+                }
+            )
+            loss_picking.action_confirm()
+
         loss_picking.action_assign()
         return loss_picking
 
@@ -111,7 +129,7 @@ class StockMoveLine(models.Model):
             quants._lock_quants_for_loss()
 
             unprocessed_qty = line._release_unprocessed_qty()
-            loss_picking = line._create_loss_picking(unprocessed_qty)
+            loss_picking = line._create_loss_move_line(unprocessed_qty)
             loss_picking._schedule_loss_activity()
 
             if (
