@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
-<odoo>
+<odoo noupdate="1">
 
-    <data noupdate="1">
-        <!-- Group for activities notifications -->
+    <!-- Group for activities notifications -->
 
-        <record model="res.groups" id="group_loss_notification">
-            <field name="name">Picking Loss Notifications</field>
-            <field name="category_id" ref="base.module_category_hidden" />
-        </record>
-    </data>
+    <record model="res.groups" id="group_loss_notification">
+        <field name="name">Picking Loss Notifications</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+    </record>
 
 </odoo>

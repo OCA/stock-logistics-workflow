@@ -5,7 +5,6 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-
     _inherit = "stock.picking"
 
     def _schedule_loss_activity(self):
@@ -18,7 +17,8 @@ class StockPicking(models.Model):
             return
         for user in group.users:
             self.activity_schedule(
-                act_type_xmlid="stock_picking_operation_loss_quantity.loss_picking_notification",
+                act_type_xmlid="stock_picking_operation_loss_quantity.\
+                    loss_picking_notification",
                 summary=self.name,
                 user_id=user.id,
             )
