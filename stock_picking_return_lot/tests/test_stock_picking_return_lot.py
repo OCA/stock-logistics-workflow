@@ -4,6 +4,7 @@
 from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import Form
+from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -168,6 +169,7 @@ class StockPickingReturnLotTest(BaseCommon):
         self.assertEqual(move_2.move_line_ids.lot_id, self.lot_2)
         self.assertEqual(move_2.product_qty, 1)
 
+    @mute_logger("odoo.models.unlink")
     def test_full_return_after_partial_return(self):
         self.test_partial_return()
         wiz = self.create_return_wiz(self.picking)

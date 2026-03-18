@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ========================
 Stock Picking Return Lot
 ========================
@@ -17,7 +13,7 @@ Stock Picking Return Lot
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -53,6 +49,13 @@ because the quantities are now split up per lot.
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+There is an option under Inventory > Configuration > Traceability called
+"Restrict lot on picking return line" that, if enabled, will allow you
+to select only the lots that were used in the linked transaction.
 
 Usage
 =====
@@ -94,25 +97,25 @@ Authors
 Contributors
 ------------
 
-- Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
-- `PyTech SRL <https://www.pytech.it>`__:
+-  Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
+-  `PyTech SRL <https://www.pytech.it>`__:
 
-  - Alessio Renda
-  - Sebastiano Picchi
+   -  Alessio Renda
+   -  Sebastiano Picchi
 
-- `Ooops404 <https://www.ooops404.com>`__:
+-  `Ooops404 <https://www.ooops404.com>`__:
 
-  - Foresti Francesco <francesco.foresti@ooops404.com>
+   -  Foresti Francesco <francesco.foresti@ooops404.com>
 
-- `ACSONE SA/NV <https://www.acsone.eu>`__:
+-  `ACSONE SA/NV <https://www.acsone.eu>`__:
 
-  - Souheil Bejaoui <souheil.bejaoui@acsone.eu>
+   -  Souheil Bejaoui <souheil.bejaoui@acsone.eu>
 
-- `APSL-Nagarro <https://apsl.tech>`__:
+-  `APSL-Nagarro <https://apsl.tech>`__:
 
-  - Antoni Marroig <amarroig@apsl.net>
+   -  Antoni Marroig <amarroig@apsl.net>
 
-- Stefan Rijnhart <stefan@opener.amsterdam>
+-  Stefan Rijnhart <stefan@opener.amsterdam>
 
 Maintainers
 -----------
