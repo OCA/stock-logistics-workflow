@@ -22,6 +22,8 @@ class StockMoveLine(models.Model):
                 and (rec.qty_done - rec.reserved_qty < 0)
                 and rec.state not in ("done", "draft")
                 and rec.picking_id.picking_type_code != "incoming"
+                and rec.picking_id.picking_type_id
+                != rec.location_id.warehouse_id.loss_type_id
             )
 
     def action_lose_quantity(self):
