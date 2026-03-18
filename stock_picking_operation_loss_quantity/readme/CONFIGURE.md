@@ -2,3 +2,4 @@
 - Enable 'Storage Locations' and 'Multi-Step Routes'.
 - Go To Inventory > Configuration > Warehouse Management > Warehouses
 - On the selected Warehouse, check the 'Enable the Loss feature' under 'Loss' section.
+- Set the "Loss Auto-Clear threshold" if you want to use the "auto-clear" feature (or let 0 if you do not want to use it)
