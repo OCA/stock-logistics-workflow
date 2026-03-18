@@ -10,5 +10,8 @@
     "author": "Camptocamp, ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock_restrict_lot", "stock_picking_return_restricted_qty"],
-    "data": ["wizards/stock_return_picking.xml"],
+    "data": [
+        "views/res_config_settings_views.xml",
+        "wizards/stock_return_picking.xml",
+    ],
 }
