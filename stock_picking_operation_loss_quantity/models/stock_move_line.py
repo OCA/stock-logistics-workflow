@@ -106,7 +106,7 @@ class StockMoveLine(models.Model):
 
         if (
             self.location_id.warehouse_id.loss_auto_clear_threshold
-            and len(loss_picking.move_line_ids)
+            and len(loss_picking.move_ids)
             >= self.location_id.warehouse_id.loss_auto_clear_threshold
         ):
             quants_available_quantity = self.env["stock.quant"]._get_available_quantity(
