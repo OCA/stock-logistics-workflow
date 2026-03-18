@@ -55,6 +55,7 @@ class StockMoveLine(models.Model):
             raise ValidationError(
                 _("You try to create a Loss picking without any loss quantity!")
             )
+
         new_loss_move_vals = {
             "name": self.product_id.display_name,
             "product_id": self.product_id.id,
@@ -88,6 +89,8 @@ class StockMoveLine(models.Model):
             new_loss_move = self.env["stock.move"].create(
                 {**new_loss_move_vals, "picking_id": loss_picking.id}
             )
+            # Use merge = False so that the number of move lines = the number
+            # of loss declared for this quant
             new_loss_move._action_confirm(merge=False)
         else:
             loss_picking = self.env["stock.picking"].create(
@@ -98,6 +101,28 @@ class StockMoveLine(models.Model):
                     "move_ids": [Command.create(new_loss_move_vals)],
                 }
             )
+
+        if (
+            self.location_id.warehouse_id.loss_auto_clear_threshold
+            and len(loss_picking.move_line_ids)
+            >= self.location_id.warehouse_id.loss_auto_clear_threshold
+        ):
+            quants_available_quantity = self.env["stock.quant"]._get_available_quantity(
+                product_id=self.product_id,
+                location_id=self.location_id,
+                lot_id=self.lot_id,
+                package_id=self.package_id,
+                owner_id=self.owner_id,
+            )
+            if quants_available_quantity > 0:
+                new_loss_move = self.env["stock.move"].create(
+                    {
+                        **new_loss_move_vals,
+                        "product_uom_qty": quants_available_quantity,
+                        "picking_id": loss_picking.id,
+                    }
+                )
+                new_loss_move._action_confirm(merge=False)
 
         loss_picking.action_assign()
         return loss_picking
