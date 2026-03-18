@@ -35,8 +35,8 @@ Stock Picking Operation Loss Quantity
 This module allows to declare loss product quantities during picking
 operations.
 
-To avoid unwanted stock losses if it is not justified, movements will be
-reaffected to another picking type.
+To avoid unwanted stock losses if it is not justified, movements will
+instead be reaffected to a "LOSS" picking type.
 
 This module take into account the flows with product lot management,
 packages, owners.
@@ -66,6 +66,8 @@ Configuration
 - Go To Inventory > Configuration > Warehouse Management > Warehouses
 - On the selected Warehouse, check the 'Enable the Loss feature' under
   'Loss' section.
+- Set the "Loss Auto-Clear threshold" if you want to use the
+  "auto-clear" feature (or let 0 if you do not want to use it)
 
 Usage
 =====
@@ -96,6 +98,10 @@ Usage
 
 - Then, an operator can decide to validate the inventory loss or to
   cancel the picking.
+
+- If a "Loss Auto-Clear Threshold" is configured (value greater than 0),
+  once this threshold is reached, the system automatically reserves the
+  entire remaining quantity of that quant in the Loss Picking.
 
 Known issues / Roadmap
 ======================

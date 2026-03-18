@@ -377,8 +377,8 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_operation_loss_quantity"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_operation_loss_quantity"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module allows to declare loss product quantities during picking
 operations.</p>
-<p>To avoid unwanted stock losses if it is not justified, movements will be
-reaffected to another picking type.</p>
+<p>To avoid unwanted stock losses if it is not justified, movements will
+instead be reaffected to a “LOSS” picking type.</p>
 <p>This module take into account the flows with product lot management,
 packages, owners.</p>
 <p><strong>Table of contents</strong></p>
@@ -415,6 +415,8 @@ assigned picking, confirm or cancel loss in a second time.</p>
 <li>Go To Inventory &gt; Configuration &gt; Warehouse Management &gt; Warehouses</li>
 <li>On the selected Warehouse, check the ‘Enable the Loss feature’ under
 ‘Loss’ section.</li>
+<li>Set the “Loss Auto-Clear threshold” if you want to use the
+“auto-clear” feature (or let 0 if you do not want to use it)</li>
 </ul>
 </div>
 <div class="section" id="usage">
@@ -438,6 +440,9 @@ order to avoid another picking that want to take a quantity that
 possibly does not exist anymore.</li>
 <li>Then, an operator can decide to validate the inventory loss or to
 cancel the picking.</li>
+<li>If a “Loss Auto-Clear Threshold” is configured (value greater than 0),
+once this threshold is reached, the system automatically reserves the
+entire remaining quantity of that quant in the Loss Picking.</li>
 </ul>
 </div>
 <div class="section" id="known-issues-roadmap">
