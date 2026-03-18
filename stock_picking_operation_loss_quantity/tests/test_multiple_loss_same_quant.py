@@ -50,7 +50,7 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
-        self.assertEqual(len(loss_picking.move_line_ids), 3)
+        self.assertEqual(len(loss_picking.move_ids), 3)
 
     def test_loss_auto_clear(self):
         self.warehouse.loss_auto_clear_threshold = 3
@@ -68,7 +68,7 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
-        self.assertEqual(len(loss_picking.move_line_ids), 4)
+        self.assertEqual(len(loss_picking.move_ids), 4)
         last_loss_move_line = loss_picking.move_line_ids.sorted(lambda line: line.id)[
             -1
         ]
