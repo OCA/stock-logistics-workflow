@@ -103,6 +103,7 @@ class StockMoveLine(models.Model):
                     "move_ids": [Command.create(new_loss_move_vals)],
                 }
             )
+            loss_picking.move_ids._action_confirm()
 
         if (
             self.location_id.warehouse_id.loss_auto_clear_threshold
