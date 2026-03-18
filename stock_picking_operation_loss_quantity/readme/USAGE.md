@@ -12,3 +12,6 @@
 - That loss picking is now reserving the possible missing quantity in order to avoid
   another picking that want to take a quantity that possibly does not exist anymore.
 - Then, an operator can decide to validate the inventory loss or to cancel the picking.
+
+- If a "Loss Auto-Clear Threshold" is configured (value greater than 0), once this threshold is reached,
+  the system automatically reserves the entire remaining quantity of that quant in the Loss Picking.

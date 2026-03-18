@@ -12,6 +12,10 @@
             <group name="group_resupply" position="after">
                 <group name="group_loss" string="Loss">
                     <field name="use_loss_picking" />
+                    <field
+                        name="loss_auto_clear_threshold"
+                        attrs="{'invisible': [('use_loss_picking', '=', False)]}"
+                    />
                 </group>
             </group>
             <field name="lot_stock_id" position="after">

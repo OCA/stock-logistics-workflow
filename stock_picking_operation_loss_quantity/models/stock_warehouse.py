@@ -15,11 +15,20 @@ class StockWarehouse(models.Model):
         comodel_name="stock.location",
     )
     loss_type_id = fields.Many2one(
-        comodel_name="stock.picking.type", string="Loss Picking Type", help=""
+        comodel_name="stock.picking.type",
+        string="Loss Picking Type",
+        help="The operation type for loss operations",
     )
     loss_route_id = fields.Many2one(
         comodel_name="stock.route",
         help="This is a dummy field in order to create other values correctly",
+    )
+    loss_auto_clear_threshold = fields.Integer(
+        string="Loss Auto-Clear Threshold",
+        default=0,
+        help="Number of loss declarations required before the system automatically "
+        "resets the remaining stock quantity to zero. If set to 0, "
+        "the auto-clear behavior is deactivated.",
     )
 
     def write(self, vals):
