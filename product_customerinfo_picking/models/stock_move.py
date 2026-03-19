@@ -6,6 +6,13 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    product_customer_code = fields.Char(
+        compute="_compute_product_customer_code",
+    )
+    product_customer_name = fields.Char(
+        compute="_compute_product_customer_code",
+    )
+
     @api.depends(
         "picking_id.partner_id",
         "product_id",
@@ -19,21 +26,24 @@ class StockMove(models.Model):
             if (
                 move.picking_id
                 and move.picking_id.partner_id
-                and move.product_tmpl_id.customer_ids
+                and move.product_id.customer_ids
             ):
-                customer = fields.first(
-                    move.product_tmpl_id.customer_ids.filtered(
-                        lambda m, mo=move: m.partner_id == mo.picking_id.partner_id
-                    )
+                customer_info_ids = move.product_tmpl_id.customer_ids.filtered(
+                    lambda m, mo=move: m.partner_id == mo.picking_id.partner_id
+                    and m.product_tmpl_id == mo.product_tmpl_id
                 )
-                product_customer_code = customer.product_code
-                product_customer_name = customer.product_name
+                for customer_info_id in customer_info_ids:
+                    product_customer_code = customer_info_id.product_code
+                    product_customer_name = customer_info_id.product_name
+                    break
+                customer_ids = move.product_id.variant_customer_ids.filtered(
+                    lambda m, mo=move: m.partner_id == mo.picking_id.partner_id
+                    and m.product_id == mo.product_id
+                )
+                for customer_id in customer_ids:
+                    if customer_id.partner_id == move.picking_id.partner_id:
+                        product_customer_code = customer_id.product_code
+                        product_customer_name = customer_id.product_name
+                        break
             move.product_customer_code = product_customer_code
             move.product_customer_name = product_customer_name
-
-    product_customer_code = fields.Char(
-        compute="_compute_product_customer_code",
-    )
-    product_customer_name = fields.Char(
-        compute="_compute_product_customer_code",
-    )
