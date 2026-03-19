@@ -24,6 +24,7 @@ class StockPicking(models.Model):
         all_exceptions += moves.detect_exceptions()
         return all_exceptions
 
+    
     @api.constrains("ignore_exception", "move_ids", "state")
     def stock_check_exception(self):
         pickings = self.filtered(
