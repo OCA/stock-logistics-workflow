@@ -103,20 +103,6 @@ class TestStockMoveDisableExtra(TransactionCase):
 
         return picking, move
 
-    def _assert_lot_information_preserved(self, move, lot):
-        """Helper to assert that lot information is preserved."""
-        self.assertEqual(
-            move.move_line_ids.lot_id.id,
-            lot.id,
-            "Lot information should be preserved",
-        )
-
-    def _assert_excess_quantity_stored(self, move, excess_qty):
-        """Helper to assert that excess quantity is stored."""
-        self.assertEqual(
-            move.excess_quantity, excess_qty, "Excess quantity should be stored"
-        )
-
     def _create_lot(self, name):
         """Helper to create a lot for the test product."""
         return self.env["stock.lot"].create(
@@ -153,9 +139,15 @@ class TestStockMoveDisableExtra(TransactionCase):
         self.assertEqual(
             self.move.product_uom_qty, 10, "Move quantity should remain unchanged"
         )
-        self._assert_lot_information_preserved(self.move, lot)
+        self.assertEqual(
+            self.move.move_line_ids.lot_id.id,
+            lot.id,
+            "Lot information should be preserved",
+        )
         self.assertEqual(self.move.quantity, 15, "Quantity done should be preserved")
-        self._assert_excess_quantity_stored(self.move, 5)
+        self.assertEqual(
+            self.move.excess_quantity, 5, "Excess quantity should be stored"
+        )
 
     def test_extra_move_enabled_normal_behavior(self):
         """Test that when extra moves are enabled (default), normal behavior occurs."""
