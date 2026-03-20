@@ -107,7 +107,7 @@ class TestStockMoveDisableExtra(TransactionCase):
         )
 
         # Check that the quantity done is preserved
-        self.assertEqual(self.move.qty_done, 15, "Quantity done should be preserved")
+        self.assertEqual(self.move.quantity, 15, "Quantity done should be preserved")
 
         # Check that excess quantity is stored
         self.assertEqual(
