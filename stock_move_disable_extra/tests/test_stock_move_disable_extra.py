@@ -42,6 +42,15 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
+        # Create a test lot that can be reused
+        cls.test_lot = cls.env["stock.lot"].create(
+            {
+                "name": "TESTLOT001",
+                "product_id": cls.product_lot.id,
+                "company_id": cls.env.company.id,
+            }
+        )
+
     def _set_move_line_quantity(self, move, lot, quantity):
         """Helper to set the quantity and lot on a move line."""
         move.move_line_ids.write(
@@ -83,14 +92,7 @@ class TestStockMoveDisableExtra(TransactionCase):
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        lot = self.env["stock.lot"].create(
-            {
-                "name": "LOT001",
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
-        self._set_move_line_quantity(move, lot, 15)
+        self._set_move_line_quantity(move, self.test_lot, 15)
 
         # Act
         picking.button_validate()
@@ -102,7 +104,7 @@ class TestStockMoveDisableExtra(TransactionCase):
         )
         self.assertEqual(
             move.move_line_ids.lot_id.id,
-            lot.id,
+            self.test_lot.id,
             "Lot information should be preserved",
         )
         self.assertEqual(move.quantity, 15, "Quantity done should be preserved")
@@ -115,14 +117,7 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        lot = self.env["stock.lot"].create(
-            {
-                "name": "LOT002",
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
-        self._set_move_line_quantity(move_normal, lot, 15)
+        self._set_move_line_quantity(move_normal, self.test_lot, 15)
 
         # Act
         picking_normal.button_validate()
