@@ -59,6 +59,23 @@ class TestStockMoveDisableExtra(TransactionCase):
         self.picking.action_confirm()
         self.picking.action_assign()
 
+        # Create picking type with extra moves enabled (for normal behavior test)
+        self.picking_type_normal = self.env["stock.picking.type"].create(
+            {
+                "name": "Test Receipt Type Normal",
+                "code": "incoming",
+                "sequence_code": "TESTN",
+                "disable_extra_moves": False,  # Extra moves enabled
+                "warehouse_id": self.env.ref("stock.warehouse0").id,
+                "default_location_src_id": self.env.ref(
+                    "stock.stock_location_suppliers"
+                ).id,
+                "default_location_dest_id": self.env.ref(
+                    "stock.stock_location_stock"
+                ).id,
+            }
+        )
+
     def test_extra_move_disabled_preserves_lot(self):
         """Test that when extra moves are disabled, lot information is preserved."""
 
@@ -117,27 +134,10 @@ class TestStockMoveDisableExtra(TransactionCase):
     def test_extra_move_enabled_normal_behavior(self):
         """Test that when extra moves are enabled (default), normal behavior occurs."""
 
-        # Create a new picking type with extra moves enabled (default)
-        picking_type_normal = self.env["stock.picking.type"].create(
-            {
-                "name": "Test Receipt Type Normal",
-                "code": "incoming",
-                "sequence_code": "TESTN",
-                "disable_extra_moves": False,  # Extra moves enabled
-                "warehouse_id": self.env.ref("stock.warehouse0").id,
-                "default_location_src_id": self.env.ref(
-                    "stock.stock_location_suppliers"
-                ).id,
-                "default_location_dest_id": self.env.ref(
-                    "stock.stock_location_stock"
-                ).id,
-            }
-        )
-
-        # Create a new receipt with this picking type
+        # Create a new receipt with the normal picking type (extra moves enabled)
         picking_normal = self.env["stock.picking"].create(
             {
-                "picking_type_id": picking_type_normal.id,
+                "picking_type_id": self.picking_type_normal.id,
                 "location_id": self.env.ref("stock.stock_location_suppliers").id,
                 "location_dest_id": self.env.ref("stock.stock_location_stock").id,
             }
