@@ -103,18 +103,6 @@ class TestStockMoveDisableExtra(TransactionCase):
 
         return picking, move
 
-    def _assert_no_extra_move_created(self, picking):
-        """Helper to assert that no extra move was created."""
-        self.assertEqual(len(picking.move_ids), 1, "Extra move should not be created")
-
-    def _assert_extra_move_created(self, picking):
-        """Helper to assert that an extra move was created."""
-        self.assertEqual(
-            len(picking.move_ids),
-            2,
-            "Extra move should be created when feature is disabled",
-        )
-
     def _assert_lot_information_preserved(self, move, lot):
         """Helper to assert that lot information is preserved."""
         self.assertEqual(
@@ -159,7 +147,9 @@ class TestStockMoveDisableExtra(TransactionCase):
         self.picking.button_validate()
 
         # Assert
-        self._assert_no_extra_move_created(self.picking)
+        self.assertEqual(
+            len(self.picking.move_ids), 1, "Extra move should not be created"
+        )
         self.assertEqual(
             self.move.product_uom_qty, 10, "Move quantity should remain unchanged"
         )
@@ -181,7 +171,11 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal.button_validate()
 
         # Assert
-        self._assert_extra_move_created(picking_normal)
+        self.assertEqual(
+            len(picking_normal.move_ids),
+            2,
+            "Extra move should be created when feature is disabled",
+        )
 
         # Check that the original move keeps its original quantity
         original_move = picking_normal.move_ids.filtered(lambda m: m == move_normal)
