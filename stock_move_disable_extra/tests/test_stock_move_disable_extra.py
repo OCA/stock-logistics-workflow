@@ -16,46 +16,45 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-    def setUp(self):
-        super().setUp()
-
         # Create picking type with extra moves disabled
-        self.picking_type = self.env["stock.picking.type"].create(
+        cls.picking_type = cls.env["stock.picking.type"].create(
             {
                 "name": "Test Receipt Type",
                 "code": "incoming",
                 "sequence_code": "TEST",
                 "disable_extra_moves": True,
-                "warehouse_id": self.env.ref("stock.warehouse0").id,
-                "default_location_src_id": self.env.ref(
+                "warehouse_id": cls.env.ref("stock.warehouse0").id,
+                "default_location_src_id": cls.env.ref(
                     "stock.stock_location_suppliers"
                 ).id,
-                "default_location_dest_id": self.env.ref(
+                "default_location_dest_id": cls.env.ref(
                     "stock.stock_location_stock"
                 ).id,
             }
         )
 
-        # Create picking and move for the disabled extra moves test
-        self.picking, self.move = self._create_picking_and_move(
-            self.picking_type, "Test Move"
-        )
-
         # Create picking type with extra moves enabled (for normal behavior test)
-        self.picking_type_normal = self.env["stock.picking.type"].create(
+        cls.picking_type_normal = cls.env["stock.picking.type"].create(
             {
                 "name": "Test Receipt Type Normal",
                 "code": "incoming",
                 "sequence_code": "TESTN",
                 "disable_extra_moves": False,  # Extra moves enabled
-                "warehouse_id": self.env.ref("stock.warehouse0").id,
-                "default_location_src_id": self.env.ref(
+                "warehouse_id": cls.env.ref("stock.warehouse0").id,
+                "default_location_src_id": cls.env.ref(
                     "stock.stock_location_suppliers"
                 ).id,
-                "default_location_dest_id": self.env.ref(
+                "default_location_dest_id": cls.env.ref(
                     "stock.stock_location_stock"
                 ).id,
             }
+        )
+
+    def setUp(self):
+        super().setUp()
+        # Create picking and move for the disabled extra moves test
+        self.picking, self.move = self._create_picking_and_move(
+            self.picking_type, "Test Move"
         )
 
     def _create_lot(self, name):
