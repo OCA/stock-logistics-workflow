@@ -14,7 +14,6 @@ from ..exceptions import (
     NoPickingCandidateError,
     NoSuitableDeviceError,
     PickingCandidateNumberLineExceedError,
-    PickingSplitNotPossibleError,
 )
 
 _logger = logging.getLogger(__name__)
@@ -337,14 +336,10 @@ class MakePickingBatch(models.TransientModel):
             if self._is_picking_exceeding_limits(picking):
                 split_picking = self._split_first_picking_for_limit(picking)
                 if not split_picking:
-                    if raise_if_not_found:
-                        raise PickingSplitNotPossibleError(picking)
-                    _logger.debug(
-                        f"The picking {picking.name} could not be split "
-                        "for batch creation."
-                    )
-                    continue
-                selected_picking = split_picking
+                    # If the picking has only one move, it won't be split
+                    selected_picking = picking
+                else:
+                    selected_picking = split_picking
             else:
                 selected_picking = picking
             break
@@ -444,9 +439,11 @@ class MakePickingBatch(models.TransientModel):
             return self.env["stock.picking.batch"].browse()
         device = self._compute_device_to_use(first_picking)
         if not device:
-            if raise_if_not_possible:
-                raise NoSuitableDeviceError(pickings=first_picking)
-            return self.env["stock.picking.batch"].browse()
+            # A picking has been elected. If no device is suitable, use the
+            # last device. This can happen when the picking still exceeds the
+            # limits. Then the best device to use is the last done (that should
+            # be the biggest one).
+            device = self._get_sorted_devices()[-1]
         self._init_counters(first_picking, device)
         self._apply_limits()
         vals = self._create_batch_values()

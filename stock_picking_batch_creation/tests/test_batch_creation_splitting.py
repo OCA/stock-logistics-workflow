@@ -1,4 +1,5 @@
 # Copyright 2025 Camptocamp SA
+# Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 from .common import ClusterPickingCommonFeatures
@@ -10,7 +11,7 @@ class TestBatchCreationSplitting(ClusterPickingCommonFeatures):
         super().setUpClass()
 
     def test_batch_creation_one_pick_move_over_the_limit(self):
-        """Test splitting a picking when the first move exceed the weight limit."""
+        """Test splitting a picking when the first move exceeds a limit."""
         self.pick2.action_cancel()
         self.pick3.action_cancel()
         # Keep the picking 1 with one line and product 1
@@ -35,11 +36,10 @@ class TestBatchCreationSplitting(ClusterPickingCommonFeatures):
         )
         self.make_picking_batch.stock_device_type_ids = device
         batch = self.make_picking_batch._create_batch()
-        # There is no batch because the only picking could not be split
-        self.assertFalse(batch)
+        self.assertTrue(batch, "There should always be a batch")
 
     def test_batch_creation_move_over_the_limit_take_2nd_picking(self):
-        """Test splitting a picking when the first move exceed the weight limit."""
+        """Splitting is disabled, the first picking exceeding a limit is excluded."""
         self.pick3.action_cancel()
         # Keep the picking 1 with one line and product 1
         move = self.pick1.move_ids
@@ -54,7 +54,7 @@ class TestBatchCreationSplitting(ClusterPickingCommonFeatures):
         self.make_picking_batch.write(
             {
                 "maximum_number_of_preparation_lines": 2,
-                "split_picking_exceeding_limits": True,
+                "split_picking_exceeding_limits": False,
             }
         )
         device = self._create_device(
