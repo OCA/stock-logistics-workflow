@@ -42,13 +42,6 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-    def setUp(self):
-        super().setUp()
-        # Create picking and move for the disabled extra moves test
-        self.picking, self.move = self._create_picking_and_move(
-            self.picking_type, "Test Move"
-        )
-
     def _create_lot(self, name):
         """Helper to create a lot for the test product."""
         return self.env["stock.lot"].create(
@@ -68,32 +61,56 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
+    def _create_picking_and_move(self, picking_type, move_name):
+        """Helper to create a picking and move for the given picking type."""
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": picking_type.id,
+                "location_id": picking_type.default_location_src_id.id,
+                "location_dest_id": picking_type.default_location_dest_id.id,
+            }
+        )
+
+        move = self.env["stock.move"].create(
+            {
+                "name": move_name,
+                "product_id": self.product_lot.id,
+                "product_uom_qty": 10,
+                "product_uom": self.product_lot.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": picking_type.default_location_src_id.id,
+                "location_dest_id": picking_type.default_location_dest_id.id,
+            }
+        )
+
+        picking.action_confirm()
+        picking.action_assign()
+
+        return picking, move
+
     def test_extra_move_disabled_preserves_lot(self):
         """Test that when extra moves are disabled, lot information is preserved."""
 
         # Arrange
+        picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
         lot = self._create_lot("LOT001")
-        self._set_move_line_quantity(self.move, lot, 15)
+        self._set_move_line_quantity(move, lot, 15)
 
         # Act
-        self.picking.button_validate()
+        picking.button_validate()
 
         # Assert
+        self.assertEqual(len(picking.move_ids), 1, "Extra move should not be created")
         self.assertEqual(
-            len(self.picking.move_ids), 1, "Extra move should not be created"
+            move.product_uom_qty, 10, "Move quantity should remain unchanged"
         )
         self.assertEqual(
-            self.move.product_uom_qty, 10, "Move quantity should remain unchanged"
-        )
-        self.assertEqual(
-            self.move.move_line_ids.lot_id.id,
+            move.move_line_ids.lot_id.id,
             lot.id,
             "Lot information should be preserved",
         )
-        self.assertEqual(self.move.quantity, 15, "Quantity done should be preserved")
-        self.assertEqual(
-            self.move.excess_quantity, 5, "Excess quantity should be stored"
-        )
+        self.assertEqual(move.quantity, 15, "Quantity done should be preserved")
+        self.assertEqual(move.excess_quantity, 5, "Excess quantity should be stored")
 
     def test_extra_move_enabled_normal_behavior(self):
         """Test that when extra moves are enabled (default), normal behavior occurs."""
