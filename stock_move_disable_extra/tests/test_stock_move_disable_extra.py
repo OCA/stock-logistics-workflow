@@ -75,18 +75,22 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking.action_assign()
         return picking, move
 
+    def _create_test_lot(self, name):
+        """Helper to create a test lot for the test product."""
+        return self.env["stock.lot"].create(
+            {
+                "name": name,
+                "product_id": self.product_lot.id,
+                "company_id": self.env.company.id,
+            }
+        )
+
     def test_extra_move_disabled_preserves_lot(self):
         """Test that when extra moves are disabled, lot information is preserved."""
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        lot = self.env["stock.lot"].create(
-            {
-                "name": "TESTLOT001",
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
+        lot = self._create_test_lot("TESTLOT001")
         self._set_move_line_quantity(move, lot, 15)
 
         # Act
@@ -112,13 +116,7 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        lot = self.env["stock.lot"].create(
-            {
-                "name": "TESTLOT002",
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
+        lot = self._create_test_lot("TESTLOT002")
         self._set_move_line_quantity(move_normal, lot, 15)
 
         # Act
