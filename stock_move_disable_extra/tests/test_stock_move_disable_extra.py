@@ -77,17 +77,12 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking.action_assign()
         return picking, move
 
-    def _create_test_lot(self, name):
-        """Helper to get a test lot name (lot will be created automatically)."""
-        return name
-
     def test_extra_move_disabled_preserves_lot(self):
         """Test that when extra moves are disabled, lot information is preserved."""
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        lot_name = self._create_test_lot("TESTLOT001")
-        self._set_move_line_quantity(move, lot_name, 15)
+        self._set_move_line_quantity(move, "TESTLOT001", 15)
 
         # Act
         picking.button_validate()
@@ -112,8 +107,7 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        lot_name = self._create_test_lot("TESTLOT002")
-        self._set_move_line_quantity(move_normal, lot_name, 15)
+        self._set_move_line_quantity(move_normal, "TESTLOT002", 15)
 
         # Act
         picking_normal.button_validate()
