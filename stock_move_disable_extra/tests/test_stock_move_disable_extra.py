@@ -42,16 +42,6 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-    def _create_lot(self, name):
-        """Helper to create a lot for the test product."""
-        return self.env["stock.lot"].create(
-            {
-                "name": name,
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
-
     def _set_move_line_quantity(self, move, lot, quantity):
         """Helper to set the quantity and lot on a move line."""
         move.move_line_ids.write(
@@ -93,7 +83,13 @@ class TestStockMoveDisableExtra(TransactionCase):
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        lot = self._create_lot("LOT001")
+        lot = self.env["stock.lot"].create(
+            {
+                "name": "LOT001",
+                "product_id": self.product_lot.id,
+                "company_id": self.env.company.id,
+            }
+        )
         self._set_move_line_quantity(move, lot, 15)
 
         # Act
@@ -119,7 +115,13 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        lot = self._create_lot("LOT002")
+        lot = self.env["stock.lot"].create(
+            {
+                "name": "LOT002",
+                "product_id": self.product_lot.id,
+                "company_id": self.env.company.id,
+            }
+        )
         self._set_move_line_quantity(move_normal, lot, 15)
 
         # Act
