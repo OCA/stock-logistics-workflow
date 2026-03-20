@@ -42,15 +42,6 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-        # Create a test lot that can be reused
-        cls.test_lot = cls.env["stock.lot"].create(
-            {
-                "name": "TESTLOT001",
-                "product_id": cls.product_lot.id,
-                "company_id": cls.env.company.id,
-            }
-        )
-
     def _set_move_line_quantity(self, move, lot, quantity):
         """Helper to set the quantity and lot on a move line."""
         move.move_line_ids.write(
@@ -69,7 +60,6 @@ class TestStockMoveDisableExtra(TransactionCase):
                 "location_dest_id": picking_type.default_location_dest_id.id,
             }
         )
-
         move = self.env["stock.move"].create(
             {
                 "name": move_name,
@@ -81,10 +71,8 @@ class TestStockMoveDisableExtra(TransactionCase):
                 "location_dest_id": picking_type.default_location_dest_id.id,
             }
         )
-
         picking.action_confirm()
         picking.action_assign()
-
         return picking, move
 
     def test_extra_move_disabled_preserves_lot(self):
@@ -92,7 +80,14 @@ class TestStockMoveDisableExtra(TransactionCase):
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        self._set_move_line_quantity(move, self.test_lot, 15)
+        lot = self.env["stock.lot"].create(
+            {
+                "name": "TESTLOT001",
+                "product_id": self.product_lot.id,
+                "company_id": self.env.company.id,
+            }
+        )
+        self._set_move_line_quantity(move, lot, 15)
 
         # Act
         picking.button_validate()
@@ -117,7 +112,14 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        self._set_move_line_quantity(move_normal, self.test_lot, 15)
+        lot = self.env["stock.lot"].create(
+            {
+                "name": "TESTLOT002",
+                "product_id": self.product_lot.id,
+                "company_id": self.env.company.id,
+            }
+        )
+        self._set_move_line_quantity(move_normal, lot, 15)
 
         # Act
         picking_normal.button_validate()
