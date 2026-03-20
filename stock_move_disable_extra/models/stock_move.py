@@ -29,7 +29,11 @@ class StockMove(models.Model):
             ):
                 excess = self.quantity - self.product_uom_qty
                 self.excess_quantity = excess
-            # Return self instead of creating extra move
+                # Return empty recordset to prevent extra move creation
+                # but excess quantity is stored on the original move
+                return self.browse()
+
+            # No excess quantity, return self as normal
             return self
 
         # Use the original logic if extra moves are not disabled
