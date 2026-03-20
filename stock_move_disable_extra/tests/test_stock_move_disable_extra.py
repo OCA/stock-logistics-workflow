@@ -5,17 +5,19 @@ from odoo.tests.common import TransactionCase
 
 
 class TestStockMoveDisableExtra(TransactionCase):
-    def setUp(self):
-        super().setUp()
-
-        # Create products with lot tracking
-        self.product_lot = self.env["product.product"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_lot = cls.env["product.product"].create(
             {
-                "name": "Product with Lot",
+                "name": "Product with Lot Tracking",
                 "type": "product",
                 "tracking": "lot",
             }
         )
+
+    def setUp(self):
+        super().setUp()
 
         # Create picking type with extra moves disabled
         self.picking_type = self.env["stock.picking.type"].create(
@@ -34,30 +36,10 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-        # Create a receipt
-        self.picking = self.env["stock.picking"].create(
-            {
-                "picking_type_id": self.picking_type.id,
-                "location_id": self.env.ref("stock.stock_location_suppliers").id,
-                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
-            }
+        # Create picking and move for the disabled extra moves test
+        self.picking, self.move = self._create_picking_and_move(
+            self.picking_type, "Test Move"
         )
-
-        # Create move
-        self.move = self.env["stock.move"].create(
-            {
-                "name": "Test Move",
-                "product_id": self.product_lot.id,
-                "product_uom_qty": 10,
-                "product_uom": self.product_lot.uom_id.id,
-                "picking_id": self.picking.id,
-                "location_id": self.env.ref("stock.stock_location_suppliers").id,
-                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
-            }
-        )
-
-        self.picking.action_confirm()
-        self.picking.action_assign()
 
         # Create picking type with extra moves enabled (for normal behavior test)
         self.picking_type_normal = self.env["stock.picking.type"].create(
@@ -75,33 +57,6 @@ class TestStockMoveDisableExtra(TransactionCase):
                 ).id,
             }
         )
-
-    def _create_picking_and_move(self, picking_type, move_name="Test Move"):
-        """Helper to create a picking and move for the given picking type."""
-        picking = self.env["stock.picking"].create(
-            {
-                "picking_type_id": picking_type.id,
-                "location_id": self.env.ref("stock.stock_location_suppliers").id,
-                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
-            }
-        )
-
-        move = self.env["stock.move"].create(
-            {
-                "name": move_name,
-                "product_id": self.product_lot.id,
-                "product_uom_qty": 10,
-                "product_uom": self.product_lot.uom_id.id,
-                "picking_id": picking.id,
-                "location_id": self.env.ref("stock.stock_location_suppliers").id,
-                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
-            }
-        )
-
-        picking.action_confirm()
-        picking.action_assign()
-
-        return picking, move
 
     def _create_lot(self, name):
         """Helper to create a lot for the test product."""
