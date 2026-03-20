@@ -16,13 +16,13 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-        # Create picking type with extra moves disabled
-        cls.picking_type = cls.env["stock.picking.type"].create(
+        # Create normal picking type (extra moves enabled by default)
+        cls.picking_type_normal = cls.env["stock.picking.type"].create(
             {
-                "name": "Test Receipt Type",
+                "name": "Test Receipt Type Normal",
                 "code": "incoming",
-                "sequence_code": "TEST",
-                "disable_extra_moves": True,
+                "sequence_code": "TESTN",
+                "disable_extra_moves": False,
                 "warehouse_id": cls.env.ref("stock.warehouse0").id,
                 "default_location_src_id": cls.env.ref(
                     "stock.stock_location_suppliers"
@@ -33,20 +33,12 @@ class TestStockMoveDisableExtra(TransactionCase):
             }
         )
 
-        # Create picking type with extra moves enabled (for normal behavior test)
-        cls.picking_type_normal = cls.env["stock.picking.type"].create(
+        # Create picking type with extra moves disabled by copying the normal one
+        cls.picking_type = cls.picking_type_normal.copy(
             {
-                "name": "Test Receipt Type Normal",
-                "code": "incoming",
-                "sequence_code": "TESTN",
-                "disable_extra_moves": False,  # Extra moves enabled
-                "warehouse_id": cls.env.ref("stock.warehouse0").id,
-                "default_location_src_id": cls.env.ref(
-                    "stock.stock_location_suppliers"
-                ).id,
-                "default_location_dest_id": cls.env.ref(
-                    "stock.stock_location_stock"
-                ).id,
+                "name": "Test Receipt Type",
+                "sequence_code": "TEST",
+                "disable_extra_moves": True,
             }
         )
 
