@@ -19,7 +19,6 @@ class StockMove(models.Model):
         """
         # Check if extra moves are disabled for this picking type
         if self.picking_id and self.picking_id.picking_type_id.disable_extra_moves:
-            # Store the excess quantity if any
             rounding = self.product_uom.rounding
             if (
                 float_compare(
