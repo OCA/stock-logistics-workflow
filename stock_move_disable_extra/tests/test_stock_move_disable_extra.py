@@ -30,6 +30,7 @@ class TestStockMoveDisableExtra(TransactionCase):
                 "default_location_dest_id": cls.env.ref(
                     "stock.stock_location_stock"
                 ).id,
+                "use_existing_lots": False,  # Allow automatic lot creation
             }
         )
 
@@ -39,14 +40,15 @@ class TestStockMoveDisableExtra(TransactionCase):
                 "name": "Test Receipt Type",
                 "sequence_code": "TEST",
                 "disable_extra_moves": True,
+                "use_existing_lots": False,  # Allow automatic lot creation
             }
         )
 
-    def _set_move_line_quantity(self, move, lot, quantity):
-        """Helper to set the quantity and lot on a move line."""
+    def _set_move_line_quantity(self, move, lot_name, quantity):
+        """Helper to set the quantity and lot name on a move line."""
         move.move_line_ids.write(
             {
-                "lot_id": lot.id,
+                "lot_name": lot_name,
                 "quantity": quantity,
             }
         )
@@ -76,22 +78,16 @@ class TestStockMoveDisableExtra(TransactionCase):
         return picking, move
 
     def _create_test_lot(self, name):
-        """Helper to create a test lot for the test product."""
-        return self.env["stock.lot"].create(
-            {
-                "name": name,
-                "product_id": self.product_lot.id,
-                "company_id": self.env.company.id,
-            }
-        )
+        """Helper to get a test lot name (lot will be created automatically)."""
+        return name
 
     def test_extra_move_disabled_preserves_lot(self):
         """Test that when extra moves are disabled, lot information is preserved."""
 
         # Arrange
         picking, move = self._create_picking_and_move(self.picking_type, "Test Move")
-        lot = self._create_test_lot("TESTLOT001")
-        self._set_move_line_quantity(move, lot, 15)
+        lot_name = self._create_test_lot("TESTLOT001")
+        self._set_move_line_quantity(move, lot_name, 15)
 
         # Act
         picking.button_validate()
@@ -102,9 +98,9 @@ class TestStockMoveDisableExtra(TransactionCase):
             move.product_uom_qty, 10, "Move quantity should remain unchanged"
         )
         self.assertEqual(
-            move.move_line_ids.lot_id.id,
-            self.test_lot.id,
-            "Lot information should be preserved",
+            move.move_line_ids.lot_name,
+            "TESTLOT001",
+            "Lot name should be preserved",
         )
         self.assertEqual(move.quantity, 15, "Quantity done should be preserved")
         self.assertEqual(move.excess_quantity, 5, "Excess quantity should be stored")
@@ -116,8 +112,8 @@ class TestStockMoveDisableExtra(TransactionCase):
         picking_normal, move_normal = self._create_picking_and_move(
             self.picking_type_normal, "Test Move Normal"
         )
-        lot = self._create_test_lot("TESTLOT002")
-        self._set_move_line_quantity(move_normal, lot, 15)
+        lot_name = self._create_test_lot("TESTLOT002")
+        self._set_move_line_quantity(move_normal, lot_name, 15)
 
         # Act
         picking_normal.button_validate()
