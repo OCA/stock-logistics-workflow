@@ -1,7 +1,8 @@
 # Copyright 2019 Sergio Teruel - Tecnativa <sergio.teruel@tecnativa.com>
 # Copyright 2023 Moduon Team - Eduardo de Miguel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-from odoo.addons.stock_picking_batch_extended_account.tests import (
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+from odoo.addons.stock_picking_batch_account.tests import (
     test_stock_picking_batch_extended_account as test_bp_account,
 )
 
@@ -12,15 +13,6 @@ class TestStockPickingBatchExtendedAccountSaleType(
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
         cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.sale_type = cls.env["sale.order.type"].create(
             {"name": "sale type for tests", "batch_picking_auto_invoice": True}
@@ -39,7 +31,7 @@ class TestStockPickingBatchExtendedAccountSaleType(
         self.order2.action_confirm()
         pickings = self.order1.picking_ids + self.order2.picking_ids
         move_lines = pickings.mapped("move_line_ids")
-        move_lines.qty_done = 1.0
+        move_lines.quantity = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
         action_done_res = bp.action_done()
