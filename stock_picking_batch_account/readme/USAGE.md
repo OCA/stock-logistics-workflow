@@ -1,6 +1,6 @@
 To use this module, you need to:
 
-1.  Go to *Inventory \> Batch Picking*.
+1.  Go to *Inventory \> Operations \> Batch Transfers*.
 2.  Create a new batch and add some pickings such that their partners
     have the option 'Batch picking auto invoice' checked (See
     configuration section). Make sure the selected pickings are linked

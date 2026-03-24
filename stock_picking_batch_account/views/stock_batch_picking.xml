@@ -9,7 +9,7 @@
                     name="action_print_invoices"
                     string="Print Invoices"
                     type="object"
-                    attrs="{'invisible': [('state', 'in', ['draft','in_progress','assigned'])]}"
+                    invisible="state in ['draft','in_progress','assigned']"
                 />
             </xpath>
         </field>

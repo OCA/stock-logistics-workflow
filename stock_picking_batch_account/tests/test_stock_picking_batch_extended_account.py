@@ -3,37 +3,23 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from odoo.tests import Form, TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestStockPickingBatchExtendedAccount(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-        DISABLED_MAIL_CONTEXT = {
-            "tracking_disable": True,
-            "mail_create_nolog": True,
-            "mail_create_nosubscribe": True,
-            "mail_notrack": True,
-            "no_reset_password": True,
-        }
         cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.SaleOrder = cls.env["sale.order"]
         cls.product_uom_id = cls.env.ref("uom.product_uom_unit")
         cls.stock_loc = cls.browse_ref(cls, "stock.stock_location_stock")
-        cls.currency_usd = cls.env.ref("base.USD")
-        cls.currency_usd.active = True
-        # Make sure the currency of the company is USD, as this not always happens
-        # To be removed in V17: https://github.com/odoo/odoo/pull/107113
         cls.company = cls.env.company
-        cls.env.cr.execute(
-            "UPDATE res_company SET currency_id = %s WHERE id = %s",
-            [cls.currency_usd.id, cls.company.id],
-        )
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "list_price": 20.00,
                 "invoice_policy": "delivery",
             }
@@ -96,7 +82,7 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         self.order2.action_confirm()
         pickings = self.order1.picking_ids + self.order2.picking_ids
         move_lines = pickings.mapped("move_line_ids")
-        move_lines.qty_done = 1.0
+        move_lines.quantity = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
         action_done_res = bp.action_done()
@@ -114,7 +100,7 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         self.order2.action_confirm()
         pickings = self.order1.picking_ids + self.order2.picking_ids
         move_lines = pickings.mapped("move_line_ids")
-        move_lines.qty_done = 1.0
+        move_lines.quantity = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
         action_done_res = bp.action_done()
@@ -132,7 +118,7 @@ class TestStockPickingBatchExtendedAccount(TransactionCase):
         self.order2.action_confirm()
         pickings = self.order1.picking_ids + self.order2.picking_ids
         move_lines = pickings.mapped("move_line_ids")
-        move_lines.qty_done = 1.0
+        move_lines.quantity = 1.0
         bp = self._create_batch_picking(pickings)
         bp.action_assign()
         action_done_res = bp.action_done()

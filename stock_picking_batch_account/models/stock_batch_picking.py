@@ -1,6 +1,6 @@
 # Copyright 2020 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import UserError
 
 
@@ -10,7 +10,7 @@ class StockBatchPicking(models.Model):
     def action_print_invoices(self):
         invoices = self.mapped("picking_ids.sale_id.invoice_ids")
         if not invoices:
-            raise UserError(_("Nothing to print."))
+            raise UserError(self.env._("Nothing to print."))
         report = self.env.ref("account.account_invoices_without_payment")
         return report.report_action(invoices)
 
