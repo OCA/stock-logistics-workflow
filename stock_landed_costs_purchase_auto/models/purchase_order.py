@@ -15,10 +15,10 @@ class PurchaseOrder(models.Model):
 
     def _compute_landed_cost_number(self):
         domain = [("purchase_id", "in", self.ids)]
-        res = self.env["stock.landed.cost"].read_group(
-            domain=domain, fields=["purchase_id"], groupby=["purchase_id"]
+        groups = self.env["stock.landed.cost"]._read_group(
+            domain=domain, groupby=["purchase_id"], aggregates=["__count"]
         )
-        landed_cost_dict = {x["purchase_id"][0]: x["purchase_id_count"] for x in res}
+        landed_cost_dict = {purchase.id: count for purchase, count in groups}
         for item in self:
             item.landed_cost_number = landed_cost_dict.get(item.id, 0)
 
@@ -46,9 +46,7 @@ class PurchaseOrder(models.Model):
         for order in self:
             order_pickings = order.picking_ids - all_pickings
             if order_pickings:
-                order._create_picking_with_stock_landed_cost(
-                    fields.first(order_pickings)
-                )
+                order._create_picking_with_stock_landed_cost(order_pickings[:1])
         return res
 
     def action_view_stock_landed_cost(self):
@@ -68,7 +66,5 @@ class PurchaseOrderLine(models.Model):
         for order in self.mapped("order_id"):
             order_pickings = order.picking_ids - all_pickings
             if order_pickings:
-                order._create_picking_with_stock_landed_cost(
-                    fields.first(order_pickings)
-                )
+                order._create_picking_with_stock_landed_cost(order_pickings[:1])
         return res
