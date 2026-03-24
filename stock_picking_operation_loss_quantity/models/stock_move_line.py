@@ -147,7 +147,7 @@ class StockMoveLine(models.Model):
         loss_picking.action_assign()
         return loss_picking
 
-    def _release_unprocessed_qty(self) -> float:
+    def _unreserve_unprocessed_qty(self) -> float:
         self.ensure_one()
         unprocessed_qty = self.reserved_uom_qty - self.qty_done
         # Free the quantity that the operator was not able to do
@@ -175,7 +175,7 @@ class StockMoveLine(models.Model):
             )
             quants._lock_quants_for_loss()
 
-            unprocessed_qty = line._release_unprocessed_qty()
+            unprocessed_qty = line._unreserve_unprocessed_qty()
             loss_picking = line._create_loss_move_line(unprocessed_qty)
             loss_picking._schedule_loss_activity()
 
