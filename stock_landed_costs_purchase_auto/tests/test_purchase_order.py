@@ -27,7 +27,7 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         lc = self.order.landed_cost_ids
         picking = self.order.picking_ids
         self.assertIn(picking, lc.picking_ids)
-        for move in picking.move_ids_without_package:
+        for move in picking.move_ids:
             move.quantity = 1
         self._action_picking_validate(picking)
         self.assertEqual(len(self.order.landed_cost_ids), 2)
