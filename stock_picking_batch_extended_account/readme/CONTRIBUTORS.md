@@ -1,0 +1,7 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Ernesto Tejeda
+  - Pedro M. Baeza
+  - Carlos Dauden
+  - Sergio Teruel
+- [Moduon Team](https://www.moduon.team):
+  - Eduardo de Miguel
