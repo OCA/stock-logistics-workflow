@@ -20,5 +20,6 @@
         "views/stock_move_line.xml",
         "views/stock_warehouse.xml",
         "data/mail_activity_type.xml",
+        "views/stock_picking.xml",
     ],
 }

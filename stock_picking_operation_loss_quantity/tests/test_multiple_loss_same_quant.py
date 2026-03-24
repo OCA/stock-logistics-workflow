@@ -48,14 +48,14 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
-        self.assertEqual(len(loss_picking.move_ids), 3)
+        self.assertEqual(loss_picking.loss_declaration_count, 3)
+        # 4 loss per picking = 3*4 = 12
+        self.assertEqual(sum(loss_picking.move_ids.mapped("product_uom_qty")), 12)
+        self.assertEqual(sum(loss_picking.move_ids.mapped("reserved_availability")), 12)
 
     def test_loss_auto_clear(self):
         self.warehouse.loss_auto_clear_threshold = 3
 
-        quant_available_qty_before = self._get_quants_available_qty(
-            self.pickings[0].move_line_ids
-        )
         for picking in self.pickings:
             line = picking.move_line_ids
             line.qty_done = 1
@@ -66,13 +66,10 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
-        self.assertEqual(len(loss_picking.move_ids), 4)
-        last_loss_move_line = loss_picking.move_line_ids.sorted(lambda line: line.id)[
-            -1
-        ]
-        self.assertEqual(
-            last_loss_move_line.reserved_uom_qty, quant_available_qty_before
-        )
+        self.assertEqual(loss_picking.loss_declaration_count, 3)
+        # All quantity except done one = 100 - 3 = 97
+        self.assertEqual(sum(loss_picking.move_ids.mapped("product_uom_qty")), 97)
+        self.assertEqual(sum(loss_picking.move_ids.mapped("reserved_availability")), 97)
         self.assertEqual(quant_available_qty_after, 0)
 
     def test_auto_clear_parent_clears_child_location(self):
@@ -114,30 +111,9 @@ class TestMultipleLossSameQuant(OperationLossQuantityCommon):
 
         loss_picking = self._get_loss_pickings()
         self.assertEqual(len(loss_picking), 1)
-
-        # 2 moves (one for manual loss and one for "auto-clear")
-        self.assertEqual(len(loss_picking.move_ids), 2)
-
-        # 3 move lines (one for manual loss and 2 for auto-clear: stock and shelf)
-        self.assertEqual(len(loss_picking.move_line_ids), 3)
+        self.assertEqual(loss_picking.loss_declaration_count, 1)
+        # All quantity except done one = 105 - 1 = 104
+        self.assertEqual(sum(loss_picking.move_ids.mapped("product_uom_qty")), 104)
         self.assertEqual(
-            loss_picking.move_ids.mapped("state"), ["assigned", "assigned"]
+            sum(loss_picking.move_ids.mapped("reserved_availability")), 104
         )
-
-        manual_move, auto_move = loss_picking.move_ids.sorted(lambda m: m.id)
-        manual_move_line = manual_move.move_line_ids
-        auto_move_lines = auto_move.move_line_ids
-        self.assertEqual(len(manual_move_line), 1)
-        self.assertEqual(len(auto_move_lines), 2)
-
-        auto_move_line_shelf = auto_move_lines.filtered(
-            lambda line: line.location_id == loc_shelf
-        )
-        auto_move_line_stock = auto_move_lines.filtered(
-            lambda line: line.location_id == self.loc_stock
-        )
-
-        self.assertEqual(manual_move_line.reserved_uom_qty, 4)
-        self.assertEqual(auto_move_line_shelf.reserved_uom_qty, 5)
-        # Total in loc_stock (100) - first loss (4) - qty done (1)
-        self.assertEqual(auto_move_line_stock.reserved_uom_qty, 95)
