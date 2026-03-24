@@ -43,14 +43,12 @@ class StockMoveLine(models.Model):
             "lot_ids": [Command.set(self.lot_id.ids)] if self.lot_id else False,
         }
 
-    def _prepare_loss_picking_vals(self, new_loss_move_vals):
+    def _prepare_loss_picking_vals(self):
         loss_pick_type = self.location_id.warehouse_id.loss_type_id
         return {
             "picking_type_id": loss_pick_type.id,
             "location_id": self.location_id.id,
             "location_dest_id": loss_pick_type.default_location_dest_id.id,
-            "move_ids": [Command.create(new_loss_move_vals)],
-            "loss_declaration_count": 1,
         }
 
     def _find_loss_picking_moves_domain(self):
@@ -105,22 +103,19 @@ class StockMoveLine(models.Model):
                 _("You try to create a Loss picking without any loss quantity!")
             )
 
-        new_loss_move_vals = self._prepare_loss_move_vals(unprocessed_qty)
-
         # Search for an already existing LOSS picking for this quant
         loss_picking = self._find_loss_picking()
-
-        if loss_picking:
-            new_loss_move = self.env["stock.move"].create(
-                {**new_loss_move_vals, "picking_id": loss_picking.id}
-            )
-            new_loss_move._action_confirm()
-            loss_picking.loss_declaration_count += 1
-        else:
+        if not loss_picking:
             loss_picking = self.env["stock.picking"].create(
-                self._prepare_loss_picking_vals(new_loss_move_vals)
+                self._prepare_loss_picking_vals()
             )
-            loss_picking.move_ids._action_confirm()
+
+        new_loss_move_vals = self._prepare_loss_move_vals(unprocessed_qty)
+        new_loss_move = self.env["stock.move"].create(
+            {**new_loss_move_vals, "picking_id": loss_picking.id}
+        )
+        new_loss_move._action_confirm()
+        loss_picking.loss_declaration_count += 1
 
         if (
             self.location_id.warehouse_id.loss_auto_clear_threshold
@@ -142,7 +137,7 @@ class StockMoveLine(models.Model):
                         "picking_id": loss_picking.id,
                     }
                 )
-                new_loss_move._action_confirm(merge=False)
+                new_loss_move._action_confirm()
 
         loss_picking.action_assign()
         return loss_picking
