@@ -1,11 +1,24 @@
 # Copyright 2026 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import fields, models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
+
+    loss_declaration_count = fields.Integer(
+        string="Number of Loss Declarations", default=0, copy=False
+    )
+
+    is_loss_picking = fields.Boolean(compute="_compute_is_loss_picking")
+
+    def _compute_is_loss_picking(self):
+        for rec in self:
+            rec.is_loss_picking = (
+                self.picking_type_id.id
+                == self.picking_type_id.warehouse_id.loss_type_id.id
+            )
 
     def _schedule_loss_activity(self):
         self.ensure_one()

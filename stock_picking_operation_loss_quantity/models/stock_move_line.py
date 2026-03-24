@@ -50,6 +50,7 @@ class StockMoveLine(models.Model):
             "location_id": self.location_id.id,
             "location_dest_id": loss_pick_type.default_location_dest_id.id,
             "move_ids": [Command.create(new_loss_move_vals)],
+            "loss_declaration_count": 1,
         }
 
     def _find_loss_picking_moves_domain(self):
@@ -113,9 +114,8 @@ class StockMoveLine(models.Model):
             new_loss_move = self.env["stock.move"].create(
                 {**new_loss_move_vals, "picking_id": loss_picking.id}
             )
-            # Use merge = False so that the number of move lines = the number
-            # of loss declared for this quant
-            new_loss_move._action_confirm(merge=False)
+            new_loss_move._action_confirm()
+            loss_picking.loss_declaration_count += 1
         else:
             loss_picking = self.env["stock.picking"].create(
                 self._prepare_loss_picking_vals(new_loss_move_vals)
@@ -124,7 +124,7 @@ class StockMoveLine(models.Model):
 
         if (
             self.location_id.warehouse_id.loss_auto_clear_threshold
-            and len(loss_picking.move_ids)
+            and loss_picking.loss_declaration_count
             >= self.location_id.warehouse_id.loss_auto_clear_threshold
         ):
             quants_available_quantity = self.env["stock.quant"]._get_available_quantity(
