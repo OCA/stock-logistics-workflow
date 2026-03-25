@@ -16,8 +16,8 @@ class StockPicking(models.Model):
     def _compute_is_loss_picking(self):
         for rec in self:
             rec.is_loss_picking = (
-                self.picking_type_id.id
-                == self.picking_type_id.warehouse_id.loss_type_id.id
+                rec.picking_type_id.id
+                == rec.picking_type_id.warehouse_id.loss_type_id.id
             )
 
     def _schedule_loss_activity(self):
