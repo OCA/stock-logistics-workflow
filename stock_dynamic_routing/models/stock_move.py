@@ -230,7 +230,7 @@ class StockMove(models.Model):
                 # NOTE: starting from Odoo 18.0, '_split' method doesn't check
                 # anymore the move quantity against the qty to split, and performs
                 # a split in all cases, letting an empty move behind. Avoid this.
-                new_move_vals = []
+                new_move_vals_list = []
                 if (
                     float_compare(
                         move.product_qty,
@@ -239,12 +239,18 @@ class StockMove(models.Model):
                     )
                     == 1
                 ):
-                    new_move_vals = move.with_context(bypass_log_message=True)._split(
-                        qty
+                    new_move_vals_list = move.with_context(
+                        bypass_log_message=True
+                    )._split(qty)
+                if new_move_vals_list:
+                    confirm_dict = dict(
+                        state=move.state, reservation_date=move.reservation_date
                     )
-                if new_move_vals:
-                    new_move = self.env["stock.move"].create(new_move_vals)
-                    new_move._action_confirm(merge=False)
+                    [d.update(confirm_dict) for d in new_move_vals_list]
+                    # Only create the move, do not call _action_confirm as
+                    # since Odoo 15.0, it calls _action_assign() or we only
+                    # want to split
+                    new_move = self.env["stock.move"].create(new_move_vals_list)
                 else:
                     # If no split occurred keep the current move
                     new_move = move
