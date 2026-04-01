@@ -91,7 +91,7 @@ class StockWarehouse(models.Model):
                     "sequence": next_sequence + 1,
                     "show_reserved": True,
                     "show_operations": True,
-                    "sequence_code": "LOS",
+                    "sequence_code": "LOSS",
                     "company_id": self.company_id.id,
                 }
             }
@@ -144,7 +144,10 @@ class StockWarehouse(models.Model):
             {
                 "loss_type_id": {
                     "name": name + " " + _("Loss Sequence"),
-                    "prefix": code + "/" + (self.loss_type_id.code or "LOSS") + "/",
+                    "prefix": code
+                    + "/"
+                    + (self.loss_type_id.sequence_code or "LOSS")
+                    + "/",
                     "padding": 5,
                     "company_id": self.company_id.id,
                 },
