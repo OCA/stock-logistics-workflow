@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="group_stock_reporting_user" model="res.groups">
+        <field name="name">Inventory Reporting Access</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('stock.group_stock_user'))]"
+        />
+    </record>
+</odoo>
