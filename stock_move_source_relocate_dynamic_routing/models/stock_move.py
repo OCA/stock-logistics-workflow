@@ -11,8 +11,14 @@ _logger = logging.getLogger(__name__)
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def _after_apply_source_relocate_rule(self):
-        super()._after_apply_source_relocate_rule()
-        result = self._chain_apply_routing()
-        _logger.debug("Dynamic routing applied on relocated moves %s", self.ids)
-        return result
+    def _after_apply_dynamic_routing_rule(self):
+        self._apply_source_relocate()
+        return self.with_context(exclude_apply_source_relocate=True)
+
+    def _after_apply_source_relocate_rule(self, merge=True):
+        # Apply dynamic routing on relocated move to potentially route it in
+        # another picking
+        _logger.debug(f"Apply dynamic routing on relocated moves {self}")
+        self._chain_apply_routing()
+        super()._after_apply_source_relocate_rule(merge=merge)
+        return
