@@ -14,61 +14,45 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _action_assign(self, force_qty=False):
-        unconfirmed_moves = self.filtered(
-            lambda m: m.state in ["confirmed", "partially_available"]
-        )
-        result = super()._action_assign(force_qty=force_qty)
-        # could not be (entirely) reserved
-        unconfirmed_moves = unconfirmed_moves.filtered(
-            lambda m: m.state in ["confirmed", "partially_available"]
-        )
-        if unconfirmed_moves:
-            unconfirmed_moves._apply_source_relocate()
-        return result
+        super()._action_assign(force_qty=force_qty)
+        if not self.env.context.get("exclude_apply_source_relocate"):
+            self._apply_source_relocate()
+        return
 
     def _apply_source_relocate(self):
-        """Apply relocation rules.
-
-        Returns the recordset of confirmed and partially available moves
-        """
-        # Read the `quantity` field of the moves out of the loop
-        # to prevent unwanted cache invalidation when actually reserving.
-        quantity = {move: move.quantity for move in self}
-        roundings = {move: move.product_id.uom_id.rounding for move in self}
-        relocated_ids = []
-        _logger.debug(
-            f"Try to relocate moves of operation type ("
-            f"{', '.join(self.picking_type_id.mapped('name'))})"
-        )
-        res_ids = []
+        """Apply relocation rules."""
+        relocated_moves = self.browse()
         for move in self:
+            if move.state not in ["confirmed", "partially_available"]:
+                continue
+            if move.picked or move.picking_id.printed:
+                continue
             # We don't need to ignore moves with "_should_bypass_reservation()
             # is True" because they are reserved at this point.
             relocation = self.env["stock.source.relocate"]._rule_for_move(move)
             if not relocation or relocation.relocate_location_id == move.location_id:
-                res_ids.append(move.id)
                 continue
-            relocated = move._apply_source_relocate_rule(
-                relocation, quantity, roundings
-            )
+            relocated = move._apply_source_relocate_rule(relocation)
             if relocated:
-                relocated_ids.append(relocated.id)
-                res_ids.append(relocated.id)
-            else:
-                res_ids.append(move.id)
-        if relocated_ids:
-            _logger.debug(f"Relocated moves {relocated_ids}")
-            self.browse(relocated_ids)._after_apply_source_relocate_rule()
-        return self.browse(res_ids)
+                relocated_moves |= relocated
+        if relocated_moves:
+            relocated_moves._after_apply_source_relocate_rule()
 
-    def _apply_source_relocate_rule(self, relocation, quantity, roundings):
+    def _apply_source_relocate_rule(self, relocation):
+        """Perform the source location relocation.
+
+        Returns the relocated move.
+        """
         self.ensure_one()
-        rounding = roundings[self]
-        qty_reserved = quantity[self]
+        _logger.debug(
+            f"Relocate {self} of operation type {self.picking_type_id.name} "
+            f"to source location {relocation.relocate_location_id.display_name}"
+        )
+        rounding = self.product_uom.rounding
+        qty_reserved = self.quantity
+
         if float_compare(qty_reserved, 0, precision_rounding=rounding) == 0:
-            # nothing could be reserved, however, we want to source the
-            # move on the specific relocation (for replenishment), so
-            # update it's source location
+            # Nothing is reserved, modify the move
             self.location_id = relocation.relocate_location_id
             # Do not call _action_confirm on a split moves inside _action_assign
             return self
@@ -80,6 +64,7 @@ class StockMove(models.Model):
             rounding_method="HALF-UP",
         )
         if float_compare(need, 0, precision_rounding=rounding) <= 0:
+            # Everything is reserved (shouldn't happen), do nothing
             return self.env["stock.move"].browse()
 
         # A part of the quantity could be reserved in the original
