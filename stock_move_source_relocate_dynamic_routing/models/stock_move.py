@@ -12,7 +12,7 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _after_apply_dynamic_routing_rule(self):
-        self._apply_source_relocate()
+        self.with_context(bypass_log_message=True)._apply_source_relocate()
         return self.with_context(exclude_apply_source_relocate=True)
 
     def _after_apply_source_relocate_rule(self, merge=True):
