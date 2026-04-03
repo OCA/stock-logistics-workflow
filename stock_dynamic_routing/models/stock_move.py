@@ -231,7 +231,9 @@ class StockMove(models.Model):
                     )
                     == 1
                 ):
-                    new_move_vals_list = move._split(qty)
+                    new_move_vals_list = move.with_context(bypass_log_message=True)._split(
+                        qty
+                    )
                 if new_move_vals_list:
                     confirm_dict = dict(
                         state=move.state, reservation_date=move.reservation_date
