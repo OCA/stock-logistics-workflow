@@ -40,12 +40,39 @@ Handle variable done quantity in multi-step deliveries.
 .. contents::
    :local:
 
-Known issues / Roadmap
-======================
+Use Cases / Context
+===================
 
-- Detect what's a backorder and what's not...
-- Add setting at picking type (maybe we don't want this behavior all the
-  time)
+In multi-step deliveries that use pull rules, validating an upstream
+picking with a quantity different from the initial demand does not
+automatically propagate that variance to the next delivery step.
+
+As a result, the downstream moves can keep the original demanded
+quantity even though the previous operation was completed with a lower
+or higher actual quantity.
+
+This module keeps the sale flow aligned by updating the related sale
+order line, so the following pull-generated moves are recomputed with
+the processed quantity.
+
+Configuration
+=============
+
+To enable the feature, go to *Inventory > Configuration > Operation
+Types* and open the picking type used for the upstream step of the
+delivery flow, such as *Pick* in a *Pick + Ship* route.
+
+Enable the *Variable Sale Quantity* option on that operation type.
+
+Usage
+=====
+
+When the *Variable Sale Quantity* option is enabled on a picking type,
+validate that operation with the actual processed quantity.
+
+If the validated quantity differs from the original demand, the module
+updates the linked sale order line and the downstream delivery moves to
+match that new quantity.
 
 Bug Tracker
 ===========
