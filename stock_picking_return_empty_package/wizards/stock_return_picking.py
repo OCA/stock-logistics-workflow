@@ -8,12 +8,8 @@ from odoo import models
 class StockReturnPicking(models.TransientModel):
     _inherit = "stock.return.picking"
 
-    def create_returns(self):
-        res = super().create_returns()
-        new_picking_id = res.get("res_id")
+    def _create_return(self):
+        return_picking = super()._create_return()
         if self.picking_id.picking_type_id.empty_package_at_return:
-            move_lines = self.env["stock.move.line"].search(
-                [("picking_id", "=", new_picking_id)]
-            )
-            move_lines.result_package_id = False
-        return res
+            return_picking.move_line_ids.result_package_id = False
+        return return_picking

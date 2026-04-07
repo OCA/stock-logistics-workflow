@@ -2,15 +2,17 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+from odoo.tests.common import TransactionCase
 
 
 class TestEmptyPackageAtPickingReturn(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product = cls.env["product.product"].create(
-            {"name": "Product 1", "type": "product"}
+            {"name": "Product 1", "type": "consu", "is_storable": True}
         )
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.loc_stock = cls.warehouse.lot_stock_id
@@ -40,7 +42,7 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
         )
         cls.picking.action_confirm()
         cls.picking.action_assign()
-        cls.picking.action_set_quantities_to_reservation()
+        cls.picking.move_ids.picked = True
         cls.picking._put_in_pack(cls.picking.move_line_ids)
         cls.picking._action_done()
 
@@ -55,7 +57,7 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
         )
         wizard = stock_form.save()
         wizard.product_return_moves.write({"quantity": quantity})
-        res = wizard.create_returns()
+        res = wizard.action_create_returns()
         return cls.env["stock.picking"].browse(res["res_id"])
 
     def test_00(self):
@@ -66,7 +68,7 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
         )
         return_picking = self._return_picking(self.picking, 10)
         self.assertTrue(return_picking.move_line_ids.result_package_id)
-        return_picking.action_set_quantities_to_reservation()
+        return_picking.move_ids.picked = True
         return_picking._action_done()
         quant = (
             self.product.stock_quant_ids.filtered(
@@ -81,7 +83,7 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
         self.pick_type.empty_package_at_return = True
         return_picking = self._return_picking(self.picking, 10)
         self.assertFalse(return_picking.move_line_ids.result_package_id)
-        return_picking.action_set_quantities_to_reservation()
+        return_picking.move_ids.picked = True
         return_picking._action_done()
         quant = self.product.stock_quant_ids.filtered(
             lambda q, loc=self.loc_stock: q.location_id == loc
