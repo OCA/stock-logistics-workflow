@@ -110,6 +110,9 @@ class TestSourceRelocate(SourceRelocateCommon):
 
         self.assertEqual(pick_move.state, "assigned")
         self.assertEqual(pick_move.product_uom_qty, 5)
+        replenish_move = replenish_move.search(
+            [("location_id", "=", self.loc_replenish.id), ("group_id", "=", group.id)]
+        )
         self.assertEqual(replenish_move.state, "confirmed")
         self.assertEqual(replenish_move.product_uom_qty, 15)
 

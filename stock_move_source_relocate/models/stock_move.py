@@ -70,7 +70,7 @@ class StockMove(models.Model):
             # move on the specific relocation (for replenishment), so
             # update it's source location
             self.location_id = relocation.relocate_location_id
-            self._action_confirm(merge=True)
+            # Do not call _action_confirm on a split moves inside _action_assign
             return self
 
         missing_reserved_uom_quantity = self.product_uom_qty - qty_reserved
@@ -88,9 +88,17 @@ class StockMove(models.Model):
         move_vals_list = self._split(need)
         for move_vals in move_vals_list:
             move_vals["location_id"] = relocation.relocate_location_id.id
-        new_move = self.create(move_vals_list)
-        return new_move._action_confirm()
+            # Do not call _action_confirm on a split moves inside _action_assign
+            move_vals["state"] = "confirmed"
+            move_vals["reservation_date"] = self.reservation_date
+        return self.create(move_vals_list)
 
-    def _after_apply_source_relocate_rule(self):
-        # Hook for stock_dynamic_routing
-        return
+    def _after_apply_source_relocate_rule(self, merge=True):
+        if merge:
+            _logger.debug("Try to merge relocated moves")
+            # When the unassigned move is relocated in the same picking as the
+            # assigned move, merge back the assigned move into the relocated
+            # moves. Ensure the current move does not disappear as we are
+            # inside _action_assign
+            for moves in self.grouped("picking_id").values():
+                (moves.picking_id.move_ids - moves)._merge_moves(merge_into=moves)
