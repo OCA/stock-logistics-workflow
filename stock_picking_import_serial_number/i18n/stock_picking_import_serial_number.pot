@@ -179,3 +179,8 @@ msgstr ""
 msgid ""
 "You only can import S/N for picking operations with creation lots checked"
 msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "s"
+msgstr ""
