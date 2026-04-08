@@ -19,12 +19,12 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
-"<h2>Pull rules:</h2>When a move with operation type <strong>{routing."
-"picking_type_id.display_name}</strong> has a source location "
-"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
-"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
+"<h2>Pull rules:</h2>When a move with operation type "
+"<strong>{routing.picking_type_id.display_name}</strong> has a source "
+"location <strong>{routing.location_id.display_name}</strong> (or a sub-"
+"location), one of these rules can apply (depending of their domain):"
+"<ul>{rule_messages}</ul>"
 msgstr ""
 "<h2>Regole di richiamo:</h2>Quando una operazione con tipo operazione "
 "<strong>{routing.picking_type_id.display_name}</strong> ha ubicazione di "
@@ -35,12 +35,12 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
-"<h2>Push rules:</h2>When a move with operation type <strong>{routing."
-"picking_type_id.display_name}</strong> has a destination location "
-"<strong>{routing.location_id.display_name}</strong> (or a sub-location), one "
-"of these rules can apply (depending of their domain):<ul>{rule_messages}</ul>"
+"<h2>Push rules:</h2>When a move with operation type "
+"<strong>{routing.picking_type_id.display_name}</strong> has a destination "
+"location <strong>{routing.location_id.display_name}</strong> (or a sub-"
+"location), one of these rules can apply (depending of their domain):"
+"<ul>{rule_messages}</ul>"
 msgstr ""
 "<h2>Regole di invio:</h2>Quando una operazione con tipo operazione "
 "<strong>{routing.picking_type_id.display_name}</strong> ha una ubicazione di "
@@ -137,70 +137,65 @@ msgstr "ID"
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
-"If the destination of the move is already <strong>{rule.location_dest_id."
-"display_name}</strong>, the operation type of the move is changed to "
+"If the destination of the move is already "
+"<strong>{rule.location_dest_id.display_name}</strong>, the operation type of "
+"the move is changed to <strong>{rule.picking_type_id.display_name}</strong>."
+"<br/>If the destination of the move is a parent location of  "
+"<strong>{rule.location_dest_id.display_name}</strong>, the destination is "
+"set to <strong>{rule.location_dest_id.display_name}</strong>  and the "
+"operation type of the move is changed to "
 "<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the destination "
-"of the move is a parent location of  <strong>{rule.location_dest_id."
-"display_name}</strong>, the destination is set to <strong>{rule."
-"location_dest_id.display_name}</strong>  and the operation type of the move "
-"is changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If "
-"the destination of the move is unrelated to  <strong>{rule.location_dest_id."
-"display_name}</strong>, a new move is added before, from <strong>{rule."
-"location_src_id.display_name}</strong> to  <strong>{rule.location_dest_id."
-"display_name}</strong>, using the operation type  <strong>{rule."
-"picking_type_id.display_name}</strong>."
+"of the move is unrelated to  <strong>{rule.location_dest_id.display_name}</"
+"strong>, a new move is added before, from "
+"<strong>{rule.location_src_id.display_name}</strong> to  "
+"<strong>{rule.location_dest_id.display_name}</strong>, using the operation "
+"type  <strong>{rule.picking_type_id.display_name}</strong>."
 msgstr ""
-"Se la destinazione del movimento è già <strong>{rule.location_dest_id."
-"display_name}</strong>, il tipo operazione del movimento è modificato in "
+"Se la destinazione del movimento è già "
+"<strong>{rule.location_dest_id.display_name}</strong>, il tipo operazione "
+"del movimento è modificato in <strong>{rule.picking_type_id.display_name}</"
+"strong>.<br/>Se la destinazione del movimento è una ubicazione padre di   "
+"<strong>{rule.location_dest_id.display_name}</strong>, la destinazione è "
+"impostata a <strong>{rule.location_dest_id.display_name}</strong>  e il tipo "
+"operazione del movimento è modificato in "
 "<strong>{rule.picking_type_id.display_name}</strong>.<br/>Se la destinazione "
-"del movimento è una ubicazione padre di   <strong>{rule.location_dest_id."
-"display_name}</strong>, la destinazione è impostata a <strong>{rule."
-"location_dest_id.display_name}</strong>  e il tipo operazione del movimento "
-"è modificato in <strong>{rule.picking_type_id.display_name}</strong>.<br/>Se "
-"la destinazione del movimento non è relativa a  <strong>{rule."
-"location_dest_id.display_name}</strong>, viene aggiunto prima un movimento, "
-"da <strong>{rule.location_src_id.display_name}</strong> a  <strong>{rule."
-"location_dest_id.display_name}</strong>, utilizzando il tipo operazione  "
-"<strong>{rule.picking_type_id.display_name}</strong>."
+"del movimento non è relativa a  <strong>{rule.location_dest_id.display_name}"
+"</strong>, viene aggiunto prima un movimento, da "
+"<strong>{rule.location_src_id.display_name}</strong> a  "
+"<strong>{rule.location_dest_id.display_name}</strong>, utilizzando il tipo "
+"operazione  <strong>{rule.picking_type_id.display_name}</strong>."
 
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing.py:0
-#, python-format
 msgid ""
-"If the source of the move is already <strong>{rule.location_src_id."
-"display_name}</strong> or a sub-location, the operation type of the move is "
-"changed to <strong>{rule.picking_type_id.display_name}</strong>.<br/>If the "
-"source of the move is outside or a parent location of  <strong>{rule."
-"location_dest_id.display_name}</strong>, the destination of the move is set "
-"to  <strong>{rule.location_src_id.display_name}</strong>,  a new move is "
-"added after it, from <strong>{rule.location_src_id.display_name}</strong> "
-"to  <strong>{rule.location_dest_id.display_name}</strong> using the "
-"operation type  <strong>{rule.picking_type_id.display_name}</strong>."
+"If the source of the move is already "
+"<strong>{rule.location_src_id.display_name}</strong> or a sub-location, the "
+"operation type of the move is changed to "
+"<strong>{rule.picking_type_id.display_name}</strong>.<br/>If the source of "
+"the move is outside or a parent location of  "
+"<strong>{rule.location_dest_id.display_name}</strong>, the destination of "
+"the move is set to  <strong>{rule.location_src_id.display_name}</strong>,  a "
+"new move is added after it, from <strong>{rule.location_src_id.display_name}"
+"</strong> to  <strong>{rule.location_dest_id.display_name}</strong> using "
+"the operation type  <strong>{rule.picking_type_id.display_name}</strong>."
 msgstr ""
 "Se l'origine del movimento è già <strong>{rule.location_src_id.display_name}"
 "</strong> o una sottoubicazione, il tipo operazione del movimento viene "
 "cambiato in <strong>{rule.picking_type_id.display_name}</strong>.<br/>Se "
-"l'origine del movimento è esterna o una ubicazione padre di  <strong>{rule."
-"location_dest_id.display_name}</strong>, la destinazione del movimento viene "
-"impostata a  <strong>{rule.location_src_id.display_name}</strong>, un nuovo "
-"movimento viene aggiunto dopo di esso, da <strong>{rule.location_src_id."
-"display_name}</strong> a  <strong>{rule.location_dest_id.display_name}</"
-"strong> utilizzando il tipo operazione  <strong>{rule.picking_type_id."
-"display_name}</strong>."
+"l'origine del movimento è esterna o una ubicazione padre di  "
+"<strong>{rule.location_dest_id.display_name}</strong>, la destinazione del "
+"movimento viene impostata a  <strong>{rule.location_src_id.display_name}</"
+"strong>, un nuovo movimento viene aggiunto dopo di esso, da "
+"<strong>{rule.location_src_id.display_name}</strong> a  "
+"<strong>{rule.location_dest_id.display_name}</strong> utilizzando il tipo "
+"operazione  <strong>{rule.picking_type_id.display_name}</strong>."
 
 #. module: stock_dynamic_routing
 #: model:ir.model,name:stock_dynamic_routing.model_stock_location
 msgid "Inventory Locations"
 msgstr "Ubicazioni di inventario"
-
-#. module: stock_dynamic_routing
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing____last_update
-#: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing__write_uid
@@ -257,7 +252,6 @@ msgstr "Tipo di operazione"
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
-#, python-format
 msgid ""
 "Operation type of a rule used as 'pull' must have '{}' or a sub-location as "
 "source location."
@@ -268,7 +262,6 @@ msgstr ""
 #. module: stock_dynamic_routing
 #. odoo-python
 #: code:addons/stock_dynamic_routing/models/stock_routing_rule.py:0
-#, python-format
 msgid ""
 "Operation type of a rule used as 'push' must have '{}' or a sub-location as "
 "destination location."
@@ -285,6 +278,11 @@ msgstr "Tipo di operazione che verrà applicata al movimento."
 #: model:ir.model.fields,field_description:stock_dynamic_routing.field_stock_routing_rule__picking_type_id
 msgid "Picking Type"
 msgstr "Tipo prelievo"
+
+#. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
 
 #. module: stock_dynamic_routing
 #: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__pull
@@ -362,3 +360,6 @@ msgstr ""
 #: model:ir.model,name:stock_dynamic_routing.model_stock_picking
 msgid "Transfer"
 msgstr "Trasferimento"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
