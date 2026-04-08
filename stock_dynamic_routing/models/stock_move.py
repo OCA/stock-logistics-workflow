@@ -239,7 +239,9 @@ class StockMove(models.Model):
                     )
                     == 1
                 ):
-                    new_move_vals = move._split(qty)
+                    new_move_vals = move.with_context(bypass_log_message=True)._split(
+                        qty
+                    )
                 if new_move_vals:
                     new_move = self.env["stock.move"].create(new_move_vals)
                     new_move._action_confirm(merge=False)
