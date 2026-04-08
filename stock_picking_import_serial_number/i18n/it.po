@@ -120,11 +120,6 @@ msgid "Import S/N wizard"
 msgstr "Procedura guidata importazione S/N"
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: stock_picking_import_serial_number
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
@@ -182,19 +177,25 @@ msgstr ""
 #. module: stock_picking_import_serial_number
 #. odoo-python
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
-#, python-format
 msgid "You must upload file to import records"
 msgstr "Bisogna caricare il file per l'importazione dei record"
 
 #. module: stock_picking_import_serial_number
 #. odoo-python
 #: code:addons/stock_picking_import_serial_number/wizard/import_serial_number_wizard.py:0
-#, python-format
 msgid ""
 "You only can import S/N for picking operations with creation lots checked"
 msgstr ""
 "Si possono importare solo S/N per operazioni prelievo con la creazione lotto "
 "selezionata"
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.res_config_settings_view_form
+msgid "s"
+msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
 
 #~ msgid "_Cancel"
 #~ msgstr "Annulla"
