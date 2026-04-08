@@ -10,8 +10,8 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         When a pick move is partially available and the destination is
         re-routed, it is split in 2 moves, one assigned on the re-routed
         destination location and one not assigned relocated and then re-routed
-        to that same destination location. As both pick moves are going to the
-        same destination location, ensure the ship move is not split.
+        to that same destination location. As both pick moves have the same source
+        location, they get merged. Also ensure the ship move is not split.
 
         This test is similar to test_change_dest_move_source_split in
         stock_dynamic_routing/tests/test_routing_pull except that no move_d is created
@@ -70,44 +70,30 @@ class TestRoutingAndSourceRelocate(TestRoutingPullCommon):
         self._update_product_qty_in_location(self.location_hb_1_2, move_a.product_id, 6)
         pick_picking.action_assign()
 
-        move_c = (
-            self.env["stock.picking"]
-            .search([("picking_type_id", "=", self.pick_type_routing_op.id)])
-            .move_ids
-        ) - move_a
         self.assertRecordValues(
-            move_a | move_b | move_c,
+            move_a | move_b,
             [
                 {
-                    "product_qty": 4,
+                    "product_qty": 10,
                     "move_orig_ids": [],
                     "move_dest_ids": move_b.ids,
-                    "state": "confirmed",
+                    "state": "partially_available",
                     "location_id": self.location_hb.id,
                     "location_dest_id": area1.id,
                 },
                 {
                     "product_qty": 10,
-                    "move_orig_ids": (move_c | move_a).ids,
+                    "move_orig_ids": move_a.ids,
                     "move_dest_ids": [],
                     "state": "waiting",
                     "location_id": area1.id,
                     "location_dest_id": self.customer_loc.id,
-                },
-                {
-                    "product_qty": 6,
-                    "move_orig_ids": [],
-                    "move_dest_ids": move_b.ids,
-                    "state": "assigned",
-                    "location_id": self.location_hb.id,
-                    "location_dest_id": area1.id,
                 },
             ],
         )
 
         self.assertEqual(move_a.picking_id.picking_type_id, self.pick_type_routing_op)
         self.assertEqual(move_b.picking_id.picking_type_id, pick_type_routing_delivery)
-        self.assertEqual(move_c.picking_id.picking_type_id, self.pick_type_routing_op)
 
     def test_prepickship_with_routing_and_relocate(self):
         """Check that if a pick move is waiting another move, the ship move is not split
