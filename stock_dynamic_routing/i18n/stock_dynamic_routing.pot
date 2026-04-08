@@ -233,6 +233,11 @@ msgid "Picking Type"
 msgstr ""
 
 #. module: stock_dynamic_routing
+#: model:ir.model,name:stock_dynamic_routing.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_dynamic_routing
 #: model:ir.model.fields.selection,name:stock_dynamic_routing.selection__stock_routing_rule__method__pull
 msgid "Pull"
 msgstr ""
