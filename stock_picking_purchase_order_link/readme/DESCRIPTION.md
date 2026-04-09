@@ -1,2 +1,2 @@
-This module extends standard WMS to add a smart button in pickings to go
-to purchase order that creates the picking.
+This module extends the standard WMS to add a smart button in pickings to go
+to the purchase order that created the picking.
