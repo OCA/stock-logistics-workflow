@@ -1,6 +1,6 @@
 # Copyright 2022 Tecnativa - Carlos Roca
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import models
+from odoo import Command, models
 from odoo.tools import float_compare, float_is_zero
 
 
@@ -18,7 +18,7 @@ class PurchaseOrderLine(models.Model):
         ):
             if (
                 stock_move.state != "done"
-                or stock_move.scrapped
+                or stock_move.scrap_id
                 or (
                     stock_move.location_id.usage != "supplier"
                     and (
@@ -37,7 +37,7 @@ class PurchaseOrderLine(models.Model):
                 moves_linked += stock_move
                 continue
             elif float_is_zero(
-                to_invoice, precision_rounding=self.product_uom.rounding
+                to_invoice, precision_rounding=self.product_uom_id.rounding
             ):
                 break
             to_invoice -= (
@@ -61,5 +61,5 @@ class PurchaseOrderLine(models.Model):
             < 0
         ):
             stock_moves = stock_moves.filtered("to_refund")
-        vals["move_line_ids"] = [(4, m.id) for m in stock_moves]
+        vals["move_line_ids"] = [Command.set(stock_moves.ids)]
         return vals

@@ -1,7 +1,7 @@
 # Copyright 2021 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import Command, models
 
 
 class StockMove(models.Model):
@@ -15,27 +15,42 @@ class StockMove(models.Model):
         res = super().write(vals)
         if vals.get("state", "") == "done":
             stock_moves = self.get_moves_link_invoice()
+            invoices_to_recompute = self.env["account.move"]
             for stock_move in stock_moves.filtered(
                 lambda sm: sm.purchase_line_id
                 and sm.product_id.purchase_method == "purchase"
             ):
-                inv_type = stock_move.to_refund and "in_refund" or "in_invoice"
-                inv_line = self.env["account.move.line"].search(
-                    [
-                        ("purchase_line_id", "=", stock_move.purchase_line_id.id),
-                        ("move_id.move_type", "=", inv_type),
-                    ]
+                # Use location direction to determine invoice type, not to_refund.
+                # In V19, stock_account sets to_refund=True by default for all moves,
+                # so to_refund cannot be used to distinguish receipts from returns.
+                if stock_move.location_dest_id.usage in ("supplier", "transit"):
+                    inv_type = "in_refund"
+                else:
+                    inv_type = "in_invoice"
+                inv_lines = (
+                    self.env["account.move.line"]
+                    .sudo()
+                    .search(
+                        [
+                            ("purchase_line_id", "=", stock_move.purchase_line_id.id),
+                            ("move_id.move_type", "=", inv_type),
+                            ("move_id.state", "!=", "cancel"),
+                        ]
+                    )
                 )
-                if inv_line:
-                    stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
+                if inv_lines:
+                    stock_move.invoice_line_ids = [Command.set(inv_lines.ids)]
+                    invoices_to_recompute |= inv_lines.move_id
+            if invoices_to_recompute:
+                invoices_to_recompute._compute_picking_ids()
         return res
 
     def get_moves_link_invoice(self):
         return self.filtered(
             lambda x: x.state == "done"
-            and not x.scrapped
+            and not x.scrap_id
             and (
-                x.location_id.usage == "supplier"
-                or (x.location_dest_id.usage == "supplier" and x.to_refund)
+                x.location_id.usage in ("supplier", "transit")
+                or x.location_dest_id.usage in ("supplier", "transit")
             )
         )
