@@ -39,10 +39,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='date_done']" position="before">
                 <field name="is_editable_actual_date" invisible="1" />
-                <field
-                    name="actual_date"
-                    attrs="{'readonly': [('is_editable_actual_date', '=', False)]}"
-                />
+                <field name="actual_date" readonly="not is_editable_actual_date" />
             </xpath>
         </field>
     </record>

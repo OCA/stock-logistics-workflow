@@ -62,7 +62,7 @@ class TestStockMoveActualDate(TransactionCase):
                                         "product_id": self.product_1.id,
                                         "location_id": self.supplier_location.id,
                                         "location_dest_id": self.stock_location.id,
-                                        "qty_done": 10.0,
+                                        "quantity": 10.0,
                                     }
                                 )
                             ],
@@ -73,6 +73,7 @@ class TestStockMoveActualDate(TransactionCase):
         )
         receipt.move_ids._action_confirm()
         if is_done:
+            receipt.move_ids.picked = True
             receipt.move_ids._action_done()
         return receipt, receipt.move_ids
 
@@ -96,11 +97,11 @@ class TestStockMoveActualDate(TransactionCase):
         self.assertEqual(move.actual_date, date(2024, 8, 1))
         self.assertEqual(move.account_move_ids.date, date(2024, 8, 1))
         scrap = self.create_scrap(receipt, date(2024, 9, 10))
-        self.assertEqual(scrap.move_id.actual_date, date(2024, 9, 10))
-        self.assertEqual(scrap.move_id.account_move_ids.date, date(2024, 9, 10))
+        self.assertEqual(scrap.move_ids.actual_date, date(2024, 9, 10))
+        self.assertEqual(scrap.move_ids.account_move_ids.date, date(2024, 9, 10))
         scrap.actual_date = date(2024, 8, 11)
-        self.assertEqual(scrap.move_id.actual_date, date(2024, 8, 11))
-        self.assertEqual(scrap.move_id.account_move_ids.date, date(2024, 8, 11))
+        self.assertEqual(scrap.move_ids.actual_date, date(2024, 8, 11))
+        self.assertEqual(scrap.move_ids.account_move_ids.date, date(2024, 8, 11))
 
     def test_inventory_adjustment_actual_date(self):
         quant = self.env["stock.quant"].create(
@@ -143,8 +144,8 @@ class TestStockMoveActualDate(TransactionCase):
         self.assertEqual(move.actual_date, date(2025, 5, 9))
         self.assertEqual(move.account_move_ids.date, date(2025, 5, 9))
         scrap = self.create_scrap(receipt)
-        self.assertEqual(scrap.move_id.actual_date, date(2025, 5, 9))
-        self.assertEqual(scrap.move_id.account_move_ids.date, date(2025, 5, 9))
+        self.assertEqual(scrap.move_ids.actual_date, date(2025, 5, 9))
+        self.assertEqual(scrap.move_ids.account_move_ids.date, date(2025, 5, 9))
         valuation_layer = move.stock_valuation_layer_ids
         self.assertEqual(valuation_layer.actual_date, date(2025, 5, 9))
         account_move = valuation_layer.account_move_id
@@ -180,8 +181,7 @@ class TestStockMoveActualDate(TransactionCase):
 
     def test_backorder_picking_actual_date(self):
         picking, move = self.create_picking(date(2025, 3, 10), is_done=False)
-        move.move_line_ids.qty_done = 5.0
-        move.quantity_done = 5.0
+        move.move_line_ids.quantity = 5.0
         backorder_wizard_values = picking.button_validate()
         backorder_wizard = (
             self.env[(backorder_wizard_values.get("res_model"))]
