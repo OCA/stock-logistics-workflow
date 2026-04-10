@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='expiration_date']" position="attributes">
                 <attribute name="column_invisible">
-                    not parent.use_expiration_date or parent.picking_code != 'incoming'
+                    not parent.use_expiration_date or parent.picking_code not in ['incoming', 'dropship']
                 </attribute>
                 <attribute name="readonly">
                     picking_type_use_existing_lots
