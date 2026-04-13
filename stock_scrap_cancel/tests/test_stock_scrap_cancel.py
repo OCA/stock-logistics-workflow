@@ -4,12 +4,12 @@
 from odoo.tests import common
 
 
-class TestStockScrapCancel(common.SavepointCase):
+class TestStockScrapCancel(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env["product.product"].create(
-            {"name": "Test product", "type": "product"}
+            {"name": "Test product", "is_storable": True}
         )
         warehouse = cls.env.ref("stock.warehouse0")
         cls.scrap = cls.env["stock.scrap"].create(
@@ -42,6 +42,6 @@ class TestStockScrapCancel(common.SavepointCase):
         self.assertEqual(self.product.qty_available, 1)
         self.assertEqual(self.scrap.state, "cancel")
         self.assertEqual(self.scrap.scrap_qty, 1)
-        self.assertFalse(self.scrap.move_id)
+        self.assertFalse(self.scrap.move_ids)
         self.scrap.action_draft()
         self.assertEqual(self.scrap.state, "draft")

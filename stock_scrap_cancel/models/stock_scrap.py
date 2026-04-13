@@ -16,9 +16,9 @@ class StockScrap(models.Model):
         """We need to change the state of the move to draft in order to delete it
         (a done move cannot be deleted)."""
         old_scrap_qty = self.scrap_qty
-        self.move_id.move_line_ids.write({"qty_done": 0.0})
-        self.move_id.write({"state": "draft"})
-        self.move_id.unlink()
+        self.move_ids.move_line_ids.write({"quantity": 0.0})
+        self.move_ids.write({"state": "draft"})
+        self.move_ids.unlink()
         return self.write(
             {"state": "cancel", "scrap_qty": old_scrap_qty, "date_done": False}
         )
