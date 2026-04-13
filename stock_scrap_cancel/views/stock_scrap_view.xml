@@ -10,13 +10,13 @@
             <xpath expr="//button[@name='action_validate']" position="after">
                 <button
                     name="action_cancel"
-                    states="done"
+                    invisible="state != 'done'"
                     type="object"
                     string="Cancel"
                 />
                 <button
                     name="action_draft"
-                    states="cancel"
+                    invisible="state != 'cancel'"
                     type="object"
                     string="Set to Draft"
                 />
