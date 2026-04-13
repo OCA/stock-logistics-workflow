@@ -33,7 +33,7 @@ class StockMove(models.Model):
     def get_moves_link_invoice(self):
         return self.filtered(
             lambda x: x.state == "done"
-            and not x.scrapped
+            and not getattr(x, "scrapped", getattr(x, "is_scrap", False))
             and (
                 x.location_id.usage == "supplier"
                 or (x.location_dest_id.usage == "supplier" and x.to_refund)
