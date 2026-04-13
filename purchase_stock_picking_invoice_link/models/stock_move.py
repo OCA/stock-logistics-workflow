@@ -7,27 +7,26 @@ from odoo import models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    def write(self, vals):
+    def _action_done(self, cancel_backorder=False):
         """Method used to associate the stock.move with the created account.move.line
         when the invoicing method of the product is 'purchase' and the invoice is done
         before receiving the products.
         """
-        res = super().write(vals)
-        if vals.get("state", "") == "done":
-            stock_moves = self.get_moves_link_invoice()
-            for stock_move in stock_moves.filtered(
-                lambda sm: sm.purchase_line_id
-                and sm.product_id.purchase_method == "purchase"
-            ):
-                inv_type = stock_move.to_refund and "in_refund" or "in_invoice"
-                inv_line = self.env["account.move.line"].search(
-                    [
-                        ("purchase_line_id", "=", stock_move.purchase_line_id.id),
-                        ("move_id.move_type", "=", inv_type),
-                    ]
-                )
-                if inv_line:
-                    stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
+        res = super()._action_done(cancel_backorder=cancel_backorder)
+        stock_moves = res.get_moves_link_invoice()
+        for stock_move in stock_moves.filtered(
+            lambda sm: sm.purchase_line_id
+            and sm.product_id.purchase_method == "purchase"
+        ):
+            inv_type = stock_move.to_refund and "in_refund" or "in_invoice"
+            inv_line = self.env["account.move.line"].search(
+                [
+                    ("purchase_line_id", "=", stock_move.purchase_line_id.id),
+                    ("move_id.move_type", "=", inv_type),
+                ]
+            )
+            if inv_line:
+                stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
         return res
 
     def get_moves_link_invoice(self):

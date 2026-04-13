@@ -38,9 +38,7 @@ class PurchaseOrderLine(models.Model):
                 )
                 moves_linked += stock_move
                 continue
-            elif float_is_zero(
-                to_invoice, precision_rounding=self.product_uom.rounding
-            ):
+            elif float_is_zero(to_invoice, precision_rounding=self.uom_id.rounding):
                 break
             to_invoice -= (
                 stock_move.quantity
