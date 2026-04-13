@@ -7,7 +7,6 @@
             <notebook position="inside">
                 <page string="Returns" invisible="not returned_ids">
                     <field name="returned_ids" />
-                    <field name="source_picking_id" invisible="1" />
                 </page>
             </notebook>
             <div name="button_box" position="inside">

@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.fields import first
 
 
 class StockPicking(models.Model):
@@ -28,8 +27,8 @@ class StockPicking(models.Model):
     def _compute_source_picking_id(self):
         """Get source piking from this picking. Only one origin is possible."""
         for picking in self:
-            picking.source_picking_id = first(
-                picking.move_ids.origin_returned_move_id.picking_id
+            picking.source_picking_id = (
+                picking.move_ids.origin_returned_move_id.picking_id[:1].id
             )
 
     def action_show_source_picking(self):

@@ -21,7 +21,6 @@ class TestStockPickingShowReturn(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": cls.product.name,
                             "location_id": picking_type.default_location_src_id.id,
                             "location_dest_id": (
                                 picking_type.default_location_dest_id.id
