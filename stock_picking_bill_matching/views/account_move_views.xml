@@ -20,6 +20,32 @@
                         <span class="o_stat_text">Match Pickings</span>
                     </div>
                 </button>
+                <!-- Force Matched Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_force_picking_matched"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-check"
+                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), '|', ('is_picking_matched', '=', True), ('force_picking_matched', '=', True)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Force Matched</span>
+                    </div>
+                </button>
+                <!-- Reset Force Matched Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_reset_force_picking_matched"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-undo"
+                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('force_picking_matched', '=', False)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Reset Force</span>
+                    </div>
+                </button>
                 <!-- Matched (Debug/Undo) Button -->
                 <button
                     class="oe_stat_button"
@@ -35,7 +61,27 @@
                     </div>
                 </button>
                 <field name="is_picking_matched" invisible="1" />
+                <field name="force_picking_matched" invisible="1" />
             </div>
+        </field>
+    </record>
+
+    <record
+        id="view_account_invoice_filter_inherit_stock_bill_matching"
+        model="ir.ui.view"
+    >
+        <field name="name">account.invoice.filter.inherit.stock.bill.matching</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <filter name="draft" position="after">
+                <separator />
+                <filter
+                    string="Unmatched Picking"
+                    name="unmatched_picking"
+                    domain="[('is_picking_matched', '=', False), ('move_type', 'in', ('in_invoice', 'in_refund'))]"
+                />
+            </filter>
         </field>
     </record>
 

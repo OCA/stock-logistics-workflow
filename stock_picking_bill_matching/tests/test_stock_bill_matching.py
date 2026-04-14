@@ -252,3 +252,121 @@ class TestStockBillMatching(common.TransactionCase):
             "Auto-match bypass should work when storable lines match.",
         )
         self.assertEqual(action.get("res_id"), picking2.id)
+
+    def test_06_force_matched_after_backorder_cancel(self):
+        """If a receipt exceeds the billed qty and its backorder is cancelled,
+        the user can force the bill to matched."""
+        picking = self.create_picking([(self.product_a, 10)])
+        bill = self.create_bill([(self.product_a, 4, 50.0)])
+
+        self.env.flush_all()
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "=", self.product_a.id),
+                ("is_matched", "=", False),
+            ]
+        )
+        match_lines.action_match_lines()
+
+        backorder = self.env["stock.picking"].search(
+            [("backorder_id", "=", picking.id)]
+        )
+        self.assertTrue(backorder)
+        backorder.action_cancel()
+
+        # After matching 4 out of 4 billed, bill is still matched
+        self.assertTrue(bill.is_picking_matched)
+
+        # Force matched remains an idempotent safe fallback
+        bill.action_force_picking_matched()
+        self.assertTrue(bill.force_picking_matched)
+        self.assertTrue(bill.is_picking_matched)
+
+    def test_07_force_matched_when_bill_exceeds_receipt(self):
+        """If a bill has a higher quantity than the receipt and no further
+        receipts are expected, the user can force the bill to matched."""
+        self.create_picking([(self.product_a, 4)])
+        bill = self.create_bill([(self.product_a, 10, 50.0)])
+
+        self.env.flush_all()
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "=", self.product_a.id),
+                ("is_matched", "=", False),
+            ]
+        )
+        match_lines.action_match_lines()
+
+        # Only 4 out of 10 billed units are matched -> not fully matched
+        self.assertFalse(
+            bill.is_picking_matched,
+            "Bill should stay unmatched when billed qty exceeds receipt qty.",
+        )
+
+        # User decides no further receipts will come
+        bill.action_force_picking_matched()
+        self.assertTrue(bill.force_picking_matched)
+        self.assertTrue(
+            bill.is_picking_matched,
+            "Force matched should override the unmatched state.",
+        )
+
+    def test_08_no_product_lines_excluded(self):
+        """Bill lines without a product should be excluded from matching
+        and should not block the bill from being considered matched."""
+        self.create_picking([(self.product_a, 5)])
+        bill = self.env["account.move"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "move_type": "in_invoice",
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "display_type": "product",
+                            "name": "Line without product",
+                            "quantity": 2,
+                            "price_unit": 100.0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_a.id,
+                            "quantity": 5,
+                            "price_unit": 50.0,
+                        },
+                    ),
+                ],
+            }
+        )
+
+        self.env.flush_all()
+
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("account_move_id", "=", bill.id),
+            ]
+        )
+        self.assertEqual(
+            len(match_lines),
+            2,
+            "Only storable bill line + stock move should appear in view.",
+        )
+        self.assertFalse(
+            any(not line.product_id for line in match_lines),
+            "Lines without product must not appear in matching view.",
+        )
+
+        match_lines.action_match_lines()
+        self.assertTrue(
+            bill.is_picking_matched,
+            "Bill should be matched when storable lines are matched "
+            "even if a no-product line exists.",
+        )
