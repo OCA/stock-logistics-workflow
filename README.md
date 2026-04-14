@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [stock_picking_kind](stock_picking_kind/) | 19.0.1.0.0 |  | Computes the kind of picking based on locations
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 19.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
 [stock_picking_return_restricted_qty](stock_picking_return_restricted_qty/) | 19.0.1.0.0 |  | Restrict the return to delivered quantity
+[stock_picking_send_by_mail](stock_picking_send_by_mail/) | 19.0.1.0.0 |  | Send stock picking by email
 [stock_split_picking](stock_split_picking/) | 19.0.1.0.0 |  | Split a picking in two not transferred pickings
 
 [//]: # (end addons)
