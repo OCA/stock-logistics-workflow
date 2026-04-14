@@ -33,7 +33,7 @@ class BillToPickingWizard(models.TransientModel):
         self.ensure_one()
         lines = self._get_active_lines()
         aml_ids = lines.aml_id.filtered(
-            lambda l: l.product_id and l.product_id.type == "product"
+            lambda l: l.product_id and l.product_id.type in ("product", "consu")
         )
 
         if not aml_ids:
@@ -66,11 +66,11 @@ class BillToPickingWizard(models.TransientModel):
                 "name": aml.name or aml.product_id.display_name,
                 "product_id": aml.product_id.id,
                 "product_uom_qty": aml.unmatched_qty,
-                "product_uom": aml.product_uom_id.id,
                 "picking_id": self.picking_id.id,
                 "location_id": self.picking_id.location_id.id,
                 "location_dest_id": self.picking_id.location_dest_id.id,
                 "invoice_line_ids": [Command.link(aml.id)],
+                "product_uom": aml.product_uom_id.id,
             }
             # Set quantity_done if auto-validating
             if self.auto_validate and not self.picking_id.origin:
