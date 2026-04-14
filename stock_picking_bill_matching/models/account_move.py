@@ -27,7 +27,9 @@ class AccountMove(models.Model):
         )
         for move in self:
             move.is_picking_matched = True
-            for line in move.invoice_line_ids:
+            for line in move.invoice_line_ids.filtered(
+                lambda l: l.display_type == "product" and l.product_id.type == "product"
+            ):
                 qty_matched = sum(
                     stock_move.product_uom_qty for stock_move in line.move_line_ids
                 )
@@ -42,7 +44,9 @@ class AccountMove(models.Model):
 
     def _get_bill_lines_to_match(self):
         return self.invoice_line_ids.filtered(
-            lambda l: l.display_type == "product" and l.unmatched_qty > 0
+            lambda l: l.display_type == "product"
+            and l.product_id.type == "product"
+            and l.unmatched_qty > 0
         )
 
     def _get_partner_pickings(self):
