@@ -107,10 +107,21 @@ processed the receipt:
 
    -  The lines will vanish from the Unmatched view.
    -  If the Receipt had a higher quantity than the Bill, Odoo will
-      automatically create a Backorder for the remaining quantity.
+      automatically create a Backorder for the remaining quantity. If
+      you later cancel the backorder and decide not to keep the extra
+      stock, click **Force Matched** on the bill to settle it.
    -  If the Bill had a higher quantity, the remaining billed quantity
       will stay in the view awaiting a future receipt, or you can create
       a new picking for it using the **Create / Add to Picking** button.
+      If you decide the remaining quantity will never be delivered, you
+      can click **Force Matched** to settle the bill anyway.
+
+*Typical workflow:* Go to **Accounting -> Vendors -> Bills**, open the
+list view and apply the **Unmatched Picking** filter. This shows only
+vendor bills that still need to be matched. Work through them one by one
+— either by matching them against receipts in the matching view, or by
+forcing them to matched when the discrepancy is accepted. This keeps
+your todo list of bills to match clean and up to date.
 
 2. "Small Shop" Replenishment (Auto-Create Pickings)
 ----------------------------------------------------
@@ -142,6 +153,16 @@ If you made a mistake:
 2. Select the mistakenly matched lines.
 3. Click **Unmatch Selected**. The Many-to-Many links will be severed,
    and the quantities will return to the **Match Pickings** view.
+
+4. Integration with ``stock_picking_invoicing``
+-----------------------------------------------
+
+If the ``stock_picking_invoicing`` module is installed, matching or
+unmatching bill lines automatically synchronizes the invoice state on
+the related stock moves and pickings. Matched lines are marked as
+``invoiced``, while partially matched or unmatched lines revert to
+``2binvoiced``, keeping the picking's billing status consistent without
+manual intervention.
 
 Bug Tracker
 ===========
