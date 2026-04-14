@@ -123,9 +123,14 @@ class PickingBillLineMatch(models.Model):
                 stock_picking sp ON sm.picking_id = sp.id
             JOIN
                 stock_picking_type pt ON sp.picking_type_id = pt.id
+            JOIN
+                product_product pp ON sm.product_id = pp.id
+            JOIN
+                product_template prod_tmpl ON pp.product_tmpl_id = prod_tmpl.id
             WHERE
                 pt.code in ('incoming', 'outgoing')
                 AND sm.state != 'cancel'
+                AND prod_tmpl.type = 'product'
         """
 
     @api.model
@@ -156,10 +161,15 @@ class PickingBillLineMatch(models.Model):
                 account_move_line aml
             JOIN
                 account_move am ON aml.move_id = am.id
+            JOIN
+                product_product pp ON aml.product_id = pp.id
+            JOIN
+                product_template prod_tmpl ON pp.product_tmpl_id = prod_tmpl.id
             WHERE
                 aml.display_type = 'product'
                 AND am.move_type in ('in_invoice', 'in_refund')
                 AND am.state in ('draft', 'posted')
+                AND prod_tmpl.type = 'product'
         """
 
     @property
