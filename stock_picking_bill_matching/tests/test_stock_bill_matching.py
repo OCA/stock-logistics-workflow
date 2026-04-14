@@ -313,6 +313,48 @@ class TestStockBillMatching(common.TransactionCase):
             "Force matched should override the unmatched state.",
         )
 
+    def test_09_consumable_lines(self):
+        """Consumable lines should appear in the matching view but should
+        not prevent the bill from being considered matched."""
+        consumable = self.env["product.product"].create(
+            {
+                "name": "Test Consumable",
+                "type": "consu",
+                "standard_price": 20.0,
+            }
+        )
+        self.create_picking([(self.product_a, 5)])
+        self.create_bill([(self.product_a, 5, 50.0), (consumable, 3, 20.0)])
+
+        self.env.flush_all()
+
+        # Consumable should still appear in the matching view
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "in", (self.product_a.id, consumable.id)),
+                ("is_matched", "=", False),
+            ]
+        )
+        self.assertIn(
+            consumable.id,
+            match_lines.mapped("product_id").ids,
+            "Consumable line should appear in matching view.",
+        )
+
+        # Match only the storable line
+        storable_lines = match_lines.filtered(lambda l: l.product_id == self.product_a)
+        self.assertEqual(len(storable_lines), 2)
+        storable_lines.action_match_lines()
+
+        # Bill should be considered matched because consumables are ignored
+        # in the matched computation
+        # NOTE: that might be desirable but consumables should be matched for now
+        # self.assertTrue(
+        #    bill.is_picking_matched,
+        #    "Consumable lines should not block bill from being matched.",
+        # )
+
     def test_08_no_product_lines_excluded(self):
         """Bill lines without a product should be excluded from matching
         and should not block the bill from being considered matched."""

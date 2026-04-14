@@ -88,9 +88,7 @@ class PickingBillLineMatch(models.Model):
         """Safely check if an extension module injected a custom matching reference method."""
         model = self.env[model_name]
         if hasattr(model, "_get_bill_matching_reference_sql"):
-            x = model._get_bill_matching_reference_sql(alias)
-            _logger.debug("GET REF %s %s %s %s", self, model, alias, x)
-            return x
+            return model._get_bill_matching_reference_sql(alias)
         return "NULL::varchar"
 
     @api.model
@@ -130,7 +128,7 @@ class PickingBillLineMatch(models.Model):
             WHERE
                 pt.code in ('incoming', 'outgoing')
                 AND sm.state != 'cancel'
-                AND prod_tmpl.type = 'product'
+                AND prod_tmpl.type in ('product', 'consu')
         """
 
     @api.model
@@ -169,7 +167,7 @@ class PickingBillLineMatch(models.Model):
                 aml.display_type = 'product'
                 AND am.move_type in ('in_invoice', 'in_refund')
                 AND am.state in ('draft', 'posted')
-                AND prod_tmpl.type = 'product'
+                AND prod_tmpl.type in ('product', 'consu')
         """
 
     @property
