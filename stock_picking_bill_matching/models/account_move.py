@@ -35,7 +35,7 @@ class AccountMove(models.Model):
             for line in move.invoice_line_ids.filtered(
                 lambda l: l.display_type == "product"
                 and l.product_id
-                and l.product_id.type == "product"
+                and l.product_id.type in ("product", "consu")
             ):
                 qty_matched = sum(
                     stock_move.product_uom_qty for stock_move in line.move_line_ids
@@ -61,7 +61,7 @@ class AccountMove(models.Model):
         return self.invoice_line_ids.filtered(
             lambda l: l.display_type == "product"
             and l.product_id
-            and l.product_id.type == "product"
+            and l.product_id.type in ("product", "consu")
             and l.unmatched_qty > 0
         )
 
