@@ -42,6 +42,13 @@ class AccountChartTemplate(models.Model):
                                 "price_unit": 100.0,
                             }
                         ),
+                        Command.create(
+                            {
+                                "product_id": ref("product.product_product_1").id,
+                                "quantity": 1,
+                                "price_unit": 30.75,
+                            }
+                        ),
                     ],
                 }
             },

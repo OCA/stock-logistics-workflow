@@ -194,3 +194,61 @@ class TestStockBillMatching(common.TransactionCase):
             new_picking.move_ids,
             "M2M should be linked.",
         )
+
+    def test_05_service_lines_excluded(self):
+        """Service lines should not appear in the matching view and should
+        not block matching of storable lines."""
+        service_product = self.env.ref("product.product_product_1")
+        self.assertEqual(service_product.type, "service")
+
+        picking = self.create_picking([(self.product_a, 5)])
+        bill = self.create_bill(
+            [(self.product_a, 5, 50.0), (service_product, 1, 100.0)]
+        )
+
+        self.env.flush_all()
+
+        # Only 2 lines (1 stock move + 1 storable bill line) should be visible
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "in", (self.product_a.id, service_product.id)),
+            ]
+        )
+        self.assertEqual(
+            len(match_lines),
+            2,
+            "Service bill lines must be excluded from the matching view.",
+        )
+        self.assertNotIn(
+            service_product.id,
+            match_lines.mapped("product_id").ids,
+            "Service product should not appear in matching view.",
+        )
+
+        # Matching should succeed without touching the service line
+        match_lines.action_match_lines()
+        self.assertEqual(
+            bill.invoice_line_ids.filtered(
+                lambda l: l.product_id == self.product_a
+            ).move_line_ids,
+            picking.move_ids,
+        )
+        self.assertTrue(
+            bill.is_picking_matched,
+            "Mixed bill with matched storable lines should be considered matched.",
+        )
+
+        # Auto-match bypass should also work with mixed bills
+        bill2 = self.create_bill(
+            [(self.product_a, 5, 50.0), (service_product, 1, 100.0)]
+        )
+        picking2 = self.create_picking([(self.product_a, 5)])
+        self.env.flush_all()
+        action = bill2.action_picking_matching()
+        self.assertEqual(
+            action.get("res_model"),
+            "stock.picking",
+            "Auto-match bypass should work when storable lines match.",
+        )
+        self.assertEqual(action.get("res_id"), picking2.id)

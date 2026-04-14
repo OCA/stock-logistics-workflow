@@ -32,7 +32,9 @@ class BillToPickingWizard(models.TransientModel):
     def action_add_to_picking(self):
         self.ensure_one()
         lines = self._get_active_lines()
-        aml_ids = lines.aml_id.filtered("product_id")
+        aml_ids = lines.aml_id.filtered(
+            lambda l: l.product_id and l.product_id.type == "product"
+        )
 
         if not aml_ids:
             raise UserError(_("No bill lines with products were selected."))
