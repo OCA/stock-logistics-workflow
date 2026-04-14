@@ -14,21 +14,28 @@ class AccountMove(models.Model):
     is_picking_matched = fields.Boolean(
         compute="_compute_is_picking_matched", store=True
     )
+    force_picking_matched = fields.Boolean(default=False, copy=False)
 
     @api.depends(
         "invoice_line_ids",
         "invoice_line_ids.move_line_ids",
         "invoice_line_ids.move_line_ids.product_uom_qty",
         "invoice_line_ids.quantity",
+        "force_picking_matched",
     )
     def _compute_is_picking_matched(self):
         precision_digits = self.env["decimal.precision"].precision_get(
             "Product Unit of Measure"
         )
         for move in self:
+            if move.force_picking_matched:
+                move.is_picking_matched = True
+                continue
             move.is_picking_matched = True
             for line in move.invoice_line_ids.filtered(
-                lambda l: l.display_type == "product" and l.product_id.type == "product"
+                lambda l: l.display_type == "product"
+                and l.product_id
+                and l.product_id.type == "product"
             ):
                 qty_matched = sum(
                     stock_move.product_uom_qty for stock_move in line.move_line_ids
@@ -42,9 +49,18 @@ class AccountMove(models.Model):
                     move.is_picking_matched = False
                     break
 
+    def action_force_picking_matched(self):
+        self.ensure_one()
+        self.force_picking_matched = True
+
+    def action_reset_force_picking_matched(self):
+        self.ensure_one()
+        self.force_picking_matched = False
+
     def _get_bill_lines_to_match(self):
         return self.invoice_line_ids.filtered(
             lambda l: l.display_type == "product"
+            and l.product_id
             and l.product_id.type == "product"
             and l.unmatched_qty > 0
         )
