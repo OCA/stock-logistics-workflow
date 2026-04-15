@@ -26,20 +26,19 @@ class StockMove(models.Model):
             and self.purchase_line_id
             and self.product_id.id == self.purchase_line_id.product_id.id
         ):
-            self.env["decimal.precision"].precision_get("Product Price")
             line = self.purchase_line_id
             order = line.order_id
-            price_unit = line.price_unit
+            converted_price = line.price_unit
             if order.currency_id != order.company_id.currency_id:
-                price_unit = order.currency_id._convert(
-                    price_unit,
+                converted_price = order.currency_id._convert(
+                    converted_price,
                     order.company_id.currency_id,
                     order.company_id,
                     date_backdating,
                     round=False,
                 )
-
-        return {self.env["stock.lot"]: price_unit}
+            return {self.env["stock.lot"]: converted_price}
+        return price_unit
 
     def _backdating_stock_valuation_layers(self):
         """Set date on linked stock.valuation.layer same for each move in `self`."""
