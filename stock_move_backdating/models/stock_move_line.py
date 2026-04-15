@@ -2,14 +2,19 @@
 # Copyright 2023 Simone Rubino - TAKOBI
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools.translate import LazyTranslate
+
+_lt = LazyTranslate(__name__)
 
 
 def check_date(date):
     now = fields.Datetime.now()
     if date and date > now:
-        raise UserError(_("You can not process an actual movement date in the future."))
+        raise UserError(
+            _lt("You can not process an actual movement date in the future.")
+        )
 
 
 class StockMoveLine(models.Model):
