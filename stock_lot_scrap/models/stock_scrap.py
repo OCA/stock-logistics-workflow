@@ -5,7 +5,7 @@
 
 from markupsafe import Markup
 
-from odoo import _, models
+from odoo import models
 
 
 class StockScrap(models.Model):
@@ -15,6 +15,10 @@ class StockScrap(models.Model):
         self.ensure_one()
         if self.lot_id:
             self.lot_id.message_post(
-                body=Markup(_("Lot was scrapped by <b>%s</b>.") % self.env.user.name)
+                body=Markup(
+                    self.env._(
+                        "Lot was scrapped by <b>%(name)s</b>.", name=self.env.user.name
+                    )
+                )
             )
         return super().action_validate()
