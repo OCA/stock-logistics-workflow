@@ -6,7 +6,7 @@
 
 from lxml import etree
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import ValidationError
 
 
@@ -19,7 +19,6 @@ class StockLot(models.Model):
         that add a header element in the main view.
         """
         arch, view = super()._get_view(view_id, view_type, **options)
-
         if isinstance(arch, bytes):
             # If arch is bytes, convert it to an XML element
             eview = etree.fromstring(arch)
@@ -41,10 +40,11 @@ class StockLot(models.Model):
             {
                 "type": "object",
                 "name": "action_scrap_lot",
-                "confirm": _(
+                "invisible": "product_qty == 0",
+                "confirm": self.env._(
                     "This will scrap the whole lot. Are you sure you want to continue?"
                 ),
-                "string": _("Scrap"),
+                "string": self.env._("Scrap"),
             },
         )
         header_element.append(button_element)
@@ -70,7 +70,7 @@ class StockLot(models.Model):
         )
         if not quants:
             raise ValidationError(
-                _("This lot doesn't contain any quant in internal location."),
+                self.env._("This lot doesn't contain any quant in internal location."),
             )
         scrap_obj = self.env["stock.scrap"]
         scraps = scrap_obj.browse()
