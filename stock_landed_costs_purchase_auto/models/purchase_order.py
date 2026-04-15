@@ -1,6 +1,7 @@
 # Copyright 2021-2023 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields, models
+from odoo.exceptions import UserError
 
 
 class PurchaseOrder(models.Model):
@@ -32,6 +33,15 @@ class PurchaseOrder(models.Model):
         # We need to use sudo() because only Inventory > Administrator have
         # permissions on stock.landed.cost
         self.ensure_one()
+        if not self.company_id.lc_journal_id:
+            raise UserError(
+                self.env._(
+                    "Cannot create a landed cost for purchase order %(order)s: "
+                    "no default journal is configured for landed costs. "
+                    "Please set it in Inventory > Configuration > Settings.",
+                    order=self.name,
+                )
+            )
         landed_cost = (
             self.env["stock.landed.cost"]
             .with_company(self.company_id)
