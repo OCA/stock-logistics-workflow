@@ -23,6 +23,7 @@ class StockQuant(models.Model):
         self,
         product_id,
         location_id,
+        quantity=False,
         reserved_quantity=False,
         lot_id=None,
         package_id=None,
@@ -38,6 +39,7 @@ class StockQuant(models.Model):
         return super()._update_available_quantity(
             product_id,
             location_id,
+            quantity=quantity,
             reserved_quantity=reserved_quantity,
             lot_id=lot_id,
             package_id=package_id,
