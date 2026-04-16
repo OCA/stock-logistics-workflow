@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -37,6 +37,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__res_config_settings__default_sn_search_product_by_field__barcode
 #: model:ir.model.fields.selection,name:stock_picking_import_serial_number.selection__stock_picking_import_serial_number_wiz__sn_search_product_by_field__barcode
 msgid "Barcode"
+msgstr ""
+
+#. module: stock_picking_import_serial_number
+#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
+msgid "Cancel"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
@@ -111,11 +116,6 @@ msgid "Import S/N wizard"
 msgstr ""
 
 #. module: stock_picking_import_serial_number
-#: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: stock_picking_import_serial_number
 #: model:ir.model.fields,field_description:stock_picking_import_serial_number.field_stock_picking_import_serial_number_wiz__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -180,9 +180,4 @@ msgstr ""
 #, python-format
 msgid ""
 "You only can import S/N for picking operations with creation lots checked"
-msgstr ""
-
-#. module: stock_picking_import_serial_number
-#: model_terms:ir.ui.view,arch_db:stock_picking_import_serial_number.stock_picking_import_serial_number_wiz
-msgid "_Cancel"
 msgstr ""
