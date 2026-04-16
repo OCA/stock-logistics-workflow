@@ -1,0 +1,28 @@
+<odoo>
+    <template id="partner_vat">
+        <div t-if="o.partner_vat" class="mt16">
+            <t
+                t-if="o.company_id.country_id.vat_label"
+                t-out="o.company_id.country_id.vat_label"
+                id="inv_tax_id_label"
+            />
+            <t t-else="">Tax ID:</t>
+            <span t-field="o.partner_vat" />
+        </div>
+    </template>
+
+    <template
+        id="report_delivery_document_partner_vat"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//t[@t-set='address']" position="inside">
+            <t t-call="stock_picking_partner_vat.partner_vat" />
+        </xpath>
+    </template>
+
+    <template id="report_picking_partner_vat" inherit_id="stock.report_picking">
+        <xpath expr="//div[@name='div_outgoing_address']" position="inside">
+            <t t-call="stock_picking_partner_vat.partner_vat" />
+        </xpath>
+    </template>
+</odoo>
