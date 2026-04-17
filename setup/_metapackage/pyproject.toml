@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-workflow"
-version = "19.0.20260415.1"
+version = "19.0.20260417.0"
 dependencies = [
     "odoo-addon-sale_stock_picking_invoice_link==19.0.*",
     "odoo-addon-stock_dangerous_goods==19.0.*",
+    "odoo-addon-stock_lot_scrap==19.0.*",
     "odoo-addon-stock_no_negative==19.0.*",
     "odoo-addon-stock_picking_auto_create_lot==19.0.*",
     "odoo-addon-stock_picking_auto_create_package==19.0.*",
