@@ -2,7 +2,7 @@
 <odoo>
     <record model="ir.ui.view" id="view_picking_form">
         <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_form_inherit" />
         <field name="arch" type="xml">
             <field name="batch_id" position="attributes">
                 <attribute name="readonly">state in ('done', 'cancel')</attribute>
