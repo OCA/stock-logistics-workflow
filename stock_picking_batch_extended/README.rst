@@ -48,7 +48,14 @@ companies.
 
 |config_image|
 
+In Inventory/Configuration, you can enable the Split Transfers From
+Batch option, which allows you to define new quantities for
+batch-related transactions using a wizard.
+
+|split_pickings_batch_settings|
+
 .. |config_image| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/picking_batch_configuration_settings.png
+.. |split_pickings_batch_settings| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch_settings.png
 
 Usage
 =====
@@ -111,10 +118,30 @@ validation approach in the inventory settings.
 4. Notes. Reflects the notes that have been entered from the wizard and
    allows you to modify them.
 
+**Split pickings in batch**
+
+|split_pickings_batch|
+
+1. Go to Inventory > Operations > Batch Transfers
+2. Create new batch transfer.
+3. If there are transfers associated with the batch and the *Split
+   Transfers From Batch* setting is selected, the *Split Pickings*
+   button will be displayed.
+4. Clicking on the button will open a wizard with all the available
+   moves.
+
+|split_pickings_batch_wizard|
+
+5. Modify the quantities and confirm; backorders will then be created if
+   necessary. These new picks will not be associated with the batch.
+6. Batch movements are updated with the new quantities.
+
 .. |image1| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_wizard.png
 .. |image2| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_draft.png
 .. |image3| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_in_progress.png
 .. |image4| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/batch_form_done.png
+.. |split_pickings_batch| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch.png
+.. |split_pickings_batch_wizard| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch_wizard.png
 
 Bug Tracker
 ===========

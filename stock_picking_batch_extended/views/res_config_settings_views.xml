@@ -17,6 +17,18 @@
                     </div>
                 </div>
             </field>
+            <xpath
+                expr="//block[@name='operations_setting_container']"
+                position="inside"
+            >
+                <setting
+                    id="split_transfers_from_batch_id"
+                    help="It allows you to establish new quantities for picking movements using a wizard and create partial deliveries, without the batch being validated"
+                    invisible="not module_stock_picking_batch"
+                >
+                    <field name="split_transfers_from_batch" />
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>
