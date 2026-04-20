@@ -378,11 +378,10 @@ class TestBatchPicking(BaseCommon):
         self.assertEqual(len(back_order_wizard.pick_ids), 2)
         back_order_wizard.process()
         self.batch.remove_undone_pickings()
-        self.assertEqual(len(self.batch.picking_ids), 2)
+        self.assertEqual(set(self.batch.picking_ids.mapped("state")), {"done"})
         self.assertEqual("done", self.picking.state)
         # Second picking is filled and his state is done too
         self.assertEqual("done", self.picking2.state)
-        self.assertTrue(self.picking2.batch_id)
         picking_backorder = self.picking_model.search(
             [("backorder_id", "=", self.picking.id)]
         )

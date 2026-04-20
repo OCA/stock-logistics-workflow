@@ -1,3 +1,4 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 access_stock_picking_batch_creator_group_field_user,access_stock_picking_batch_creator_group_field_user,model_stock_picking_batch_creator_group_field,stock.group_stock_user,1,1,1,1
 base.access_ir_model_fields_user,ir_model_fields all,base.model_ir_model_fields,base.group_user,1,0,0,0
+access_split_picking_from_batch_user,split_picking_from_batch,model_split_picking_from_batch,stock.group_stock_user,1,1,1,1

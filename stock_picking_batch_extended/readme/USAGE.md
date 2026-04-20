@@ -3,11 +3,11 @@ new fields added.
 
 ![](../static/batch_wizard.png)
 
-1.  Name: Allows to rename the batch. But be careful, if this is done,
-    it overwrites the name that Odoo assigns to the batch by default.
-2.  Notes: Allows to add notes to the batch.
-3.  Allows you to group the batch by the fields of the model
-    stock_picking
+1. Name: Allows to rename the batch. But be careful, if this is done,
+   it overwrites the name that Odoo assigns to the batch by default.
+2. Notes: Allows to add notes to the batch.
+3. Allows you to group the batch by the fields of the model
+   stock_picking
 
 Adds to the form view of batch picking:
 
@@ -15,31 +15,31 @@ Adds to the form view of batch picking:
 
 ![](../static/batch_form_draft.png)
 
-1.  Delete all delivery notes in the batch whose status is not done or
-    canceled.
-2.  Print pickings.
-3.  Smart button with counting and access to pickings.
-4.  Rename the batch if it is in draft status.
-5.  Date. On which the batch picking is to be processed.
-6.  Notes. Reflects the notes that have been entered from the wizard and
-    allows you to modify them.
-7.  Delete all delivery notes from the batch whose status is not done or
-    canceled.
-8.  Allows to add more fields to the list of pickings.
+1. Delete all delivery notes in the batch whose status is not done or
+   canceled.
+2. Print pickings.
+3. Smart button with counting and access to pickings.
+4. Rename the batch if it is in draft status.
+5. Date. On which the batch picking is to be processed.
+6. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+7. Delete all delivery notes from the batch whose status is not done or
+   canceled.
+8. Allows to add more fields to the list of pickings.
 
 **"In progress" status:**
 
 ![](../static/batch_form_in_progress.png)
 
-1.  Delete all pickings in the batch whose status is not done or
-    cancelled.
-2.  Print pickings.
-3.  Smart button with counting and access to pickings.
-4.  Date. On which the batch picking is to be processed. It can be
-    changed in this state.
-5.  Notes. Reflects the notes that have been entered from the wizard and
-    allows you to modify them.
-6.  Allows to add more fields to the list of pickings.
+1. Delete all pickings in the batch whose status is not done or
+   cancelled.
+2. Print pickings.
+3. Smart button with counting and access to pickings.
+4. Date. On which the batch picking is to be processed. It can be
+   changed in this state.
+5. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+6. Allows to add more fields to the list of pickings.
 
 Note: If a batch is cancelled, it cancels all batch picks and sets the
 batch statuses to cancel as well only if the user has set the OCA batch
@@ -49,9 +49,25 @@ validation approach in the inventory settings.
 
 ![](../static/batch_form_done.png)
 
-1.  Print pickings.
-2.  Smart button with counting and access to pickings.
-3.  Date. On which the batch picking is to be processed. Already it
-    can’t be modified in this state.
-4.  Notes. Reflects the notes that have been entered from the wizard and
-    allows you to modify them.
+1. Print pickings.
+2. Smart button with counting and access to pickings.
+3. Date. On which the batch picking is to be processed. Already it
+   can’t be modified in this state.
+4. Notes. Reflects the notes that have been entered from the wizard and
+   allows you to modify them.
+
+**Split pickings in batch**
+
+![split_pickings_batch](../static/split_pickings_batch.png)
+
+1. Go to Inventory > Operations > Batch Transfers
+2. Create new batch transfer.
+3. If there are transfers associated with the batch and the *Split Transfers From Batch* setting
+   is selected, the *Split Pickings* button will be displayed.
+4. Clicking on the button will open a wizard with all the available moves.
+
+![split_pickings_batch_wizard](../static/split_pickings_batch_wizard.png)
+
+5. Modify the quantities and confirm; backorders will then be created if necessary.
+   These new picks will not be associated with the batch.
+6. Batch movements are updated with the new quantities.

@@ -10,7 +10,7 @@
             <field name="user_id" position="after">
                 <field name="date" readonly="state not in ('draft', 'in_progress')" />
                 <field name="use_oca_batch_validation" invisible="1" />
-
+                <field name="split_transfers_from_batch" invisible="1" />
             </field>
             <xpath expr="//header//field[@name='state']" position="before">
                 <button
@@ -26,6 +26,13 @@
                     type="object"
                     class="oe_highlight"
                     invisible="not use_oca_batch_validation"
+                />
+                <button
+                    name="action_split_picking"
+                    string="Split Pickings"
+                    type="object"
+                    class="oe_highlight"
+                    invisible="state in ('done','cancel') or not split_transfers_from_batch"
                 />
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
