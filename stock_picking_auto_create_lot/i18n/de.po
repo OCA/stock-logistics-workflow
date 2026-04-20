@@ -6,20 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-04-20 09:45+0000\n"
+"Last-Translator: Judith Massa <jsmassa@users.noreply.translation.odoo-"
+"community.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
 msgid "Auto Create Lot"
-msgstr ""
+msgstr "Lose automatisch erstellen"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__display_name
@@ -28,7 +31,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__id
@@ -37,29 +40,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Vorgangsart"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Produktbewegungen (Lagerbuchung)"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Lagerbuchung"
 
 #. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
