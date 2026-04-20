@@ -8,3 +8,4 @@ class Company(models.Model):
     _inherit = "res.company"
 
     use_oca_batch_validation = fields.Boolean()
+    split_transfers_from_batch = fields.Boolean(default=False)

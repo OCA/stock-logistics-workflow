@@ -395,6 +395,10 @@ deactivate which approach for batch handling will be used per company.
 By default after installation this option will be activated for all
 companies.</p>
 <p><img alt="config_image" src="https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/picking_batch_configuration_settings.png" /></p>
+<p>In Inventory/Configuration, you can enable the Split Transfers From
+Batch option, which allows you to define new quantities for
+batch-related transactions using a wizard.</p>
+<p><img alt="split_pickings_batch_settings" src="https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch_settings.png" /></p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -449,6 +453,23 @@ validation approach in the inventory settings.</p>
 be modified in this state.</li>
 <li>Notes. Reflects the notes that have been entered from the wizard and
 allows you to modify them.</li>
+</ol>
+<p><strong>Split pickings in batch</strong></p>
+<p><img alt="split_pickings_batch" src="https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch.png" /></p>
+<ol class="arabic simple">
+<li>Go to Inventory &gt; Operations &gt; Batch Transfers</li>
+<li>Create new batch transfer.</li>
+<li>If there are transfers associated with the batch and the <em>Split
+Transfers From Batch</em> setting is selected, the <em>Split Pickings</em>
+button will be displayed.</li>
+<li>Clicking on the button will open a wizard with all the available
+moves.</li>
+</ol>
+<p><img alt="split_pickings_batch_wizard" src="https://raw.githubusercontent.com/OCA/stock-logistics-workflow/17.0/stock_picking_batch_extended/static/split_pickings_batch_wizard.png" /></p>
+<ol class="arabic simple" start="5">
+<li>Modify the quantities and confirm; backorders will then be created if
+necessary. These new picks will not be associated with the batch.</li>
+<li>Batch movements are updated with the new quantities.</li>
 </ol>
 </div>
 <div class="section" id="bug-tracker">

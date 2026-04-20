@@ -1,7 +1,7 @@
 # Copyright 2012-2014 Alexandre Fayolle, Camptocamp SA
 # Copyright 2018-2020 Tecnativa - Carlos Dauden
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -37,6 +37,17 @@ class StockPickingBatch(models.Model):
         string="# Pickings",
         compute="_compute_picking_count",
     )
+    split_transfers_from_batch = fields.Boolean(
+        compute="_compute_split_transfers_from_batch",
+        copy=False,
+    )
+
+    @api.depends_context("company")
+    def _compute_split_transfers_from_batch(self):
+        for batch in self:
+            batch.split_transfers_from_batch = (
+                batch.env.company.split_transfers_from_batch
+            )
 
     def _compute_picking_count(self):
         """Calculate number of pickings."""
@@ -109,3 +120,22 @@ class StockPickingBatch(models.Model):
         action["context"]["parent"] = self
         action["domain"] = [("id", "in", self.move_line_ids.ids)]
         return action
+
+    def action_split_picking(self):
+        view = self.env.ref(
+            "stock_picking_batch_extended.split_picking_from_batch_view_form"
+        )
+        return {
+            "name": _("Split pickings"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "split.picking.from.batch",
+            "views": [(view.id, "form")],
+            "view_id": view.id,
+            "target": "new",
+            "context": dict(
+                self.env.context,
+                default_move_ids=self.mapped("move_ids.id"),
+                default_picking_batch_id=self.id,
+            ),
+        }
