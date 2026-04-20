@@ -23,6 +23,7 @@
         "views/res_config_settings_views.xml",
         "reports/report_batch_picking.xml",
         "wizards/stock_picking_to_batch_views.xml",
+        "wizards/split_picking_from_batch_views.xml",
     ],
     "installable": True,
     "post_init_hook": "post_init_hook",

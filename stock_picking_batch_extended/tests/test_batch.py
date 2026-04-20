@@ -1,7 +1,7 @@
 # Copyright 2018 Tecnativa - Carlos Dauden
 from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests import Form
+from odoo.tests import Form, new_test_user
 from odoo.tests.common import tagged
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -43,6 +43,9 @@ class TestBatchPicking(BaseCommon):
                     Command.link(cls.picking2.id),
                 ],
             }
+        )
+        cls.stock_user = new_test_user(
+            cls.env, "test_stock_user", groups="stock.group_stock_user"
         )
 
     @classmethod
@@ -378,11 +381,10 @@ class TestBatchPicking(BaseCommon):
         self.assertEqual(len(back_order_wizard.pick_ids), 2)
         back_order_wizard.process()
         self.batch.remove_undone_pickings()
-        self.assertEqual(len(self.batch.picking_ids), 2)
+        self.assertEqual(set(self.batch.picking_ids.mapped("state")), {"done"})
         self.assertEqual("done", self.picking.state)
         # Second picking is filled and his state is done too
         self.assertEqual("done", self.picking2.state)
-        self.assertTrue(self.picking2.batch_id)
         picking_backorder = self.picking_model.search(
             [("backorder_id", "=", self.picking.id)]
         )
@@ -425,3 +427,49 @@ class TestBatchPicking(BaseCommon):
         # Test if group field create_date has been stored into config
         # parameters
         self.assertEqual(origin_field, wiz.load_store_fields())
+
+    def test_split_transfers_from_batch_setting(self):
+        self.assertFalse(self.batch.split_transfers_from_batch)
+        self.env["res.config.settings"].create(
+            {"split_transfers_from_batch": True}
+        ).execute()
+        self.assertTrue(self.env.company.split_transfers_from_batch)
+        self.batch.invalidate_recordset(["split_transfers_from_batch"])
+        self.assertTrue(self.batch.split_transfers_from_batch)
+
+    def test_split_picking(self):
+        self.batch.action_assign()
+        move6 = self.picking.move_ids.filtered(lambda m: m.product_id == self.product6)
+        move7 = self.picking.move_ids.filtered(lambda m: m.product_id == self.product7)
+        move6.quantity = 4
+        move7.quantity = 3
+        batch = self.batch.with_user(self.stock_user)
+        action = batch.action_split_picking()
+        self.assertEqual(action["res_model"], "split.picking.from.batch")
+        wizard = Form(
+            self.env[action["res_model"]]
+            .with_user(self.stock_user)
+            .with_context(**action["context"])
+        ).save()
+        self.assertEqual(wizard.picking_batch_id, self.batch)
+        self.assertEqual(wizard.move_ids, self.batch.move_ids)
+        wizard.split_pickings()
+        self.assertEqual(move6.product_uom_qty, 4)
+        self.assertEqual(move7.product_uom_qty, 3)
+        backorder = self.picking_model.search([("backorder_id", "=", self.picking.id)])
+        self.assertEqual(len(backorder), 1)
+        self.assertFalse(backorder.batch_id)
+        self.assertEqual(backorder.move_ids.product_id, self.product6 + self.product7)
+        backorder_move6 = backorder.move_ids.filtered(
+            lambda m: m.product_id == self.product6
+        )
+        backorder_move7 = backorder.move_ids.filtered(
+            lambda m: m.product_id == self.product7
+        )
+        self.assertEqual(backorder_move6.product_uom_qty, 6)
+        self.assertEqual(backorder_move7.product_uom_qty, 7)
+        self.assertEqual(self.batch.picking_ids, self.picking + self.picking2)
+        self.assertFalse(
+            self.picking_model.search([("backorder_id", "=", self.picking2.id)])
+        )
+        self.assertEqual(self.picking2.move_ids.mapped("product_uom_qty"), [10, 10])

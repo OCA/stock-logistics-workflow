@@ -12,3 +12,8 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.use_oca_batch_validation",
         readonly=False,
     )
+
+    split_transfers_from_batch = fields.Boolean(
+        related="company_id.split_transfers_from_batch",
+        readonly=False,
+    )
