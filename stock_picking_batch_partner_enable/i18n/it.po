@@ -6,38 +6,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-04-21 09:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_res_partner__allow_batch_grouping
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_res_users__allow_batch_grouping
 msgid "Allowed for Automatic Batch grouping"
-msgstr ""
+msgstr "Abilitato per il raggruppamento lotto automatico"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model,name:stock_picking_batch_partner_enable.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_res_partner__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_stock_picking_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_res_partner__id
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_picking_batch_partner_enable.field_stock_picking_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model.fields,help:stock_picking_batch_partner_enable.field_res_partner__allow_batch_grouping
@@ -46,6 +48,9 @@ msgid ""
 "If disabled, pickings for this partner will not be automatically grouped  "
 "into batches, even when the operation type has 'Automatic Batches' enabled."
 msgstr ""
+"Se disabilitata, i prelievi per questo partner non verrà raggruppata "
+"automaticamente in lotti, nemmeno quando il tipo di operazione prevede "
+"l'opzione \"Lotti automatici\" abilitata."
 
 #. module: stock_picking_batch_partner_enable
 #. odoo-python
@@ -54,13 +59,15 @@ msgid ""
 "Note: Partners must be 'Allowed for batch grouping' for the picking to be "
 "included in batches."
 msgstr ""
+"Nota: i partner devono essere \"Autorizzato al raggruppamento in lotti\" "
+"affinché il prelievo venga incluso nei lotti."
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model,name:stock_picking_batch_partner_enable.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo prelievo"
 
 #. module: stock_picking_batch_partner_enable
 #: model:ir.model,name:stock_picking_batch_partner_enable.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
