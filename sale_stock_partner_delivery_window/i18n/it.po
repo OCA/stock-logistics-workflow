@@ -1,0 +1,70 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_stock_partner_delivery_window
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: sale_stock_partner_delivery_window
+#: model:ir.model,name:sale_stock_partner_delivery_window.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#. odoo-python
+#: code:addons/sale_stock_partner_delivery_window/models/sale_order.py:0
+msgid "Customer delivery preference not met"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_res_partner__display_name
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_res_partner__id
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_stock_partner_delivery_window.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#. odoo-python
+#: code:addons/sale_stock_partner_delivery_window/models/res_partner.py:0
+msgid "Invalid delivery time preference: %s"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#. odoo-python
+#: code:addons/sale_stock_partner_delivery_window/models/res_partner.py:0
+msgid "No available delivery date found"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#: model:ir.model,name:sale_stock_partner_delivery_window.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#: model:ir.model,name:sale_stock_partner_delivery_window.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: sale_stock_partner_delivery_window
+#. odoo-python
+#: code:addons/sale_stock_partner_delivery_window/models/sale_order.py:0
+msgid ""
+"The requested date doesn't fit with the customer delivery preference. The "
+"next available delivery date is %(next_date)s."
+msgstr ""
