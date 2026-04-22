@@ -1,0 +1,1 @@
+The module adds archiving capabilities on stock.quant.package model
