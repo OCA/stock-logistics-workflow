@@ -1,0 +1,35 @@
+<odoo>
+    <record id="stock.access_stock_scrap_user" model="ir.model.access">
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+    </record>
+    <record id="stock.access_stock_scrap_manager" model="ir.model.access">
+        <field name="perm_write" eval="0" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+    <record id="module_category_stock_scrap" model="ir.module.category">
+        <field name="name">Stock Scrap</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="group_stock_scrap_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]" />
+        <field name="category_id" ref="module_category_stock_scrap" />
+    </record>
+    <record id="group_stock_scrap_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('stock_scrap_security.group_stock_scrap_user'))]"
+        />
+        <field name="category_id" ref="module_category_stock_scrap" />
+        <field
+            name="users"
+            eval="[
+                Command.link(ref('base.user_root')),
+                Command.link(ref('base.user_admin'))
+            ]"
+        />
+    </record>
+</odoo>

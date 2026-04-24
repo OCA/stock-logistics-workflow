@@ -1,0 +1,8 @@
+<odoo>
+    <record id="stock.action_scrap" model="ir.actions.server">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('stock_scrap_security.group_stock_scrap_user'))]"
+        />
+    </record>
+</odoo>
