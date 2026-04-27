@@ -30,12 +30,30 @@ class StockMove(models.Model):
                     stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
         return res
 
+    def _is_purchase_invoice_link_candidate(self):
+        """Whether this move can be linked to a vendor bill or refund.
+
+        Accepted endpoints:
+        - supplier locations (standard PO receipts/returns)
+        - transit locations (intercompany flows route through transit)
+        - subcontracting locations (receipts from a subcontractor; the
+          location is internal but flagged via ``is_subcontracting_location``,
+          which is provided by ``mrp_subcontracting`` when installed)
+        """
+        self.ensure_one()
+        if self.state != "done" or self.scrapped:
+            return False
+        accepted_usages = ("supplier", "transit")
+        if self.location_id.usage in accepted_usages or getattr(
+            self.location_id, "is_subcontracting_location", False
+        ):
+            return True
+        if self.to_refund and (
+            self.location_dest_id.usage in accepted_usages
+            or getattr(self.location_dest_id, "is_subcontracting_location", False)
+        ):
+            return True
+        return False
+
     def get_moves_link_invoice(self):
-        return self.filtered(
-            lambda x: x.state == "done"
-            and not x.scrapped
-            and (
-                x.location_id.usage == "supplier"
-                or (x.location_dest_id.usage == "supplier" and x.to_refund)
-            )
-        )
+        return self.filtered(lambda m: m._is_purchase_invoice_link_candidate())

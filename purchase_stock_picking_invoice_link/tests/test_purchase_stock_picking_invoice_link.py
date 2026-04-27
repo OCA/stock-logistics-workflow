@@ -181,6 +181,75 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         backorder_picking.button_validate()
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
 
+    def test_intercompany_transit_link(self):
+        """Receipts routed from a transit location must be linked to the
+        vendor bill line. Reproduces the intercompany purchase case where
+        the move starts from a transit location instead of a supplier
+        location.
+        """
+        transit_location = self.env["stock.location"].create(
+            {
+                "name": "Test Transit Location",
+                "usage": "transit",
+                "company_id": False,
+            }
+        )
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_ids.write({"location_id": transit_location.id})
+        picking.write({"location_id": transit_location.id})
+        picking.move_line_ids.write(
+            {"location_id": transit_location.id, "quantity": 1.0}
+        )
+        picking.button_validate()
+        inv_action = self.po.action_create_invoice()
+        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
+        invoice.invoice_date = self.po.create_date
+        invoice._compute_picking_ids()
+        invoice.action_post()
+        line = invoice.invoice_line_ids
+        self.assertEqual(
+            line.mapped("move_line_ids").mapped("move_line_ids"),
+            picking.move_line_ids,
+        )
+        self.assertEqual(picking.invoice_ids, invoice)
+
+    def test_subcontracting_receipt_link(self):
+        """Receipts from a subcontracting location must be linked to the
+        vendor bill line. The subcontract location's usage is 'internal'
+        but ``is_subcontracting_location`` is True; that boolean is what
+        gates the link.
+        """
+        if "is_subcontracting_location" not in self.env["stock.location"]._fields:
+            self.skipTest("mrp_subcontracting not installed")
+        subcontract_location = self.env["stock.location"].create(
+            {
+                "name": "Test Subcontract Location",
+                "usage": "internal",
+                "is_subcontracting_location": True,
+                "company_id": self.env.company.id,
+            }
+        )
+        self.po.button_confirm()
+        picking = self.po.picking_ids[0]
+        picking.move_ids.write({"location_id": subcontract_location.id})
+        picking.write({"location_id": subcontract_location.id})
+        picking.move_line_ids.write(
+            {"location_id": subcontract_location.id, "quantity": 1.0}
+        )
+        picking.button_validate()
+        inv_action = self.po.action_create_invoice()
+        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
+        invoice.invoice_date = self.po.create_date
+        invoice._compute_picking_ids()
+        invoice.action_post()
+        line = invoice.invoice_line_ids
+        self.assertEqual(
+            line.mapped("move_line_ids").mapped("move_line_ids"),
+            picking.move_line_ids,
+        )
+        self.assertEqual(picking.invoice_ids, invoice)
+
     def test_partial_invoice_full_link(self):
         """Check that the partial invoices are linked to the stock
         picking.
