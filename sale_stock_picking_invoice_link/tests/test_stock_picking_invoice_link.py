@@ -392,6 +392,38 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             return_pick.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
 
+    def test_intercompany_transit_link(self):
+        """Deliveries routed to a transit location must be linked to the
+        invoice line. Reproduces the intercompany sale case where the move
+        ends in a transit location instead of a customer location.
+        """
+        transit_location = self.env["stock.location"].create(
+            {
+                "name": "Test Transit Location",
+                "usage": "transit",
+                "company_id": False,
+            }
+        )
+        pick = self.so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned", "partially_available")
+        )
+        pick.move_ids.write({"location_dest_id": transit_location.id})
+        pick.write({"location_dest_id": transit_location.id})
+        pick.move_line_ids.write(
+            {"location_dest_id": transit_location.id, "quantity": 2}
+        )
+        pick.button_validate()
+        inv = self.so._create_invoices()
+        inv_line_prod_del = inv.invoice_line_ids.filtered(
+            lambda line: line.product_id == self.prod_del
+        )
+        self.assertEqual(
+            inv_line_prod_del.move_line_ids,
+            pick.move_ids.filtered(lambda m: m.product_id == self.prod_del),
+        )
+        self.assertEqual(inv.picking_ids, pick)
+
     def test_link_transfer_after_invoice_creation(self):
         self.prod_order.invoice_policy = "order"
         # Create new sale.order to get the change on invoice policy

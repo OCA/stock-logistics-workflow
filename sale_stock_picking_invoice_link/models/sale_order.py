@@ -17,17 +17,7 @@ class SaleOrderLine(models.Model):
         for stock_move in self.move_ids.sorted(
             lambda m: (m.write_date, m.id), reverse=True
         ):
-            if (
-                stock_move.state != "done"
-                or stock_move.scrapped
-                or (
-                    stock_move.location_dest_id.usage != "customer"
-                    and (
-                        stock_move.location_id.usage != "customer"
-                        or not stock_move.to_refund
-                    )
-                )
-            ):
+            if not stock_move._is_sale_invoice_link_candidate():
                 continue
             if not stock_move.invoice_line_ids:
                 to_invoice -= (
