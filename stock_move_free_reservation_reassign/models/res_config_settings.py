@@ -8,8 +8,7 @@ class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
     reassign_stock_move_after_free_reservation = fields.Boolean(
-        "Automatically reassign stock move after free reservation due to "
-        "inventory adjustment",
+        "Reassign moves unreserved by inventories",
         default=False,
         config_parameter="stock_move_free_reservation_reassign."
         "reassign_stock_move_after_free_reservation",

@@ -12,7 +12,7 @@ class TestStockMoveFreeReservationReassign(TransactionCase):
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create(
-            {"name": "Product A", "type": "product"}
+            {"name": "Product A", "is_storable": True}
         )
         cls.location_1 = cls.env["stock.location"].create(
             {
@@ -32,6 +32,10 @@ class TestStockMoveFreeReservationReassign(TransactionCase):
         cls.partner = cls.env["res.partner"].create({"name": "Partner"})
         cls._set_qty_in_location(cls.product, cls.location_1, 10.0)
         cls._set_qty_in_location(cls.product, cls.location_2, 10.0)
+        # Workaround regarding TransactionCase.check_attrs which intercepts
+        # lived-patched methods as new attributes
+        cls.attrs_before["stock.move"].add("_recompute_state")
+        cls.attrs_before["stock.move.line"].add("_free_reservation")
 
     @classmethod
     def _set_qty_in_location(cls, product, location, quantity):
@@ -97,9 +101,17 @@ class TestStockMoveFreeReservationReassign(TransactionCase):
         move = self._create_move_picking_out(self.product, 10.0)
         move._action_assign()
         self.assertEqual(move.state, "assigned")
-        # make an inventory on the reserved location
+        # NOTE: Odoo 17.0 is able to re-assign unreserved moves, but it depends
+        # on the order the lines/quants are processed, so there is no guarantee
+        # it'll be able to re-assign the expected moves.
+        #   => To ensure that behavior, we do another inventory on the 2nd location
+        #      if the move is still assigned after the 1st one.
         initial_location = move.move_line_ids.location_id
         self._make_location_inventory(self.product, initial_location, 0)
+        if move.state == "assigned":
+            new_location = move.move_line_ids.location_id
+            self._make_location_inventory(self.product, new_location, 0)
+            self._make_location_inventory(self.product, initial_location, 10)
         self.assertEqual(self.product.qty_available, 10.0)
-        # the move should still be assigned but a new move should be created
+        # the move should be unassigned
         self.assertEqual(move.state, "confirmed")
