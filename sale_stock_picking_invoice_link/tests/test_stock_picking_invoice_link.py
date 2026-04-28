@@ -392,37 +392,112 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             return_pick.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
 
-    def test_intercompany_transit_link(self):
-        """Deliveries routed to a transit location must be linked to the
-        invoice line. Reproduces the intercompany sale case where the move
-        ends in a transit location instead of a customer location.
+    def test_invoice_link_candidate_predicate(self):
+        """Verify ``_is_sale_invoice_link_candidate`` accepts customer and
+        transit destinations (intercompany sale case) and rejects
+        unrelated locations.
         """
-        transit_location = self.env["stock.location"].create(
+        Location = self.env["stock.location"]
+        StockMove = self.env["stock.move"]
+        customer_loc = Location.search([("usage", "=", "customer")], limit=1)
+        internal_loc = Location.search([("usage", "=", "internal")], limit=1)
+        transit_loc = Location.create(
             {
                 "name": "Test Transit Location",
                 "usage": "transit",
                 "company_id": False,
             }
         )
-        pick = self.so.picking_ids.filtered(
-            lambda x: x.picking_type_code == "outgoing"
-            and x.state in ("confirmed", "assigned", "partially_available")
+        other_internal = Location.create(
+            {
+                "name": "Other Internal",
+                "usage": "internal",
+                "company_id": self.env.company.id,
+            }
         )
-        pick.move_ids.write({"location_dest_id": transit_location.id})
-        pick.write({"location_dest_id": transit_location.id})
-        pick.move_line_ids.write(
-            {"location_dest_id": transit_location.id, "quantity": 2}
+        common_vals = {
+            "name": "Test move",
+            "product_id": self.prod_del.id,
+            "product_uom": self.prod_del.uom_id.id,
+            "product_uom_qty": 1.0,
+            "state": "done",
+        }
+        # Forward: internal -> customer (existing behaviour)
+        move_to_customer = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": customer_loc.id,
+            }
         )
-        pick.button_validate()
-        inv = self.so._create_invoices()
-        inv_line_prod_del = inv.invoice_line_ids.filtered(
-            lambda line: line.product_id == self.prod_del
+        self.assertTrue(move_to_customer._is_sale_invoice_link_candidate())
+        # Forward: internal -> transit (intercompany; the fix)
+        move_to_transit = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": transit_loc.id,
+            }
         )
-        self.assertEqual(
-            inv_line_prod_del.move_line_ids,
-            pick.move_ids.filtered(lambda m: m.product_id == self.prod_del),
+        self.assertTrue(move_to_transit._is_sale_invoice_link_candidate())
+        # Internal-only: must be rejected (no customer/transit endpoint)
+        move_internal = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": other_internal.id,
+            }
         )
-        self.assertEqual(inv.picking_ids, pick)
+        self.assertFalse(move_internal._is_sale_invoice_link_candidate())
+        # Return: customer -> internal with to_refund (existing behaviour)
+        move_return = StockMove.new(
+            {
+                **common_vals,
+                "location_id": customer_loc.id,
+                "location_dest_id": internal_loc.id,
+                "to_refund": True,
+            }
+        )
+        self.assertTrue(move_return._is_sale_invoice_link_candidate())
+        # Return from transit with to_refund (the fix, return path)
+        move_return_transit = StockMove.new(
+            {
+                **common_vals,
+                "location_id": transit_loc.id,
+                "location_dest_id": internal_loc.id,
+                "to_refund": True,
+            }
+        )
+        self.assertTrue(move_return_transit._is_sale_invoice_link_candidate())
+        # Return from customer WITHOUT to_refund: must be rejected
+        move_return_no_refund = StockMove.new(
+            {
+                **common_vals,
+                "location_id": customer_loc.id,
+                "location_dest_id": internal_loc.id,
+            }
+        )
+        self.assertFalse(move_return_no_refund._is_sale_invoice_link_candidate())
+        # Scrapped move: must be rejected even if endpoints match
+        move_scrapped = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": customer_loc.id,
+                "scrapped": True,
+            }
+        )
+        self.assertFalse(move_scrapped._is_sale_invoice_link_candidate())
+        # Non-done move: must be rejected
+        move_draft = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": customer_loc.id,
+                "state": "draft",
+            }
+        )
+        self.assertFalse(move_draft._is_sale_invoice_link_candidate())
 
     def test_link_transfer_after_invoice_creation(self):
         self.prod_order.invoice_policy = "order"

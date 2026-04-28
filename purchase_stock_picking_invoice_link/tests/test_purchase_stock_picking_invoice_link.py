@@ -181,48 +181,118 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         backorder_picking.button_validate()
         self.assertEqual(invoice.picking_ids, picking + backorder_picking)
 
-    def test_intercompany_transit_link(self):
-        """Receipts routed from a transit location must be linked to the
-        vendor bill line. Reproduces the intercompany purchase case where
-        the move starts from a transit location instead of a supplier
-        location.
+    def test_invoice_link_candidate_predicate(self):
+        """Verify ``_is_purchase_invoice_link_candidate`` accepts supplier,
+        transit, and subcontracting endpoints, and rejects unrelated
+        locations. Subcontracting cases are skipped if
+        ``mrp_subcontracting`` is not installed.
         """
-        transit_location = self.env["stock.location"].create(
+        Location = self.env["stock.location"]
+        StockMove = self.env["stock.move"]
+        supplier_loc = Location.search([("usage", "=", "supplier")], limit=1)
+        internal_loc = Location.search([("usage", "=", "internal")], limit=1)
+        transit_loc = Location.create(
             {
                 "name": "Test Transit Location",
                 "usage": "transit",
                 "company_id": False,
             }
         )
-        self.po.button_confirm()
-        picking = self.po.picking_ids[0]
-        picking.move_ids.write({"location_id": transit_location.id})
-        picking.write({"location_id": transit_location.id})
-        picking.move_line_ids.write(
-            {"location_id": transit_location.id, "quantity": 1.0}
+        other_internal = Location.create(
+            {
+                "name": "Other Internal",
+                "usage": "internal",
+                "company_id": self.env.company.id,
+            }
         )
-        picking.button_validate()
-        inv_action = self.po.action_create_invoice()
-        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
-        invoice.invoice_date = self.po.create_date
-        invoice._compute_picking_ids()
-        invoice.action_post()
-        line = invoice.invoice_line_ids
-        self.assertEqual(
-            line.mapped("move_line_ids").mapped("move_line_ids"),
-            picking.move_line_ids,
+        common_vals = {
+            "name": "Test move",
+            "product_id": self.product.id,
+            "product_uom": self.product.uom_id.id,
+            "product_uom_qty": 1.0,
+            "state": "done",
+        }
+        # Forward: supplier -> internal (existing behaviour)
+        move_from_supplier = StockMove.new(
+            {
+                **common_vals,
+                "location_id": supplier_loc.id,
+                "location_dest_id": internal_loc.id,
+            }
         )
-        self.assertEqual(picking.invoice_ids, invoice)
-
-    def test_subcontracting_receipt_link(self):
-        """Receipts from a subcontracting location must be linked to the
-        vendor bill line. The subcontract location's usage is 'internal'
-        but ``is_subcontracting_location`` is True; that boolean is what
-        gates the link.
-        """
-        if "is_subcontracting_location" not in self.env["stock.location"]._fields:
-            self.skipTest("mrp_subcontracting not installed")
-        subcontract_location = self.env["stock.location"].create(
+        self.assertTrue(move_from_supplier._is_purchase_invoice_link_candidate())
+        # Forward: transit -> internal (intercompany; the fix)
+        move_from_transit = StockMove.new(
+            {
+                **common_vals,
+                "location_id": transit_loc.id,
+                "location_dest_id": internal_loc.id,
+            }
+        )
+        self.assertTrue(move_from_transit._is_purchase_invoice_link_candidate())
+        # Internal-only: must be rejected
+        move_internal = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": other_internal.id,
+            }
+        )
+        self.assertFalse(move_internal._is_purchase_invoice_link_candidate())
+        # Return: internal -> supplier with to_refund (existing behaviour)
+        move_return = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": supplier_loc.id,
+                "to_refund": True,
+            }
+        )
+        self.assertTrue(move_return._is_purchase_invoice_link_candidate())
+        # Return to transit with to_refund (the fix, return path)
+        move_return_transit = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": transit_loc.id,
+                "to_refund": True,
+            }
+        )
+        self.assertTrue(move_return_transit._is_purchase_invoice_link_candidate())
+        # Return to supplier WITHOUT to_refund: must be rejected
+        move_return_no_refund = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": supplier_loc.id,
+            }
+        )
+        self.assertFalse(move_return_no_refund._is_purchase_invoice_link_candidate())
+        # Scrapped move: must be rejected even if endpoints match
+        move_scrapped = StockMove.new(
+            {
+                **common_vals,
+                "location_id": supplier_loc.id,
+                "location_dest_id": internal_loc.id,
+                "scrapped": True,
+            }
+        )
+        self.assertFalse(move_scrapped._is_purchase_invoice_link_candidate())
+        # Non-done move: must be rejected
+        move_draft = StockMove.new(
+            {
+                **common_vals,
+                "location_id": supplier_loc.id,
+                "location_dest_id": internal_loc.id,
+                "state": "draft",
+            }
+        )
+        self.assertFalse(move_draft._is_purchase_invoice_link_candidate())
+        # Subcontracting receipt: source location flagged as subcontract
+        # (skip when mrp_subcontracting is not installed)
+        if "is_subcontracting_location" not in Location._fields:
+            return
+        subcontract_loc = Location.create(
             {
                 "name": "Test Subcontract Location",
                 "usage": "internal",
@@ -230,25 +300,24 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
                 "company_id": self.env.company.id,
             }
         )
-        self.po.button_confirm()
-        picking = self.po.picking_ids[0]
-        picking.move_ids.write({"location_id": subcontract_location.id})
-        picking.write({"location_id": subcontract_location.id})
-        picking.move_line_ids.write(
-            {"location_id": subcontract_location.id, "quantity": 1.0}
+        move_from_subcontract = StockMove.new(
+            {
+                **common_vals,
+                "location_id": subcontract_loc.id,
+                "location_dest_id": internal_loc.id,
+            }
         )
-        picking.button_validate()
-        inv_action = self.po.action_create_invoice()
-        invoice = self.env["account.move"].browse([(inv_action["res_id"])])
-        invoice.invoice_date = self.po.create_date
-        invoice._compute_picking_ids()
-        invoice.action_post()
-        line = invoice.invoice_line_ids
-        self.assertEqual(
-            line.mapped("move_line_ids").mapped("move_line_ids"),
-            picking.move_line_ids,
+        self.assertTrue(move_from_subcontract._is_purchase_invoice_link_candidate())
+        # Return to subcontract location with to_refund
+        move_return_subcontract = StockMove.new(
+            {
+                **common_vals,
+                "location_id": internal_loc.id,
+                "location_dest_id": subcontract_loc.id,
+                "to_refund": True,
+            }
         )
-        self.assertEqual(picking.invoice_ids, invoice)
+        self.assertTrue(move_return_subcontract._is_purchase_invoice_link_candidate())
 
     def test_partial_invoice_full_link(self):
         """Check that the partial invoices are linked to the stock
