@@ -19,7 +19,7 @@ class StockPicking(models.Model):
                 # try to validate operation
                 reviews = rec.request_validation()
                 rec._validate_tier(reviews)
-                if self.validation_status != "validated":
+                if rec.validation_status != "validated":
                     raise ValidationError(
                         _(
                             "This action needs to be validated for at least "
