@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="vpicktree" model="ir.ui.view">
+        <field name="name">stock.picking.tree - stock_picking_origin_state</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="origin_state" column_invisible="1" />
+                <field
+                    name="origin_state_label"
+                    string="Origin State"
+                    optional="show"
+                    readonly="1"
+                    widget="badge"
+                    decoration-warning="origin_state in ('waiting', 'partially_available')"
+                    decoration-info="origin_state == 'assigned'"
+                    decoration-success="origin_state == 'done'"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>
