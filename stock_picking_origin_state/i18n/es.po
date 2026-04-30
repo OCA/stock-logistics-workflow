@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_origin_state
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-30 11:51+0000\n"
+"PO-Revision-Date: 2026-04-30 11:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields,help:stock_picking_origin_state.field_stock_picking__origin_state
+msgid ""
+"Aggregated state of the origin pickings. Reports the deepest level still "
+"active; once every origin picking is done, reports the closest origin as "
+"Done. Empty only when the picking has no origin pickings."
+msgstr ""
+"Estado agregado de los albaranes de origen. Reporta el nivel más profundo "
+"que aún está activo; una vez que todos los albaranes de origen estén "
+"realizados, reporta el origen más cercano como Hecho. Vacío solo cuando el "
+"albarán no tiene albaranes de origen."
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields,help:stock_picking_origin_state.field_stock_picking__origin_state_label
+msgid "Display string combining Origin Operation Type and Origin State"
+msgstr ""
+"Cadena de texto que combina el Tipo de operación de origen y el Estado del "
+"origen"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields.selection,name:stock_picking_origin_state.selection__stock_picking__origin_state__done
+msgid "Done"
+msgstr "Hecho"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields,field_description:stock_picking_origin_state.field_stock_picking__origin_state
+#: model_terms:ir.ui.view,arch_db:stock_picking_origin_state.vpicktree
+msgid "Origin State"
+msgstr "Estado del origen"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields,field_description:stock_picking_origin_state.field_stock_picking__origin_state_label
+msgid "Origin State Label"
+msgstr "Etiqueta del estado del origen"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields.selection,name:stock_picking_origin_state.selection__stock_picking__origin_state__partially_available
+msgid "Partially Available"
+msgstr "Parcialmente reservado"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields.selection,name:stock_picking_origin_state.selection__stock_picking__origin_state__assigned
+msgid "Ready"
+msgstr "Listo"
+
+#. module: stock_picking_origin_state
+#: model:ir.model,name:stock_picking_origin_state.model_stock_picking
+msgid "Transfer"
+msgstr "Albarán"
+
+#. module: stock_picking_origin_state
+#: model:ir.model.fields.selection,name:stock_picking_origin_state.selection__stock_picking__origin_state__waiting
+msgid "Waiting"
+msgstr "En espera"
