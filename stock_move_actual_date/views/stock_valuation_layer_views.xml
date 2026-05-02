@@ -19,4 +19,18 @@
             </xpath>
         </field>
     </record>
+    <record id="stock_valuation_layer_search" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.search</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.view_inventory_valuation_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='group_by_created_date']" position="before">
+                <filter
+                    string="Actual Date"
+                    name="group_by_actual_date"
+                    context="{'group_by': 'actual_date'}"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
