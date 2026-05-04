@@ -11,19 +11,32 @@ class StockMoveLine(models.Model):
 
     def _action_done(self):
         res = super()._action_done()
-        for line in self.exists():
+
+        # We must filter by .exists() because super() may unlink some move lines
+        existing_lines = self.exists()
+        restricted_lines = existing_lines.filtered(
+            lambda line: line.move_id.picking_type_id.put_in_pack_restriction
+        )
+
+        for line in restricted_lines:
             picking_type = line.move_id.picking_type_id
             restriction = picking_type.put_in_pack_restriction
-            if not restriction:
-                continue
-            line_has_package = bool(line.result_package_id)
-            if restriction == "no_package" and line_has_package:
+            has_package = bool(line.result_package_id)
+
+            if restriction == "no_package" and has_package:
                 raise ValidationError(
-                    _("Using a package on transfer type %s is not allowed.")
-                    % picking_type.name
+                    _(
+                        "Using a package on transfer type %(name)s is not allowed.",
+                        name=picking_type.display_name,
+                    )
                 )
-            if restriction == "with_package" and not line_has_package:
+
+            if restriction == "with_package" and not has_package:
                 raise ValidationError(
-                    _("A package is required for transfer type %s.") % picking_type.name
+                    _(
+                        "A package is required for transfer type %(name)s.",
+                        name=picking_type.display_name,
+                    )
                 )
+
         return res
