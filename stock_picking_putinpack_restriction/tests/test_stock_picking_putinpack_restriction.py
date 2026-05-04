@@ -2,11 +2,12 @@
 # Copyright 2024 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestStockPickingPutInPackRestriction(SavepointCase):
+class TestStockPickingPutInPackRestriction(TransactionCase):
     @classmethod
     def setUpClass(cls):
         """ """
@@ -27,7 +28,8 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
             10,
         )
         cls.picking = cls._create_picking()
-        cls.picking.move_lines.update({"quantity_done": 4.0})
+        cls.picking.action_confirm()
+        cls.picking.move_line_ids.write({"qty_done": 4.0})
 
     @classmethod
     def _create_picking(cls):
@@ -35,12 +37,10 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
             "location_id": cls.stock.id,
             "location_dest_id": cls.customers.id,
             "picking_type_id": cls.picking_type.id,
-            "move_lines": [
-                (
-                    0,
-                    0,
+            "move_ids": [
+                Command.create(
                     {
-                        "name": "Product Test",
+                        "name": cls.product.name,
                         "location_id": cls.stock.id,
                         "location_dest_id": cls.customers.id,
                         "product_id": cls.product.id,
@@ -67,7 +67,10 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
         self.picking.action_assign()
         self.assertEqual(self.picking.state, "assigned")
         self.picking.move_line_ids[0].qty_done = 5.0
-        msg = "A package is required for transfer type %s." % self.picking_type.name
+        msg = (
+            "A package is required for transfer type %s."
+            % self.picking_type.display_name
+        )
         with self.assertRaisesRegex(ValidationError, msg):
             self.picking._action_done()
         # Check it works without restriction
@@ -85,7 +88,7 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
         ].create({})
         msg = (
             "Using a package on transfer type %s is not allowed."
-            % self.picking_type.name
+            % self.picking_type.display_name
         )
         with self.assertRaisesRegex(ValidationError, msg):
             self.picking._action_done()
@@ -98,11 +101,11 @@ class TestStockPickingPutInPackRestriction(SavepointCase):
         self.picking_type.put_in_pack_restriction = "with_package"
         self.picking.action_assign()
         self.assertEqual(self.picking.state, "assigned")
-        line = self.picking.move_line_ids
-        qty_done = 1
-        new_line_vals = {"product_uom_qty": 4.0, "qty_done": 0}
-        line.copy(new_line_vals)
-        line.qty_done = qty_done
-        line.with_context(bypass_reservation_update=True).product_uom_qty = qty_done
-        line.result_package_id = self.env["stock.quant.package"].create({})
+        move = self.picking.move_ids
+        move.quantity_done = 1
+        new_move = self.env["stock.move"].create(move._split(4))
+        self.assertEqual(new_move.quantity_done, 0)
+        move.move_line_ids.result_package_id = self.env["stock.quant.package"].create(
+            {}
+        )
         self.picking._action_done()

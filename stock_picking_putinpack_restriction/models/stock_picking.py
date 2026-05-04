@@ -15,7 +15,9 @@ class StockPicking(models.Model):
     def _pre_put_in_pack_hook(self, move_line_ids):
         if "no_package" in self.picking_type_id.mapped("put_in_pack_restriction"):
             raise ValidationError(
-                _("Destination package can not be used with %s transfer.")
-                % self.picking_type_id.name
+                _(
+                    "Destination package can not be used with %(picking_type_name)s transfer.",
+                    picking_type_name=self.picking_type_id.name,
+                )
             )
         return super()._pre_put_in_pack_hook(move_line_ids)
