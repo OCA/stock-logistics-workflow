@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_line_sequence
+#
+# Translators:
+# Peter Hageman <hageman.p@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-03 03:56+0000\n"
+"PO-Revision-Date: 2026-02-28 14:09+0000\n"
+"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/"
+"23907/nl_NL/)\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: stock_picking_line_sequence
+#: model_terms:ir.ui.view,arch_db:stock_picking_line_sequence.report_delivery_document
+#, fuzzy
+msgid "<strong>Seq.</strong>"
+msgstr "<strong>Seq.</strong>"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__sequence
+msgid "HiddenSequence"
+msgstr "Verborgenvolgorde"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_picking__max_line_sequence
+msgid "Max sequence in lines"
+msgstr "Maximale volgorde in regels"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,field_description:stock_picking_line_sequence.field_stock_move__visible_sequence
+msgid "Sequence"
+msgstr "Volgorde"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model.fields,help:stock_picking_line_sequence.field_stock_move__visible_sequence
+msgid "Shows the sequence in the Stock Move."
+msgstr "Toont de volgorde nummer van deze verplaatsing op de voorraadpicking."
+
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_move
+msgid "Stock Move"
+msgstr "Voorraadmutatie"
+
+#. module: stock_picking_line_sequence
+#: model:ir.model,name:stock_picking_line_sequence.model_stock_picking
+msgid "Transfer"
+msgstr "Verplaats"
