@@ -38,15 +38,41 @@ class StockPicking(models.Model):
             self.date_done = max(dates)
         return True
 
-    def _backdating_update_stock_valuation_layers_date(self):
-        """Set date on linked stock.valuation.layer same as date on stock.move."""
-        self.ensure_one()
-        stock_moves = self.move_ids
-        stock_moves._backdating_stock_valuation_layers()
-        return True
-
     def _action_done(self):
+        # Capture per-move backdating dates BEFORE super, since move_lines
+        # may be recreated/unlinked during _action_done (losing date_backdating).
+        move_backdating = {}
+        for picking in self:
+            for move in picking.move_ids:
+                line = move.move_line_ids[:1]
+                if line.date_backdating:
+                    move_backdating[move.id] = line.date_backdating
+
         result = super()._action_done()
+
+        # After all super processing is complete, force the backdated date on
+        # the moves and their move_lines. This runs at picking level so it
+        # happens once the move-level _action_done, account move creation,
+        # and picking write of date_done are already done.
+        if move_backdating:
+            # Flush any pending ORM writes (notably move.date = now() set by
+            # stock._action_done) BEFORE our SQL UPDATE; otherwise a later
+            # flush would overwrite our backdated value.
+            self.env.flush_all()
+            for move_id, date_backdating in move_backdating.items():
+                self.env.cr.execute(
+                    "UPDATE stock_move SET date = %s WHERE id = %s",
+                    (date_backdating, move_id),
+                )
+                self.env.cr.execute(
+                    "UPDATE stock_move_line "
+                    "SET date = %s, date_backdating = %s "
+                    "WHERE move_id = %s",
+                    (date_backdating, date_backdating, move_id),
+                )
+            # Drop the cache without flushing again (we just flushed and the
+            # SQL UPDATE bypasses the ORM, so the cache is now stale).
+            self.env.invalidate_all(flush=False)
 
         pickings_backdate = self.filtered_domain(
             [
@@ -57,5 +83,4 @@ class StockPicking(models.Model):
         )
         for picking in pickings_backdate:
             picking._backdating_update_picking_date()
-            picking._backdating_update_stock_valuation_layers_date()
         return result

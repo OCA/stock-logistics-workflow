@@ -19,7 +19,7 @@ class StockScrap(models.Model):
     @api.onchange("date_backdating")
     def onchange_date_backdating(self):
         self.ensure_one()
-        check_date(self.date_backdating)
+        check_date(self, self.date_backdating)
 
     def _prepare_move_values(self):
         """Update backdating into stock move line"""
