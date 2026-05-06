@@ -137,7 +137,6 @@ class StockPickingNotificationTemplate(models.Model):
                 "res_model": "stock.picking",
                 "res_id": picking.id,
                 "view_mode": "form",
-                "view_type": "form",
                 "target": "current",
             },
             sound=self._get_sound_path(),

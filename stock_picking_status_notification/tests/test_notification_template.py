@@ -99,7 +99,7 @@ class TestStockNotifyPicking(TransactionCase):
 
         news = self.get_bus_notifications() - existing
         self.assertEqual(1, len(news))
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertEqual(payload["title"], picking.name)
         self.assertEqual(payload["action"]["res_id"], picking.id)
 
@@ -155,7 +155,7 @@ class TestStockNotifyPicking(TransactionCase):
 
         # only one notification was sent
         self.assertEqual(1, len(news))
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertEqual(payload["title"], picking.name)
         self.assertEqual(payload["message"], "test")
 
@@ -208,6 +208,6 @@ class TestStockNotifyPicking(TransactionCase):
         news = self.get_bus_notifications() - existing
 
         self.assertEqual(1, len(news))
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         # only second rule was applied
         self.assertEqual(payload["message"], "rule_2")

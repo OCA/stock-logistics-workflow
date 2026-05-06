@@ -14,20 +14,18 @@ class StockPicking(models.Model):
         "and to send a notification.",
     )
 
-    def _write(self, vals):
-        # We use the _write method instead of write because _write is a low-level implementation
-        # that bypasses certain restrictions related to computed fields. In this case, it is
-        # crucial to ensure that notifications are triggered correctly when the state of the
-        # picking changes, even if this field (state) was computed by dependent fields
-        if "state" in vals:
-            vals = dict(vals)
-            vals.setdefault("to_web_notify", True)
-
-        res = super()._write(vals)
+    def _write_multi(self, vals_list):
+        new_vals = list()
+        for vals in vals_list:
+            if "state" in vals:
+                vals = dict(vals)
+                vals.setdefault("to_web_notify", True)
+            new_vals.append(vals)
 
         dbname = self.env.cr.dbname
         context = self.env.context
         uid = self.env.uid
+        res = super()._write_multi(new_vals)
 
         # only the latest state needs to be sent
         @self.env.cr.postcommit.add
