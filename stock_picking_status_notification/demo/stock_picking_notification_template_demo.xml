@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record
         id="delivery_picking_notification_template1"
         model="stock.picking.notification.template"
@@ -18,5 +17,4 @@
         />
         <field name="filename">ting.mp3</field>
     </record>
-
 </odoo>
