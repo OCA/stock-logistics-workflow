@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_interwarehouse_transfer_user,stock.interwarehouse.transfer user,model_stock_interwarehouse_transfer,stock.group_stock_user,1,1,1,1
+access_stock_interwarehouse_transfer_line_user,stock.interwarehouse.transfer.line user,model_stock_interwarehouse_transfer_line,stock.group_stock_user,1,1,1,1
