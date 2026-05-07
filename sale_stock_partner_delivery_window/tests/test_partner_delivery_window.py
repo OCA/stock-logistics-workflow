@@ -42,7 +42,7 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
     def test_expected_date_anytime_with_sale_delay(self):
         """Customer with no preferences + product sale delay.
 
-        Expected date = order date + sale_delay (2 days: Thu → Sat).
+        Expected date = order date customer_anytime+ sale_delay (2 days: Thu → Sat).
         """
         self.product.sale_delay = 2
         order = self._create_order(self.customer_anytime)
@@ -256,3 +256,128 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         order = self._create_order(self.customer_time_window)
         with Form(order) as form, self.assertNoLogs("odoo.tests.form"):
             form.commitment_date = "2020-04-02 10:00:00"
+
+    @freeze_time("2020-04-01 10:00:00")  # Wednesday
+    def test_onchange_commitment_date_anytime_no_warning(self):
+        """Anytime delivery preference should never raise a warning."""
+        order = self._create_order(self.customer_anytime)
+
+        order.commitment_date = "2020-04-03 10:00:00"  # Friday
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertFalse(
+            warning,
+            "No warning should be raised for anytime delivery preference",
+        )
+
+    @freeze_time("2020-04-03 10:00:00")  # Friday
+    def test_onchange_commitment_date_workdays_warning(self):
+        """Workdays preference should warn for weekend commitment dates."""
+        order = self._create_order(self.customer_working_days)
+
+        order.commitment_date = "2020-04-04 10:00:00"  # Saturday
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertTrue(warning)
+        self.assertEqual(
+            warning["warning"]["title"],
+            "Customer delivery preference not met",
+        )
+        self.assertIn(
+            "next available delivery date is",
+            warning["warning"]["message"],
+        )
+
+    @freeze_time("2020-04-01 10:00:00")  # Wednesday
+    def test_onchange_commitment_date_time_window_warning(self):
+        """Time-window preference should warn for invalid delivery day.
+
+        Customer only accepts Thursday/Saturday deliveries.
+        Commitment date is Friday -> warning expected.
+        """
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2020-04-03 10:00:00"  # Friday
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertTrue(
+            warning,
+            "A warning should be returned for an invalid delivery day",
+        )
+
+        self.assertEqual(
+            warning["warning"]["title"],
+            "Customer delivery preference not met",
+        )
+
+        self.assertIn(
+            "next available delivery date is",
+            warning["warning"]["message"],
+        )
+
+    @freeze_time("2020-04-01 10:00:00")  # Wednesday
+    def test_onchange_commitment_date_time_window_no_warning(self):
+        """Time-window preference should not warn for valid delivery day."""
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2020-04-02 10:00:00"  # Thursday
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertFalse(
+            warning,
+            "No warning should be raised for a valid delivery date",
+        )
+
+    @freeze_time("2020-04-02 20:00:00")  # Thursday evening
+    def test_onchange_commitment_date_time_window_warning_outside_hours(self):
+        """Warn when commitment date is outside allowed delivery hours.
+
+        Delivery window: 14:00 -> 18:00
+        Commitment date: 20:00
+        """
+        self.customer_time_window.delivery_time_window_ids.write(
+            {
+                "time_window_start": 14.0,
+                "time_window_end": 18.0,
+            }
+        )
+
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2020-04-02 20:00:00"
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertTrue(
+            warning,
+            "A warning should be returned when outside delivery hours",
+        )
+
+        self.assertEqual(
+            warning["warning"]["title"],
+            "Customer delivery preference not met",
+        )
+
+        self.assertIn(
+            "next available delivery date is",
+            warning["warning"]["message"],
+        )
+
+    @freeze_time("2020-04-02 15:00:00")  # Thursday afternoon
+    def test_onchange_commitment_date_time_window_no_warning_inside_hours(self):
+        """No warning when commitment date fits allowed delivery hours."""
+        self.customer_time_window.delivery_time_window_ids.write(
+            {
+                "time_window_start": 14.0,
+                "time_window_end": 18.0,
+            }
+        )
+
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2020-04-02 15:00:00"
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertFalse(
+            warning,
+            "No warning should be raised inside delivery hours",
+        )
