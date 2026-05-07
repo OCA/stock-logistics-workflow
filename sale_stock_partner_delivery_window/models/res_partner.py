@@ -23,8 +23,8 @@ class ResPartner(models.Model):
         # Pre-compute the from_datetime, in case from_date is a `date`
         # We use the start of the day in the partner's timezone
         tz = pytz.timezone(self.tz or self.env.company.partner_id.tz or "UTC")
-        from_datetime_tz_aware = tz.localize(fields.Datetime.to_datetime(from_date))
-        from_datetime = from_datetime_tz_aware.astimezone(pytz.utc).replace(tzinfo=None)
+        from_datetime = fields.Datetime.to_datetime(from_date)
+        from_datetime_tz_aware = tz.localize(from_datetime)
         # If the delivery is anytime, simply return the from_datetime
         if self.delivery_time_preference == "anytime":
             return from_datetime
