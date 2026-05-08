@@ -15,16 +15,15 @@ class StockScrap(BaseCommon):
 
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
-        cls.categ_1 = cls.env.ref("product.product_category_all")
+        cls.categ_1 = cls.env.ref("product.product_category_goods")
         cls.categ_2 = cls.env["product.category"].create({"name": "Test category"})
         stock_location_locations_virtual = cls.env["stock.location"].create(
-            {"name": "Virtual Locations", "usage": "view", "posz": 1}
+            {"name": "Virtual Locations", "usage": "view"}
         )
         cls.scrapped_location = cls.env["stock.location"].create(
             {
                 "name": "Scrapped",
                 "location_id": stock_location_locations_virtual.id,
-                "scrap_location": True,
                 "usage": "inventory",
             }
         )
@@ -83,7 +82,6 @@ class StockScrap(BaseCommon):
         )
         move1 = self.env["stock.move"].create(
             {
-                "name": "A move to confirm and scrap its product",
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.customer_location.id,
                 "product_id": self.scrap_product.id,
@@ -143,7 +141,6 @@ class StockScrap(BaseCommon):
         )
         move2 = self.env["stock.move"].create(
             {
-                "name": "A move to confirm and scrap its product",
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.customer_location.id,
                 "product_id": self.scrap_product.id,

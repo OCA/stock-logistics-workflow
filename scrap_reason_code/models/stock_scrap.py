@@ -3,7 +3,7 @@
 # Copyright 2023 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -42,7 +42,7 @@ class StockScrap(models.Model):
                 and rec.reason_code_id not in rec.allowed_reason_code_ids
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "The selected reason code is not allowed for this "
                         "product category."
                     )
