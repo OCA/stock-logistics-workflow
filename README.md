@@ -59,6 +59,7 @@ addon | version | maintainers | summary
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 17.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
 [stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 17.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
 [stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 17.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
+[stock_picking_origin_state](stock_picking_origin_state/) | 17.0.1.0.0 |  | Expose the aggregated state of the origin pickings on a transfer
 [stock_picking_partner_note](stock_picking_partner_note/) | 17.0.1.0.0 |  | Add partner notes on picking
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 17.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_return_lot](stock_picking_return_lot/) | 17.0.1.0.0 |  | Propagate SN/lots from origin picking to return picking.
