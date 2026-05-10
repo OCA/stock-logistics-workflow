@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-03-12 01:06+0000\n"
-"Last-Translator: MartinLG3 <martinlg369@gmail.com>\n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: delivery_procurement_group_carrier
 #: model:ir.model.fields,field_description:delivery_procurement_group_carrier.field_procurement_group__carrier_id
@@ -29,7 +29,7 @@ msgstr "Grupo de Adquisiciones"
 #. module: delivery_procurement_group_carrier
 #: model:ir.model,name:delivery_procurement_group_carrier.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Línea de albarán de devolución"
 
 #. module: delivery_procurement_group_carrier
 #: model:ir.model,name:delivery_procurement_group_carrier.model_sale_order
@@ -49,4 +49,4 @@ msgstr "Movimiento de Existencias"
 #. module: delivery_procurement_group_carrier
 #: model:ir.model,name:delivery_procurement_group_carrier.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferencia"
