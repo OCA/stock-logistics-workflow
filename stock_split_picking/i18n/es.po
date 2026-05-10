@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-19 13:08+0000\n"
-"PO-Revision-Date: 2024-04-23 08:40+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_split_picking
 #. odoo-python
@@ -24,6 +24,8 @@ msgid ""
 "%s: Nothing to split, all demand is done. For split you need at least one "
 "line not fully fulfilled"
 msgstr ""
+"%s: Nada que dividir, toda la demanda está completada. Para dividir "
+"necesitas al menos una línea no completamente satisfecha"
 
 #. module: stock_split_picking
 #. odoo-python
@@ -32,6 +34,8 @@ msgid ""
 "%s: Nothing to split. Fill the quantities you want in a new transfer in the "
 "done quantities"
 msgstr ""
+"%s: Nada que dividir. Rellena las cantidades que quieres en una nueva "
+"transferencia en las cantidades realizadas"
 
 #. module: stock_split_picking
 #: model_terms:ir.ui.view,arch_db:stock_split_picking.view_stock_split_picking
@@ -42,13 +46,13 @@ msgstr "Cancelar"
 #. odoo-python
 #: code:addons/stock_split_picking/exceptions.py:0
 msgid "Cannot split off all moves from picking %(name)s"
-msgstr ""
+msgstr "No se pueden separar todos los movimientos del albarán %(name)s"
 
 #. module: stock_split_picking
 #. odoo-python
 #: code:addons/stock_split_picking/exceptions.py:0
 msgid "Cannot split picking %(name)s in state %(state)s"
-msgstr ""
+msgstr "No se puede dividir el albarán %(name)s en estado %(state)s"
 
 #. module: stock_split_picking
 #: model:ir.model.fields,field_description:stock_split_picking.field_stock_split_picking__create_uid
@@ -130,7 +134,7 @@ msgstr "Dividir un albarán"
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 msgid "Split off from %s"
-msgstr ""
+msgstr "Dividido de %s"
 
 #. module: stock_split_picking
 #: model:ir.actions.act_window,name:stock_split_picking.action_stock_split_picking
@@ -141,7 +145,7 @@ msgstr "Dividir albaranes"
 #. odoo-python
 #: code:addons/stock_split_picking/models/stock_picking.py:0
 msgid "The split order %s has been created."
-msgstr ""
+msgstr "El pedido dividido %s ha sido creado."
 
 #. module: stock_split_picking
 #: model:ir.model,name:stock_split_picking.model_stock_picking
