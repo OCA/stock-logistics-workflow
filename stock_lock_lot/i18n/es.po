@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 02:51+0000\n"
-"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"PO-Revision-Date: 2026-05-10 18:45+0000\n"
 "Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/es/)\n"
@@ -111,7 +111,6 @@ msgstr "Es seguidor"
 
 #. module: stock_lock_lot
 #: model_terms:ir.ui.view,arch_db:stock_lock_lot.search_product_lot_filter
-#, fuzzy
 msgid "Locked"
 msgstr "Bloqueado"
 
