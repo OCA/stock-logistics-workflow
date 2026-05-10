@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-27 19:34+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -33,7 +33,7 @@ msgstr "Lote"
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante de producto"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
@@ -44,7 +44,7 @@ msgstr "Restringir Lote"
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Línea de albarán de devolución"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
@@ -63,6 +63,8 @@ msgid ""
 "The lot(s) %(move_line_lot)s being moved is inconsistent with the "
 "restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
+"El/los lote(s) %(move_line_lot)s que se mueve(n) es inconsistente con la "
+"restricción del lote %(move_restrict_lot)s establecida en el movimiento"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
@@ -76,3 +78,5 @@ msgid ""
 "You can't modify the Lot/Serial number because at least one move in the "
 "chain has already been done with another Lot/Serial number."
 msgstr ""
+"No puede modificar el número de Lote/Serie porque al menos un movimiento en "
+"la cadena ya se ha realizado con otro número de Lote/Serie."
