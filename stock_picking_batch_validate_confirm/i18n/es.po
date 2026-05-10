@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-10 06:08+0000\n"
-"PO-Revision-Date: 2024-06-10 08:08+0200\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_batch_validate_confirm
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_validate_confirm.stock_picking_batch_confirm_view_form
@@ -65,7 +65,7 @@ msgstr "Nombre mostrado"
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_batch_validate_confirm
 #: model:ir.model.fields,field_description:stock_picking_batch_validate_confirm.field_stock_picking_batch_confirm____last_update
