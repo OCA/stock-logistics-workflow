@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-24 02:43+0000\n"
-"PO-Revision-Date: 2023-10-28 18:53+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/es/)\n"
 "Language: es\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model.fields.selection,name:stock_picking_backorder_strategy_cancel.selection__stock_picking_type__create_backorder__cancel
@@ -30,7 +30,7 @@ msgstr "Cancelar"
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model.fields,field_description:stock_picking_backorder_strategy_cancel.field_stock_picking_type__create_backorder
 msgid "Create Backorder"
-msgstr ""
+msgstr "Crear pedido pendiente"
 
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking_type
@@ -51,6 +51,12 @@ msgid ""
 " * Always: a backorder is automatically created for the remaining products\n"
 " * Never: remaining products are cancelled"
 msgstr ""
+"Al validar una transferencia:\n"
+"* Preguntar: se pregunta a los usuarios si desean crear un pedido pendiente "
+"para los productos restantes.\n"
+"* Siempre: se crea automáticamente un pedido pendiente para los productos "
+"restantes.\n"
+"* Nunca: los productos restantes se cancelan"
 
 #~ msgid "Backorder Strategy"
 #~ msgstr "Estrategia de pedidos pendientes"
