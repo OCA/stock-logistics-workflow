@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-22 10:00+0000\n"
-"PO-Revision-Date: 2023-12-22 11:02+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_product_set
 #: model:ir.actions.act_window,name:stock_product_set.act_open_wizard_product_set_add_from_picking
@@ -103,9 +103,11 @@ msgstr "Cantidad"
 #: code:addons/stock_product_set/wizard/stock_product_set_wizard.py:0
 #, python-format
 msgid "This set of products is restricted for this user."
-msgstr ""
+msgstr "Este conjunto de productos está restringido para este usuario."
 
 #. module: stock_product_set
 #: model:ir.model,name:stock_product_set.model_stock_product_set_wizard
 msgid "Wizard model to add product set into a picking form"
 msgstr ""
+"Modelo de asistente para agregar un conjunto de productos a un formulario de "
+"albarán"
