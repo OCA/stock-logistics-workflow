@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-04 01:08+0000\n"
-"PO-Revision-Date: 2026-05-10 09:44+0000\n"
+"PO-Revision-Date: 2026-05-10 18:45+0000\n"
 "Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -56,7 +56,6 @@ msgstr "Cambia la ubicación de destino de las operaciones"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
-#, fuzzy
 msgid ""
 "Change the destination location.\n"
 "                    <br/>"
@@ -142,8 +141,8 @@ msgid ""
 "You can not change operations destination location if picking state is not "
 "in %s"
 msgstr ""
-"No puedes cambiar la ubicación de destino de operaciones que su estado no "
-"sea %s"
+"No puede cambiar la ubicación de destino de las operaciones si el estado del "
+"albarán no está en %s"
 
 #. module: stock_picking_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_operation_quick_change.stock_picking_operation_change_location_view
