@@ -304,6 +304,9 @@ class StockMove(models.Model):
         routing_to_apply = [
             (move, detail.rule) for move, detail in routing_details.items()
         ]
+        # Keep the moves created by _insert_routing_moves that themselves match
+        # a routing rule, as to try to merge them with similiar moves.
+        inserted_routing_move_ids = set()
         for move, routing_rule in routing_to_apply:
             # Add the routing rule to the context for stock_dynamic_routing_delivery
             move = move.with_context(__routing_rule=routing_rule)
@@ -379,9 +382,14 @@ class StockMove(models.Model):
                 if routing_rule:
                     # Add a new routing to apply for this new move
                     routing_to_apply.append((routing_move, routing_rule))
+                    # Mark it as eligible for merging once its rule is applied.
+                    inserted_routing_move_ids.add(routing_move.id)
 
             pickings_to_check_for_emptiness |= move.picking_id
             move._assign_picking()
+            # Try merging inserted move
+            if move.id in inserted_routing_move_ids:
+                move = move._merge_moves()
             move_ids_to_assign_per_location[move.location_id].append(move.id)
 
         # We have two kind of "routed" moves:
