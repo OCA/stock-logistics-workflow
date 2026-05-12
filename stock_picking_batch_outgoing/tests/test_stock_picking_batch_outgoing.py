@@ -9,12 +9,6 @@ class TestStockPickingBatchOutgoing(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env["res.config.settings"].write(
-            {
-                "group_stock_adv_location": True,
-                "group_stock_multi_locations": True,
-            }
-        )
         # Picking Types
         cls.picking_type_internal = cls.env.ref("stock.picking_type_internal")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
@@ -25,12 +19,12 @@ class TestStockPickingBatchOutgoing(TransactionCase):
 
         cls.partner = cls.env["res.partner"].create({"name": "Partner test"})
         cls.product = cls.env["product.product"].create(
-            {"name": "product_product_test", "type": "product"}
+            {"name": "product_product_test", "type": "consu", "is_storable": True}
         )
 
         # Create a product route containing a stock rule that will
         # generate a move from Stock for every procurement created in Output
-        product_route = cls.env["stock.location.route"].create(
+        product_route = cls.env["stock.route"].create(
             {
                 "name": "Stock -> output route",
                 "product_selectable": True,
@@ -43,7 +37,8 @@ class TestStockPickingBatchOutgoing(TransactionCase):
                             "action": "pull",
                             "picking_type_id": cls.picking_type_internal.id,
                             "location_src_id": cls.stock_loc.id,
-                            "location_id": cls.stock_loc_output.id,
+                            "location_dest_id": cls.stock_loc_output.id,
+                            "location_dest_from_rule": True,
                         },
                     )
                 ],
@@ -51,14 +46,15 @@ class TestStockPickingBatchOutgoing(TransactionCase):
         )
         # Set this route on `product.product_product_3`
         cls.product.write({"route_ids": [(4, product_route.id)]})
-        # Create Delivery Order of 10 `product.product_product_3` from Output -> Customer
+        # Create Delivery Order of 10 `product.product_product_3`
+        # from Output -> Customer
         vals = {
             "name": "Delivery order for procurement",
             "partner_id": cls.partner.id,
             "picking_type_id": cls.picking_type_out.id,
             "location_id": cls.stock_loc_output.id,
             "location_dest_id": cls.customer_loc.id,
-            "move_lines": [
+            "move_ids": [
                 (
                     0,
                     0,
@@ -75,7 +71,7 @@ class TestStockPickingBatchOutgoing(TransactionCase):
             ],
         }
         cls.pick_output = cls.env["stock.picking"].create(vals)
-        cls.pick_output.move_lines._onchange_product_id()
+        cls.pick_output.move_ids._onchange_product_id()
 
         # Confirm delivery order.
         cls.pick_output.action_confirm()
@@ -83,8 +79,8 @@ class TestStockPickingBatchOutgoing(TransactionCase):
         # I run the scheduler.
         # Note: If purchase if already installed, the method _run_buy will be called due
         # to the purchase demo data. As we update the stock module to run this test, the
-        # method won't be an attribute of stock.procurement at this moment. For that reason
-        # we mute the logger when running the scheduler.
+        # method won't be an attribute of stock.procurement at this moment. For that
+        # reason we mute the logger when running the scheduler.
         with mute_logger("odoo.addons.stock.models.procurement"):
             cls.env["procurement.group"].run_scheduler()
 
@@ -95,7 +91,7 @@ class TestStockPickingBatchOutgoing(TransactionCase):
                 ("product_id", "=", self.product.id),
                 ("location_id", "=", self.stock_loc.id),
                 ("location_dest_id", "=", self.stock_loc_output.id),
-                ("move_dest_ids", "in", self.pick_output.move_lines[0].ids),
+                ("move_dest_ids", "in", self.pick_output.move_ids[0].ids),
             ]
         )
         self.assertEqual(
@@ -117,6 +113,7 @@ class TestStockPickingBatchOutgoing(TransactionCase):
             }
         )
         picking = moves.picking_id
-        picking.move_lines.quantity_done = 5
+        picking.move_ids.quantity = 5
+        picking.move_ids.picked = True
         picking.with_context(cancel_backorder=False)._action_done()
         self.assertTrue(picking.backorder_ids.batch_outgoing_id)

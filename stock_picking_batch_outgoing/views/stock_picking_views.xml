@@ -9,12 +9,9 @@
             </field>
         </field>
     </record>
-    <record model="ir.ui.view" id="vpicktree_inherit_stock_picking_batch">
+    <record model="ir.ui.view" id="vpicktree">
         <field name="model">stock.picking</field>
-        <field
-            name="inherit_id"
-            ref="stock_picking_batch.vpicktree_inherit_stock_picking_batch"
-        />
+        <field name="inherit_id" ref="stock_picking_batch.vpicktree" />
         <field name="arch" type="xml">
             <field name="batch_id" position="after">
                 <field name="batch_outgoing_id" optional="hide" />
@@ -25,10 +22,7 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.stock_picking_kanban" />
         <field name="arch" type="xml">
-            <field name="name" position="after">
-                <field name="batch_outgoing_id" />
-            </field>
-            <xpath expr="//t[@t-name='kanban-box']/div" position="inside">
+            <xpath expr="//t[@t-name='card']" position="inside">
                 <t t-if="record.batch_outgoing_id.raw_value">
                     <div class="row pull-right mt8">
                         <div class="col text-right">

@@ -10,7 +10,7 @@ class StockPicking(models.Model):
 
     batch_outgoing_id = fields.Many2one(
         comodel_name="stock.picking.batch",
-        related="move_lines.first_move_id.first_move_id.picking_id.batch_id",
+        related="move_ids.first_move_id.first_move_id.picking_id.batch_id",
         string="Batch Outgoing",
         store=True,
     )
