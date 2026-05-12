@@ -17,31 +17,29 @@ Stock picking batch outgoing
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/15.0/stock_picking_batch_outgoing
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_batch_outgoing
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-15-0/stock-logistics-workflow-15-0-stock_picking_batch_outgoing
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-18-0/stock-logistics-workflow-18-0-stock_picking_batch_outgoing
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=15.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to display an outgoing batch in origin pickings on multiroute
-warehouse management.
+This module allows to display an outgoing batch in origin pickings on
+multiroute warehouse management.
 
-In this way we can view intermediate picking by the outgoing batch picking created.
+In this way we can view intermediate picking by the outgoing batch
+picking created.
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/15.0/stock_batch_picking/static/picking_outgoing_batch_list.png
-   :alt: Outgoing pickings in batch
-   :width: 80 %
-   :align: center
+|Outgoing pickings in batch|
 
-.. figure:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/15.0/stock_batch_picking/static/picking_pick_batch.png
-   :alt: Pick pickings in outgoing batch
-   :width: 80 %
-   :align: center
+|Pick pickings in outgoing batch|
+
+.. |Outgoing pickings in batch| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/15.0/stock_batch_picking/static/picking_outgoing_batch_list.png
+.. |Pick pickings in outgoing batch| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/15.0/stock_batch_picking/static/picking_pick_batch.png
 
 **Table of contents**
 
@@ -54,7 +52,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_outgoing%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_batch_outgoing%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -62,20 +60,20 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Tecnativa <https://www.tecnativa.com>`_:
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Carlos Dauden
-  * Sergio Teruel
+  - Carlos Dauden
+  - Sergio Teruel
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -95,6 +93,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sergio-teruel| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/15.0/stock_picking_batch_outgoing>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_batch_outgoing>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
