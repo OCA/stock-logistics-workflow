@@ -37,6 +37,7 @@ class TestPickingVariableQuantity(TestStockCommon):
         # Disable Backorder creation
         cls.wh.pick_type_id.write({"create_backorder": "never"})
         cls.wh.out_type_id.write({"create_backorder": "never"})
+        cls.wh.pick_type_id.propagate_variable_qty = True
 
     def _create_pick_ship_pickings(self, stock_qty: float, move_qty: float):
         """Create pick and ship pickings with the given stock and move quantities"""
@@ -116,6 +117,19 @@ class TestPickingVariableQuantity(TestStockCommon):
         ship_picking.action_assign()
         self.assertEqual(ship_picking.move_line_ids[0].quantity, 2.0)
         ship_picking.button_validate()
+
+    def test_pick_ship_qty_done_exceeded_disabled(self):
+        """Do not propagate quantity changes when the picking type disables it."""
+        self.wh.pick_type_id.propagate_variable_qty = False
+        pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 1.0)
+        # Operations on PICK from scratch
+        pick_picking.action_assign()
+        pick_picking.move_line_ids[0].quantity += 1.0
+        pick_picking.button_validate()
+        # Operations on SHIP from scratch
+        ship_picking.do_unreserve()
+        ship_picking.action_assign()
+        self.assertEqual(ship_picking.move_line_ids[0].quantity, 1.0)
 
     def test_pick_ship_qty_done_not_reached(self):
         """Test picking flow when qty done not reachs the demand in pick"""

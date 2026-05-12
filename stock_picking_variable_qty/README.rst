@@ -30,6 +30,9 @@ Stock Picking Variable Qty
 
 Handle variable done quantity in multi-step deliveries.
 
+When enabled on an operation type, the quantity actually processed on a
+move is propagated to its chained destination moves.
+
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
    Only for development or testing purpose, do not use in production.
@@ -39,6 +42,12 @@ Handle variable done quantity in multi-step deliveries.
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+Enable **Propagate variable quantities** on the operation types where
+chained destination moves should follow the quantity actually processed.
 
 Bug Tracker
 ===========
@@ -61,7 +70,7 @@ Authors
 Contributors
 ------------
 
-- David Vidal
+- David Vidal (``Moduon <https://www.moduon.team/>``\ \_\_)
 
 Maintainers
 -----------

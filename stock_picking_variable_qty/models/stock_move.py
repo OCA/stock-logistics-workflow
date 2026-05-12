@@ -16,9 +16,10 @@ class StockMove(models.Model):
         move_dest_id.
         """
         # TODO:
-        #   * Make this optionable (by operation or whatever)
         #   * Handle correctly all the dest moves cases to spread or not the quantity
-        for move in self.filtered("move_dest_ids"):
+        for move in self.filtered(
+            lambda m: m.move_dest_ids and m.picking_type_id.propagate_variable_qty
+        ):
             rounding = move.product_uom.rounding
             if (
                 float_compare(

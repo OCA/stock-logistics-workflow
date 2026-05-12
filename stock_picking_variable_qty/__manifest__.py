@@ -13,5 +13,7 @@
     "depends": [
         "sale_stock",
     ],
-    "data": [],
+    "data": [
+        "views/stock_picking_type_views.xml",
+    ],
 }
