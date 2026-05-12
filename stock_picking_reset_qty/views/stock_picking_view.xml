@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_reset_qty_done" model="ir.ui.view">
+        <field name="name">stock.picking.form.reset.qty.done</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button
+                    name="action_clear_qty"
+                    string="Clear Qty"
+                    type="object"
+                    invisible="picking_type_code != 'incoming' or state in ('done', 'cancel')"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
