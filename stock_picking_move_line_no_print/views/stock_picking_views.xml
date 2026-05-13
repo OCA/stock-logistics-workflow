@@ -6,14 +6,15 @@
         <field name="priority">99</field>
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='move_ids_without_package']//field[@name='lot_ids']"
-                position="after"
+                expr="//page[@name='operations']/field[@name='move_ids']//button[@name='action_show_details']"
+                position="before"
             >
                 <field
                     name="display_in_report"
                     widget="boolean_toggle"
                     options="{'autosave': False}"
                     optional="hide"
+                    width="50"
                 />
             </xpath>
         </field>
