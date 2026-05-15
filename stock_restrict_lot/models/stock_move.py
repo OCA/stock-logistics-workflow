@@ -45,6 +45,24 @@ class StockMove(models.Model):
             vals["lot_id"] = self.restrict_lot_id.id
         return vals
 
+    def _get_available_move_lines(
+        self, assigned_moves_ids, partially_available_moves_ids
+    ):
+        """It is important that, if there is a restricted lot, you only suggest the lot
+        we want to restrict (for example: move_orig_id with 10 lots).
+        """
+        available_move_lines = super()._get_available_move_lines(
+            assigned_moves_ids, partially_available_moves_ids
+        )
+        if self.restrict_lot_id:
+            new_available_move_lines = {}
+            for key, value in available_move_lines.items():
+                _location_id, lot_id, _package_id, _owner_id = key
+                if lot_id == self.restrict_lot_id:
+                    new_available_move_lines[key] = value
+            return new_available_move_lines
+        return available_move_lines
+
     def _get_available_quantity(
         self,
         location_id,
