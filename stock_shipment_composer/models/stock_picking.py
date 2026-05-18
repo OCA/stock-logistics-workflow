@@ -1,7 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -12,6 +12,7 @@ class StockPicking(models.Model):
         "stock.shipment.composer", compute="_compute_shipment_composer_ids"
     )
 
+    @api.depends("move_ids.shipment_composer_ids")
     def _compute_shipment_composer_ids(self):
         for rec in self:
             rec.shipment_composer_ids = rec.move_ids.shipment_composer_ids
@@ -24,7 +25,7 @@ class StockPicking(models.Model):
                 lambda x: x.state in ["in_progress", "draft"]
             ):
                 raise UserError(
-                    _(
+                    self.env._(
                         "You cannot validate a transfer that has an active shipment "
                         "composer line. Please validate the shipment composer first."
                     )
