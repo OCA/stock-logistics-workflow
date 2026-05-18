@@ -70,7 +70,9 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <h1><field name="name" class="oe_inline" /></h1>
+                        <h1>
+                            <field name="name" class="oe_inline" />
+                        </h1>
                     </div>
                     <group>
                         <group>
@@ -323,7 +325,7 @@
                         context="{'group_by':'date_done'}"
                     />
                 </group>
-           </search>
+            </search>
         </field>
     </record>
     <record id="stock_shipment_composer_action" model="ir.actions.act_window">

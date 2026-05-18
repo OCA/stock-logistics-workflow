@@ -10,7 +10,9 @@
                             name="outgoing_delivery_address"
                             t-if="o.picking_type_id.code == 'outgoing'"
                         >
-                            <span><strong>Delivery Address:</strong></span>
+                            <span>
+                                <strong>Delivery Address:</strong>
+                            </span>
                             <div
                                 t-field="o.partner_id"
                                 t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
@@ -20,7 +22,9 @@
                             name="outgoing_warehouse_address"
                             t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id"
                         >
-                            <span><strong>Warehouse Address:</strong></span>
+                            <span>
+                                <strong>Warehouse Address:</strong>
+                            </span>
                             <div
                                 t-field="o.picking_type_id.warehouse_id.partner_id"
                                 t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
@@ -36,14 +40,18 @@
                                 name="vendor_address"
                                 t-if="o.picking_type_id.code=='incoming' and partner"
                             >
-                                <span><strong>Vendor Address:</strong></span>
+                                <span>
+                                    <strong>Vendor Address:</strong>
+                                </span>
                                 <t t-set="show_partner" t-value="True" />
                             </div>
                             <div
                                 name="customer_address"
                                 t-if="o.picking_type_id.code=='outgoing' and partner and partner != partner.commercial_partner_id"
                             >
-                                <span><strong>Customer Address:</strong></span>
+                                <span>
+                                    <strong>Customer Address:</strong>
+                                </span>
                                 <t t-set="show_partner" t-value="True" />
                             </div>
                             <div t-if="show_partner" name="partner_header">
@@ -81,10 +89,18 @@
                     <table class="table table-sm" name="composer_line_table">
                         <thead>
                             <tr>
-                                <th name="th_product"><strong>Product</strong></th>
-                                <th name="th_transfer"><strong>Transfer</strong></th>
-                                <th name="th_quantity"><strong>Quantity</strong></th>
-                                <th name="th_remark"><strong>Remark</strong></th>
+                                <th name="th_product">
+                                    <strong>Product</strong>
+                                </th>
+                                <th name="th_transfer">
+                                    <strong>Transfer</strong>
+                                </th>
+                                <th name="th_quantity">
+                                    <strong>Quantity</strong>
+                                </th>
+                                <th name="th_remark">
+                                    <strong>Remark</strong>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,7 +123,7 @@
                     </table>
                 </div>
             </t>
-         </t>
+        </t>
     </template>
     <template id="report_shipment_composer">
         <t t-foreach="docs" t-as="o">
