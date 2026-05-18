@@ -13,10 +13,16 @@ class StockShipmentComposerLine(models.Model):
     )
     move_id = fields.Many2one("stock.move", required=True)
     picking_id = fields.Many2one(related="move_id.picking_id", string="Transfer")
-    quantity = fields.Float(compute="_compute_quantity", store="True", readonly=False)
+    quantity = fields.Float(compute="_compute_quantity", store=True, readonly=False)
     product_uom_qty = fields.Float(related="move_id.product_uom_qty")
-    reserved_availability = fields.Float(related="move_id.reserved_availability")
-    quantity_done = fields.Float(related="move_id.quantity_done")
+    reserved_availability = fields.Float(
+        compute="_compute_reserved_availability",
+        string="Reserved",
+    )
+    quantity_done = fields.Float(
+        compute="_compute_quantity_done",
+        string="Done",
+    )
     uom_id = fields.Many2one(related="move_id.product_uom", string="UoM")
     move_state = fields.Selection(related="move_id.state", string="Move Status")
     remarks = fields.Text()
@@ -28,6 +34,24 @@ class StockShipmentComposerLine(models.Model):
     location_dest_id = fields.Many2one(
         related="move_id.location_dest_id", string="Destination Location"
     )
+
+    @api.depends("move_id.quantity", "move_id.picked", "move_id.state")
+    def _compute_reserved_availability(self):
+        for rec in self:
+            move = rec.move_id
+            if move.state == "done" or move.picked:
+                rec.reserved_availability = 0.0
+            else:
+                rec.reserved_availability = move.quantity
+
+    @api.depends("move_id.quantity", "move_id.picked", "move_id.state")
+    def _compute_quantity_done(self):
+        for rec in self:
+            move = rec.move_id
+            if move.state == "done" or move.picked:
+                rec.quantity_done = move.quantity
+            else:
+                rec.quantity_done = 0.0
 
     @api.depends("move_id")
     def _compute_quantity(self):

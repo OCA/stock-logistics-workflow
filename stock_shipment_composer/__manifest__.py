@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 {
     "name": "Stock Shipment Composer",
-    "version": "16.0.1.0.0",
+    "summary": "Aggregate stock moves from multiple transfers into one shipment",
+    "version": "19.0.1.0.0",
     "author": "Quartile, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Inventory",
@@ -20,5 +21,6 @@
         "views/stock_shipment_composer_views.xml",
         "wizards/stock_shipment_composer_wizard_views.xml",
     ],
+    "maintainers": ["yostashiro", "aungkokolin1997"],
     "installable": True,
 }

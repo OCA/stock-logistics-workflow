@@ -1,7 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
@@ -37,11 +37,14 @@ class StockMove(models.Model):
         help="The original move from which this move was split.",
     )
 
+    @api.depends("composer_line_ids.composer_id")
     def _compute_shipment_composer_ids(self):
         for rec in self:
             rec.shipment_composer_ids = rec.composer_line_ids.composer_id
 
-    @api.depends("composer_line_ids.quantity", "composer_line_ids.state")
+    @api.depends(
+        "product_uom_qty", "composer_line_ids.quantity", "composer_line_ids.state"
+    )
     def _compute_composer_line_qty(self):
         for rec in self:
             rec.composer_line_qty = sum(
@@ -54,6 +57,12 @@ class StockMove(models.Model):
     @api.constrains("composer_line_qty", "product_uom_qty", "state")
     def _check_composer_total_qty(self):
         for move in self.filtered(lambda m: m.state not in ("done", "cancel")):
+            if not move.composer_line_ids:
+                continue
+            # POs with negative quantities (e.g., returns) get bitten at confirm without
+            # this condition, as a move is temporarily created with a negative qty
+            if not move.composer_line_qty or move.product_uom_qty < 0:
+                continue
             if (
                 float_compare(
                     move.composer_line_qty,
@@ -63,15 +72,13 @@ class StockMove(models.Model):
                 > 0
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Total composer quantity (%(line_qty)s) for '%(product)s' "
-                        "cannot exceed the move quantity (%(move_qty)s)."
+                        "cannot exceed the move quantity (%(move_qty)s).",
+                        line_qty=move.composer_line_qty,
+                        product=move.product_id.display_name,
+                        move_qty=move.product_uom_qty,
                     )
-                    % {
-                        "line_qty": move.composer_line_qty,
-                        "product": move.product_id.display_name,
-                        "move_qty": move.product_uom_qty,
-                    }
                 )
 
     @api.model_create_multi
@@ -93,25 +100,21 @@ class StockMove(models.Model):
             res[0]["move_split_origin_id"] = self.id
         return res
 
-    def name_get(self):
-        res = []
+    @api.depends_context("is_shipment_composer")
+    @api.depends(
+        "picking_id.origin",
+        "product_id.display_name",
+        "composer_unallocated_qty",
+    )
+    def _compute_display_name(self):
         if not self.env.context.get("is_shipment_composer"):
-            return super().name_get()
+            return super()._compute_display_name()
         for move in self:
-            res.append(
-                (
-                    move.id,
-                    "%s%s%s"
-                    % (
-                        move.picking_id.origin
-                        and "%s: " % move.picking_id.origin
-                        or "",
-                        move.sale_line_id
-                        and "%s " % move.sale_line_id.name
-                        or move.product_id.display_name
-                        or "",
-                        "(%s)" % move.composer_unallocated_qty,
-                    ),
-                )
+            sale_line = self._fields.get("sale_line_id") and move.sale_line_id
+            origin = f"{move.picking_id.origin}: " if move.picking_id.origin else ""
+            label = (
+                f"{sale_line.name} "
+                if sale_line
+                else (move.product_id.display_name or "")
             )
-        return res
+            move.display_name = f"{origin}{label}({move.composer_unallocated_qty})"
