@@ -1,7 +1,9 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, fields, models
+from markupsafe import Markup
+
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -21,7 +23,6 @@ class StockShipmentComposer(models.Model):
     partner_id = fields.Many2one(
         "res.partner",
         check_company=True,
-        states={"done": [("readonly", True)], "cancel": [("readonly", True)]},
     )
     picking_type_id = fields.Many2one(
         "stock.picking.type", string="Operation Type", required=True
@@ -31,8 +32,6 @@ class StockShipmentComposer(models.Model):
         string="Responsible",
         tracking=True,
         check_company=True,
-        readonly=True,
-        states={"draft": [("readonly", False)], "in_progress": [("readonly", False)]},
         default=lambda self: self.env.user,
     )
     company_id = fields.Many2one(
@@ -68,7 +67,6 @@ class StockShipmentComposer(models.Model):
         store=True,
         readonly=False,
         copy=False,
-        states={"done": [("readonly", True)], "cancel": [("readonly", True)]},
         help="""Scheduled date for the transfers to be processed.
               - When moves are added/removed/updated then this will be their pickings'
                 earliest scheduled date.
@@ -77,7 +75,7 @@ class StockShipmentComposer(models.Model):
     )
     move_ids = fields.Many2many("stock.move", compute="_compute_move_ids", store=True)
     show_check_availability = fields.Boolean(
-        compute="_compute_move_ids",
+        compute="_compute_show_check_availability",
         compute_sudo=True,
     )
     show_validate = fields.Boolean(compute="_compute_show_validate")
@@ -100,8 +98,7 @@ class StockShipmentComposer(models.Model):
                 rec.state = "cancel"
                 continue
             if rec.move_ids.filtered(
-                lambda x: x.shipment_composer_id == rec
-                and x.state in ["cancel", "done"]
+                lambda x, rec=rec: x.shipment_composer_id == rec and x.state == "done"
             ):
                 rec.state = "done"
                 rec.date_done = fields.Datetime.now()
@@ -115,14 +112,19 @@ class StockShipmentComposer(models.Model):
                 default=False,
             )
 
-    @api.depends("line_ids.move_id", "line_ids.move_id.state")
+    @api.depends("line_ids.move_id")
     def _compute_move_ids(self):
         for rec in self:
             rec.move_ids = rec.line_ids.move_id
+
+    @api.depends("move_ids.state")
+    def _compute_show_check_availability(self):
+        for rec in self:
             rec.show_check_availability = any(
                 m.state not in ["assigned", "cancel", "done"] for m in rec.move_ids
             )
 
+    @api.depends("line_ids", "line_ids.quantity", "line_ids.reserved_enough")
     def _compute_show_validate(self):
         for rec in self:
             rec.show_validate = False
@@ -147,7 +149,7 @@ class StockShipmentComposer(models.Model):
     def action_confirm(self):
         self.ensure_one()
         if not self.line_ids:
-            raise UserError(_("You have to add some shipment composer lines."))
+            raise UserError(self.env._("You have to add some shipment composer lines."))
         self.line_ids.move_id.picking_id.action_confirm()
         self._check_company()
         self.state = "in_progress"
@@ -160,7 +162,7 @@ class StockShipmentComposer(models.Model):
         moves = self.move_ids.filtered(
             lambda x: x.state not in ("draft", "cancel", "done")
         )
-        moves.sorted(
+        moves = moves.sorted(
             key=lambda x: (
                 -int(x.priority),
                 not bool(x.date_deadline),
@@ -170,7 +172,7 @@ class StockShipmentComposer(models.Model):
             )
         )
         if not moves:
-            raise UserError(_("Nothing to check the availability for."))
+            raise UserError(self.env._("Nothing to check the availability for."))
         moves._action_assign()
         return True
 
@@ -188,46 +190,42 @@ class StockShipmentComposer(models.Model):
         self.ensure_one()
         if self.line_ids.filtered(lambda x: x.quantity == 0):
             raise UserError(
-                _(
+                self.env._(
                     "You cannot validate a shipment composer with lines that have a "
                     "quantity of 0.",
                 )
             )
         if self.line_ids.filtered(lambda x: x.quantity > x.reserved_availability):
             raise UserError(
-                _(
+                self.env._(
                     "You cannot validate a shipment composer with lines that have a "
                     "quantity greater than the reserved availability.",
                 )
             )
         pickings = self.move_ids.picking_id
-        # First clear the qty_done of all move lines of related pickings
-        pickings.move_line_ids.qty_done = 0.0
-        # Then set the qty_done of each move line to the reserved quantity
+        # Reset picked state on all move lines of related pickings, so only the
+        # moves handled by this composer get validated.
+        pickings.move_line_ids.picked = False
+        # Set the move quantity to the composer line quantity and mark as picked.
         for line in self.line_ids:
             move = line.move_id
-            unallocated_qty = line.quantity
-            for ml in move.move_line_ids:
-                ml.qty_done = min(ml.reserved_uom_qty, unallocated_qty)
-                unallocated_qty -= ml.qty_done
+            move.quantity = line.quantity
+            move.picked = True
         for picking in pickings:
             picking.message_post(
-                body=_(
-                    "<b>{label}:</b> {source} "
-                    "<a href='#id={id}&amp;view_type=form&amp;model=stock.shipment.composer'>{doc}</a>"  # noqa B950
-                ).format(
-                    label=_("Transferred by"),
-                    source=_("Shipment Composer"),
-                    id=self.id,
-                    doc=self.name,
-                )
+                body=Markup("<b>%(label)s:</b> %(source)s %(link)s")
+                % {
+                    "label": self.env._("Transferred by"),
+                    "source": self.env._("Shipment Composer"),
+                    "link": self._get_html_link(),
+                }
             )
         # Run sanity_check here and skip the one in button_validate().
         pickings._sanity_check(separate_pickings=False)
         # Set the composer on all moves of the pickings before validation
         self.move_ids.shipment_composer_id = self
         context = {"skip_sanity_check": True, "validated_by_composer": True}
-        return pickings.with_context(skip_immediate=True, **context).button_validate()
+        return pickings.with_context(**context).button_validate()
 
     def action_view_operations(self):
         action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
@@ -240,7 +238,7 @@ class StockShipmentComposer(models.Model):
         for rec in self:
             if rec.state not in ("draft", "cancel"):
                 raise UserError(
-                    _(
+                    self.env._(
                         "You can not delete a shipment composer unless the status is "
                         "Draft or Cancelled."
                     )

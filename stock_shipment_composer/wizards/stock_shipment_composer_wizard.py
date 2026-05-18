@@ -1,7 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from odoo import Command, _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -32,20 +32,23 @@ class StockShipmentComposerWizard(models.TransientModel):
         moves = self.env["stock.move"].browse(move_ids)
         if any(state in ["done", "cancel"] for state in moves.mapped("state")):
             raise UserError(
-                _(
-                    "Please select stock moves that are not in 'Done' or 'Cancelled' state."
+                self.env._(
+                    "Please select stock moves that are not in 'Done' or 'Cancelled' "
+                    "state."
                 )
             )
         picking_types = moves.mapped("picking_type_id")
         if len(picking_types) > 1:
             raise UserError(
-                _("Please select stock moves with the same Operation Type.")
+                self.env._("Please select stock moves with the same Operation Type.")
             )
         partners = moves.mapped("partner_id")
         if not partners:
-            raise UserError(_("Please select stock moves with the partner."))
+            raise UserError(self.env._("Please select stock moves with the partner."))
         if len(partners) > 1:
-            raise UserError(_("All selected stock moves must have the same Partner."))
+            raise UserError(
+                self.env._("All selected stock moves must have the same Partner.")
+            )
         partner = partners[0]
         res.update(
             {
@@ -59,7 +62,7 @@ class StockShipmentComposerWizard(models.TransientModel):
     def action_create_composer(self):
         self.ensure_one()
         if not self.line_ids:
-            raise UserError(_("You must have at least one shipment line."))
+            raise UserError(self.env._("You must have at least one shipment line."))
         composer = self.env["stock.shipment.composer"].create(
             {
                 "partner_id": self.partner_id.id,

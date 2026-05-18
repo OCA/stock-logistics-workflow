@@ -20,7 +20,7 @@ class TestShipmentComposer(TransactionCase):
         cls.stock_loc = cls.wh.lot_stock_id
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create(
-            {"name": "test", "type": "product"}
+            {"name": "test", "is_storable": True}
         )
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_loc, 5.0
@@ -44,7 +44,6 @@ class TestShipmentComposer(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": "Test",
                             "partner_id": partner.id,
                             "location_id": cls.stock_loc.id,
                             "location_dest_id": cls.customer_loc.id,
@@ -95,7 +94,8 @@ class TestShipmentComposer(TransactionCase):
         self.assertEqual(self.picking.state, "done")
         self.assertEqual(self.composer1.state, "done")
         self.assertTrue(self.composer1.date_done)
-        self.assertEqual(self.move.quantity_done, 5.0)
+        self.assertEqual(self.move.quantity, 5.0)
+        self.assertTrue(self.move.picked)
         self.assertEqual(self.move.shipment_composer_id, self.composer1)
 
     def test_action_done_success_flow_with_backorder(self):
@@ -116,9 +116,20 @@ class TestShipmentComposer(TransactionCase):
         self.assertEqual(self.picking.state, "done")
         self.assertEqual(self.composer1.state, "done")
         self.assertTrue(self.composer1.date_done)
-        self.assertEqual(self.move.quantity_done, 3.0)
+        self.assertEqual(self.move.quantity, 3.0)
+        self.assertTrue(self.move.picked)
         new_move = self.picking.backorder_ids.move_ids
         self.assertEqual(self.line2.move_id, new_move)
+
+    def test_action_done_with_picked_move(self):
+        self.composer1.action_confirm()
+        self.move.picked = True
+        self.assertEqual(self.line1.reserved_availability, 5.0)
+        self.assertEqual(self.line1.quantity_done, 5.0)
+        self.assertTrue(self.composer1.show_validate)
+        self.composer1.action_done()
+        self.assertEqual(self.picking.state, "done")
+        self.assertEqual(self.composer1.state, "done")
 
     def test_action_done_quantity_zero_error(self):
         # set one line to zero and expect error
