@@ -12,7 +12,7 @@
                 <header>
                     <button
                         name="action_confirm"
-                        states="draft"
+                        invisible="state != 'draft'"
                         string="Confirm"
                         type="object"
                         class="oe_highlight"
@@ -22,32 +22,32 @@
                         string="Validate"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible':['|',('state','!=','in_progress'),('show_validate','=',False)]}"
+                        invisible="state != 'in_progress' or not show_validate"
                     />
                     <button
                         name="action_assign"
                         string="Check Availability"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible':['|','|',('state','!=','in_progress'),('show_check_availability','=',False),('show_validate','=',True)]}"
+                        invisible="state != 'in_progress' or not show_check_availability or show_validate"
                     />
                     <button
                         name="action_assign"
                         string="Check Availability"
                         type="object"
-                        attrs="{'invisible':['|','|',('state','!=','in_progress'),('show_check_availability','=',False),('show_validate','=',False)]}"
+                        invisible="state != 'in_progress' or not show_check_availability or not show_validate"
                     />
                     <button
                         name="action_cancel"
                         string="Cancel"
                         type="object"
-                        states="in_progress"
+                        invisible="state != 'in_progress'"
                     />
                     <button
                         name="action_draft"
                         string="Reset to Draft"
                         type="object"
-                        states="cancel"
+                        invisible="state != 'cancel'"
                     />
                     <field
                         name="state"
@@ -62,7 +62,7 @@
                             class="oe_stat_button"
                             icon="fa-arrows-v"
                             type="object"
-                            attrs="{'invisible':[('move_ids','=',[])]}"
+                            invisible="not move_ids"
                         >
                             <div class="o_form_field o_stat_info">
                                 <span class="o_stat_text">Operations</span>
@@ -78,28 +78,34 @@
                         <group>
                             <field
                                 name="partner_id"
-                                attrs="{'readonly':[('line_ids','!=',[])]}"
+                                readonly="line_ids or state in ('done', 'cancel')"
                                 force_save="1"
                             />
                             <field
                                 name="picking_type_id"
-                                attrs="{'readonly':[('line_ids','!=',[])]}"
+                                readonly="line_ids"
                                 force_save="1"
                             />
-                            <field name="user_id" />
+                            <field
+                                name="user_id"
+                                readonly="state not in ('draft', 'in_progress')"
+                            />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
-                                attrs="{'readonly': [('line_ids', '!=', [])]}"
+                                readonly="line_ids"
                                 force_save="1"
                             />
                         </group>
                         <group>
-                            <field name="scheduled_date" />
+                            <field
+                                name="scheduled_date"
+                                readonly="state in ('done', 'cancel')"
+                            />
                             <field
                                 name="date_done"
                                 string="Effective Date"
-                                states="done"
+                                invisible="state != 'done'"
                             />
                         </group>
                     </group>
@@ -107,23 +113,30 @@
                         <page string="Composer Lines">
                             <field
                                 name="line_ids"
-                                attrs="{'readonly':[('state','in',('done','cancel'))]}"
+                                readonly="state in ('done', 'cancel')"
                                 context="{'is_shipment_composer':True}"
                             >
-                                <tree
+                                <list
                                     editable="bottom"
                                     context="{'default_composer_id': composer_id}"
                                 >
-                                    <field name="composer_id" invisible="1" />
-                                    <field name="reserved_enough" invisible="1" />
-                                    <field name="state" invisible="1" />
+                                    <field name="composer_id" column_invisible="True" />
+                                    <field
+                                        name="reserved_enough"
+                                        column_invisible="True"
+                                    />
+                                    <field name="state" column_invisible="True" />
                                     <field
                                         name="move_id"
                                         domain="[('partner_id','=',parent.partner_id),('picking_type_id','=',parent.picking_type_id),('state','not in',['done','cancel']),('id','not in',parent.move_ids)]"
                                         context="{'is_shipment_composer': True}"
                                         help="The number in brackets represents the unallocated quantity to composers in 'In Progress' or 'Done' states."
                                     />
-                                    <field name="picking_id" optional="show" />
+                                    <field
+                                        name="picking_id"
+                                        optional="show"
+                                        widget="many2one"
+                                    />
                                     <field
                                         name="location_id"
                                         string="From"
@@ -150,7 +163,7 @@
                                     <field
                                         name="reserved_availability"
                                         string="Reserved"
-                                        attrs="{'column_invisible':[('parent.state','in',['done','cancel'])]}"
+                                        column_invisible="parent.state in ('done', 'cancel')"
                                         optional="show"
                                     />
                                     <button
@@ -158,14 +171,14 @@
                                         name="action_product_forecast_report"
                                         title="Forecast Report"
                                         icon="fa-area-chart"
-                                        attrs="{'invisible':['|',('parent.state','in',['done','cancel']),('reserved_enough','=',False)]}"
+                                        invisible="parent.state in ('done', 'cancel') or not reserved_enough"
                                     />
                                     <button
                                         type="object"
                                         name="action_product_forecast_report"
                                         title="Forecast Report"
                                         icon="fa-area-chart text-danger"
-                                        attrs="{'invisible':['|',('parent.state','in',['done','cancel']),('reserved_enough','=',True)]}"
+                                        invisible="parent.state in ('done', 'cancel') or reserved_enough"
                                     />
                                     <field
                                         name="quantity_done"
@@ -184,25 +197,21 @@
                                         decoration-success="move_state=='done'"
                                         decoration-warning="move_state not in ('draft','cancel','done','assigned')"
                                     />
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" groups="base.group_user" />
-                    <field name="activity_ids" />
-                    <field name="message_ids" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
     <record id="stock_shipment_composer_tree" model="ir.ui.view">
-        <field name="name">stock.shipment.composer.tree</field>
+        <field name="name">stock.shipment.composer.list</field>
         <field name="model">stock.shipment.composer</field>
         <field name="arch" type="xml">
-            <tree multi_edit="1">
-                <field name="company_id" invisible="1" />
+            <list multi_edit="1">
+                <field name="company_id" column_invisible="True" />
                 <field name="name" decoration-bf="1" />
                 <field name="create_date" optional="show" />
                 <field name="partner_id" />
@@ -221,7 +230,7 @@
                     name="activity_exception_decoration"
                     widget="activity_exception"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="stock_shipment_composer_filter" model="ir.ui.view">
@@ -256,17 +265,13 @@
                 />
                 <filter name="done" string="Done" domain="[('state','=','done')]" />
                 <separator />
-                <filter
-                    name="create_date"
-                    date="create_date"
-                    default_period="this_month"
-                />
+                <filter name="create_date" date="create_date" default_period="month" />
                 <filter
                     name="scheduled_date"
                     date="scheduled_date"
-                    default_period="this_month"
+                    default_period="month"
                 />
-                <filter name="date_done" date="date_done" default_period="this_month" />
+                <filter name="date_done" date="date_done" default_period="month" />
                 <separator />
                 <filter
                     invisible="1"
@@ -287,7 +292,7 @@
                     name="activities_upcoming_all"
                     domain="[('my_activity_date_deadline','&gt;',context_today().strftime('%Y-%m-%d'))]"
                 />
-                <group expand="0" string="Group By">
+                <group>
                     <filter
                         string="Partner"
                         name="partner"
@@ -332,7 +337,7 @@
         <field name="name">Shipment Composers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.shipment.composer</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="stock_shipment_composer_filter" />
     </record>
     <menuitem

@@ -10,7 +10,7 @@
                     <field name="move_ids" invisible="1" />
                 </group>
                 <field name="line_ids">
-                    <tree editable="bottom">
+                    <list editable="bottom">
                         <field
                             name="move_id"
                             domain="[('partner_id','=',parent.partner_id),('picking_type_id','=',parent.picking_type_id),('state','not in',['done','cancel']),('id','not in',parent.move_ids)]"
@@ -21,7 +21,7 @@
                         <field name="quantity_done" />
                         <field name="uom_id" />
                         <field name="remarks" />
-                    </tree>
+                    </list>
                 </field>
                 <footer>
                     <button

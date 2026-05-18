@@ -6,17 +6,15 @@ from odoo import api, fields, models
 
 class StockShipmentComposerLine(models.Model):
     _name = "stock.shipment.composer.line"
+    _inherit = "stock.shipment.composer.line.mixin"
     _description = "Stock Shipment Composer Line"
 
     composer_id = fields.Many2one(
         "stock.shipment.composer", required=True, ondelete="cascade"
     )
-    move_id = fields.Many2one("stock.move", required=True)
     picking_id = fields.Many2one(related="move_id.picking_id", string="Transfer")
-    quantity = fields.Float(compute="_compute_quantity", store="True", readonly=False)
+    quantity = fields.Float(compute="_compute_quantity", store=True, readonly=False)
     product_uom_qty = fields.Float(related="move_id.product_uom_qty")
-    reserved_availability = fields.Float(related="move_id.reserved_availability")
-    quantity_done = fields.Float(related="move_id.quantity_done")
     uom_id = fields.Many2one(related="move_id.product_uom", string="UoM")
     move_state = fields.Selection(related="move_id.state", string="Move Status")
     remarks = fields.Text()

@@ -20,7 +20,7 @@ class TestShipmentComposer(TransactionCase):
         cls.stock_loc = cls.wh.lot_stock_id
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create(
-            {"name": "test", "type": "product"}
+            {"name": "test", "is_storable": True}
         )
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_loc, 5.0
@@ -44,7 +44,6 @@ class TestShipmentComposer(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": "Test",
                             "partner_id": partner.id,
                             "location_id": cls.stock_loc.id,
                             "location_dest_id": cls.customer_loc.id,
@@ -95,7 +94,8 @@ class TestShipmentComposer(TransactionCase):
         self.assertEqual(self.picking.state, "done")
         self.assertEqual(self.composer1.state, "done")
         self.assertTrue(self.composer1.date_done)
-        self.assertEqual(self.move.quantity_done, 5.0)
+        self.assertEqual(self.move.quantity, 5.0)
+        self.assertTrue(self.move.picked)
         self.assertEqual(self.move.shipment_composer_id, self.composer1)
 
     def test_action_done_success_flow_with_backorder(self):
@@ -116,9 +116,75 @@ class TestShipmentComposer(TransactionCase):
         self.assertEqual(self.picking.state, "done")
         self.assertEqual(self.composer1.state, "done")
         self.assertTrue(self.composer1.date_done)
-        self.assertEqual(self.move.quantity_done, 3.0)
+        self.assertEqual(self.move.quantity, 3.0)
+        self.assertTrue(self.move.picked)
         new_move = self.picking.backorder_ids.move_ids
         self.assertEqual(self.line2.move_id, new_move)
+
+    def test_action_done_with_backorder_other_composer_in_progress(self):
+        self.line1.quantity = 3.0
+        composer2 = self.create_composer()
+        line2 = self.create_composer_line(composer2, self.move, quantity=2.0)
+        self.composer1.action_confirm()
+        composer2.action_confirm()
+        backorder_wizard_dict = self.composer1.action_done()
+        Form(
+            self.env[(backorder_wizard_dict.get("res_model"))].with_context(
+                **backorder_wizard_dict["context"]
+            )
+        ).save().process()
+        self.assertEqual(self.composer1.state, "done")
+        self.assertEqual(self.move.product_uom_qty, 3.0)
+        self.assertEqual(line2.move_id, self.picking.backorder_ids.move_ids)
+        self.assertEqual(line2.move_id.product_uom_qty, 2.0)
+        self.assertEqual(line2.quantity, 2.0)
+        self.assertEqual(line2.move_id.composer_line_qty, 2.0)
+
+    def test_action_done_with_backorder_multiple_moves(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_loc, 5.0
+        )
+        picking2 = self.create_picking(self.partner)
+        picking2.action_confirm()
+        move2 = picking2.move_ids
+        self.line1.quantity = 3.0
+        self.create_composer_line(self.composer1, move2, quantity=3.0)
+        composer2 = self.create_composer()
+        line2 = self.create_composer_line(composer2, self.move, quantity=2.0)
+        line3 = self.create_composer_line(composer2, move2, quantity=2.0)
+        self.composer1.action_confirm()
+        backorder_wizard_dict = self.composer1.action_done()
+        Form(
+            self.env[(backorder_wizard_dict.get("res_model"))].with_context(
+                **backorder_wizard_dict["context"]
+            )
+        ).save().process()
+        self.assertEqual(line2.move_id, self.picking.backorder_ids.move_ids)
+        self.assertEqual(line3.move_id, picking2.backorder_ids.move_ids)
+        self.assertNotIn("done", (line2 | line3).move_id.mapped("state"))
+        self.assertEqual((line2 | line3).mapped("quantity"), [2.0, 2.0])
+
+    def test_split_transfer_keeps_composer_lines(self):
+        self.line1.quantity = 3.0
+        composer2 = self.create_composer()
+        line2 = self.create_composer_line(composer2, self.move, quantity=2.0)
+        self.composer1.action_confirm()
+        self.move.quantity = 3.0
+        self.picking.action_split_transfer()
+        self.assertEqual(self.move.product_uom_qty, 3.0)
+        self.assertEqual(self.line1.move_id, self.move)
+        self.assertEqual(self.line1.quantity, 3.0)
+        self.assertEqual(line2.move_id, self.move)
+
+    def test_action_done_with_picked_move(self):
+        self.composer1.action_confirm()
+        self.move.picked = True
+        self.assertEqual(self.line1.reserved_availability, 5.0)
+        self.assertEqual(self.line1.quantity_done, 5.0)
+        self.assertTrue(self.composer1.show_validate)
+        self.composer1.action_done()
+        self.assertEqual(self.picking.state, "done")
+        self.assertEqual(self.composer1.state, "done")
 
     def test_action_done_quantity_zero_error(self):
         # set one line to zero and expect error
