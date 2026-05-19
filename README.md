@@ -46,6 +46,7 @@ addon | version | maintainers | summary
 [stock_picking_return_restricted_qty](stock_picking_return_restricted_qty/) | 19.0.1.0.0 |  | Restrict the return to delivered quantity
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 19.0.1.0.0 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 19.0.1.0.0 |  | Send stock picking by email
+[stock_restrict_lot](stock_restrict_lot/) | 19.0.1.0.0 | <a href='https://github.com/florian-dacosta'><img src='https://github.com/florian-dacosta.png' width='32' height='32' style='border-radius:50%;' alt='florian-dacosta'/></a> | Base module that add back the concept of restrict lot on stock move
 [stock_split_picking](stock_split_picking/) | 19.0.1.0.0 |  | Split a picking in two not transferred pickings
 
 [//]: # (end addons)
