@@ -4,7 +4,7 @@
 
 from collections import defaultdict
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 CONTEXT_KEY_FORCE_RECOMPUTE = "stock_picking_return_lot.force_recompute"
 
@@ -35,22 +35,29 @@ class ReturnPicking(models.TransientModel):
         return qties
 
     def _compute_moves_locations(self):
-        # Split up moves by tracked quantities
+        # Split up moves by tracked quantities. Lines are rebuilt with commands
+        # instead of being copied, as this compute runs within onchange, where
+        # real records would break the web client one2many diff.
         res = super()._compute_moves_locations()
         for wizard in self:
+            product_return_moves = [Command.clear()]
             for line in wizard.product_return_moves:
+                line_values = line.copy_data()[0]
+                line_values.pop("wizard_id", None)
                 qties = self._get_qty_by_lot(line.move_id)
-                first = True
-                for lot, qty in qties.items():
-                    if qty < 0:
-                        qty = 0
-                    if first:
-                        line.lot_id = lot
-                        first = False
-                    elif qty:
-                        line = line.copy({"lot_id": lot.id})
-                    line.quantity = qty
-
+                lot_qties = [(lot, qty) for lot, qty in qties.items() if qty > 0]
+                if not lot_qties and qties:
+                    # Everything has been returned already: keep a single line
+                    # for the move, so it is still displayed in the wizard
+                    lot_qties = [(next(iter(qties)), 0.0)]
+                if not lot_qties:
+                    product_return_moves.append(Command.create(line_values))
+                    continue
+                for lot, qty in lot_qties:
+                    product_return_moves.append(
+                        Command.create(dict(line_values, lot_id=lot.id, quantity=qty))
+                    )
+            wizard.product_return_moves = product_return_moves
         return res
 
     def _reset_quantities(self):
