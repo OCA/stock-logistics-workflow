@@ -1,0 +1,3 @@
+- Souheil Bejaoui (ACSONE SA/NV) \<<souheil.bejaoui@acsone.eu>\>
+- SodexisTeam \<<dev@sodexis.com>\>
+- Adriana Saiz \<<adriana.saiz@factorlibre.com>\>
