@@ -1,7 +1,8 @@
 # Copyright (C) 2024 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, registry
+from odoo import api, fields, models
+from odoo.modules.registry import Registry
 
 
 class StockPicking(models.Model):
@@ -30,7 +31,7 @@ class StockPicking(models.Model):
         # only the latest state needs to be sent
         @self.env.cr.postcommit.add
         def trigger_picking_notification():
-            db_registry = registry(dbname)
+            db_registry = Registry(dbname)
             with db_registry.cursor() as cr:
                 env = api.Environment(cr, uid, context)
                 to_notify = env["stock.picking"].search([("to_web_notify", "=", True)])
