@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:10+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_cost_price_avco_sync
 #: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
@@ -21,23 +23,25 @@ msgid ""
 "More than one stock move line to assign the new stock valuation layer "
 "quantity"
 msgstr ""
+"Más dunha liña de movemento de existencias para asignar a nova cantidade de "
+"capa de valoración de existencias"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movementos de Produto (Liña de Movemento de Existencias)"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_valuation_layer
 msgid "Stock Valuation Layer"
-msgstr ""
+msgstr "Nivel de Valoración de Existencias"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferir"
