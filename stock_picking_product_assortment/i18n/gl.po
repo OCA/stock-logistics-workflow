@@ -6,25 +6,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:11+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_product_assortment
 #: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_picking__assortment_product_ids
 msgid "Assortment Products"
-msgstr ""
+msgstr "Fornecido de Produtos"
 
 #. module: stock_picking_product_assortment
 #: model:ir.model.fields,field_description:stock_picking_product_assortment.field_stock_picking__has_assortment
 msgid "Has Assortment"
-msgstr ""
+msgstr "Ten Fornecido"
 
 #. module: stock_picking_product_assortment
 #: model:ir.model,name:stock_picking_product_assortment.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Albará"
