@@ -6,44 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:10+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__action_pack_op_auto_fill_allowed
 msgid "Action Pack Op Auto Fill Allowed"
-msgstr ""
+msgstr "Autocompletar operación de paquete de acción permitido"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__auto_fill_operation
 msgid "Auto fill operations"
-msgstr ""
+msgstr "Autocompletar operacións"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
 msgid "AutoFill"
-msgstr ""
+msgstr "Autocompletar"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.view_picking_type_form_assignment
 msgid "Automation"
-msgstr ""
+msgstr "Autocompletar"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto fill for more line with lots product"
-msgstr ""
+msgstr "Evite o enchido automático para obter máis liña con moito produto"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,field_description:stock_move_line_auto_fill.field_stock_picking_type__avoid_lot_assignment
 msgid "Avoid auto-assignment of lots"
-msgstr ""
+msgstr "Evitar asignación automática de lotes"
 
 #. module: stock_move_line_auto_fill
 #: code:addons/stock_move_line_auto_fill/models/stock_picking.py:0
@@ -52,16 +54,19 @@ msgid ""
 "Filling the operations automatically is not possible, perhaps the pickings "
 "aren't in the right state (Partially available or available)."
 msgstr ""
+"Encher as operaciosn de forma automática non é posible, posiblemente os "
+"movementos non están no estado correcto (Parcialmente dispoñible ou "
+"Dispoñible)."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Tipo de Recollida"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movemento de stock"
 
 #. module: stock_move_line_auto_fill
 #: model_terms:ir.ui.view,arch_db:stock_move_line_auto_fill.stock_picking_form_view
@@ -69,6 +74,9 @@ msgid ""
 "This button will automatically fill all operations that have no tracking set"
 " on the product, no processed qty and no selected package."
 msgstr ""
+"Este botón vai encher todas as operacións de forma automática, se non teñen "
+"activada a rastrexabilidade no produto, ningunha cantidade procesada e "
+"ningún paquete seleccionado."
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model.fields,help:stock_move_line_auto_fill.field_stock_picking__auto_fill_operation
@@ -78,8 +86,12 @@ msgid ""
 "- If checked, auto fill done quantity automatically\n"
 "- If unchecked, show button AutoFill for user to do the auto fill manually"
 msgstr ""
+"Encher automaticamente a cantidade realizada no documento de picking.\n"
+"- Se está marcada, a cantidade encherase automaticamente\n"
+"- Se non está marcada, mostra o botón Autorrelleno para que o usuario "
+"realice o autorrelleno manualmente"
 
 #. module: stock_move_line_auto_fill
 #: model:ir.model,name:stock_move_line_auto_fill.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferir"
