@@ -6,46 +6,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:10+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_warn_option
 #: model:ir.model.fields.selection,name:stock_warn_option.selection__warn_option__allowed_warning_usage__partner_picking_warn
 msgid "(Partner) Warning on the Picking"
-msgstr ""
+msgstr "(Contacto) Aviso nos albarás"
 
 #. module: stock_warn_option
 #: model:ir.model.fields,field_description:stock_warn_option.field_warn_option__allowed_warning_usage
 msgid "Allowed Warning Usage"
-msgstr ""
+msgstr "Uso da alerta permitida"
 
 #. module: stock_warn_option
 #: model:ir.model.fields,help:stock_warn_option.field_warn_option__allowed_warning_usage
 msgid "Allows to choose where the message can be selected"
-msgstr ""
+msgstr "Permite elixir onde pode ser seleccionado a mensaxe"
 
 #. module: stock_warn_option
 #: model:ir.model,name:stock_warn_option.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: stock_warn_option
 #: model:ir.model.fields,field_description:stock_warn_option.field_res_partner__picking_warn_option
 #: model:ir.model.fields,field_description:stock_warn_option.field_res_users__picking_warn_option
 msgid "Picking Warn Option"
-msgstr ""
+msgstr "Opción de alerta en albarás"
 
 #. module: stock_warn_option
 #: model_terms:ir.ui.view,arch_db:stock_warn_option.stock_warn_option_partner_form
 msgid "Select a warning option"
-msgstr ""
+msgstr "Selecciona unha opción de alerta"
 
 #. module: stock_warn_option
 #: model:ir.model,name:stock_warn_option.model_warn_option
 msgid "Warn Option"
-msgstr ""
+msgstr "Opción de alerta"
