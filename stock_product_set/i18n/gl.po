@@ -6,110 +6,114 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:10+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_product_set
 #: model:ir.actions.act_window,name:stock_product_set.act_open_wizard_product_set_add_from_picking
 msgid "Add a set in a picking"
-msgstr ""
+msgstr "Engadir conxunto nun albará"
 
 #. module: stock_product_set
 #: model_terms:ir.ui.view,arch_db:stock_product_set.product_set_add_from_picking_form_view
 #: model_terms:ir.ui.view,arch_db:stock_product_set.view_picking_form
 msgid "Add set"
-msgstr ""
+msgstr "Engadir conxunto"
 
 #. module: stock_product_set
 #: model_terms:ir.ui.view,arch_db:stock_product_set.product_set_add_from_picking_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__partner_id
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado o"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome a mostrar"
 
 #. module: stock_product_set
 #: model:ir.model.fields,help:stock_product_set.field_product_set_add_from_picking__skip_existing_products
 msgid ""
 "Enable this to not add new lines for products already included in SO lines."
 msgstr ""
+"Habilite isto para non agregar novas liñas para produtos xa incluídos nas "
+"liñas SO."
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación o"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Data modificación"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__picking_id
 msgid "Picking"
-msgstr ""
+msgstr "Albará"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__product_set_id
 msgid "Product set"
-msgstr ""
+msgstr "Liña de conxunto de produtos"
 
 #. module: stock_product_set
 #: model:ir.model,name:stock_product_set.model_product_set_line
 msgid "Product set line"
-msgstr ""
+msgstr "Liña de conxunto de produtos"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__product_set_line_ids
 msgid "Product set lines"
-msgstr ""
+msgstr "Liña de conxunto de produtos"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidade"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__order_id
 msgid "Sale Order"
-msgstr ""
+msgstr "Pedido de venda"
 
 #. module: stock_product_set
 #: model:ir.model.fields,field_description:stock_product_set.field_product_set_add_from_picking__skip_existing_products
 msgid "Skip Existing Products"
-msgstr ""
+msgstr "Omitir produtos existentes"
 
 #. module: stock_product_set
 #: model:ir.model,name:stock_product_set.model_product_set_add_from_picking
