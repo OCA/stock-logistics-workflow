@@ -6,26 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-23 16:10+0000\n"
+"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_send_by_mail
 #: code:addons/stock_picking_send_by_mail/models/stock_picking.py:0
 #, python-format
 msgid "Compose Email"
-msgstr ""
+msgstr "Compoñer correo electrónico"
 
 #. module: stock_picking_send_by_mail
 #: model_terms:ir.ui.view,arch_db:stock_picking_send_by_mail.view_picking_form
 msgid "Send by Email"
-msgstr ""
+msgstr "Enviar por correo electrónico"
 
 #. module: stock_picking_send_by_mail
 #: model:ir.model,name:stock_picking_send_by_mail.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferencia"
