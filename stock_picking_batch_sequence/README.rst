@@ -67,6 +67,7 @@ Contributors
 - `Tecnativa <https://www.tecnativa.com>`__:
 
   - Carlos Dauden
+  - Carlos Roca
 
 Maintainers
 -----------
