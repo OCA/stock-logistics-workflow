@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_delivery_document"
+        inherit_id="stock.report_delivery_document"
+        priority="99"
+    >
+        <!-- Add context for moves and move_lines if accessed directly or with search -->
+        <xpath expr="//t[@t-call='web.external_layout']/t[@t-set='o']" position="after">
+            <t t-set="o" t-value="o.with_context(display_in_report=True)" />
+        </xpath>
+        <!-- Since moves are using filtered, we need to check display directly -->
+        <xpath
+            expr="//table[@name='stock_move_table']/tbody/tr[@t-foreach='lines']"
+            position="attributes"
+        >
+            <attribute name='t-if'>move.display_in_report</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+        priority="99"
+    >
+        <!-- Add check for aggregated lines -->
+        <xpath expr="//tr[@t-foreach='aggregated_lines']" position="attributes">
+            <attribute
+                name="t-if"
+            >aggregated_lines[line]['display_in_report']</attribute>
+        </xpath>
+    </template>
+</odoo>
