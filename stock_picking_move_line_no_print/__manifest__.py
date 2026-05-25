@@ -3,7 +3,7 @@
 {
     "name": "Stock operations hidden in delivery slips",
     "summary": "Hide operations in delivery slips",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Delivery",
     "website": "https://github.com/OCA/stock-logistics-workflow",
