@@ -18,7 +18,7 @@ org_name: Odoo Community Association (OCA)
 org_slug: OCA
 postgres_image: ''
 rebel_module_groups:
-- stock_picking_batch_extended
+- stock_picking_batch_extended,stock_picking_batch_sequence
 repo_description: stock-logistics-workflow
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
