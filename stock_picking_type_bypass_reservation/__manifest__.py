@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Type Bypass Reservation",
     "summary": "Bypass reservation on desired Stock Picking Types",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "development_status": "Alpha",
     "category": "Inventory/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
