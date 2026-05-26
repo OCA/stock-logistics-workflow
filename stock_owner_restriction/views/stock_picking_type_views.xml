@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group[@name='second']" position="inside">
+                <group name="owner_restriction" string="Owner settings">
+                    <field name="owner_restriction" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
