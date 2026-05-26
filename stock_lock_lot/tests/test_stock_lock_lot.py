@@ -39,7 +39,7 @@ class TestStockLockLot(BaseCommon):
         self.assertTrue(lot.locked)
 
     def test_lock_permissions(self):
-        self.env.user.groups_id -= self.env.ref("stock_lock_lot.group_lock_lot")
+        self.env.user.group_ids -= self.env.ref("stock_lock_lot.group_lock_lot")
         # This should work correctly
         lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         with self.assertRaises(exceptions.AccessError):

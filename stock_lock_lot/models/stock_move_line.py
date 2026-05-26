@@ -1,7 +1,7 @@
 # Copyright 2016 AvanzOsc (http://www.avanzosc.es)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, exceptions, models
+from odoo import exceptions, models
 
 
 class StockMoveLine(models.Model):
@@ -11,7 +11,7 @@ class StockMoveLine(models.Model):
         for ml in self:
             if ml.lot_id.locked and not ml.location_dest_id.allow_locked:
                 raise exceptions.ValidationError(
-                    _(
+                    self.env._(
                         "The following lots/serial number is blocked and "
                         "cannot be moved:\n%(lot)s",
                         lot=ml.lot_id.name,

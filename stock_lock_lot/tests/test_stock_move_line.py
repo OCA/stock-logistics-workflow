@@ -4,8 +4,9 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockMoveLine(BaseCommon):
-    def setUp(cls):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         cls.category = cls.env["product.category"].create(
             {"name": "Test category", "lot_default_locked": True}
         )
@@ -26,7 +27,6 @@ class TestStockMoveLine(BaseCommon):
         )
         cls.move = cls.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": cls.product.id,
                 "product_uom_qty": 10,
                 "location_id": cls.location_src.id,
