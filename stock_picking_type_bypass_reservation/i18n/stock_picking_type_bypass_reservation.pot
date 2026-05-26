@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_type_bypass_reservation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,help:stock_picking_type_bypass_reservation.field_stock_move_line__bypassed_reservation
+msgid ""
+"Detailed operations with this flag, have a forced reserved quantity to "
+"reveal the uncovered demand in the system. It can be used to easily filter "
+"this operations"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,help:stock_picking_type_bypass_reservation.field_stock_picking_type__bypass_reservation
+msgid ""
+"If checked, products from this Picking Type will always be reserved even if you don't have enough stock (available stock will be reserved as usual).\n"
+"Note: Pickings will be reserved on Confirmation even if you don't have checked the option"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,field_description:stock_picking_type_bypass_reservation.field_stock_move_line__bypassed_reservation
+#: model_terms:ir.ui.view,arch_db:stock_picking_type_bypass_reservation.stock_move_line_view_search
+msgid "Phantom reservation"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model,name:stock_picking_type_bypass_reservation.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model,name:stock_picking_type_bypass_reservation.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model.fields,field_description:stock_picking_type_bypass_reservation.field_stock_picking_type__bypass_reservation
+msgid "Reserve over availability"
+msgstr ""
+
+#. module: stock_picking_type_bypass_reservation
+#: model:ir.model,name:stock_picking_type_bypass_reservation.model_stock_move
+msgid "Stock Move"
+msgstr ""
