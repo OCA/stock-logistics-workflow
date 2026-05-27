@@ -1,10 +1,10 @@
 # Copyright 2021 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from .common import Basecommon
 
 
-class TestStockScrapCancel(common.TransactionCase):
+class TestStockScrapCancel(Basecommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -12,24 +12,21 @@ class TestStockScrapCancel(common.TransactionCase):
             {"name": "Test product", "is_storable": True}
         )
         warehouse = cls.env.ref("stock.warehouse0")
+        cls.location = warehouse.lot_stock_id
         cls.scrap = cls.env["stock.scrap"].create(
             {
                 "product_id": cls.product.id,
                 "scrap_qty": 1.00,
                 "product_uom_id": cls.product.uom_id.id,
-                "location_id": warehouse.lot_stock_id.id,
+                "location_id": cls.location.id,
             }
         )
 
     def _update_qty_on_hand_product(self, new_qty):
-        qty_wizard = self.env["stock.change.product.qty"].create(
-            {
-                "product_id": self.product.id,
-                "product_tmpl_id": self.product.product_tmpl_id.id,
-                "new_quantity": new_qty,
-            }
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.location, new_qty
         )
-        qty_wizard.change_product_qty()
+        self.product.invalidate_recordset(["qty_available"])
 
     def test_stock_scrap_process(self):
         self.assertEqual(self.product.qty_available, 0)
