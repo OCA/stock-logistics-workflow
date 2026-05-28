@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="ir_cron_auto_process" model="ir.cron">
+        <field name="name">Stock: Auto Process Pickings</field>
+        <field name="model_id" ref="model_automatic_process_job" />
+        <field name="state">code</field>
+        <field name="code">model.run()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+    </record>
+</odoo>

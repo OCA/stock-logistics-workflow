@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_auto_process_rule_view_tree" model="ir.ui.view">
+        <field name="name">stock.auto.process.rule.tree</field>
+        <field name="model">stock.auto.process.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="picking_type_ids" widget="many2many_tags" />
+                <field name="do_confirm" />
+                <field name="do_assign" />
+                <field name="do_validate" />
+                <field name="create_backorder" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="active" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_auto_process_rule_view_form" model="ir.ui.view">
+        <field name="name">stock.auto.process.rule.form</field>
+        <field name="model">stock.auto.process.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <field name="active" invisible="1" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field
+                                name="name"
+                                placeholder="e.g. Auto-ship pre-assigned outgoing pickings"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Selection">
+                            <field name="picking_type_ids" widget="many2many_tags" />
+                            <field
+                                name="domain"
+                                widget="domain"
+                                options="{'model': 'stock.picking'}"
+                            />
+                        </group>
+                        <group string="Actions">
+                            <field name="do_confirm" />
+                            <field name="do_assign" />
+                            <field name="do_validate" />
+                            <field
+                                name="create_backorder"
+                                attrs="{'invisible': [('do_validate', '=', False)]}"
+                            />
+                            <field name="sequence" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_auto_process_rule_view_search" model="ir.ui.view">
+        <field name="name">stock.auto.process.rule.search</field>
+        <field name="model">stock.auto.process.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="picking_type_ids" />
+                <filter
+                    name="filter_inactive"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_company"
+                        string="Company"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_auto_process_rule_action" model="ir.actions.act_window">
+        <field name="name">Auto Process Rules</field>
+        <field name="res_model">stock.auto.process.rule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="stock_auto_process_rule_menu"
+        name="Auto Process Rules"
+        parent="stock.menu_stock_warehouse_mgmt"
+        action="stock_auto_process_rule_action"
+        groups="group_stock_auto_process"
+        sequence="100"
+    />
+
+</odoo>

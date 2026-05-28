@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="group_stock_auto_process" model="res.groups">
+        <field name="name">Stock Auto Process</field>
+    </record>
+</odoo>
