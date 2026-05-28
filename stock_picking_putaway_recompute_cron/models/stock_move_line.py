@@ -15,7 +15,6 @@ class StockMoveLine(models.Model):
         """
         domain = [
             ("state", "not in", ("done", "cancel")),
-            ("can_recompute_putaways", "=", True),
             ("qty_done", "=", 0),
             ("picking_id", "!=", False),
         ]
@@ -28,9 +27,8 @@ class StockMoveLine(models.Model):
         and trigger putaway recomputation on them.
         """
 
-        lines_to_recompute = self.search(self._get_putaway_recompute_domain())
-
+        lines = self.search(self._get_putaway_recompute_domain())
+        lines_to_recompute = lines._filtered_for_putaway_recompute()
         if lines_to_recompute:
             lines_to_recompute.action_recompute_putaways()
-
         return True
