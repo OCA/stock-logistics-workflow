@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <group name="linked_group" position="after">
+                <group
+                    name="moves_used"
+                    string="Source Moves Used"
+                    groups="account.group_account_user"
+                    colspan="2"
+                >
+                    <field name="incoming_usage_ids" readonly="1">
+                        <list>
+                            <field name="src_stock_move_id" />
+                            <field name="quantity" />
+                            <field name="value" />
+                        </list>
+                    </field>
+                </group>
+            </group>
+            <sheet position="inside">
+                <notebook>
+                    <page name="usage" string="Usage">
+                        <field name="usage_ids" />
+                    </page>
+                    <page
+                        name="incoming_usage"
+                        string="Incoming Usage"
+                        invisible="not incoming_usage_ids"
+                    >
+                        <field name="incoming_usage_ids" />
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+</odoo>
