@@ -15,8 +15,13 @@ class StockMove(models.Model):
         )
         all_om_in_self = all(om in self for om in orig_moves)
 
+        restrict = any(
+            m.picking_id.picking_type_id.restrict_cancel_with_orig_move for m in self
+        )
+
         if (
-            self.env.context.get("bypass_check_state")
+            not restrict
+            or self.env.context.get("bypass_check_state")
             or all_om_canceled_or_done
             or all_om_in_self
         ):
@@ -44,10 +49,14 @@ class StockMove(models.Model):
             )
 
     def get_blocking_moves(self, orig_moves):
-        not_canceled_or_done = orig_moves.filtered(
+        restricted_moves = self.filtered(
+            lambda m: m.picking_id.picking_type_id.restrict_cancel_with_orig_move
+        )
+        restricted_orig_moves = orig_moves & restricted_moves.move_orig_ids
+        not_canceled_or_done = restricted_orig_moves.filtered(
             lambda m: m.state not in ("cancel", "done")
         )
-        not_in_self = orig_moves.filtered(lambda m: m not in self)
+        not_in_self = restricted_orig_moves.filtered(lambda m: m not in self)
         return not_in_self & not_canceled_or_done
 
     def identify_blocking_objects(self, blocking_moves):

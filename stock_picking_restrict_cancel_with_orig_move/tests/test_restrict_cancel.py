@@ -17,6 +17,7 @@ class TestRestrictCancelStockMove(BaseCommon):
 
         cls.internal_pt = cls.warehouse.int_type_id
         cls.internal_pt.active = True
+        cls.internal_pt.restrict_cancel_with_orig_move = True
 
         cls.dummy_product = (
             cls.env["product.template"]
@@ -87,6 +88,56 @@ class TestRestrictCancelStockMove(BaseCommon):
         self.input_to_qc_picking.action_cancel()
         self.assertEqual(qc_to_stock_move.state, "cancel")
         self.assertEqual(self.input_to_qc_picking.move_ids.state, "cancel")
+
+    def test_no_restriction_when_flag_disabled(self):
+        self.internal_pt.restrict_cancel_with_orig_move = False
+        upstream = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.internal_pt.id,
+                "location_id": self.input_loc.id,
+                "location_dest_id": self.qc_loc.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.dummy_product.name,
+                            "product_id": self.dummy_product.id,
+                            "product_uom": self.env.ref("uom.product_uom_unit").id,
+                            "product_uom_qty": 1,
+                            "location_id": self.input_loc.id,
+                        },
+                    )
+                ],
+            }
+        )
+        upstream.action_confirm()
+        downstream = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.internal_pt.id,
+                "location_id": self.qc_loc.id,
+                "location_dest_id": self.stock_loc.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.dummy_product.name,
+                            "product_id": self.dummy_product.id,
+                            "product_uom": self.env.ref("uom.product_uom_unit").id,
+                            "product_uom_qty": 1,
+                            "location_id": self.qc_loc.id,
+                        },
+                    )
+                ],
+            }
+        )
+        downstream.action_confirm()
+        downstream.move_ids.move_orig_ids |= upstream.move_ids
+        # Cancelling the downstream picking must succeed even though the
+        # upstream move is still in progress, because the flag is off.
+        downstream.action_cancel()
+        self.assertEqual(downstream.move_ids.state, "cancel")
 
     def test_do_not_restrict(self):
         # When this picking is created, odoo will apply push rules on each

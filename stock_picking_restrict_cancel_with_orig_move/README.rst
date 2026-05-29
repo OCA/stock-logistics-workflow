@@ -48,6 +48,10 @@ user, listing all the stock pickings containing stock moves linked to
 the picking the user is trying to cancel, so he can delete the original,
 ensuring all the following pickings will be canceled as well.
 
+To enable the restriction, go to **Inventory > Configuration > Operation
+Types**, open the desired operation type, and enable the option
+**Restrict Cancellation with Original Moves**.
+
 Bug Tracker
 ===========
 
