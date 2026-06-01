@@ -74,6 +74,11 @@
               <field name="from_info" />
               <field name="ref" />
               <field name="description" />
+              <field
+                                name="dock_ids"
+                                widget="many2many_tags"
+                                options="{'no_create': True}"
+                            />
             </group>
           </group>
             <label for="picking_ids" />
