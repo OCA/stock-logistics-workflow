@@ -56,32 +56,31 @@ class StockPicking(models.Model):
 
     def _scheduled_date_no_delivery_window_match_msg(self):
         delivery_date = self._planned_delivery_date()
+        partner = self.partner_id
+        tz = partner.delivery_window_tz
         if isinstance(delivery_date, datetime.datetime):
-            formatted_delivery_date = format_datetime(self.env, delivery_date)
+            formatted_delivery_date = format_datetime(self.env, delivery_date, tz=tz)
         else:
             formatted_delivery_date = format_date(self.env, delivery_date)
-        partner = self.partner_id
         if partner.delivery_time_preference == "workdays":
             message = self.env._(
                 "The %(date_name)s is %(date)s (%(tz)s), but the partner is "
                 "set to prefer deliveries on working days.",
                 date_name=self._planned_delivery_date_name,
                 date=formatted_delivery_date,
-                tz=self.env.context.get("tz"),
+                tz=tz,
             )
         else:
             delivery_windows_strings = []
             if partner:
                 for w in partner._get_delivery_windows().get(partner):
-                    delivery_windows_strings.append(
-                        f"  * {w.display_name} ({partner.tz})"
-                    )
+                    delivery_windows_strings.append(f"  * {w.display_name} ({tz})")
             message = self.env._(
                 "The %(date_name)s is %(date)s (%(tz)s), but the partner is "
                 "set to prefer deliveries on following time windows:\n%(window)s",
                 date_name=self._planned_delivery_date_name,
                 date=formatted_delivery_date,
-                tz=self.env.context.get("tz"),
+                tz=tz,
                 window="\n".join(delivery_windows_strings),
             )
         return message

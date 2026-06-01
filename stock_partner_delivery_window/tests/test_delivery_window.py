@@ -6,6 +6,8 @@ from unittest import mock
 
 from freezegun import freeze_time
 
+from odoo import Command
+
 from .common import PartnerDeliveryWindowCommon
 
 
@@ -263,3 +265,44 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
         date = datetime.datetime.fromisoformat("2020-04-04 17:00:00")
         self.assertFalse(self.customer_time_window._is_in_delivery_window(date))
+
+    def test_partner_tz_is_in_delivery_window(self):
+        """Test UTC datetimes are checked against partner-local windows."""
+        self.customer_time_window.tz = "Europe/Zurich"
+        self.customer_time_window.delivery_time_window_ids.write(
+            {
+                "time_window_start": 10.0,
+                "time_window_end": 18.0,
+                "time_window_weekday_ids": [
+                    Command.set(
+                        [self.env.ref("base_time_window.time_weekday_friday").id]
+                    )
+                ],
+            }
+        )
+
+        date = datetime.datetime.fromisoformat("2026-05-29 07:59:59")
+        self.assertFalse(self.customer_time_window._is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2026-05-29 08:00:00")
+        self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
+
+    def test_company_tz_is_delivery_window_fallback(self):
+        """Test company timezone is used when partner has no timezone."""
+        self.env.company.partner_id.tz = "Europe/Zurich"
+        self.customer_time_window.tz = False
+        self.customer_time_window.delivery_time_window_ids.write(
+            {
+                "time_window_start": 10.0,
+                "time_window_end": 18.0,
+                "time_window_weekday_ids": [
+                    Command.set(
+                        [self.env.ref("base_time_window.time_weekday_friday").id]
+                    )
+                ],
+            }
+        )
+
+        date = datetime.datetime.fromisoformat("2026-05-29 07:59:59")
+        self.assertFalse(self.customer_time_window._is_in_delivery_window(date))
+        date = datetime.datetime.fromisoformat("2026-05-29 08:00:00")
+        self.assertTrue(self.customer_time_window._is_in_delivery_window(date))
