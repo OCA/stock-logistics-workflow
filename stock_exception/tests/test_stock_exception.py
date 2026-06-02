@@ -1,18 +1,20 @@
 # Copyright 2024 Open Source Integrators
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 from odoo.tests import Form
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPicking(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        stock_location = self.env.ref("stock.stock_location_stock")
-        customer_location = self.env.ref("stock.stock_location_customers")
-        product = self.env.ref("product.product_product_4")
-        picking_type = self.env.ref("stock.picking_type_out")
+class TestStockException(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        stock_location = cls.env.ref("stock.stock_location_stock")
+        customer_location = cls.env.ref("stock.stock_location_customers")
+        product = cls.env.ref("product.product_product_4")
+        picking_type = cls.env.ref("stock.picking_type_out")
         # Create a picking in 'assigned' state with exceptions
-        self.picking_with_exceptions = self.env["stock.picking"].create(
+        cls.picking_with_exceptions = cls.env["stock.picking"].create(
             {
                 "name": "Test Picking With Exceptions 2",
                 "state": "assigned",
@@ -28,7 +30,7 @@ class TestStockPicking(TransactionCase):
                             "product_id": product.id,
                             "product_uom_qty": 1,
                             "quantity": 1,
-                            "product_uom": self.env.ref("uom.product_uom_unit").id,
+                            "product_uom": cls.env.ref("uom.product_uom_unit").id,
                             "location_id": stock_location.id,
                             "location_dest_id": customer_location.id,
                         },
@@ -38,19 +40,20 @@ class TestStockPicking(TransactionCase):
             }
         )
 
-        self.exception = self.env["exception.rule"].create(
+        cls.exception = cls.env["exception.rule"].create(
             {
                 "name": "Demand Quantity not positive",
                 "description": "Demand Quantity not positive",
                 "sequence": 50,
                 "model": "stock.move",
                 "code": "if self.product_uom_qty == 0: failed=True",
-                "active": True,
+                "active": False,
             }
         )
 
     def test_detect_exceptions(self):
         # Test that exceptions are detected for the picking with exceptions
+        self.exception.active = True
         exceptions = self.picking_with_exceptions.detect_exceptions()
         self.assertFalse(exceptions, "Exceptions shouldn't be detected")
         move = self.picking_with_exceptions.move_ids[0]
@@ -60,21 +63,25 @@ class TestStockPicking(TransactionCase):
         self.assertTrue(exceptions, "Exceptions should be detected")
 
     def test_button_validate_with_exceptions(self):
+        self.exception.active = True
         move = self.picking_with_exceptions.move_ids[0]
         move.write({"product_uom_qty": 0})
         move.write({"quantity": 1})
         # Result returns a dict in case it detects an exception,
         # otherwise it returns 'True'
-        result = self.picking_with_exceptions.button_validate()
+        self.picking_with_exceptions.detect_exceptions()
 
         # Verify the result of the button_validate action
         # If exceptions detected, the result should be different from 'True'
-        self.assertNotEqual(
-            result, True, f"Expected result not to be True, but got {type(result)}"
+        self.assertTrue(
+            self.picking_with_exceptions.exception_ids.filtered(
+                lambda x: x == self.exception
+            )
         )
 
     def test_onchange_ignore_exception(self):
         # Change state and verify onchange behavior for picking
+        self.exception.active = True
         self.picking_with_exceptions.onchange_ignore_exception()
         self.picking_with_exceptions._reverse_field()
         self.picking_with_exceptions.write(
@@ -83,6 +90,7 @@ class TestStockPicking(TransactionCase):
         self.assertTrue(self.picking_with_exceptions.ignore_exception)
 
     def test_confirm_picking(self):
+        self.exception.active = True
         self.stock_exception = self.env["exception.rule"].create(
             {
                 "name": "No Partner",
