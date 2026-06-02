@@ -8,8 +8,8 @@ from odoo import models
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    def _action_done(self):
-        res = super()._action_done()
+    def button_validate(self):
+        res = super().button_validate()
         if self.env.context.get("invoice_batch", False):
             sales = self.mapped("sale_id").filtered(
                 lambda so: so.invoice_status == "to invoice"
