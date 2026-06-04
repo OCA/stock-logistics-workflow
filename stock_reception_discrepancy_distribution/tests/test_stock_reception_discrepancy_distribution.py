@@ -1,5 +1,6 @@
 # Copyright 2023 Tecnativa - Sergio Teruel
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+from odoo import Command
 from odoo.tests import Form, common
 
 
@@ -7,23 +8,21 @@ class TestStockReceptionDiscrepancyDistribution(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.warehouse = cls.env.ref("stock.warehouse0")
         buy_route = cls.env.ref("purchase_stock.route_warehouse0_buy")
-        # activate MTO route
         mto_route = cls.env.ref("stock.route_warehouse0_mto")
         mto_route.active = True
-
         cls.product = cls.env["product.product"].create(
             {
                 "name": "test",
-                "type": "product",
-                "route_ids": [(6, 0, (mto_route + buy_route).ids)],
+                "type": "consu",
+                "is_storable": True,
+                "route_ids": [Command.set((mto_route + buy_route).ids)],
             }
         )
         cls.supplier = cls.env["res.partner"].create({"name": "test - supplier"})
         cls.env["product.supplierinfo"].create(
             {
-                "name": cls.supplier.id,
+                "partner_id": cls.supplier.id,
                 "product_tmpl_id": cls.product.product_tmpl_id.id,
                 "product_id": cls.product.id,
                 "product_uom": cls.product.uom_po_id.id,
@@ -48,37 +47,42 @@ class TestStockReceptionDiscrepancyDistribution(common.TransactionCase):
     def test_stock_reception_discrepancy_distribution(self):
         self.order.action_confirm()
         self.order2.action_confirm()
-        # A purchase order must has been created
         purchase_order = self.order._get_purchase_orders()
         purchase_order.button_approve()
         picking_in = purchase_order.picking_ids
         # we will receipt 30.00 units instead of 25.00
-        picking_in.move_lines.quantity_done = 30.0
-
-        # Test action
-        action = picking_in.move_lines.action_change_move_dest_qty()
+        picking_in.move_ids.quantity = 30.0
+        picking_in.move_ids.picked = True
+        action = picking_in.move_ids.action_change_move_dest_qty()
         self.assertFalse(action["res_id"])
-        self.assertEqual(picking_in.move_lines.id, action["context"]["default_move_id"])
-
-        # Test workflow
+        self.assertEqual(picking_in.move_ids.id, action["context"]["default_move_id"])
         wiz = Form(
             self.env["stock.reception.discrepancy.distribution.wiz"].with_context(
                 **action["context"]
             )
         )
         self.assertEqual(len(wiz.move_dest_ids), 2)
-
-        # Initial wizard values
         self.assertEqual(wiz.move_qty_done, 30.00)
         self.assertEqual(wiz.move_dest_demand, 25.00)
         self.assertEqual(wiz.over_quantity, 5.00)
-
-        # Change values in wizard lines
         with wiz.move_dest_ids.edit(0) as line:
             line.product_uom_qty = 20.0
         with wiz.move_dest_ids.edit(1) as line:
             line.product_uom_qty = 40.0
-
         self.assertEqual(wiz.move_qty_done, 30.00)
         self.assertEqual(wiz.move_dest_demand, 60.00)
         self.assertEqual(wiz.over_quantity, -30.00)
+
+    def test_action_confirm_bumps_demand_on_over_receipt(self):
+        self.order.action_confirm()
+        self.order2.action_confirm()
+        purchase_order = self.order._get_purchase_orders()
+        purchase_order.button_approve()
+        receipt_move = purchase_order.picking_ids.move_ids
+        receipt_move.quantity = 30.0
+        receipt_move.picked = True
+        wiz = self.env["stock.reception.discrepancy.distribution.wiz"].create(
+            {"move_id": receipt_move.id}
+        )
+        wiz.action_confirm()
+        self.assertEqual(receipt_move.product_uom_qty, 30.0)

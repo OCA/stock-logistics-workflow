@@ -70,13 +70,7 @@
                 </group>
                 <group string="Destination stock moves">
                     <field name="move_dest_ids" nolabel="1">
-                        <tree editable="top" create="false" delete="false">
-                            <field
-                                name="product_id"
-                                readonly="1"
-                                options="{'no_open': True}"
-                                invisible="1"
-                            />
+                        <list editable="top" create="false" delete="false">
                             <field
                                 name="picking_id"
                                 readonly="1"
@@ -89,7 +83,7 @@
                             />
                             <field
                                 name="product_uom_qty"
-                                attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"
+                                readonly="state in ['done', 'cancel']"
                                 sum="Total"
                             />
                             <field
@@ -97,8 +91,8 @@
                                 readonly="1"
                                 options="{'no_open': True}"
                             />
-                            <field name="state" invisible="0" optional="hidden" />
-                        </tree>
+                            <field name="state" optional="hidden" />
+                        </list>
                     </field>
                 </group>
                 <field name="move_id" invisible="1" />

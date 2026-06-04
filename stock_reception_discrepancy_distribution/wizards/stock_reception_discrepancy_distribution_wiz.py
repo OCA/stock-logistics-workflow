@@ -12,7 +12,7 @@ class StockReceptionDiscrepancyDistributionWiz(models.TransientModel):
     move_id = fields.Many2one(comodel_name="stock.move")
     product_id = fields.Many2one(related="move_id.product_id", readonly=True)
     product_uom = fields.Many2one(related="move_id.product_uom")
-    move_qty_done = fields.Float(related="move_id.quantity_done")
+    move_qty_done = fields.Float(related="move_id.quantity")
     move_dest_demand = fields.Float(
         compute="_compute_move_dest_demand", digits="Product Unit of Measure"
     )
@@ -27,21 +27,24 @@ class StockReceptionDiscrepancyDistributionWiz(models.TransientModel):
         inverse="_inverse_move_dest_ids",
     )
 
-    @api.depends("move_dest_ids.product_uom_qty")
+    @api.depends("move_dest_ids.product_uom_qty", "move_qty_done")
     def _compute_move_dest_demand(self):
-        self.move_dest_demand = sum(self.move_dest_ids.mapped("product_uom_qty"))
-        self.over_quantity = self.move_qty_done - self.move_dest_demand
+        for wiz in self:
+            wiz.move_dest_demand = sum(wiz.move_dest_ids.mapped("product_uom_qty"))
+            wiz.over_quantity = wiz.move_qty_done - wiz.move_dest_demand
 
     @api.depends("move_id")
     def _compute_move_dest_ids(self):
-        self.move_dest_ids = self.move_id.move_dest_ids
+        for wiz in self:
+            wiz.move_dest_ids = wiz.move_id.move_dest_ids
 
     def _inverse_move_dest_ids(self):
         """To store changes on stock moves"""
-        self.move_id.move_dest_ids = self.move_dest_ids
+        for wiz in self:
+            wiz.move_id.move_dest_ids = wiz.move_dest_ids
 
     def action_confirm(self):
         # Update initial demand to avoid an extra picking when use multi steps reception
         # and MTO
-        if self.move_id.quantity_done > self.move_id.product_uom_qty:
-            self.move_id.product_uom_qty = self.move_id.quantity_done
+        if self.move_id.quantity > self.move_id.product_uom_qty:
+            self.move_id.product_uom_qty = self.move_id.quantity
