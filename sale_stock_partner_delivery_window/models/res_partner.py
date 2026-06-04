@@ -13,6 +13,18 @@ from odoo.tools.date_utils import start_of
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
+    def _to_partner_delivery_datetime(self, from_date, tz):
+        """Convert a datetime to partner local datetime.
+
+        :param from_date: date or datetime to convert.
+        :param tz: partner delivery window timezone string.
+        :return: timezone aware datetime in the partner timezone.
+        """
+        timezone = pytz.timezone(tz)
+        if isinstance(from_date, datetime):
+            return pytz.utc.localize(from_date).astimezone(timezone)
+        return timezone.localize(fields.Datetime.to_datetime(from_date))
+
     def _next_available_delivery_date(
         self, from_date: date | datetime | None = None
     ) -> datetime:
@@ -20,11 +32,12 @@ class ResPartner(models.Model):
         # If from_date is not provided, use the current datetime
         if from_date is None:  # pragma: no cover
             from_date = fields.Datetime.now()
-        # Pre-compute the from_datetime, in case from_date is a `date`
-        # We use the start of the day in the partner's timezone
-        tz = pytz.timezone(self.tz or self.env.company.partner_id.tz or "UTC")
+        # get the from_datetime, in case from_date is a `date`.
+        # datetime objects stored in odoo are naive UTC,
+        # while windows are partner local.
+        tz = self.delivery_window_tz
         from_datetime = fields.Datetime.to_datetime(from_date)
-        from_datetime_tz_aware = tz.localize(from_datetime)
+        from_datetime_tz_aware = self._to_partner_delivery_datetime(from_date, tz)
         # If the delivery is anytime, simply return the from_datetime
         if self.delivery_time_preference == "anytime":
             return from_datetime
@@ -67,11 +80,13 @@ class ResPartner(models.Model):
                             continue
                     # Otherwise, since we're looking at days ahead, simply pick the
                     # window's start time
-                    return (
-                        datetime.combine(next_date, start_time)
-                        .astimezone(pytz.utc)
-                        .replace(tzinfo=None)
+                    next_datetime = next_date.replace(
+                        hour=start_time.hour,
+                        minute=start_time.minute,
+                        second=start_time.second,
+                        microsecond=start_time.microsecond,
                     )
+                    return next_datetime.astimezone(pytz.utc).replace(tzinfo=None)
         else:  # pragma: no cover
             raise ValueError(
                 self.env._(

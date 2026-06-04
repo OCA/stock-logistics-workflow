@@ -25,6 +25,20 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
             }
         )
 
+    def _set_friday_zurich_window(self):
+        self.customer_time_window.tz = "Europe/Zurich"
+        self.customer_time_window.delivery_time_window_ids.write(
+            {
+                "time_window_start": 10.0,
+                "time_window_end": 18.0,
+                "time_window_weekday_ids": [
+                    Command.set(
+                        self.env.ref("base_time_window.time_weekday_friday").ids
+                    )
+                ],
+            }
+        )
+
     @freeze_time("2020-04-02 10:00:00")  # Thursday
     def test_expected_date_anytime(self):
         """Customer with no delivery preferences.
@@ -380,4 +394,69 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         self.assertFalse(
             warning,
             "No warning should be raised inside delivery hours",
+        )
+
+    def test_next_available_delivery_date_keeps_valid_utc_datetime(self):
+        """Test a valid UTC datetime is not shifted by partner timezone."""
+        self._set_friday_zurich_window()
+
+        next_date = self.customer_time_window._next_available_delivery_date(
+            fields.Datetime.to_datetime("2026-05-29 08:00:00")
+        )
+
+        self.assertEqual(
+            fields.Datetime.to_string(next_date),
+            "2026-05-29 08:00:00",
+        )
+
+    def test_next_available_delivery_date_returns_window_start_in_utc(self):
+        """Test the next available window start is returned."""
+        self._set_friday_zurich_window()
+
+        next_date = self.customer_time_window._next_available_delivery_date(
+            fields.Datetime.to_datetime("2026-05-28 06:00:00")
+        )
+
+        self.assertEqual(
+            fields.Datetime.to_string(next_date),
+            "2026-05-29 10:00:00",
+        )
+
+    def test_next_available_delivery_date_uses_company_tz_fallback(self):
+        """Test company timezone is used when partner has no timezone."""
+        self._set_friday_zurich_window()
+        self.env.company.partner_id.tz = "Europe/Zurich"
+        self.customer_time_window.tz = False
+
+        next_date = self.customer_time_window._next_available_delivery_date(
+            fields.Datetime.to_datetime("2026-05-28 06:00:00")
+        )
+
+        self.assertEqual(
+            fields.Datetime.to_string(next_date),
+            "2026-05-29 10:00:00",
+        )
+
+    def test_onchange_commitment_date_no_warning_inside_partner_window(self):
+        """Test no warning is shown for a UTC datetime inside the partner window."""
+        self._set_friday_zurich_window()
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2026-05-29 08:00:00"
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertFalse(warning)
+
+    def test_onchange_commitment_date_warning_displays_correct_next_time(self):
+        """Test warning displays the next available date."""
+        self._set_friday_zurich_window()
+        order = self._create_order(self.customer_time_window)
+
+        order.commitment_date = "2026-05-28 06:00:00"
+        warning = order._onchange_commitment_date_delivery_window()
+
+        self.assertTrue(warning)
+        self.assertIn(
+            "05/29/2026 10:00:00 AM",
+            warning["warning"]["message"],
         )
