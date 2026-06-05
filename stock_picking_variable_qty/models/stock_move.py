@@ -8,8 +8,128 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _action_done(self, cancel_backorder=False):
-        self._adjust_variable_quantity()
+        moves = self
+        if not cancel_backorder:
+            precision_digits = self.env["decimal.precision"].precision_get(
+                "Product Unit of Measure"
+            )
+            moves = self.filtered(
+                lambda move: not move._needs_variable_quantity_backorder(
+                    precision_digits=precision_digits
+                )
+            )
+        moves._adjust_variable_quantity()
         return super()._action_done(cancel_backorder=cancel_backorder)
+
+    def _create_backorder(self):
+        # Split moves where necessary and move quants. This mirrors the core
+        # implementation so we can keep a reliable source/backorder move mapping.
+        backorder_moves_vals = []
+        backorder_sources = []
+        precision_digits = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        for move in self:
+            if (
+                float_compare(
+                    move.quantity,
+                    move.product_uom_qty,
+                    precision_digits=precision_digits,
+                )
+                < 0
+            ):
+                qty_split = move.product_uom._compute_quantity(
+                    move.product_uom_qty - move.quantity,
+                    move.product_id.uom_id,
+                    rounding_method="HALF-UP",
+                )
+                new_move_vals = move._split(qty_split)
+                backorder_moves_vals += new_move_vals
+                backorder_sources += [move] * len(new_move_vals)
+        backorder_moves = self.env["stock.move"].create(backorder_moves_vals)
+        backorder_moves.with_context(
+            bypass_entire_pack=True, bypass_procurement_creation=True
+        )._action_confirm(merge=False)
+        self._split_variable_quantity_dest_moves(backorder_sources, backorder_moves)
+        return backorder_moves
+
+    def _needs_variable_quantity_backorder(self, precision_digits=None):
+        self.ensure_one()
+        if not (
+            self.move_dest_ids
+            and self.picking_type_id.variable_quantity
+            and self.picked
+            and self.quantity > 0
+        ):
+            return False
+        precision_digits = precision_digits or self.env[
+            "decimal.precision"
+        ].precision_get("Product Unit of Measure")
+        return (
+            float_compare(
+                self.quantity,
+                self.product_uom_qty,
+                precision_digits=precision_digits,
+            )
+            < 0
+        )
+
+    def _split_variable_quantity_dest_moves(self, backorder_sources, backorder_moves):
+        for source_move, backorder_move in zip(
+            backorder_sources, backorder_moves, strict=False
+        ):
+            if not source_move.picking_type_id.variable_quantity:
+                continue
+            dest_moves = (
+                source_move.move_dest_ids | backorder_move.move_dest_ids
+            ).filtered(lambda move: move.state not in {"done", "cancel"})
+            if not dest_moves:
+                continue
+            source_dest_moves, backorder_dest_moves = (
+                source_move._get_split_variable_quantity_dest_moves(
+                    dest_moves, backorder_move
+                )
+            )
+            source_move.move_dest_ids = [(6, 0, source_dest_moves.ids)]
+            backorder_move.move_dest_ids = [(6, 0, backorder_dest_moves.ids)]
+
+    def _get_split_variable_quantity_dest_moves(self, dest_moves, backorder_move):
+        source_dest_moves = self.env["stock.move"]
+        backorder_dest_moves = self.env["stock.move"]
+        qty_left = self.quantity
+        rounding = self.product_uom.rounding
+        for dest_move in dest_moves.sorted("id"):
+            if float_compare(qty_left, 0.0, precision_rounding=rounding) <= 0:
+                backorder_dest_moves |= dest_move
+                continue
+            if (
+                float_compare(
+                    qty_left,
+                    dest_move.product_uom_qty,
+                    precision_rounding=rounding,
+                )
+                >= 0
+            ):
+                source_dest_moves |= dest_move
+                qty_left -= dest_move.product_uom_qty
+                continue
+            source_dest_moves |= dest_move
+            residual_qty = dest_move.product_uom_qty - qty_left
+            split_qty = dest_move.product_uom._compute_quantity(
+                residual_qty,
+                dest_move.product_id.uom_id,
+                rounding_method="HALF-UP",
+            )
+            new_dest_vals = dest_move._split(split_qty)
+            for vals in new_dest_vals:
+                vals["move_orig_ids"] = [(6, 0, backorder_move.ids)]
+            new_dest_moves = self.env["stock.move"].create(new_dest_vals)
+            new_dest_moves.with_context(
+                bypass_entire_pack=True, bypass_procurement_creation=True
+            )._action_confirm(merge=False)
+            backorder_dest_moves |= new_dest_moves
+            qty_left = 0.0
+        return source_dest_moves, backorder_dest_moves
 
     def _adjust_variable_quantity(self):
         """For moves where quantity ≠ qty_demanded spread that new quantity across every

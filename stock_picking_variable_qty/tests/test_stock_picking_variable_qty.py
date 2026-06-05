@@ -303,6 +303,40 @@ class TestPickingVariableQuantity(BaseCommon):
         ).move_ids.filtered(lambda move: move.product_id == self.product)
         self.assertEqual(sum(customer_moves.mapped("product_uom_qty")), 11.0)
 
+    def test_pick_partial_backorder_keeps_customer_delivery_continuity(self):
+        order, pick_picking, ship_picking = self._confirm_sale_and_get_pickings(3.0)
+        self.assertTrue(
+            order.order_line.filtered(lambda line: line.product_id == self.product)
+        )
+        self._process_picking(pick_picking, 2.0)
+        backorder_pick = self._get_backorder(pick_picking)
+        self.assertEqual(len(backorder_pick), 1)
+        self.assertEqual(backorder_pick.move_ids.product_uom_qty, 1.0)
+
+        ship_moves = ship_picking.move_ids.filtered(
+            lambda move: move.product_id == self.product
+        )
+        self.assertEqual(sorted(ship_moves.mapped("product_uom_qty")), [1.0, 2.0])
+        ship_picking.action_assign()
+        done_ship_move = ship_moves.filtered(lambda move: move.product_uom_qty == 2.0)
+        pending_ship_move = ship_moves - done_ship_move
+        done_ship_move.quantity = 2.0
+        done_ship_move.picked = True
+        pending_ship_move.quantity = 0.0
+        pending_ship_move.picked = False
+        ship_moves._action_done()
+        backorder_ship = self._get_backorder(ship_picking)
+        self.assertEqual(len(backorder_ship), 1)
+        self.assertEqual(backorder_ship.move_ids.product_uom_qty, 1.0)
+
+        self._process_picking(backorder_pick, 1.0)
+        self.assertEqual(backorder_ship.move_ids.move_orig_ids, backorder_pick.move_ids)
+        self._process_picking(backorder_ship, 1.0)
+        customer_moves = (ship_picking | backorder_ship).move_ids.filtered(
+            lambda move: move.product_id == self.product
+        )
+        self.assertEqual(sum(customer_moves.mapped("quantity")), 3.0)
+
     def test_pick_exact_quantity_keeps_ship_move_qty(self):
         order, pick_picking, ship_picking = self._confirm_sale_and_get_pickings(10.0)
         self.assertTrue(
