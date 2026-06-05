@@ -84,6 +84,12 @@ class ResPartner(models.Model):
             )
         return weekdays
 
+    @property
+    def delivery_window_tz(self):
+        """Return the timezone used to interpret partner delivery windows."""
+        self.ensure_one()
+        return self.tz or self.env.company.partner_id.tz or "UTC"
+
     def _is_in_delivery_window(self, date):
         """
         Checks if provided date is in a delivery window for actual partner
@@ -92,9 +98,9 @@ class ResPartner(models.Model):
         :return: Boolean
         """
         self.ensure_one()
-        tz = pytz.timezone(self.tz or self.env.company.partner_id.tz or "UTC")
+        timezone = pytz.timezone(self.delivery_window_tz)
         if isinstance(date, datetime.datetime):
-            date = date.astimezone(pytz.utc).astimezone(tz)
+            date = pytz.utc.localize(date).astimezone(timezone)
         if self.delivery_time_preference == "workdays":
             if date.weekday() > 4:
                 return False
