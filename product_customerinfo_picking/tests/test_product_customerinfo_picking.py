@@ -1,4 +1,5 @@
 # Copyright 2023 ForgeFlow <http://www.forgeflow.com>
+# Copyright 2025 bosd
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
@@ -13,6 +14,17 @@ class TestProductCustomerinfoPicking(TransactionCase):
         cls.computer_SC234 = cls.env.ref("product.product_product_3")
         cls.agrolait = cls.env.ref("base.res_partner_2")
         cls.gemini = cls.env.ref("base.res_partner_3")
+        # Delivery address child of agrolait — code is on the parent only
+        cls.agrolait_delivery = cls.env["res.partner"].create(
+            {
+                "name": "Agrolait Delivery Address",
+                "parent_id": cls.agrolait.id,
+                "type": "delivery",
+            }
+        )
+        # Warehouse whose partner_id points to agrolait (consignment scenario)
+        cls.wh_main = cls.env.ref("stock.warehouse0")
+        cls.wh_main.write({"partner_id": cls.agrolait.id})
         cls.computer_SC234.write(
             {
                 "customer_ids": [
@@ -103,3 +115,95 @@ class TestProductCustomerinfoPicking(TransactionCase):
         move = delivery_picking.move_ids[0]
         move._compute_product_customer_code()
         self.assertEqual(move.product_customer_code, "test_gemini")
+
+    def test_product_customerinfo_delivery_address(self):
+        """Code defined on the parent partner resolves for a delivery address."""
+        delivery_picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.agrolait_delivery.id,
+                "picking_type_id": self.env.ref("stock.picking_type_out").id,
+                "location_id": self.src_location.id,
+                "location_dest_id": self.dest_location.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.computer_SC234.partner_ref,
+                            "product_id": self.computer_SC234.id,
+                            "product_uom": self.computer_SC234.uom_id.id,
+                            "product_uom_qty": 1.0,
+                            "location_id": self.src_location.id,
+                            "location_dest_id": self.dest_location.id,
+                        },
+                    )
+                ],
+            }
+        )
+        move = delivery_picking.move_ids[0]
+        move._compute_product_customer_code()
+        self.assertEqual(move.product_customer_code, "test_agrolait")
+
+    def test_product_customerinfo_consignment_receipt(self):
+        """Receipt into a consignment WH uses the warehouse partner as fallback."""
+        vendor = self.env["res.partner"].create({"name": "Test Vendor"})
+        wh_stock = self.wh_main.lot_stock_id
+        receipt = self.env["stock.picking"].create(
+            {
+                "partner_id": vendor.id,
+                "picking_type_id": self.env.ref("stock.picking_type_in").id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": wh_stock.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.computer_SC234.partner_ref,
+                            "product_id": self.computer_SC234.id,
+                            "product_uom": self.computer_SC234.uom_id.id,
+                            "product_uom_qty": 1.0,
+                            "location_id": self.env.ref(
+                                "stock.stock_location_suppliers"
+                            ).id,
+                            "location_dest_id": wh_stock.id,
+                        },
+                    )
+                ],
+            }
+        )
+        move = receipt.move_ids[0]
+        move._compute_product_customer_code()
+        # Vendor has no customerinfo; warehouse partner (agrolait) has one
+        self.assertEqual(move.product_customer_code, "test_agrolait")
+
+    def test_product_customerinfo_consignment_delivery(self):
+        """Delivery from a consignment WH uses the warehouse partner as fallback."""
+        end_customer = self.env["res.partner"].create({"name": "End Customer"})
+        wh_stock = self.wh_main.lot_stock_id
+        delivery = self.env["stock.picking"].create(
+            {
+                "partner_id": end_customer.id,
+                "picking_type_id": self.env.ref("stock.picking_type_out").id,
+                "location_id": wh_stock.id,
+                "location_dest_id": self.dest_location.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.computer_SC234.partner_ref,
+                            "product_id": self.computer_SC234.id,
+                            "product_uom": self.computer_SC234.uom_id.id,
+                            "product_uom_qty": 1.0,
+                            "location_id": wh_stock.id,
+                            "location_dest_id": self.dest_location.id,
+                        },
+                    )
+                ],
+            }
+        )
+        move = delivery.move_ids[0]
+        move._compute_product_customer_code()
+        # End customer has no customerinfo; warehouse partner (agrolait) has one
+        self.assertEqual(move.product_customer_code, "test_agrolait")
