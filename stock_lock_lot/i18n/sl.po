@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-27 01:52+0000\n"
-"PO-Revision-Date: 2026-02-01 11:09+0000\n"
+"PO-Revision-Date: 2026-06-06 08:32+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/sl/)\n"
@@ -147,7 +147,7 @@ msgstr "Število sporočil, ki zahtevajo ukrepanje"
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_lot__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Število sporočil z napako pri dostavi"
+msgstr "Število sporočil, ki niso bila pravilno dostavljena"
 
 #. module: stock_lock_lot
 #: model:ir.model.fields,field_description:stock_lock_lot.field_stock_lot__product_id
