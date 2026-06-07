@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-27 01:52+0000\n"
-"PO-Revision-Date: 2026-02-01 11:09+0000\n"
+"PO-Revision-Date: 2026-06-07 18:15+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/sl/)\n"
@@ -101,7 +101,9 @@ msgstr "Če je označeno, nova sporočila zahtevajo vašo pozornost."
 #. module: stock_lock_lot
 #: model:ir.model.fields,help:stock_lock_lot.field_stock_production_lot__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Označba pomeni, da nekatera sporočila vsebujejo napako pri dostavi."
+msgstr ""
+"Kadar je označeno, pomeni, da je pri nekaterih sporočilih prišlo do napake "
+"pri dostavi."
 
 #. module: stock_lock_lot
 #: model:ir.model,name:stock_lock_lot.model_stock_location
