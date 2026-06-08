@@ -125,7 +125,10 @@ class TestQuantityLossTracking(OperationLossQuantityCommon):
         self.assertEqual(len(self.picking_1.move_line_ids), 3)
         self.assertNotIn(line_lot_a_no_pack.id, self.picking_1.move_line_ids.ids)
 
-        self.assertEqual(2.0, line_lot_b.reserved_qty)
+        # The system fills the reservation with as much of "lot B" as possible
+        # when the loss is declared for "lot A"
+        # Remaining = 5 (total) - 2 (done) - 2 (already reserved)
+        self.assertEqual(3.0, line_lot_b.reserved_qty)
         self.assertEqual(0.0, line_lot_b.qty_done)
 
         loss_pickings = self._get_loss_pickings()
