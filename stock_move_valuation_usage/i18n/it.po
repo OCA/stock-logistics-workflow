@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-08 14:20+0000\n"
+"PO-Revision-Date: 2026-06-08 16:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -123,28 +123,28 @@ msgstr "Movimento di magazzino"
 #. module: stock_move_valuation_usage
 #: model:ir.model,name:stock_move_valuation_usage.model_stock_move_valuation_usage
 msgid "Stock Move Valuation Usage"
-msgstr ""
+msgstr "Utilizzo valutazione movimento di magazzino"
 
 #. module: stock_move_valuation_usage
 #: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.stock_move_valuation_usage_pivot
 msgid "Stock Move Valuation Usage Analysis"
-msgstr ""
+msgstr "Analisi utilizzo valutazione movimento di magazzino"
 
 #. module: stock_move_valuation_usage
 #: model:ir.actions.act_window,name:stock_move_valuation_usage.stock_move_valuation_usage_action
 #: model:ir.ui.menu,name:stock_move_valuation_usage.stock_move_valuation_usage_menu
 msgid "Stock Move Valuation Usages"
-msgstr ""
+msgstr "Utilizzo valutazione movimento di magazzino"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__quantity
 msgid "Taken Quantity"
-msgstr ""
+msgstr "Quantità prelevata"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__value
 msgid "Taken Value"
-msgstr ""
+msgstr "Valore prelevato"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,help:stock_move_valuation_usage.field_stock_move__incoming_usage_ids
@@ -153,34 +153,36 @@ msgid ""
 "Trace in what stock moves has this move's valuation been used, including the"
 " quantities and values taken."
 msgstr ""
+"Traccia in quali movimenti di magazzino è stata utilizzata questa "
+"valutazione, inclusi i quantitativi e i valori rilevati."
 
 #. module: stock_move_valuation_usage
 #: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.view_move_form_inherit
 msgid "Usage"
-msgstr ""
+msgstr "Uilizzo"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_quantity
 msgid "Usage Quantity"
-msgstr ""
+msgstr "Quantità utilizzo"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_value
 msgid "Usage Value"
-msgstr ""
+msgstr "Valore utilizzo"
 
 #. module: stock_move_valuation_usage
 #: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_ids
 msgid "Valuation Usage"
-msgstr ""
+msgstr "Utilizzo valorizzazione"
 
 #. module: stock_move_valuation_usage
 #: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.stock_move_valuation_usage_list
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #. module: stock_move_valuation_usage
 #. odoo-python
 #: code:addons/stock_move_valuation_usage/models/stock_move_valuation_usage.py:0
 msgid "You can't use same move as origin and destination"
-msgstr ""
+msgstr "Non si può usare lo stesso movimento come origine e destinazione"
