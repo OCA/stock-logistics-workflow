@@ -159,7 +159,9 @@ class StockMoveLine(models.Model):
         Then, lock the quant that should be reserved by the loss picking and
         create that loss picking.
         """
-        for line in self.filtered(lambda line: line.progress != 100.0):
+        loss_lines = self.filtered(lambda line: line.progress != 100.0)
+        loss_moves_quants_to_ignore = {move: [] for move in loss_lines.move_id}
+        for line in loss_lines:
             # Lock quants until the end of the transaction to avoid furter reservations
             quants = self.env["stock.quant"]._gather(
                 product_id=line.product_id,
@@ -174,6 +176,8 @@ class StockMoveLine(models.Model):
             loss_picking = line._create_loss_move_line(unprocessed_qty)
             loss_picking._schedule_loss_activity()
 
+            loss_moves_quants_to_ignore[line.move_id].extend(quants.ids)
+
             if (
                 float_compare(
                     line.reserved_uom_qty,
@@ -183,3 +187,13 @@ class StockMoveLine(models.Model):
                 <= 0
             ):
                 line.unlink()
+
+        for move, quants_to_ignore_ids in loss_moves_quants_to_ignore.items():
+            move._try_reallocate_loss_qty(quants_to_ignore_ids)
+
+    def _apply_putaway_strategy(self):
+        # Override to prevent the loss-ignored quants context from blinding
+        # the stock engine during downstream line destination/pack updates.
+        if self.env.context.get("_loss_ignored_quant_ids"):
+            self = self.with_context(_loss_ignored_quant_ids=False)
+        return super()._apply_putaway_strategy()

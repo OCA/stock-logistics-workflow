@@ -4,13 +4,39 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import models
+from odoo import api, models
+from odoo.osv import expression
 
 _logger = logging.getLogger(__name__)
 
 
 class StockQuant(models.Model):
     _inherit = "stock.quant"
+
+    @api.model
+    def _get_gather_domain(
+        self,
+        product_id,
+        location_id,
+        lot_id=None,
+        package_id=None,
+        owner_id=None,
+        strict=False,
+    ):
+        domain = super()._get_gather_domain(
+            product_id=product_id,
+            location_id=location_id,
+            lot_id=lot_id,
+            package_id=package_id,
+            owner_id=owner_id,
+            strict=strict,
+        )
+
+        ignored_quant_ids = self.env.context.get("_loss_ignored_quant_ids")
+        if ignored_quant_ids:
+            domain = expression.AND([[("id", "not in", ignored_quant_ids)], domain])
+
+        return domain
 
     def _lock_quants_for_loss(self):
         """
