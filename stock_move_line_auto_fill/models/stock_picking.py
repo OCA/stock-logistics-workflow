@@ -59,4 +59,6 @@ class StockPicking(models.Model):
             )
         )
         for op in operations_to_auto_fill:
-            op.qty_done = op.product_uom_qty
+            already_done = sum(op.move_id._get_move_lines().mapped("qty_done"))
+            if not already_done:
+                op.qty_done = op.product_uom_qty
