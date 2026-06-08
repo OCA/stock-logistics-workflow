@@ -1,6 +1,7 @@
 # Copyright 2023 ForgeFlow <http://www.forgeflow.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.fields import Command
 from odoo.tests.common import TransactionCase
 
 
@@ -10,23 +11,52 @@ class TestProductCustomerinfoPicking(TransactionCase):
         super().setUpClass()
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
-        cls.computer_SC234 = cls.env.ref("product.product_product_3")
-        cls.agrolait = cls.env.ref("base.res_partner_2")
-        cls.gemini = cls.env.ref("base.res_partner_3")
+        cls.computer_SC234 = cls.env["product.product"].create(
+            {
+                "name": "Desk Combination",
+                "type": "consu",
+                "list_price": 450.0,
+                "default_code": "FURN_7800",
+            }
+        )
+        cls.agrolait = cls.env["res.partner"].create(
+            {
+                "name": "Acme Corporation",
+                "is_company": True,
+                "street": "77 Santa Barbara Rd",
+                "city": "Pleasant Hill",
+                "state_id": cls.env.ref("base.state_us_5").id,
+                "zip": "94523",
+                "phone": "(603)-996-3829",
+                "email": "acme_corp@yourcompany.example.com",
+                "website": "http://www.acme-example-company.com",
+                "vat": "US12345673",
+            }
+        )
+        cls.gemini = cls.env["res.partner"].create(
+            {
+                "name": "Gemini Furniture",
+                "is_company": True,
+                "street": "Via Industria 21",
+                "city": "Serravalle",
+                "state_id": cls.env.ref("base.sm").id,
+                "zip": "47899",
+                "phone": "+378 0549 885555",
+                "email": "gemini_furniture@fake.geminifurniture.com",
+                "website": "http://www.gemini-furniture.com/",
+                "vat": "SM12345",
+            }
+        )
         cls.computer_SC234.write(
             {
                 "customer_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "partner_id": cls.agrolait.id,
                             "product_code": "test_agrolait",
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "partner_id": cls.gemini.id,
                             "product_code": "test_gemini",
@@ -51,11 +81,8 @@ class TestProductCustomerinfoPicking(TransactionCase):
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "name": self.computer_SC234.partner_ref,
                             "product_id": self.computer_SC234.id,
                             "product_uom": self.computer_SC234.uom_id.id,
                             "product_uom_qty": 1.0,
@@ -85,11 +112,8 @@ class TestProductCustomerinfoPicking(TransactionCase):
                 "location_id": self.src_location.id,
                 "location_dest_id": self.dest_location.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
-                            "name": self.computer_SC234.partner_ref,
                             "product_id": self.computer_SC234.id,
                             "product_uom": self.computer_SC234.uom_id.id,
                             "product_uom_qty": 1.0,

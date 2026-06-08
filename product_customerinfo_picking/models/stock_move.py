@@ -21,11 +21,10 @@ class StockMove(models.Model):
                 and move.picking_id.partner_id
                 and move.product_tmpl_id.customer_ids
             ):
-                customer = fields.first(
-                    move.product_tmpl_id.customer_ids.filtered(
-                        lambda m, mo=move: m.partner_id == mo.picking_id.partner_id
-                    )
+                customers = move.product_tmpl_id.customer_ids.filtered(
+                    lambda m, mo=move: m.partner_id == mo.picking_id.partner_id
                 )
+                customer = next(iter(customers), customers)
                 product_customer_code = customer.product_code
                 product_customer_name = customer.product_name
             move.product_customer_code = product_customer_code
