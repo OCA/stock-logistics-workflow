@@ -57,7 +57,8 @@ class StockMove(models.Model):
         if self.restrict_lot_id:
             new_available_move_lines = {}
             for key, value in available_move_lines.items():
-                _location_id, lot_id, _package_id, _owner_id = key
+                # unpack defensively to avoid ValueError.
+                _location_id, lot_id, *_other_groupby_keys = key
                 if lot_id == self.restrict_lot_id:
                     new_available_move_lines[key] = value
             return new_available_move_lines
