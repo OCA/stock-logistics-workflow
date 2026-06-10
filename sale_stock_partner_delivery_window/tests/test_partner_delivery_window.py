@@ -410,7 +410,7 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         )
 
     def test_next_available_delivery_date_returns_window_start_in_utc(self):
-        """Test the next available window start is returned."""
+        """Test the next available window start is returned as UTC."""
         self._set_friday_zurich_window()
 
         next_date = self.customer_time_window._next_available_delivery_date(
@@ -419,7 +419,7 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
 
         self.assertEqual(
             fields.Datetime.to_string(next_date),
-            "2026-05-29 10:00:00",
+            "2026-05-29 08:00:00",
         )
 
     def test_next_available_delivery_date_uses_company_tz_fallback(self):
@@ -434,7 +434,7 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
 
         self.assertEqual(
             fields.Datetime.to_string(next_date),
-            "2026-05-29 10:00:00",
+            "2026-05-29 08:00:00",
         )
 
     def test_onchange_commitment_date_no_warning_inside_partner_window(self):
@@ -448,7 +448,7 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         self.assertFalse(warning)
 
     def test_onchange_commitment_date_warning_displays_correct_next_time(self):
-        """Test warning displays the next available date."""
+        """Test warning displays the next available date in the env timezone."""
         self._set_friday_zurich_window()
         order = self._create_order(self.customer_time_window)
 
@@ -457,6 +457,6 @@ class TestSalePartnerDeliveryWindow(PartnerDeliveryWindowCommon):
 
         self.assertTrue(warning)
         self.assertIn(
-            "05/29/2026 10:00:00 AM",
+            "05/29/2026 08:00:00 AM",
             warning["warning"]["message"],
         )
