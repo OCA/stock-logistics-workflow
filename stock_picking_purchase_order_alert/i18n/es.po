@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_receipt_quantity_check
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 10:00+0000\n"
+"PO-Revision-Date: 2024-04-08 10:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_receipt_quantity_check
+#: model:ir.ui.view,arch_db:purchase_receipt_quantity_check.view_picking_form_inherit_quantity_check
+msgid "Note:"
+msgstr "Nota:"
+
+#. module: purchase_receipt_quantity_check
+#: model:ir.ui.view,arch_db:purchase_receipt_quantity_check.view_picking_form_inherit_quantity_check
+msgid "The system will warn you if the received quantity exceeds the purchase order quantity by more than 30%."
+msgstr "El sistema le advertirá si la cantidad recibida excede la cantidad del pedido de compra en más del 30%."
+
+#. module: purchase_receipt_quantity_check
+#: code:addons/purchase_receipt_quantity_check/models/stock_picking.py:0
+msgid "Warning: The received quantity (%s %s) for product %s exceeds the purchase order quantity (%s %s) by more than 30%. Please verify if this is correct."
+msgstr "Advertencia: La cantidad recibida (%s %s) para el producto %s excede la cantidad del pedido de compra (%s %s) en más del 30%. Por favor, verifique si esto es correcto."
