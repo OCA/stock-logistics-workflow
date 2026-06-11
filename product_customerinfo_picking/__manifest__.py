@@ -11,7 +11,10 @@
     "license": "AGPL-3",
     "depends": ["stock", "product_customerinfo"],
     "data": [
+        "views/res_config_settings_view.xml",
         "views/stock_picking_view.xml",
+        "reports/report_delivery_document_template.xml",
+        "reports/report_picking_template.xml",
     ],
     "installable": True,
 }
