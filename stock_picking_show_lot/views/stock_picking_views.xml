@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_picking_show_lot" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    string="Lots"
+                    type="object"
+                    name="action_show_lots"
+                    class="oe_stat_button"
+                    icon="fa-cubes"
+                    groups="stock.group_production_lot"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
