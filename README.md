@@ -104,6 +104,7 @@ addon | version | maintainers | summary
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 18.0.1.0.0 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 18.0.1.0.1 |  | Send stock picking by email
 [stock_picking_show_backorder](stock_picking_show_backorder/) | 18.0.1.0.0 |  | Provides a new field on stock pickings, allowing to display the corresponding backorders.
+[stock_picking_show_lot](stock_picking_show_lot/) | 18.0.1.0.0 |  | Stock Picking Show Lot
 [stock_picking_show_return](stock_picking_show_return/) | 18.0.1.0.0 |  | Show returns on stock pickings
 [stock_picking_tier_validation](stock_picking_tier_validation/) | 18.0.1.0.2 |  | Extends the functionality of Transfers to support a tier validation process.
 [stock_picking_to_batch_group_fields](stock_picking_to_batch_group_fields/) | 18.0.1.0.2 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> | Allows to create batches grouped by picking fields.
