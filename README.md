@@ -25,7 +25,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[sale_stock_partner_delivery_window](sale_stock_partner_delivery_window/) | 19.0.1.0.2 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Use the partner's 'Delivery schedule preference' in Sales Orders
+[sale_stock_partner_delivery_window](sale_stock_partner_delivery_window/) | 19.0.1.0.3 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Use the partner's 'Delivery schedule preference' in Sales Orders
 [sale_stock_picking_invoice_link](sale_stock_picking_invoice_link/) | 19.0.1.0.0 |  | Adds link between pickings and invoices
 [stock_account_product_run_fifo_hook](stock_account_product_run_fifo_hook/) | 19.0.1.0.0 |  | Add more flexibility in the run fifo method.
 [stock_dangerous_goods](stock_dangerous_goods/) | 19.0.1.0.0 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> | Adds utility fields to manage dangerous goods
