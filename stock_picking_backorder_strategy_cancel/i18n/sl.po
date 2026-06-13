@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2020-08-08 16:59+0000\n"
-"Last-Translator: Matjaz Mozetic <matjaz@matmoz.si>\n"
+"PO-Revision-Date: 2026-06-13 09:59+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/sl/)\n"
 "Language: sl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model.fields.selection,name:stock_picking_backorder_strategy_cancel.selection__stock_picking_type__create_backorder__cancel
@@ -34,7 +34,7 @@ msgstr ""
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Tip zbirnika"
+msgstr "Tip dobavnice"
 
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking
