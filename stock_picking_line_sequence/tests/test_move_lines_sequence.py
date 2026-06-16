@@ -166,6 +166,23 @@ class TestStockMove(common.TransactionCase):
             picking_backorder[0].move_ids[0].sequence, 1, "Backorder wrong sequence"
         )
 
+    def test_split(self):
+        picking = self._create_picking()
+        picking._compute_max_line_sequence()
+        picking.action_confirm()
+        picking.action_assign()
+        picking_product_sequence_map = {
+            move.product_id.id: move.sequence for move in picking.move_ids
+        }
+        picking.move_line_ids[0].write({"quantity": 3})
+        picking.move_line_ids[2].write({"quantity": 3})
+        picking.action_split_transfer()
+        picking_backorder = picking.backorder_ids
+        for move in picking_backorder.move_ids:
+            self.assertEqual(
+                move.sequence, picking_product_sequence_map.get(move.product_id.id)
+            )
+
     def test_move_lines_aggregated(self):
         picking = self._create_picking()
         picking._compute_max_line_sequence()
