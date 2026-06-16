@@ -1,0 +1,65 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_line_expiration_date_required
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20251222\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-15 11:34+0000\n"
+"PO-Revision-Date: 2026-05-15 11:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__all_expiry_dates_set
+msgid "All Expiry Dates Set"
+msgstr "Toutes les dates d'expiration sont définies"
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Mouvements de produit (Ligne de mouvement de stock)"
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+#. module: stock_move_line_expiration_date_required
+#. odoo-python
+#: code:addons/stock_move_line_expiration_date_required/models/stock_picking.py:0
+msgid "The following move lines have no expiration date: %s"
+msgstr "Les lignes de mouvement suivantes n'ont pas de date d'expiration : %s"
+
+#. module: stock_move_line_expiration_date_required
+#: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: stock_move_line_expiration_date_required
+#: model_terms:ir.ui.view,arch_db:stock_move_line_expiration_date_required.view_stock_move_operations
+msgid ""
+"You won't be able to confirm the parent picking until all Expiry dates are "
+"set"
+msgstr ""
+"Vous ne pourrez pas valider le transfert parent tant que toutes les dates "
+"d'expiration ne seront pas renseignées"
