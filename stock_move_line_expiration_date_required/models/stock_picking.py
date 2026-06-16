@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
 
-from odoo import _, exceptions, models
+from odoo import exceptions, models
 
 
 class StockPicking(models.Model):
@@ -24,7 +24,7 @@ class StockPicking(models.Model):
             )
             if move_lines_wo_expiration_date:
                 raise exceptions.UserError(
-                    _(
+                    self.env._(
                         "The following move lines have no expiration date: %s",
                         ", ".join(move_lines_wo_expiration_date.mapped("display_name")),
                     )
