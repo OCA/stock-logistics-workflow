@@ -32,3 +32,8 @@ class StockMove(models.Model):
         if not self.env.context.get("keep_line_sequence"):
             moves.picking_id._reset_sequence()
         return moves
+
+    def _create_backorder(self):
+        return super(
+            StockMove, self.with_context(keep_line_sequence=True)
+        )._create_backorder()
