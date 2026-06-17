@@ -160,7 +160,7 @@ class StockShipmentComposer(models.Model):
         moves = self.move_ids.filtered(
             lambda x: x.state not in ("draft", "cancel", "done")
         )
-        moves.sorted(
+        moves = moves.sorted(
             key=lambda x: (
                 -int(x.priority),
                 not bool(x.date_deadline),
