@@ -1,0 +1,499 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_batch_extended
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2020-06-12 06:19+0000\n"
+"Last-Translator: Nelson Ramírez Sánchez <info@konos.cl>\n"
+"Language-Team: none\n"
+"Language: es_CL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "# Pickings"
+msgstr "# Despachos"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Fecha:</strong>"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "<strong>Printed by:</strong>"
+msgstr "<strong>Impreso por:</strong>"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+#, fuzzy
+msgid "<strong>Total:</strong>"
+msgstr "<strong>Total:</strong>"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
+msgid "Active Pickings"
+msgstr "Despachos Activos"
+
+#. module: stock_picking_batch_extended
+#. odoo-python
+#: code:addons/stock_picking_batch_extended/wizard/stock_picking_to_batch.py:0
+#, python-format
+msgid ""
+"All selected pickings are already in a batch picking or are in a wrong state."
+msgstr ""
+"Todas las despachos ya están en una selección de lotes o están en un estado "
+"incorrecto."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "All undone pickings from this batch will be removed, are you sure?"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
+msgid "Apply OCA batch validation"
+msgstr "Aplicar validación de lotes OCA"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
+msgid "Batch Picking Creator Group Field"
+msgstr "Agrupador de Campo de Lote de Despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_to_batch
+msgid "Batch Transfer Lines"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
+msgid "Batch picking"
+msgstr "Lote de despacho"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configuración"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__batch_by_group
+msgid "Create batch pickings grouped by fields"
+msgstr "Crear selecciones por lotes agrupadas por campos"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_to_batch_form
+msgid "Create multiple batch picking grouped by..."
+msgstr "Crear selección de lotes de despacho múltiple agrupados por ..."
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_warehouse__default_user_id
+msgid "Default Picker"
+msgstr "Liquidador predeterminado"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__field_id
+msgid "Field to group"
+msgstr "Campo a grupo"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__notes
+msgid "Free form remarks"
+msgstr "Comentarios de forma libre"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__group_field_ids
+msgid "Group by field"
+msgstr "Agrupar por campo"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
+msgid "Group by picking field"
+msgstr "Agrupar por campo de selección"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__group_field_ids
+msgid "If set any, multiple batch picking will be created, one per group field"
+msgstr ""
+"Si se establece alguno, se creará la selección de lotes múltiples, uno por "
+"campo de grupo"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización en"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
+msgid "List of active picking managed by this batch."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
+msgid "My batches"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__name
+msgid "Name of the batch picking"
+msgstr "Nombre del lote de despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__notes
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__notes
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: stock_picking_batch_extended
+#. odoo-python
+#: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
+#, python-format
+msgid "Nothing to print."
+msgstr "Nada que imprimir."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "Picked By"
+msgstr "Liquidado Por"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
+msgid "Picking To Batch"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Pickings"
+msgstr "Despachos"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "Pickings Order"
+msgstr "Ordenes de Despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_delivery_slip
+msgid "Print Delivery Slip"
+msgstr "Imprimir Nota de Entrega"
+
+#. module: stock_picking_batch_extended
+#: model:ir.actions.server,name:stock_picking_batch_extended.action_print_batch_picking_operations
+msgid "Print Picking Operations"
+msgstr "Operaciones de picking de impresión"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Print Pickings"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "QTY"
+msgstr "CANT"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Remove Undone"
+msgstr "Eliminar Deshacer"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_report_stock_picking_batch_extended_report_batch_picking
+msgid "Report for Batch Picking"
+msgstr "Informe para Lotes de Despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.actions.server,name:stock_picking_batch_extended.action_stock_batch_picking_assign_all
+msgid "Reserve All"
+msgstr "Reservar Todo"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__user_id
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__user_id
+msgid "Responsible"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
+msgid "This note will show up on the batch picking printout."
+msgstr "Esta nota aparecerá en la impresión de selección de lotes."
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
+msgid "Unassigned"
+msgstr "Sin Asignar"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_config_settings__use_oca_batch_validation
+msgid "Use OCA approach to validate Picking Batch"
+msgstr "Utilice el enfoque OCA para validar Lotes de Despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_res_company__use_oca_batch_validation
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__use_oca_batch_validation
+msgid "Use Oca Batch Validation"
+msgstr "Usar validación por lotes de Oca"
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
+msgid "Visa:_________________"
+msgstr "Aprobación:_________________"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_warehouse
+msgid "Warehouse"
+msgstr "Bodega"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
+msgid "Warehouse Description"
+msgstr "Descripción de Bodega"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__date
+msgid "date on which the batch picking is to be processed"
+msgstr "fecha en que se procesará los lotes de despacho"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__notes
+msgid "free form remarks"
+msgstr "comentarios de forma libre"
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_warehouse__default_user_id
+msgid "the user to which the batch pickings are assigned by default"
+msgstr ""
+"el usuario al que se asignan los despachos por lotes de forma predeterminada"
+
+#~ msgid "Picking Batch"
+#~ msgstr "Lote de Despacho"
+
+#~ msgid "Switch behaviour bettwen Odoo and OCA for batch validation"
+#~ msgstr ""
+#~ "Cambiar el comportamiento entre Odoo y OCA para la validación por lotes"
+
+#~ msgid "Entire Package"
+#~ msgstr "Todo el Paquete"
+
+#~ msgid "Entire Package Detail"
+#~ msgstr "Detalle de Todo el Paquete"
+
+#~ msgid "Print"
+#~ msgstr "Imprimir"
+
+#~ msgid ""
+#~ "Those are the entire packages of a picking shown in the view of detailed "
+#~ "operations"
+#~ msgstr ""
+#~ "Esos son los paquetes completos de un despacho que se muestra en la vista "
+#~ "de operaciones detalladas"
+
+#~ msgid ""
+#~ "Those are the entire packages of a picking shown in the view of operations"
+#~ msgstr ""
+#~ "Esos son los paquetes completos de un despacho que se muestra en la vista "
+#~ "de operaciones"
+
+#~ msgid "Add to new Batch"
+#~ msgstr "Agregar a nuevos Lotes"
+
+#~ msgid "Assign picking operations to an employee."
+#~ msgstr "Asignar operaciones de despacho a un empleado."
+
+#~ msgid "Available"
+#~ msgstr "Disponible"
+
+#~ msgid "Batch"
+#~ msgstr "Lotes"
+
+#~ msgid "Batch Name"
+#~ msgstr "Nombre de Lote"
+
+#~ msgid "Batch Picking"
+#~ msgstr "Lote de Despacho"
+
+#~ msgid "Batch Picking Creator"
+#~ msgstr "Creador de Lote de Despacho"
+
+#~ msgid "Batch Picking properties"
+#~ msgstr "Propiedades de Lote de Despacho"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancelar"
+
+#~ msgid "Confirm"
+#~ msgstr "Confirmar"
+
+#~ msgid "Date on which the batch picking is to be processed"
+#~ msgstr "Fecha en la que se procesará los lotes de despacho"
+
+#~ msgid "Detailed Operations"
+#~ msgstr "Operaciones Detalladas"
+
+#~ msgid "Detailed operations"
+#~ msgstr "Operaciones detalladas"
+
+#~ msgid "Done"
+#~ msgstr "Hecho"
+
+#~ msgid "Group By..."
+#~ msgstr "Agrupado por..."
+
+#~ msgid "Initial Demand"
+#~ msgstr "Pedido Inicial"
+
+#~ msgid "List of picking managed by this batch."
+#~ msgstr "Lista de picking gestionada por este lote."
+
+#~ msgid "Operations"
+#~ msgstr "Operaciones"
+
+#~ msgid "Order Date"
+#~ msgstr "Fecha de Pedido"
+
+#~ msgid "Picker"
+#~ msgstr "Liquidador"
+
+#~ msgid "Register lots, packs, location"
+#~ msgstr "Registrar lotes, paquetes, ubicación"
+
+#~ msgid "Reserved"
+#~ msgstr "Reservado"
+
+#~ msgid "State"
+#~ msgstr "Estado"
+
+#~ msgid "Stock Moves"
+#~ msgstr "Movimientos de Inventario"
+
+#~ msgid "The user to which the pickings are assigned"
+#~ msgstr "El usuario al que se asignan los despachos"
+
+#, python-format
+#~ msgid "These Batches have no pickings"
+#~ msgstr "Estos Lotes no tienen despachos"
+
+#, python-format
+#~ msgid "This Batch has no pickings"
+#~ msgstr "Este Lote no tiene despachos"
+
+#~ msgid "Transfer"
+#~ msgstr "Transferir"
+
+#~ msgid "Unit of Measure"
+#~ msgstr "Unidad de Medida"
+
+#~ msgid "Validate"
+#~ msgstr "Validar"
+
+#~ msgid "_Create"
+#~ msgstr "_Creado"
+
+#~ msgid ""
+#~ "the state of the batch picking. Workflow is draft -> in_progress/assigned "
+#~ "-> done or cancel"
+#~ msgstr ""
+#~ "El estado de la selección de lotes. El flujo de trabajo es borrador -> en "
+#~ "progreso / asignado -> terminado o cancelado"
+
+#~ msgid "the user to which the pickings are assigned"
+#~ msgstr "El usuario al que se asignan los pickings"
+
+#~ msgid "Batch Picking Name"
+#~ msgstr "Nombre de Lote de Despacho"
+
+#~ msgid "Batch associated to this picking"
+#~ msgstr "Lote asociado a este despacho"
+
+#~ msgid "Cancelled"
+#~ msgstr "Cancelado"
+
+#~ msgid "Draft"
+#~ msgstr "Borrador"
+
+#~ msgid "Running"
+#~ msgstr "Corriendo"

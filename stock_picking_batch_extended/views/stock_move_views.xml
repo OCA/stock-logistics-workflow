@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Tecnativa - Sergio Teruel
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_move_line_tree" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree" />
+        <field name="mode">primary</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <field name="picking_id" position="attributes">
+                <attribute name="domain" />
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="lot_id" position="attributes">
+                <attribute
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
+                <attribute name="column_invisible" />
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="lot_name" position="attributes">
+                <attribute
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
+                <attribute name="column_invisible" />
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="location_id" position="attributes">
+                <attribute
+                    name="readonly"
+                >picking_code == 'incoming' or (state in ('done', 'cancel') and is_locked)</attribute>
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="location_dest_id" position="attributes">
+                <attribute
+                    name="readonly"
+                >picking_code == 'outgoing' or (state in ('done', 'cancel') and is_locked)</attribute>
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="package_id" position="attributes">
+                <attribute
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="result_package_id" position="attributes">
+                <attribute
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="quantity" position="attributes">
+                <attribute
+                    name="readonly"
+                >state in ('done', 'cancel') and is_locked</attribute>
+                <attribute name="force_save">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
