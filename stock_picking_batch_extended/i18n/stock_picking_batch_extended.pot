@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -35,14 +35,30 @@ msgid "<strong>Total:</strong>"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
+msgid ">Apply OCA batch validation"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_to_batch__batch_max_pickings
+msgid ""
+"A transfer will not be added to batches that will exceed this number of transfers.\n"
+"Leave this value as '0' if no transfer limit."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 msgid "Active Pickings"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
+msgid "Adds extra fields and functionalities to the batch picking form"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #. odoo-python
 #: code:addons/stock_picking_batch_extended/wizard/stock_picking_to_batch.py:0
-#, python-format
 msgid ""
 "All selected pickings are already in a batch picking or are in a wrong "
 "state."
@@ -54,17 +70,13 @@ msgid "All undone pickings from this batch will be removed, are you sure?"
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.res_config_settings_view_form
-msgid "Apply OCA batch validation"
-msgstr ""
-
-#. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch_creator_group_field
 msgid "Batch Picking Creator Group Field"
 msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_move__batch_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
 msgid "Batch Transfer"
 msgstr ""
@@ -72,6 +84,11 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_to_batch
 msgid "Batch Transfer Lines"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_move__batch_id
+msgid "Batch associated to this transfer"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -125,6 +142,11 @@ msgid "Default Picker"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Detailed op."
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__display_name
 msgid "Display Name"
 msgstr ""
@@ -161,8 +183,8 @@ msgid ""
 msgstr ""
 
 #. module: stock_picking_batch_extended
-#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field____last_update
-msgid "Last Modified on"
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_to_batch_form
+msgid "Keep empty for automatic sequence"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -178,6 +200,11 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 msgid "List of active picking managed by this batch."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__batch_max_pickings
+msgid "Maximum transfers"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -205,8 +232,17 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #. odoo-python
 #: code:addons/stock_picking_batch_extended/models/stock_batch_picking.py:0
-#, python-format
 msgid "Nothing to print."
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
+msgid "Operations"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_to_batch_form
+msgid "Options"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -247,6 +283,11 @@ msgstr ""
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
 msgid "Product"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: stock_picking_batch_extended
@@ -291,6 +332,11 @@ msgid "Sequence"
 msgstr ""
 
 #. module: stock_picking_batch_extended
+#: model:ir.model,name:stock_picking_batch_extended.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "This note will show up on the batch picking printout."
 msgstr ""
@@ -323,8 +369,12 @@ msgstr ""
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_product_product__description_warehouse
-#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.product_normal_form_view
 msgid "Warehouse Description"
+msgstr ""
+
+#. module: stock_picking_batch_extended
+#: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.view_picking_internal_search
+msgid "Without batch"
 msgstr ""
 
 #. module: stock_picking_batch_extended
