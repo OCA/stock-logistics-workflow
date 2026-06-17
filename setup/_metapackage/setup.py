@@ -92,6 +92,7 @@ setuptools.setup(
         'odoo-addon-stock_picking_product_link>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_progress>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_purchase_order_link>=16.0dev,<16.1dev',
+        'odoo-addon-stock_picking_putaway_recompute>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_putinpack_restriction>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_quick>=16.0dev,<16.1dev',
         'odoo-addon-stock_picking_restrict_cancel_printed>=16.0dev,<16.1dev',
