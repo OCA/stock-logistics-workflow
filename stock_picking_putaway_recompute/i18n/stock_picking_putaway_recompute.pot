@@ -1,0 +1,69 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_putaway_recompute
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model.fields,field_description:stock_picking_putaway_recompute.field_stock_picking_type__allow_to_recompute_putaways
+msgid "Allow To Recompute Putaways"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model.fields,field_description:stock_picking_putaway_recompute.field_stock_move_line__can_recompute_putaways
+#: model:ir.model.fields,field_description:stock_picking_putaway_recompute.field_stock_picking__can_recompute_putaways
+msgid "Can Recompute Putaways"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model.fields,help:stock_picking_putaway_recompute.field_stock_picking_type__allow_to_recompute_putaways
+msgid ""
+"Check this if you want to authorize putaways recomputations for the "
+"operationsof this type."
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model_terms:ir.ui.view,arch_db:stock_picking_putaway_recompute.view_stock_move_line_detailed_operation_tree
+msgid ""
+"Click this if you want to recompute destination location for this operation"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model_terms:ir.ui.view,arch_db:stock_picking_putaway_recompute.stock_picking_form_view
+msgid "Click this if you want to recompute destination locations"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model,name:stock_picking_putaway_recompute.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model,name:stock_picking_putaway_recompute.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model_terms:ir.ui.view,arch_db:stock_picking_putaway_recompute.stock_picking_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_putaway_recompute.view_stock_move_line_detailed_operation_tree
+msgid "Recompute Putaways"
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model.fields,help:stock_picking_putaway_recompute.field_stock_picking__can_recompute_putaways
+msgid "Technical field in order to display the Recompute Putaways button."
+msgstr ""
+
+#. module: stock_picking_putaway_recompute
+#: model:ir.model,name:stock_picking_putaway_recompute.model_stock_picking
+msgid "Transfer"
+msgstr ""
