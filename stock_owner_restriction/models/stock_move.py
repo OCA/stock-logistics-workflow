@@ -17,7 +17,13 @@ class StockMove(models.Model):
         readonly=False,
     )
 
-    @api.depends("picking_type_id", "picking_id.owner_id", "move_dest_ids")
+    @api.depends(
+        "picking_type_id",
+        "picking_id.owner_id",
+        "picking_id.partner_id",
+        "move_dest_ids",
+        "move_dest_ids.picking_id.owner_id",
+    )
     def _compute_restrict_partner_id(self):
         for move in self:
             if move.picking_type_id.owner_restriction == "picking_partner":
