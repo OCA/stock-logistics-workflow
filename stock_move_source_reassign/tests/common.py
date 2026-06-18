@@ -11,6 +11,7 @@ class MoveSourceReassignCommon(BaseCommon):
         super().setUpClass()
         cls.warehouse = cls.env.ref("stock.warehouse0")
         cls.warehouse.delivery_steps = "pick_ship"
+        cls.warehouse.out_type_id.can_reassign = True
         cls.customers = cls.env.ref("stock.stock_location_customers")
         cls.product_a = cls.env["product.product"].create(
             {
@@ -44,6 +45,7 @@ class MoveSourceReassignCommon(BaseCommon):
                 "sequence_code": "D-SHOP/",
                 "default_location_dest_id": cls.customers.id,
                 "default_location_src_id": cls.shop_out.id,
+                "can_reassign": True,
             }
         )
         cls.picking_type_transfer = cls.env["stock.picking.type"].create(

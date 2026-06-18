@@ -9,14 +9,14 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='state']"
+                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
                 position="after"
             >
                 <field name="can_be_reassigned" invisible="1" />
                 <button
                     name="action_source_reassign"
                     type="object"
-                    icon="fa-edit"
+                    icon="fa-random"
                     class="btn btn-link oe_inline"
                     title="Reassign"
                     attrs="{'invisible': [('can_be_reassigned', '=', False)]}"
@@ -36,7 +36,7 @@
                 <button
                     name="action_source_reassign"
                     type="object"
-                    icon="fa-edit"
+                    icon="fa-random"
                     class="btn btn-link oe_inline"
                     title="Reassign"
                     attrs="{'invisible': [('can_be_reassigned', '=', False)]}"

@@ -7,6 +7,9 @@ class StockMove(models.Model):
 
     _inherit = "stock.picking.type"
 
+    can_reassign = fields.Boolean(
+        help="Check this if you want to allow moves reassignation."
+    )
     default_move_reassign_picking_type_id = fields.Many2one(
         comodel_name="stock.picking.type",
         help="This is the default operation type that welcome the reassigned products.",

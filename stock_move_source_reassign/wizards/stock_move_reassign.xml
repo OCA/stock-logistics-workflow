@@ -86,6 +86,7 @@
                         name="doit"
                         string="Reassign"
                         class="btn-primary"
+                        icon="fa-random"
                         type="object"
                         attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
                     />

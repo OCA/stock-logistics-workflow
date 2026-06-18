@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <group name="locations" position="after">
                 <group name="reassign">
+                    <field name="can_reassign" />
                     <field name="default_move_reassign_picking_type_id" />
                     <field name="default_move_reassign_transfer_picking_type_id" />
                 </group>

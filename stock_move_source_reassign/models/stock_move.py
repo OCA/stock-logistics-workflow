@@ -18,7 +18,9 @@ class StockMove(models.Model):
     @api.depends("state")
     def _compute_can_be_reassigned(self):
         for move in self:
-            move.can_be_reassigned = bool(move.state == "assigned")
+            move.can_be_reassigned = move.picking_type_id.can_reassign and bool(
+                move.state == "assigned"
+            )
 
     def _check_can_be_reassigned(self):
         if any(not move.can_be_reassigned for move in self):
