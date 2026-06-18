@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <group name="locations" position="after">
+                <group name="reassign">
+                    <field name="default_move_reassign_picking_type_id" />
+                    <field name="default_move_reassign_transfer_picking_type_id" />
+                </group>
+
+            </group>
+        </field>
+    </record>
+
+</odoo>

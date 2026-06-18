@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_move_reassign_form_view">
+        <field name="model">stock.move.reassign</field>
+        <field name="name">Stock Move Reassign</field>
+        <field name="arch" type="xml">
+            <form string="Stock Move Reassign">
+                <group>
+                    <field
+                        name="package_level_ids"
+                        widget="many2many_tags"
+                        attrs="{'invisible': [('package_level_ids', '=', [])]}"
+                    />
+                    <field name="move_ids">
+                        <tree>
+                            <field name="product_id" />
+                        </tree>
+                    </field>
+                    <field name="step" invisible="1" />
+                    <group
+                        name="picking_type"
+                        attrs="{'invisible': [('step', '!=', 'ask_picking_type')]}"
+                    >
+                        Choose the operation type you want to reassign the chosen movements:
+                        <field name="reassign_picking_type_domain" invisible="1" />
+                        <field
+                            name="reassign_picking_type_id"
+                            domain="reassign_picking_type_domain"
+                        />
+                    </group>
+                    <group
+                        name="picking"
+                        attrs="{'invisible': [('step', '!=', 'ask_destination')]}"
+                    >
+                        Choose the picking you want to reassign the choses movements:
+                        <field name="destination_picking_domain" invisible="1" />
+                        <field
+                            name="destination_picking_id"
+                            domain="destination_picking_domain"
+                        />
+                    </group>
+                    <group
+                        name="transfer"
+                        attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
+                    >
+                        Choose the operation type for the transfer picking:
+                        <field
+                            name="reassign_transfer_picking_type_domain"
+                            invisible="1"
+                        />
+                        <field
+                            name="reassign_transfer_picking_type_id"
+                            domain="reassign_transfer_picking_type_domain"
+                        />
+                    </group>
+                    <group
+                        name="result"
+                        attrs="{'invisible': [('step', '!=', 'result')]}"
+                    >
+                        The concerned moves have been reassigned to these pickings:
+                        <field name="reassigned_picking_ids">
+                            <tree>
+                                <field name="name" />
+                            </tree>
+                        </field>
+                        The transfer pickings have been generated:
+                        <field name="transfer_picking_ids">
+                            <tree>
+                                <field name="name" />
+                            </tree>
+                        </field>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="doit"
+                        string="Next"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('step', 'in', ('ask_transfer', 'result'))]}"
+                    />
+                    <button
+                        name="doit"
+                        string="Reassign"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
+                    />
+                    <button
+                        name="doit"
+                        string="Ok"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('step', '!=', 'result')]}"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="stock_move_reassign_act_window">
+        <field name="name">Stock Move Reassign</field>
+        <field name="res_model">stock.move.reassign</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
