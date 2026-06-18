@@ -47,7 +47,13 @@ class StockQuant(models.Model):
             in_date=in_date,
         )
 
-    def _apply_inventory(self):
+    def _apply_inventory(self, date=None):
+        # Odoo 19 added the ``date`` parameter to
+        # ``stock.quant._apply_inventory`` and ``action_apply_inventory`` passes
+        # it through (``self._apply_inventory(date)``). The override must accept
+        # and forward it, otherwise every inventory adjustment raises
+        # ``TypeError: _apply_inventory() takes 1 positional argument but 2 were
+        # given``.
         no_backdate_inventories = self.env["stock.quant"].browse()
         for inventory in self:
             date_backdating = inventory.date_backdating
@@ -56,11 +62,11 @@ class StockQuant(models.Model):
                     date_backdating=date_backdating,
                     force_period_date=fields.Date.context_today(self, date_backdating),
                 )
-                super(StockQuant, inventory_ctx)._apply_inventory()
+                super(StockQuant, inventory_ctx)._apply_inventory(date=date)
                 inventory.date_backdating = False
             else:
                 no_backdate_inventories |= inventory
-        return super(StockQuant, no_backdate_inventories)._apply_inventory()
+        return super(StockQuant, no_backdate_inventories)._apply_inventory(date=date)
 
     @api.model
     def _get_inventory_fields_write(self):

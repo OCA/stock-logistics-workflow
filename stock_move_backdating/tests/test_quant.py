@@ -104,3 +104,27 @@ class TestQuant(TestCommon):
         )
         quants = self.env["stock.quant"]._gather(product, self.stock_location)
         self.assertTrue(any(q.in_date == in_date for q in quants))
+
+    def test_quant_action_apply_inventory_passes_date(self):
+        """Regression: applying an inventory adjustment via the UI action.
+
+        Odoo 19's ``action_apply_inventory`` forwards a ``date`` argument to
+        ``_apply_inventory`` (``self._apply_inventory(date)``). This override
+        must accept and forward it -- otherwise applying *any* inventory
+        adjustment raises ``TypeError: _apply_inventory() takes 1 positional
+        argument but 2 were given``. This test drives the full UI action so the
+        regression cannot reappear.
+        """
+        product = self.products[1]
+        quant = self._get_quant(product)
+        quant.with_context(inventory_mode=True).write(
+            {"inventory_quantity": quant.quantity + 1}
+        )
+        # Drives stock.quant.action_apply_inventory -> _apply_inventory(date).
+        quant.action_apply_inventory()
+        move = self.env["stock.move"].search(
+            [("product_id", "=", product.id), ("state", "=", "done")],
+            order="id desc",
+            limit=1,
+        )
+        self.assertTrue(move, "Inventory adjustment should create a done move")
