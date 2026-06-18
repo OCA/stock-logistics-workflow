@@ -44,7 +44,7 @@ addon | version | maintainers | summary
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 19.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 19.0.1.0.1 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 19.0.1.0.0 |  | Computes the kind of picking based on locations
-[stock_picking_line_sequence](stock_picking_line_sequence/) | 19.0.1.0.0 |  | Manages the order of stock moves by displaying its sequence
+[stock_picking_line_sequence](stock_picking_line_sequence/) | 19.0.1.0.1 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_move_line_no_print](stock_picking_move_line_no_print/) | 19.0.1.0.1 | <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> <a href='https://github.com/chienandalu'><img src='https://github.com/chienandalu.png' width='32' height='32' style='border-radius:50%;' alt='chienandalu'/></a> | Hide operations in delivery slips
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 19.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 19.0.1.0.0 |  | Link between picking and purchase order
