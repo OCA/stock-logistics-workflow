@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: stock-logistics-workflow (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-22 09:31+0000\n"
-"PO-Revision-Date: 2026-06-13 09:59+0000\n"
+"PO-Revision-Date: 2026-06-18 06:07+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-stock-logistics-"
 "workflow-8-0/language/sl/)\n"
@@ -29,7 +29,7 @@ msgstr "Preklic"
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model.fields,field_description:stock_picking_backorder_strategy_cancel.field_stock_picking_type__create_backorder
 msgid "Create Backorder"
-msgstr ""
+msgstr "Ustvari zaostalo naročilo"
 
 #. module: stock_picking_backorder_strategy_cancel
 #: model:ir.model,name:stock_picking_backorder_strategy_cancel.model_stock_picking_type
@@ -50,6 +50,12 @@ msgid ""
 " * Always: a backorder is automatically created for the remaining products\n"
 " * Never: remaining products are cancelled"
 msgstr ""
+"Pri potrjevanju transferja:\n"
+" * Vprašaj: uporabniki morajo izbrati, ali želijo za preostale izdelke "
+"odpreti naročilo z naknadno dobavo\n"
+" * Vedno: za preostale izdelke se samodejno ustvari naročilo z naknadno "
+"dobavo\n"
+" * Nikoli: preostali izdelki se prekličejo"
 
 #~ msgid "Backorder Strategy"
 #~ msgstr "Strategija zaostalih naročil"
