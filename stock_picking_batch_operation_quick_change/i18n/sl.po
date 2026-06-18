@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-04 01:08+0000\n"
-"PO-Revision-Date: 2026-01-22 19:05+0000\n"
+"PO-Revision-Date: 2026-06-18 06:07+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -23,12 +23,12 @@ msgstr ""
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__location_dest_id
 msgid "Actual destination location"
-msgstr ""
+msgstr "Dejanska ciljna lokacija"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__allowed_product_ids
 msgid "Allowed Product"
-msgstr ""
+msgstr "Dovoljeni proizvod"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
@@ -38,7 +38,7 @@ msgstr "Uveljavi"
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__batch_id
 msgid "Batch"
-msgstr ""
+msgstr "Serija"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
@@ -48,17 +48,17 @@ msgstr "Preklic"
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__change_all
 msgid "Change All"
-msgstr ""
+msgstr "Spremeni vse"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_form
 msgid "Change Location"
-msgstr ""
+msgstr "Spremeni lokacijo"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.actions.act_window,name:stock_picking_batch_operation_quick_change.action_stock_picking_batch_operation_change_location
 msgid "Change Operation Destination Location"
-msgstr ""
+msgstr "Spremeni ciljno lokacijo operacije"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_operation_quick_change.stock_picking_batch_operation_change_location_view
@@ -66,11 +66,14 @@ msgid ""
 "Change the destination location.\n"
 "                    <br/>"
 msgstr ""
+"Spremeni ciljno lokacijo.\n"
+"                    <br/>"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,help:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__change_all
 msgid "Check if you want change all operations without filter by old location"
 msgstr ""
+"Označite, če želite spremeniti vse operacije brez filtra po stari lokaciji"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__create_uid
@@ -110,22 +113,22 @@ msgstr "Zadnjič posodobljeno"
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__new_location_dest_id
 msgid "New destination location"
-msgstr ""
+msgstr "Nova cilja lokacija"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__old_location_dest_id
 msgid "Old destination location"
-msgstr ""
+msgstr "Stara ciljna lokacija"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model.fields,field_description:stock_picking_batch_operation_quick_change.field_stock_picking_batch_operation_wizard__product_id
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: stock_picking_batch_operation_quick_change
 #: model:ir.model,name:stock_picking_batch_operation_quick_change.model_stock_picking_batch_operation_wizard
 msgid "Stock Picking Batch Operation Wizard"
-msgstr ""
+msgstr "Čarovnik za skupinsko obdelavo dobavnic"
 
 #. module: stock_picking_batch_operation_quick_change
 #: code:addons/stock_picking_batch_operation_quick_change/wizards/stock_picking_batch_wizard.py:0
@@ -134,6 +137,7 @@ msgid ""
 "You can not change operations destination location if picking state is not "
 "in %s"
 msgstr ""
+"Ciljne lokacije operacij ni mogoče spremeniti, če stanje dobavnice ni v %s"
 
 #~ msgid "or"
 #~ msgstr "ali"
