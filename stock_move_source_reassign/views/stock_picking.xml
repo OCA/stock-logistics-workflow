@@ -27,7 +27,7 @@
             <button name="action_cancel" position="after">
                 <button
                     name="action_source_reassign"
-                    attrs="{'invisible': [('can_be_reassigned', '=', True)]}"
+                    attrs="{'invisible': [('can_be_reassigned', '=', False)]}"
                     string="Reassign"
                     icon="fa-random"
                     groups="stock.group_stock_manager"

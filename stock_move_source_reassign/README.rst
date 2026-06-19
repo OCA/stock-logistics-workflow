@@ -63,6 +63,41 @@ Configuration
   transfer movements if the source location is not the same as the
   original move.
 
+Usage
+=====
+
+- Go to a picking you want to reassign products.
+- Either click on the button in header to try to reassign reserved
+  products or click in front of a package or a product to reassign
+  partially:
+
+|Picking|
+
+- This will open a wizard that allows you to choose an operation type to
+  reassign moves to:
+
+|Picking Type|
+
+- Then, choose the picking you want to reassign the moves to. Let it
+  void to let the system to decide:
+
+|Picking Destination|
+
+- Then, choose the operation type for the picking that will welcome the
+  transfer moves:
+
+|Transfer Type|
+
+- Then, click on 'Reassign', the result will be displayed:
+
+|Result|
+
+.. |Picking| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_move_source_reassign/static/description/picking.png
+.. |Picking Type| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_move_source_reassign/static/description/picking_type.png
+.. |Picking Destination| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_move_source_reassign/static/description/destination_picking.png
+.. |Transfer Type| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_move_source_reassign/static/description/picking_type_transfer.png
+.. |Result| image:: https://raw.githubusercontent.com/OCA/stock-logistics-workflow/16.0/stock_move_source_reassign/static/description/result.png
+
 Bug Tracker
 ===========
 
