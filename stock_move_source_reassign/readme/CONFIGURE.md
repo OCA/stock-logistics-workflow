@@ -1,10 +1,8 @@
-[ This file is not always required; it should explain **how to configure the module before using it**; it is aimed at users with administration privileges. 
-
-Please be detailed on the path to configuration (eg: do you need to activate developer mode?), describe step by step configurations and the use of screenshots is strongly recommended.]
-
-
-To configure this module, you need to:
-
-- Go to *App* > Menu > Menu item
-- Activate boolean… > save
-- …
+- Go to Inventory > Settings > Configuration > Warehouse > Warehouse
+- Activate a multi steps pickings.
+- Go to Inventory > Settings > Configuration > Warehouse > Operation Types
+- In the 'Reassignation' section, check the 'Can Reassign' box to authorize moves
+  reassignation.
+- Below, choose the default corresponding operation type to reassign the movements.
+- You can also can choose the default operation type to create the transfer movements
+  if the source location is not the same as the original move.

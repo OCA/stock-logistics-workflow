@@ -2,30 +2,6 @@
 <!-- Copyright 2026 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-    <record id="view_picking_form" model="ir.ui.view">
-        <field name="name">Stock Move Reassign</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form" />
-        <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
-                position="after"
-            >
-                <field name="can_be_reassigned" invisible="1" />
-                <button
-                    name="action_source_reassign"
-                    type="object"
-                    icon="fa-random"
-                    class="btn btn-link oe_inline"
-                    title="Reassign"
-                    attrs="{'invisible': [('can_be_reassigned', '=', False)]}"
-                />
-            </xpath>
-
-        </field>
-    </record>
-
     <record id="package_level_tree_view_picking" model="ir.ui.view">
         <field name="name">Package Level</field>
         <field name="model">stock.package_level</field>

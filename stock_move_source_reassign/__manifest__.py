@@ -16,7 +16,8 @@
     ],
     "data": [
         "security/security.xml",
-        "views/stock_move.xml",
+        "views/stock_package_level.xml",
+        "views/stock_picking.xml",
         "views/stock_picking_type.xml",
         "wizards/stock_move_reassign.xml",
     ],

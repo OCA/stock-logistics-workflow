@@ -375,31 +375,18 @@ ul.auto-toc {
 !! source digest: sha256:c0c0ef801f601f3ed024b6952a023588710c7ac7c215bb3688684628defe032e
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_move_source_reassign"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_move_source_reassign"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>[ This file must be max 2-3 paragraphs, and is required.</p>
-<p>The goal of this document is to explain quickly the features of this
-module: “what” this module does and “what” it is for. ]</p>
-<p>Example:</p>
-<p>This module extends the functionality of … to support … and to allow
-users to …</p>
+<p>This module allows to reassign products from a picking to another one
+(and to another source location).</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#use-cases-context" id="toc-entry-1">Use Cases / Context</a></li>
-<li><a class="reference internal" href="#installation" id="toc-entry-2">Installation</a></li>
-<li><a class="reference internal" href="#configuration" id="toc-entry-3">Configuration</a></li>
-<li><a class="reference internal" href="#usage" id="toc-entry-4">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-5">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="toc-entry-6">Changelog</a><ul>
-<li><a class="reference internal" href="#x-y-z-yyyy-mm-dd" id="toc-entry-7">11.0.x.y.z (YYYY-MM-DD)</a></li>
-<li><a class="reference internal" href="#x-y-z-yyyy-mm-dd-1" id="toc-entry-8">11.0.x.y.z (YYYY-MM-DD)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-9">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-10">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-11">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-12">Contributors</a></li>
-<li><a class="reference internal" href="#other-credits" id="toc-entry-13">Other credits</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-14">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-2">Configuration</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -411,91 +398,24 @@ for the same customers have been routed to a different output location
 (e.g.: for shop delivery), one want to change the goods of location if a
 delivery occurs in the meantime.</p>
 </div>
-<div class="section" id="installation">
-<h2><a class="toc-backref" href="#toc-entry-2">Installation</a></h2>
-<p>[ This file must only be present if there are very specific installation
-instructions, such as installing non-python dependencies. The audience
-is systems administrators. ]</p>
-<p>To install this module, you need to:</p>
-<ol class="arabic simple">
-<li>Do this …</li>
-</ol>
-</div>
 <div class="section" id="configuration">
-<h2><a class="toc-backref" href="#toc-entry-3">Configuration</a></h2>
-<p>[ This file is not always required; it should explain <strong>how to configure
-the module before using it</strong>; it is aimed at users with administration
-privileges.</p>
-<p>Please be detailed on the path to configuration (eg: do you need to
-activate developer mode?), describe step by step configurations and the
-use of screenshots is strongly recommended.]</p>
-<p>To configure this module, you need to:</p>
+<h2><a class="toc-backref" href="#toc-entry-2">Configuration</a></h2>
 <ul class="simple">
-<li>Go to <em>App</em> &gt; Menu &gt; Menu item</li>
-<li>Activate boolean… &gt; save</li>
-<li>…</li>
+<li>Go to Inventory &gt; Settings &gt; Configuration &gt; Warehouse &gt; Warehouse</li>
+<li>Activate a multi steps pickings.</li>
+<li>Go to Inventory &gt; Settings &gt; Configuration &gt; Warehouse &gt; Operation
+Types</li>
+<li>In the ‘Reassignation’ section, check the ‘Can Reassign’ box to
+authorize moves reassignation.</li>
+<li>Below, choose the default corresponding operation type to reassign the
+movements.</li>
+<li>You can also can choose the default operation type to create the
+transfer movements if the source location is not the same as the
+original move.</li>
 </ul>
-</div>
-<div class="section" id="usage">
-<h2><a class="toc-backref" href="#toc-entry-4">Usage</a></h2>
-<p>[ This file is required and contains the instructions on <strong>“how”</strong> to
-use the module for end-users.</p>
-<p>If the module does not have a visible impact on the user interface, just
-add the following sentence:</p>
-<blockquote>
-This module does not impact the user interface.</blockquote>
-<p>If that’s not the case, please make sure that every usage step is
-covered and remember that images speak more than words!]</p>
-<p>To use this module, you need to:</p>
-<ul>
-<li><p class="first">Go to <em>App</em> &gt; Menu &gt; Menu item</p>
-<p><em>insert screenshot!</em></p>
-</li>
-<li><p class="first">In “Contact” form, add a value to field <em>xyz</em> &gt; save</p>
-<p><em>insert screenshot!</em></p>
-</li>
-<li><p class="first">The value of <em>xyz</em> is now displayed in the list view.</p>
-<p><em>insert screenshot!</em></p>
-</li>
-</ul>
-</div>
-<div class="section" id="known-issues-roadmap">
-<h2><a class="toc-backref" href="#toc-entry-5">Known issues / Roadmap</a></h2>
-<p>[ Enumerate known caveats and future potential improvements. It is
-mostly intended for end-users, and can also help potential new
-contributors discovering new features to implement. ]</p>
-<ul class="simple">
-<li>…</li>
-</ul>
-</div>
-<div class="section" id="changelog">
-<h2><a class="toc-backref" href="#toc-entry-6">Changelog</a></h2>
-<p>[ The change log. The goal of this file is to help readers understand
-changes between version. The primary audience is end users and
-integrators. Purely technical changes such as code refactoring must not
-be mentioned here.</p>
-<p>This file may contain ONE level of section titles, underlined with the ~
-(tilde) character. Other section markers are forbidden and will likely
-break the structure of the README.rst or other documents where this
-fragment is included. ]</p>
-<div class="section" id="x-y-z-yyyy-mm-dd">
-<h3><a class="toc-backref" href="#toc-entry-7">11.0.x.y.z (YYYY-MM-DD)</a></h3>
-<ul class="simple">
-<li>[BREAKING] Breaking changes come first.
-(<a class="reference external" href="https://github.com/OCA/repo/issues/70">#70</a>)</li>
-<li>[ADD] New feature. (<a class="reference external" href="https://github.com/OCA/repo/issues/74">#74</a>)</li>
-<li>[FIX] Correct this. (<a class="reference external" href="https://github.com/OCA/repo/issues/71">#71</a>)</li>
-</ul>
-</div>
-<div class="section" id="x-y-z-yyyy-mm-dd-1">
-<h3><a class="toc-backref" href="#toc-entry-8">11.0.x.y.z (YYYY-MM-DD)</a></h3>
-<ul class="simple">
-<li>…</li>
-</ul>
-</div>
 </div>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-9">Bug Tracker</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -503,33 +423,21 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-10">Credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
 <div class="section" id="authors">
-<h3><a class="toc-backref" href="#toc-entry-11">Authors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-5">Authors</a></h3>
 <ul class="simple">
 <li>ACSONE SA/NV</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h3><a class="toc-backref" href="#toc-entry-12">Contributors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-6">Contributors</a></h3>
 <ul class="simple">
-<li>Firstname Lastname <a class="reference external" href="mailto:email.address&#64;example.org">email.address&#64;example.org</a> (optional company website
-url)</li>
-<li>Second Person <a class="reference external" href="mailto:second.person&#64;example.org">second.person&#64;example.org</a> (optional company website url)</li>
-</ul>
-</div>
-<div class="section" id="other-credits">
-<h3><a class="toc-backref" href="#toc-entry-13">Other credits</a></h3>
-<p>[ This file is optional and contains additional credits, other than
-authors, contributors, and maintainers. ]</p>
-<p>The development of this module has been financially supported by:</p>
-<ul class="simple">
-<li>Company 1 name</li>
-<li>Company 2 name</li>
+<li>Denis Roussel <a class="reference external" href="mailto:denis.roussel&#64;acsone.eu">denis.roussel&#64;acsone.eu</a></li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h3><a class="toc-backref" href="#toc-entry-14">Maintainers</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h3>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
