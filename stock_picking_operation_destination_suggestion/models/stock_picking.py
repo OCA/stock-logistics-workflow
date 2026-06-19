@@ -45,7 +45,8 @@ class StockPicking(models.Model):
         "partner_id", "location_dest_id.children_ids.pending_out_move_line_ids"
     )
     def _compute_destination_location_suggestion_ids(self):
-        for picking in self:
+        pickings = self.filtered(lambda p: p.picking_type_id.suggest_destination)
+        for picking in pickings.with_prefetch(pickings.ids):
             pending_out_line_ids = (
                 picking.location_dest_id.children_ids.pending_out_move_line_ids
             )
@@ -62,6 +63,9 @@ class StockPicking(models.Model):
                 else self.env["stock.location"].browse()
             )
             picking.destination_location_suggestion_ids = locations
+        (self - pickings).destination_location_suggestion_ids = self.env[
+            "stock.location"
+        ].browse()
 
     def suggest_destination(self):
         """
