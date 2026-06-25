@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-25 09:16+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,28 +15,29 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_alert_date
 msgid "Lot/Serial Alert Date"
-msgstr ""
+msgstr "Datum opozorila o lotu/serijski številki"
 
 #. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_use_date
 msgid "Lot/Serial Best before Date"
-msgstr ""
+msgstr "Lot/serijska številka - uporabno najmanj do datuma"
 
 #. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__lot_removal_date
 msgid "Lot/Serial Removal Date"
-msgstr ""
+msgstr "Lot/serijska številka - datum umika"
 
 #. module: stock_receipt_lot_info
 #: model:ir.model,name:stock_receipt_lot_info.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Premiki proizvoda (postavka premika zaloge)"
 
 #. module: stock_receipt_lot_info
 #: model:ir.model.fields,field_description:stock_receipt_lot_info.field_stock_move_line__show_lots_text
 msgid "Show Lots Text"
-msgstr ""
+msgstr "Prikaži besedilo lotov"
