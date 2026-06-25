@@ -19,6 +19,11 @@ msgid "Auto Pack"
 msgstr ""
 
 #. module: stock_picking_auto_create_package
+#: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__auto_pack_requires_packaging
+msgid "Auto Pack Requires Packaging"
+msgstr ""
+
+#. module: stock_picking_auto_create_package
 #: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__automatic_package_creation_mode
 msgid "Automatic Package Creation Mode"
 msgstr ""
@@ -28,6 +33,13 @@ msgstr ""
 msgid ""
 "Automatically create the delivery packages. Any lines not in a package will "
 "automaticaly be packaged."
+msgstr ""
+
+#. module: stock_picking_auto_create_package
+#: model:ir.model.fields,help:stock_picking_auto_create_package.field_stock_picking_type__auto_pack_requires_packaging
+msgid ""
+"If enabled, automatic package creation will only apply to products that have"
+" packaging defined."
 msgstr ""
 
 #. module: stock_picking_auto_create_package
