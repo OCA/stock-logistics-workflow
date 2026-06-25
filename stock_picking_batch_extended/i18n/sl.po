@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-23 11:56+0000\n"
-"PO-Revision-Date: 2023-03-31 21:23+0000\n"
+"PO-Revision-Date: 2026-06-25 15:58+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 4.14.1\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__picking_count
@@ -74,12 +74,12 @@ msgstr "Polje za združevanje pri ustvarjanju zbirnikov"
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_batch
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__name
 msgid "Batch Transfer"
-msgstr ""
+msgstr "Serijski prenos"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_stock_picking_to_batch
 msgid "Batch Transfer Lines"
-msgstr ""
+msgstr "Postavke serijskega prenosa"
 
 #. module: stock_picking_batch_extended
 #: model:ir.actions.report,name:stock_picking_batch_extended.action_report_batch_picking
@@ -186,12 +186,12 @@ msgstr "Zadnjič posodobljeno"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,help:stock_picking_batch_extended.field_stock_picking_batch__active_picking_ids
 msgid "List of active picking managed by this batch."
-msgstr ""
+msgstr "Seznam aktivnih dobavnic v sklopu te serije."
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
 msgid "My batches"
-msgstr ""
+msgstr "Moje serije"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__name
@@ -208,7 +208,7 @@ msgstr "Naziv zbirnika dobavnic"
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__notes
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
 msgid "Notes"
-msgstr "Beležka"
+msgstr "Opombe"
 
 #. module: stock_picking_batch_extended
 #. odoo-python
@@ -225,7 +225,7 @@ msgstr "Sestavil"
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__picking_to_batch_id
 msgid "Picking To Batch"
-msgstr ""
+msgstr "Dobavnica v serijo"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
@@ -250,7 +250,7 @@ msgstr "Natisni dobavne operacije"
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_form
 msgid "Print Pickings"
-msgstr ""
+msgstr "Natisni dobavnice"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -260,7 +260,7 @@ msgstr "Proizvod"
 #. module: stock_picking_batch_extended
 #: model:ir.model,name:stock_picking_batch_extended.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Različica proizvoda"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.report_batch_picking
@@ -286,12 +286,12 @@ msgstr "Rezerviraj vse"
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch__user_id
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_to_batch__user_id
 msgid "Responsible"
-msgstr ""
+msgstr "Odgovoren"
 
 #. module: stock_picking_batch_extended
 #: model_terms:ir.ui.view,arch_db:stock_picking_batch_extended.stock_picking_batch_filter
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Načrtovani datum"
 
 #. module: stock_picking_batch_extended
 #: model:ir.model.fields,field_description:stock_picking_batch_extended.field_stock_picking_batch_creator_group_field__sequence
