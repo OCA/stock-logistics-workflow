@@ -11,3 +11,9 @@ class StockPickingType(models.Model):
         help="Automatically create the delivery packages. Any lines not in "
         "a package will automaticaly be packaged.",
     )
+
+    auto_pack_requires_packaging = fields.Boolean(
+        help="If enabled, automatic package creation will "
+        "only apply to products that have packaging defined.",
+        default=False,
+    )
