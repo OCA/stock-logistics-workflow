@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-25 09:13+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -21,37 +23,38 @@ msgstr ""
 msgid ""
 "Inconsistencies between reserved quant and lot restriction on stock move"
 msgstr ""
+"Neskladja med rezervirano količino in omejitvijo lota pri premikanju zalog"
 
 #. module: stock_restrict_lot
 #: model_terms:ir.ui.view,arch_db:stock_restrict_lot.custom_stock_picking_search_view
 msgid "Lot"
-msgstr ""
+msgstr "Lot"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Različica proizvoda"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_picking__restrict_lot_id
 msgid "Restrict Lot"
-msgstr ""
+msgstr "Omeji lot"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Postavka vračilnice"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Premik zaloge"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Pravilo zaloge"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -60,11 +63,13 @@ msgid ""
 "The lot(s) %(move_line_lot)s being moved is inconsistent with the "
 "restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
+"Lot(i) %(move_line_lot)s v premiku, niso skladni z omejitvijo lota %"
+"(move_restrict_lot)s, nastavljeno na premiku"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Premestitev"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -73,3 +78,5 @@ msgid ""
 "You can't modify the Lot/Serial number because at least one move in the "
 "chain has already been done with another Lot/Serial number."
 msgstr ""
+"Številke serije/lota ne morete spremeniti, ker je bil vsaj en premik v "
+"verigi že opravljen z drugo številko serije/lota."
