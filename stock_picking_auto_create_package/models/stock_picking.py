@@ -33,32 +33,53 @@ class StockPicking(models.Model):
         Put each done smallest product packaging in a package
         """
         for picking in self:
-            picking_move_lines = picking.move_line_ids
-            for move_line in picking_move_lines:
-                move_line = self._auto_create_delivery_package_filter(move_line)
-                if not move_line:
+            for move in picking.move_ids:
+                move_lines = self._auto_create_delivery_package_filter(
+                    move.move_line_ids
+                )
+                if not move_lines:
                     continue
-                qty_to_pack = move_line.quantity
                 max_pack_qty = 1
-                packagings = move_line.product_id.packaging_ids.filtered(
+                package_type = False
+                packagings = move_lines[0].product_id.packaging_ids.filtered(
                     lambda pack: pack.qty > 0
                 )
-                package_type = False
                 if packagings:
                     smallest_packaging = packagings.sorted("qty")[0]
                     max_pack_qty = smallest_packaging.qty
                     package_type = smallest_packaging.package_type_id
-                current_line = move_line
-                new_line = None
-                while qty_to_pack and current_line:
-                    pack_qty = min(qty_to_pack, max_pack_qty)
-                    new_line = current_line._split_move_line_package_qty(pack_qty)
-                    qty_to_pack -= pack_qty
-                    current_line.quantity = pack_qty
-                    package = current_line.picking_id._put_in_pack(current_line)
+                current_pack_lines = self.env["stock.move.line"]
+                current_pack_qty = 0
+                remaining_lines = list(move_lines)
+                while remaining_lines:
+                    current_line = remaining_lines.pop(0)
+                    line_qty = current_line.quantity
+                    space_in_pack = max_pack_qty - current_pack_qty
+                    if line_qty <= space_in_pack:
+                        current_pack_lines |= current_line
+                        current_pack_qty += line_qty
+                        if current_pack_qty >= max_pack_qty:
+                            package = picking._put_in_pack(current_pack_lines)
+                            if package_type:
+                                package.package_type_id = package_type
+                            current_pack_lines = self.env["stock.move.line"]
+                            current_pack_qty = 0
+                    else:
+                        new_line = current_line._split_move_line_package_qty(
+                            space_in_pack
+                        )
+                        current_line.quantity = space_in_pack
+                        remaining_lines.insert(0, new_line)
+                        current_pack_lines |= current_line
+                        package = picking._put_in_pack(current_pack_lines)
+                        if package_type:
+                            package.package_type_id = package_type
+                        current_pack_lines = self.env["stock.move.line"]
+                        current_pack_qty = 0
+                if current_pack_lines:
+                    package = picking._put_in_pack(current_pack_lines)
                     if package_type:
                         package.package_type_id = package_type
-                    current_line = new_line
 
     def _auto_create_delivery_package_single(self) -> None:
         """
