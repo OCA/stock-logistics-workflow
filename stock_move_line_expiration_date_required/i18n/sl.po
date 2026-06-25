@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-25 11:46+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,32 +15,33 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model.fields,field_description:stock_move_line_expiration_date_required.field_stock_move__all_expiry_dates_set
 msgid "All Expiry Dates Set"
-msgstr ""
+msgstr "Vsi datumi poteka veljavnosti so določeni"
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Premiki proizvoda (postavka premika zaloge)"
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Premik zaloge"
 
 #. module: stock_move_line_expiration_date_required
 #. odoo-python
 #: code:addons/stock_move_line_expiration_date_required/models/stock_picking.py:0
 msgid "The following move lines have no expiration date: %s"
-msgstr ""
+msgstr "Naslednje postavke nimajo datuma poteka: %s"
 
 #. module: stock_move_line_expiration_date_required
 #: model:ir.model,name:stock_move_line_expiration_date_required.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Premestitev"
 
 #. module: stock_move_line_expiration_date_required
 #: model_terms:ir.ui.view,arch_db:stock_move_line_expiration_date_required.view_stock_move_operations
@@ -47,3 +49,5 @@ msgid ""
 "You won't be able to confirm the parent picking until all Expiry dates are "
 "set"
 msgstr ""
+"Nadrejene dobavnice ne boste mogli potrditi, dokler niso nastavljeni vsi "
+"datumi poteka veljavnosti"
