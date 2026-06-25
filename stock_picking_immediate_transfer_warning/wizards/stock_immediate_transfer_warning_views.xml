@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_immediate_transfer_warning" model="ir.ui.view">
+        <field name="name">stock.immediate.transfer.warning.form</field>
+        <field name="model">stock.immediate.transfer.warning</field>
+        <field name="arch" type="xml">
+            <form string="Immediate Transfer?">
+                <group>
+                    <div>
+                        <p>
+                            No quantities have been explicitly picked for
+                            the transfer/s. Odoo will process all reserved
+                            quantities. Do you want to proceed?
+                        </p>
+                    </div>
+                </group>
+                <field name="pick_ids" invisible="1" />
+                <field
+                    name="immediate_transfer_warning_line_ids"
+                    nolabel="1"
+                    invisible="not immediate_transfer_warning_line_ids"
+                >
+                    <list create="0" delete="0" open="false">
+                        <field name="picking_id" force_save="1" readonly="1" />
+                    </list>
+                </field>
+                <footer>
+                    <button
+                        name="process"
+                        string="Process"
+                        type="object"
+                        class="oe_highlight"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Discard"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
