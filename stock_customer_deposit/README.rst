@@ -93,6 +93,8 @@ Create Customer deposits:
 12. Update location destination if it's necessary in operations
     detailed.
 13. Click on **Validate**.
+14. Invoice this order and you will see Lots delivered if you have
+    activated **Display Lots & Serial Numbers on Invoices**.
 
 View Customer deposits:
 
@@ -121,6 +123,8 @@ Deliver customer deposits:
 9.  If you try to confirm the order with more quantity than you have in
     deposit, a validation error will show.
 10. Check the deposit line has 100% discount.
+11. Invoice this order and you will see Lots delivered if you have
+    activated **Display Lots & Serial Numbers on Invoices**.
 
 Known issues / Roadmap
 ======================
