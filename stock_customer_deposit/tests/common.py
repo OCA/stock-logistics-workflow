@@ -20,7 +20,8 @@ class TestStockCustomerDepositCommon(ProductCommon, SalesTeamCommon):
             cls.env,
             login="user_customer_deposit",
             groups="sales_team.group_sale_salesman,stock.group_stock_user,"
-            "stock.group_tracking_owner,stock.group_adv_location",
+            "stock.group_tracking_owner,stock.group_adv_location,"
+            "stock_account.group_lot_on_invoice",
         )
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.warehouse = cls.env["stock.warehouse"].create(
@@ -46,6 +47,13 @@ class TestStockCustomerDepositCommon(ProductCommon, SalesTeamCommon):
             {
                 "name": "Product C",
                 "type": "product",
+            }
+        )
+        cls.productL = cls.env["product.product"].create(
+            {
+                "name": "Product C",
+                "type": "product",
+                "tracking": "lot",
             }
         )
         cls.partner1 = cls.env["res.partner"].create({"name": "Test Partner 1"})
