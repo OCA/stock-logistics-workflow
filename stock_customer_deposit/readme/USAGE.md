@@ -15,6 +15,7 @@ Create Customer deposits:
 11. Set quantity done in operations or click on **Set Quantities**.
 12. Update location destination if it's necessary in operations detailed.
 13. Click on **Validate**.
+14. Invoice this order and you will see Lots delivered if you have activated **Display Lots & Serial Numbers on Invoices**.
 
 View Customer deposits:
 
@@ -31,9 +32,8 @@ Deliver customer deposits:
 4. In page Other Info choose warehouse where deposit is located. (Only if multi-warehouse is activated)
 5. Smart button **Deposits** with deposits is displayed if the customer has deposits in the chosen warehouse.
 6. Add line with product in deposit.
-7. As a product in deposit, a button **Customer deposit** will appear. If you do not have enough in deposit, button will be grey. If you click on the button **Customer deposit**, you can view the deposits for that product.
+7. As a product in deposit, a button **Customer deposit** will appear. If you do not have enough in deposit, button will be red. If you click on the button **Customer deposit**, you can view the deposits for that product.
 8. You will only be able to confirm the order if you use less quantity than you have in the deposit.
 9. If you try to confirm the order with more quantity than you have in deposit, a validation error will show.
 10. Check the deposit line has 100% discount.
-
-
+11. Invoice this order and you will see Lots delivered if you have activated **Display Lots & Serial Numbers on Invoices**.
