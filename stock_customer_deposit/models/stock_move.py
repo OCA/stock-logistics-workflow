@@ -73,3 +73,13 @@ class StockMoveLine(models.Model):
         for ml in self.filtered(lambda ml: ml.move_id.picking_type_id.assign_owner):
             ml.location_dest_id = ml.location_id
         return res
+
+    def _should_show_lot_in_invoice(self):
+        res = super()._should_show_lot_in_invoice()
+        if not res:
+            # Moves comes from customer deposit route
+            wh = self.move_id.warehouse_id
+            deposit_route = wh.use_customer_deposits and wh.customer_deposit_route_id
+            if deposit_route and deposit_route in self.move_id.route_ids:
+                return True
+        return res
