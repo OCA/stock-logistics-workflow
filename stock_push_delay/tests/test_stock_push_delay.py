@@ -13,7 +13,7 @@ class TestPacking(TransactionCase):
         cls.warehouse.reception_steps = "two_steps"
 
         cls.productA = cls.env["product.product"].create(
-            {"name": "Product A", "type": "product"}
+            {"name": "Product A", "type": "consu", "is_storable": True}
         )
 
     def test_01_push_delay(self):
@@ -27,7 +27,7 @@ class TestPacking(TransactionCase):
         receipt.action_confirm()
         # Checks an internal transfer was not created.
         internal_transfer = self.env["stock.picking"].search(
-            [("picking_type_id", "=", self.warehouse.int_type_id.id)],
+            [("picking_type_id", "=", self.warehouse.store_type_id.id)],
             order="id desc",
             limit=1,
         )
@@ -36,7 +36,7 @@ class TestPacking(TransactionCase):
         receipt._action_done()
         # Checks an internal transfer was created.
         internal_transfer = self.env["stock.picking"].search(
-            [("picking_type_id", "=", self.warehouse.int_type_id.id)],
+            [("picking_type_id", "=", self.warehouse.store_type_id.id)],
             order="id desc",
             limit=1,
         )
