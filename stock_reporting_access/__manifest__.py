@@ -4,7 +4,7 @@
 {
     "name": "Stock Reporting Access",
     "summary": "Add a security group for inventory reporting access",
-    "version": "18.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Inventory",
     "license": "AGPL-3",
     "author": "Quartile, Odoo Community Association (OCA)",
@@ -14,5 +14,6 @@
         "security/security.xml",
         "views/stock_menu_views.xml",
     ],
+    "maintainers": ["yostashiro", "aungkokolin1997"],
     "installable": True,
 }
