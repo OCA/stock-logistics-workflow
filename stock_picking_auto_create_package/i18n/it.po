@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-02-25 17:09+0000\n"
+"PO-Revision-Date: 2026-06-30 10:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -19,12 +19,12 @@ msgstr ""
 #. module: stock_picking_auto_create_package
 #: model_terms:ir.ui.view,arch_db:stock_picking_auto_create_package.view_picking_form
 msgid "Auto Pack"
-msgstr ""
+msgstr "Imballaggio automatico"
 
 #. module: stock_picking_auto_create_package
 #: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__auto_pack_requires_packaging
 msgid "Auto Pack Requires Packaging"
-msgstr ""
+msgstr "L'imballaggio automatico richiede l'imballaggio"
 
 #. module: stock_picking_auto_create_package
 #: model:ir.model.fields,field_description:stock_picking_auto_create_package.field_stock_picking_type__automatic_package_creation_mode
@@ -60,6 +60,8 @@ msgid ""
 "If enabled, automatic package creation will only apply to products that have "
 "packaging defined."
 msgstr ""
+"Se abilitata, la creazione dell'imballaggio automatico si applicherà solo ai "
+"prodotti che hanno l'imballaggio definito."
 
 #. module: stock_picking_auto_create_package
 #: model:ir.model.fields.selection,name:stock_picking_auto_create_package.selection__stock_picking_type__automatic_package_creation_mode__packaging
@@ -74,7 +76,7 @@ msgstr "Tipo prelievo"
 #. module: stock_picking_auto_create_package
 #: model:ir.model,name:stock_picking_auto_create_package.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
 
 #. module: stock_picking_auto_create_package
 #: model:ir.model.fields.selection,name:stock_picking_auto_create_package.selection__stock_picking_type__automatic_package_creation_mode__single
