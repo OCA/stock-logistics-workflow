@@ -116,7 +116,7 @@
                                         t-esc="remaining['concept']"
                                     />
                                 </td>
-                                <td class="text-end text-nowrap">
+                                <td class="text-center text-nowrap">
                                     <t t-if="not remaining['is_header']">
                                         <span
                                             t-esc="remaining['qty']"
