@@ -14,12 +14,17 @@ class TestStockPickingOriginState(TransactionCase):
         )
         cls.warehouse.delivery_steps = "pick_pack_ship"
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product"}
+            {"name": "Test Product", "type": "consu", "is_storable": True}
         )
         cls.customer = cls.env["res.partner"].create({"name": "Test Customer"})
 
     def _create_three_step_delivery(self, qty=5.0, available_qty=None):
-        """Create a 3-step delivery for the test product.
+        """Create a chained 3-step delivery (PICK -> PACK -> OUT).
+
+        The chain is built explicitly by linking the moves through
+        ``move_dest_ids`` (mirroring Odoo core's own ``create_pick_pack_ship``
+        test helper) so the origin/destination links are deterministic and do
+        not depend on procurement/route auto-generation.
 
         Returns the (pick, pack, out) pickings recordset tuple.
         """
@@ -29,35 +34,42 @@ class TestStockPickingOriginState(TransactionCase):
             self.env["stock.quant"]._update_available_quantity(
                 self.product, self.warehouse.lot_stock_id, available_qty
             )
-        group = self.env["procurement.group"].create(
-            {"name": "Test Delivery", "partner_id": self.customer.id}
-        )
-        self.env["procurement.group"].run(
-            [
-                group.Procurement(
-                    self.product,
-                    qty,
-                    self.product.uom_id,
-                    self.env.ref("stock.stock_location_customers"),
-                    "Test Delivery",
-                    "Test Delivery",
-                    self.warehouse.company_id,
-                    {"warehouse_id": self.warehouse, "group_id": group},
-                )
-            ]
-        )
-        pickings = self.env["stock.picking"].search(
-            [("group_id", "=", group.id)], order="id"
-        )
-        out_picking = pickings.filtered(
-            lambda p: p.picking_type_id == self.warehouse.out_type_id
-        )
-        pack_picking = pickings.filtered(
-            lambda p: p.picking_type_id == self.warehouse.pack_type_id
-        )
-        pick_picking = pickings.filtered(
-            lambda p: p.picking_type_id == self.warehouse.pick_type_id
-        )
+        picking_type_out = self.warehouse.out_type_id
+        picking_type_pack = self.warehouse.pack_type_id
+        picking_type_pick = self.warehouse.pick_type_id
+
+        def _create_picking(picking_type):
+            return self.env["stock.picking"].create(
+                {
+                    "picking_type_id": picking_type.id,
+                    "location_id": picking_type.default_location_src_id.id,
+                    "location_dest_id": picking_type.default_location_dest_id.id,
+                    "state": "draft",
+                }
+            )
+
+        def _create_move(picking, picking_type, dest_move=None):
+            vals = {
+                "name": self.product.name,
+                "product_id": self.product.id,
+                "product_uom_qty": qty,
+                "product_uom": self.product.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": picking_type.default_location_src_id.id,
+                "location_dest_id": picking_type.default_location_dest_id.id,
+                "state": "confirmed",
+            }
+            if dest_move:
+                vals["move_dest_ids"] = [(4, dest_move.id)]
+            return self.env["stock.move"].create(vals)
+
+        out_picking = _create_picking(picking_type_out)
+        pack_picking = _create_picking(picking_type_pack)
+        pick_picking = _create_picking(picking_type_pick)
+
+        out_move = _create_move(out_picking, picking_type_out)
+        pack_move = _create_move(pack_picking, picking_type_pack, dest_move=out_move)
+        _create_move(pick_picking, picking_type_pick, dest_move=pack_move)
         return pick_picking, pack_picking, out_picking
 
     def _validate_picking(self, picking):
