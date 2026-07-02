@@ -56,9 +56,9 @@ When the order is confirmed, the policy is carried over to the
 deliveries it generates, including multi-step routes. On validation of a
 partial delivery:
 
-- **Ask**: the usual backorder prompt is shown.
-- **Always**: a backorder is created automatically.
-- **Never**: the remaining quantity is cancelled.
+-  **Ask**: the usual backorder prompt is shown.
+-  **Always**: a backorder is created automatically.
+-  **Never**: the remaining quantity is cancelled.
 
 The customer's policy is configured on the contact form (see
 *stock_picking_backorder_policy*).
@@ -84,10 +84,10 @@ Authors
 Contributors
 ------------
 
-- `Camptocamp <https://www.camptocamp.com>`__
+-  `Camptocamp <https://www.camptocamp.com>`__
 
-  - Alex Pfändler <alex.pfandler@camptocamp.com>
-  - Iván Todorovich <ivan.todorovich@camptocamp.com>
+   -  Alex Pfändler <alex.pfandler@camptocamp.com>
+   -  Iván Todorovich <ivan.todorovich@camptocamp.com>
 
 Maintainers
 -----------

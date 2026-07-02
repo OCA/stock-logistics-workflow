@@ -18,6 +18,7 @@ class SaleOrder(models.Model):
         store=True,
         readonly=False,
         copy=False,
+        tracking=True,
         help=BACKORDER_POLICY_HELP,
     )
 
