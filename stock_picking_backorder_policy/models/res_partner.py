@@ -24,6 +24,7 @@ class ResPartner(models.Model):
     backorder_policy = fields.Selection(
         selection=BACKORDER_POLICY_SELECTION,
         default=False,
+        tracking=True,
         help=BACKORDER_POLICY_HELP,
     )
 

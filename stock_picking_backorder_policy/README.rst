@@ -43,11 +43,11 @@ later, others never do.
 This module lets you **optionally override** that operation type
 default, on the partner and on the transfer itself:
 
-- **Ask**: the user is prompted (standard behaviour).
-- **Always**: a backorder is created automatically for the remaining
-  quantity.
-- **Never**: the remaining quantity is cancelled and no backorder is
-  created.
+-  **Ask**: the user is prompted (standard behaviour).
+-  **Always**: a backorder is created automatically for the remaining
+   quantity.
+-  **Never**: the remaining quantity is cancelled and no backorder is
+   created.
 
 The policy is shared by a company and its contacts (delivery addresses).
 A transfer created for a partner (for instance directly from the
@@ -76,9 +76,9 @@ used.
 
 When the transfer is validated with a missing quantity:
 
-- **Ask**: the usual backorder prompt is shown.
-- **Always**: a backorder is created automatically.
-- **Never**: the remaining quantity is cancelled.
+-  **Ask**: the usual backorder prompt is shown.
+-  **Always**: a backorder is created automatically.
+-  **Never**: the remaining quantity is cancelled.
 
 Bug Tracker
 ===========
@@ -101,10 +101,11 @@ Authors
 Contributors
 ------------
 
-- `Camptocamp <https://www.camptocamp.com>`__
+-  `Camptocamp <https://www.camptocamp.com>`__
 
-  - Alex Pfändler <alex.pfandler@camptocamp.com>
-  - Iván Todorovich <ivan.todorovich@camptocamp.com>
+   -  Alex Pfändler <alex.pfandler@camptocamp.com>
+   -  Iván Todorovich <ivan.todorovich@camptocamp.com>
+   -  Italo Lopes <italo.lopes@camptocamp.com>
 
 Maintainers
 -----------

@@ -14,6 +14,7 @@ class StockPicking(models.Model):
         compute="_compute_backorder_policy",
         store=True,
         readonly=False,
+        tracking=True,
         help=BACKORDER_POLICY_HELP,
     )
 
@@ -52,4 +53,34 @@ class StockPicking(models.Model):
             super(StockPicking, always)._action_done()
         if rest := (self - never - always):
             super(StockPicking, rest)._action_done()
+        if need_log := validated.filtered(
+            lambda p: p.backorder_policy
+            and p.backorder_policy != p.picking_type_id.create_backorder
+        ):
+            need_log._backorder_policy_update_log()
+        return True
+
+    @api.model
+    def _get_selection_backorder_policy(self):
+        return self.env["stock.picking"].fields_get(allfields=["backorder_policy"])[
+            "backorder_policy"
+        ]["selection"]
+
+    def _backorder_policy_update_log(self):
+        policies = dict(self._get_selection_backorder_policy())
+        for picking in self:
+            picking_type_policy = picking.picking_type_id.create_backorder
+            log_note = self.env._(
+                "Processed with backorder policy: %(policy_name)s, "
+                "instead of the operation type %(operation_type_name)s’s "
+                "policy (%(operation_type_backorder)s)",
+                policy_name=policies.get(
+                    picking.backorder_policy, picking.backorder_policy
+                ),
+                operation_type_name=picking.picking_type_id.display_name,
+                operation_type_backorder=policies.get(
+                    picking_type_policy, picking_type_policy
+                ),
+            )
+            picking.message_post(body=log_note)
         return True
