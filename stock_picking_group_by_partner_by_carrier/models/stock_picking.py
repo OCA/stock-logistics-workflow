@@ -1,11 +1,11 @@
 # Copyright 2020 Camptocamp (https://www.camptocamp.com)
-# Copyright 2020-2021 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2020 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from itertools import groupby
 
 from odoo import _, api, fields, models
-from odoo.fields import first
+from odoo.exceptions import UserError
 
 
 class StockPicking(models.Model):
@@ -87,29 +87,62 @@ class StockPicking(models.Model):
 
     def _create_backorder(self):
         backorders = self.browse()
-        for picking in self:
-            if not picking._is_grouping_disabled():
-                picking = picking.with_context(picking_no_copy_if_can_group=1)
-            backorder = super(StockPicking, picking)._create_backorder()
-            if backorder and not picking._is_grouping_disabled():
-                if backorder.group_id != picking.group_id:
-                    # the backorder is an existing picking where the remaining
-                    # moves have been moved to. We need to update the origin
-                    backorder._update_merged_origin()
-                else:
+        bo_to_assign = self.browse()
+        if picking_no_grouping := self.filtered(lambda p: p._is_grouping_disabled()):
+            backorders += super(StockPicking, picking_no_grouping)._create_backorder()
+        if picking_grouping := self - picking_no_grouping:
+            moves = picking_grouping.move_ids
+            for old_picking in moves.picking_id:
+                moves_to_backorder = old_picking._get_moves_to_backorder()
+                if not moves_to_backorder:
+                    continue
+                moves_to_backorder.with_context(
+                    _assign_picking_excluded=old_picking
+                )._assign_picking()
+                for new_picking, imoves in groupby(
+                    moves_to_backorder, lambda m: m.picking_id
+                ):
+                    moves = self.move_ids.browse(m.id for m in imoves)
+                    if old_picking == new_picking:
+                        raise UserError(
+                            _("Backorder moves cannot be assigned to the same picking")
+                        )
+                    backorders |= new_picking
+
                     # Create a new procurement group to remove the link from moves
                     # done in the original group and therefore avoid that a sale order
                     # linked to the picking and entirely delivered is no more linked
                     # to the backorder.
-                    base_group = backorder.group_id
-                    moves = backorder.move_ids
-                    new_group = base_group.copy(
-                        self._prepare_merge_procurement_group_values(
-                            moves.original_group_id
+                    if any(
+                        ogroup not in new_picking.move_ids.original_group_id
+                        for ogroup in old_picking.move_ids.original_group_id
+                    ):
+                        moves.group_id = new_picking.group_id.copy(
+                            self._prepare_merge_procurement_group_values(
+                                moves.original_group_id
+                            )
+                        )
+
+                    move_lines = moves.move_line_ids.filtered(
+                        lambda ml, new_picking=new_picking: ml.picking_id != new_picking
+                    )
+                    if move_lines:
+                        moves.move_line_ids.package_level_id.picking_id = new_picking
+                        moves.move_line_ids.picking_id = new_picking
+
+                    if not new_picking.backorder_id:
+                        new_picking.backorder_id = old_picking
+                    old_picking.message_post(
+                        body=_(
+                            "The backorder %s has been created.",
+                            new_picking._get_html_link(),
                         )
                     )
-                    moves.group_id = new_group
-            backorders |= backorder
+
+                    if new_picking.picking_type_id.reservation_method == "at_confirm":
+                        bo_to_assign |= new_picking
+        if bo_to_assign:
+            bo_to_assign.action_assign()
         return backorders
 
     def _prepare_merged_origin(self):
@@ -182,18 +215,6 @@ class StockPicking(models.Model):
             return True
         new_moves.group_id = base_group
         return False
-
-    def copy(self, defaults=None):
-        if self.env.context.get("picking_no_copy_if_can_group") and self.move_ids:
-            # we are in the process of the creation of a backorder. If we can
-            # find a suitable picking, then use it instead of copying the one
-            # we are creating a backorder from
-            picking = first(self.move_ids)._search_picking_for_assignation()
-            if picking:
-                return picking
-        return super(
-            StockPicking, self.with_context(picking_no_copy_if_can_group=0)
-        ).copy(defaults)
 
     def _is_grouping_disabled(self):
         self.ensure_one()
