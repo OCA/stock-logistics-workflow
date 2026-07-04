@@ -276,7 +276,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(svl_manual.value, 100.0, 2)
 
-    def create_picking(self, p_type="IN", qty=1.0, confirmed=True):
+    def create_picking(self, p_type="IN", qty=1.0, confirmed=True, price_unit=None):
         if p_type == "IN":
             picking_type = self.picking_type_in
             location_id = self.supplier_location
@@ -310,13 +310,48 @@ class TestProductCostPriceAvcoSync(BaseCommon):
                 }
             )
         )
+        move = picking.move_ids[:1]
+        if price_unit is not None:
+            move.price_unit = price_unit
         if confirmed:
             picking.action_assign()
-            move = picking.move_ids[:1]
             picking.move_line_ids.quantity = move.product_uom_qty
             picking.move_line_ids.picked = True
             picking._action_done()
         return picking, move
+
+    def test_sync_cost_price_with_negative_accumulated_qty(self):
+        """Incoming moves after overselling must not reset the AVCO chain."""
+        _picking_in, move_in = self.create_picking("IN", qty=10.0)
+        _picking_out, move_out = self.create_picking("OUT", qty=10.0)
+        move_out.move_line_ids.quantity = 20.0
+        _picking_in_high_cost, move_in_high_cost = self.create_picking(
+            "IN", qty=2.0, price_unit=100.0
+        )
+
+        self.assertAlmostEqual(self.product.quantity_svl, -8.0, 2)
+        svl_in = move_in.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        svl_out = move_out.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        svl_in_high_cost = move_in_high_cost.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        self.assertEqual(len(svl_in), 1)
+        self.assertEqual(len(svl_out), 1)
+        self.assertEqual(len(svl_in_high_cost), 1)
+        self.assertAlmostEqual(svl_in.quantity, 10.0, 2)
+        self.assertAlmostEqual(svl_out.quantity, -20.0, 2)
+        self.assertAlmostEqual(svl_in_high_cost.quantity, 2.0, 2)
+
+        svl_in.unit_cost = 2.0
+
+        self.assertAlmostEqual(svl_in.value, 20.0, 2)
+        self.assertAlmostEqual(svl_out.value, -40.0, 2)
+        self.assertAlmostEqual(svl_in_high_cost.value, 200.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 18.33, 2)
 
     def _test_change_quantiy_price_xx(self):
         """Write quantity and price to zero in a stock valuation layer"""

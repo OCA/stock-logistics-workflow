@@ -414,13 +414,21 @@ class StockValuationLayer(models.Model):
             # Normal incoming moves
             else:
                 svl_dic["unit_cost_processed"] = True
-                if svl_dic["previous_qty"] <= 0.0:
+                if float_is_zero(
+                    svl_dic["previous_qty"], precision_digits=precision_qty
+                ):
                     # Set income svl.unit_cost as previous_unit_cost
                     svl_dic["previous_unit_cost"] = svl_data["unit_cost"]
                 else:
+                    # previous_qty can be negative when stock was oversold due to
+                    # a correction on an already done stock move. In that case we
+                    # must still weight with the previous cost instead of blindly
+                    # discarding all history and adopting this single incoming
+                    # line's cost, as that would let one bad price wipe out the
+                    # whole average.
                     svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
                         svl_dic["previous_unit_cost"],
-                        svl_dic["previous_qty"],
+                        abs(svl_dic["previous_qty"]),
                         self.unit_cost,
                         self.quantity,
                     )
