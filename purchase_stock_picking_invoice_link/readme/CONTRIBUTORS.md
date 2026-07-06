@@ -4,6 +4,7 @@
   - Pedro M. Baeza
   - Carlos Roca
   - Stefan Ungureanu
+  - Andrii Kompaniiets
 - [Obertix](https://www.obertix.net)
   - Vicent Cubells \<<vicent@vcubells.net>\>
 - [Solvos](https://www.solvos.es)
