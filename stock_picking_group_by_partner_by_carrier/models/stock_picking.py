@@ -184,8 +184,6 @@ class StockPicking(models.Model):
         self.ensure_one()
         if self._is_grouping_disabled():
             return False
-        if not self.picking_type_id.group_pickings:
-            return False
 
         moves = self.move_ids
         base_group = self.group_id
@@ -232,6 +230,10 @@ class StockPicking(models.Model):
         return (
             not self.picking_type_id.group_pickings
             or self.partner_id.disable_picking_grouping
+            or (
+                not self.picking_type_id.group_pickings_one
+                and self.group_id.move_type == "one"
+            )
         )
 
     def _group_moves_by_order(self, moves):
