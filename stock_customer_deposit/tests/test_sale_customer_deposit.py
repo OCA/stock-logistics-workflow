@@ -18,6 +18,20 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
             cls.productB: {False: 300},
         }
         cls.update_availiable_quantity(cls, stock_dict)
+        # Create Quants with Lots for Product L
+        cls.lot_L = cls.env["stock.lot"].create(
+            {
+                "name": "Lot L1",
+                "product_id": cls.productL.id,
+                "company_id": cls.env.user.company_id.id,
+            }
+        )
+        cls.env["stock.quant"]._update_available_quantity(
+            cls.productL,
+            cls.warehouse.lot_stock_id,
+            300,
+            lot_id=cls.lot_L,
+        )
         cls.result_test = {
             False: {
                 cls.productA: 200,
@@ -176,3 +190,30 @@ class TestSaleCustomerDeposits(TestStockCustomerDepositCommon):
             "if you do not mark the order as a customer depot.",
         ):
             so.action_confirm()
+
+    @users("user_customer_deposit")
+    def test_invoice_customer_deposit(self):
+        so_form = Form(self.env["sale.order"])
+        so_form.partner_id = self.partner1_child
+        so_form.warehouse_id = self.warehouse
+        so_form.customer_deposit = True
+        with so_form.order_line.new() as line:
+            line.product_id = self.productL
+            line.product_uom_qty = 100.0
+        so = so_form.save()
+        so.action_confirm()
+        self.assertEqual(so.invoice_status, "to invoice")
+        so.picking_ids.action_confirm()
+        so.picking_ids.action_assign()
+        so.picking_ids.action_set_quantities_to_reservation()
+        so.picking_ids.button_validate()
+        invoice = so._create_invoices()
+        lot_vals = invoice._get_invoiced_lot_values()
+        self.assertFalse(
+            lot_vals, "Lots should not be displayed because invoice is in draft state"
+        )
+        invoice.action_post()
+        lot_vals = invoice._get_invoiced_lot_values()
+        self.assertEqual(len(lot_vals), 1)
+        self.assertEqual(lot_vals[0]["lot_id"], self.lot_L.id)
+        self.assertAlmostEqual(float(lot_vals[0]["quantity"]), 100.0)

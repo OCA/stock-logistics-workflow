@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ======================
 Stock Customer Deposit
 ======================
@@ -13,7 +17,7 @@ Stock Customer Deposit
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -93,6 +97,8 @@ Create Customer deposits:
 12. Update location destination if it's necessary in operations
     detailed.
 13. Click on **Validate**.
+14. Invoice this order and you will see Lots delivered if you have
+    activated **Display Lots & Serial Numbers on Invoices**.
 
 View Customer deposits:
 
@@ -121,6 +127,8 @@ Deliver customer deposits:
 9.  If you try to confirm the order with more quantity than you have in
     deposit, a validation error will show.
 10. Check the deposit line has 100% discount.
+11. Invoice this order and you will see Lots delivered if you have
+    activated **Display Lots & Serial Numbers on Invoices**.
 
 Known issues / Roadmap
 ======================
