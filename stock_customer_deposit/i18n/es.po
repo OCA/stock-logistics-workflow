@@ -114,6 +114,11 @@ msgstr ""
 "Si está marcado, el propietario del albarán será el contacto del albarán."
 
 #. module: stock_customer_deposit
+#: model:ir.model,name:stock_customer_deposit.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking_type
 msgid "Picking Type"
 msgstr "Tipo de albarán"

@@ -54,7 +54,6 @@ msgstr "Contacto"
 #. module: stock_customer_deposit
 #. odoo-python
 #: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
-#: code:addons/stock_customer_deposit/models/stock_warehouse.py:0
 #: model:ir.model.fields,field_description:stock_customer_deposit.field_sale_order__customer_deposit
 #, python-format
 msgid "Customer Deposit"
@@ -111,6 +110,11 @@ msgstr "Depósitos"
 msgid ""
 "If checked, the owner of the picking will be the partner of the picking."
 msgstr "Se está marcado, o propietario do albará será o contacto do albará."
+
+#. module: stock_customer_deposit
+#: model:ir.model,name:stock_customer_deposit.model_account_move
+msgid "Journal Entry"
+msgstr ""
 
 #. module: stock_customer_deposit
 #: model:ir.model,name:stock_customer_deposit.model_stock_picking_type
@@ -188,8 +192,8 @@ msgstr "Almacén"
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
 msgid ""
-"You cannot select Customer Deposit route in an order line if you do not mark"
-" the order as a customer depot."
+"You cannot select Customer Deposit route in an order line if you do not mark "
+"the order as a customer depot."
 msgstr ""
 "Non pode seleccionar a roteiro Depósito de cliente nunha liña de pedido se "
 "non marca o pedido como depósito de cliente."
@@ -199,8 +203,10 @@ msgstr ""
 #: code:addons/stock_customer_deposit/models/sale_order.py:0
 #, python-format
 msgid ""
-"You're trying to sell more than what's available in the customer's deposit for '%(product)s'.\n"
-"You can either adjust the quantity to fit what's available or create a new order to increase the deposit before proceeding."
+"You're trying to sell more than what's available in the customer's deposit "
+"for '%(product)s'.\n"
+"You can either adjust the quantity to fit what's available or create a new "
+"order to increase the deposit before proceeding."
 msgstr ""
 "Estás a tentar vender máis do que hai dispoñible no depósito do cliente para "
 "'%(product)s'.\n"
