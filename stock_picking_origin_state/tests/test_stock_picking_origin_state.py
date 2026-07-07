@@ -13,41 +13,48 @@ class TestStockPickingOriginState(TransactionCase):
             [("company_id", "=", cls.env.company.id)], limit=1
         )
         cls.warehouse.delivery_steps = "pick_pack_ship"
-        cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product"}
+        delivery_route = cls.warehouse.delivery_route_id
+        delivery_route.rule_ids[0].write(
+            {"location_dest_id": delivery_route.rule_ids[1].location_src_id.id}
         )
-        cls.customer = cls.env["res.partner"].create({"name": "Test Customer"})
+        delivery_route.rule_ids[1].write({"action": "pull"})
+        delivery_route.rule_ids[2].write({"action": "pull"})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Test Product", "type": "consu", "is_storable": True}
+        )
 
-    def _create_three_step_delivery(self, qty=5.0, available_qty=None):
+    def _create_three_step_delivery(self, qty=5.0, available_qty=None, origin=None):
         """Create a 3-step delivery for the test product.
 
         Returns the (pick, pack, out) pickings recordset tuple.
         """
         if available_qty is None:
             available_qty = qty
+        if origin is None:
+            origin = "Test Delivery"
         if available_qty:
             self.env["stock.quant"]._update_available_quantity(
                 self.product, self.warehouse.lot_stock_id, available_qty
             )
-        group = self.env["procurement.group"].create(
-            {"name": "Test Delivery", "partner_id": self.customer.id}
-        )
-        self.env["procurement.group"].run(
+        StockRule = self.env["stock.rule"]
+        StockRule.run(
             [
-                group.Procurement(
+                StockRule.Procurement(
                     self.product,
                     qty,
                     self.product.uom_id,
                     self.env.ref("stock.stock_location_customers"),
-                    "Test Delivery",
-                    "Test Delivery",
+                    origin,
+                    origin,
                     self.warehouse.company_id,
-                    {"warehouse_id": self.warehouse, "group_id": group},
+                    {"warehouse_id": self.warehouse},
                 )
             ]
         )
-        pickings = self.env["stock.picking"].search(
-            [("group_id", "=", group.id)], order="id"
+        pickings = (
+            self.env["stock.move"]
+            .search([("origin", "=", origin)])
+            .picking_id.sorted("id")
         )
         out_picking = pickings.filtered(
             lambda p: p.picking_type_id == self.warehouse.out_type_id
@@ -121,8 +128,10 @@ class TestStockPickingOriginState(TransactionCase):
 
     def test_07_multiple_pickings_worst_state_wins(self):
         """With several PICKs, the least-favorable state is reported."""
-        pick1, pack1, out1 = self._create_three_step_delivery()
-        pick2, pack2, out2 = self._create_three_step_delivery(available_qty=0)
+        pick1, pack1, out1 = self._create_three_step_delivery(origin="Delivery 1")
+        pick2, pack2, out2 = self._create_three_step_delivery(
+            available_qty=0, origin="Delivery 2"
+        )
         pick1.action_assign()
         self.assertEqual(pick1.state, "assigned")
         self.assertEqual(pick2.state, "confirmed")
