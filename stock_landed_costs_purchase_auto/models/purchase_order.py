@@ -33,7 +33,8 @@ class PurchaseOrder(models.Model):
         # We need to use sudo() because only Inventory > Administrator have
         # permissions on stock.landed.cost
         self.ensure_one()
-        if not self.company_id.lc_journal_id:
+        StockLandedCost = self.env["stock.landed.cost"].with_company(self.company_id)
+        if not StockLandedCost._default_account_journal_id():
             raise UserError(
                 self.env._(
                     "Cannot create a landed cost for purchase order %(order)s: "

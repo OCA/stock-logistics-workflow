@@ -22,14 +22,6 @@ class TestPurchaseOrderBase(BaseCommon):
             }
         )
         cls.partner = cls.env["res.partner"].create({"name": "Mr Odoo"})
-        cls.company.lc_journal_id = cls.env["account.journal"].create(
-            {
-                "name": "Test LC",
-                "type": "general",
-                "code": "MISC-LC",
-                "company_id": cls.company.id,
-            }
-        )
         cls.purchase_user = new_test_user(
             cls.env,
             login="test_purchase_user",
