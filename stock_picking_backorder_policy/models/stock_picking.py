@@ -31,9 +31,13 @@ class StockPicking(models.Model):
     def _check_backorder(self):
         # Skip the backorder wizard for pickings with a deterministic policy.
         # 'always'/'never' are resolved without prompting (see _action_done);
-        # 'ask' (or no policy) falls back to the standard behavior.
+        # 'ask' (or no policy) falls back to the standard behavior. Returns
+        # and exchanges (`_should_ignore_backorders`) always go through the
+        # standard behavior too: the partner's policy is about outgoing
+        # deliveries and must not affect goods coming back in.
         pickings = self.filtered(
             lambda p: p.backorder_policy not in ("always", "never")
+            or p._should_ignore_backorders()
         )
         return super(StockPicking, pickings)._check_backorder()
 
@@ -44,7 +48,12 @@ class StockPicking(models.Model):
         #   - always -> create the backorder
         #   - ask / unset -> keep the incoming behavior (operation type default)
         validated_ids = self.env.context.get("button_validate_picking_ids") or []
-        validated = self.filtered(lambda p: p.id in validated_ids)
+        # Returns/exchanges are excluded here so they never enter the
+        # 'never'/'always' buckets below and always follow the operation
+        # type's own setting (see `_check_backorder`).
+        validated = self.filtered(
+            lambda p: p.id in validated_ids and not p._should_ignore_backorders()
+        )
         if never := validated.filtered(lambda p: p.backorder_policy == "never"):
             never = never.with_context(cancel_backorder=True)
             super(StockPicking, never)._action_done()

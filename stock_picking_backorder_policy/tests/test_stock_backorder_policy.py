@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command
+from odoo.tests import Form
 
 from .common import BackorderPolicyCommon
 
@@ -274,4 +275,85 @@ class TestStockBackorderPolicy(BackorderPolicyCommon):
             upstream.backorder_policy,
             "never",
             "The policy must propagate through the MTO procurement chain",
+        )
+
+    def test_return_ignores_partner_policy_always(self):
+        """Test the partner's 'Always' policy is ignored when processing a return.
+
+        Scenario:
+            1. The partner has an 'Always' backorder policy.
+            2. A delivery is fully processed, then a return is created for
+               part of the quantity.
+            3. Only part of the return quantity is processed.
+        Expected:
+            - The standard backorder prompt is shown for the return (as if
+              there was no policy), instead of auto-creating a backorder.
+            - The return's computed policy is still 'always': the fix bypasses
+              enforcement, it does not clear the field.
+        """
+        self.commercial_partner.backorder_policy = "always"
+        picking = self._create_picking(qty=10.0)
+        self._set_qty_done(picking, 10.0)  # full delivery
+        picking.button_validate()
+
+        return_picking = self._create_return(picking, quantity=4.0)
+        self.assertEqual(return_picking.backorder_policy, "always")
+        self._set_qty_done(return_picking, 2.0)  # partial
+
+        result = return_picking.button_validate()
+        self._assertIsBackorderWizard(result)
+        self.assertNotEqual(return_picking.state, "done")
+
+    def test_return_ignores_partner_policy_never(self):
+        """Test the partner's 'Never' policy is ignored when processing a return.
+
+        Scenario: as :meth:`test_return_ignores_partner_policy_always`, but
+        with a 'Never' policy.
+        Expected:
+            - The standard backorder prompt is shown for the return, instead
+              of silently cancelling the remaining demand.
+        """
+        self.commercial_partner.backorder_policy = "never"
+        picking = self._create_picking(qty=10.0)
+        self._set_qty_done(picking, 10.0)  # full delivery
+        picking.button_validate()
+
+        return_picking = self._create_return(picking, quantity=4.0)
+        self.assertEqual(return_picking.backorder_policy, "never")
+        self._set_qty_done(return_picking, 2.0)  # partial
+
+        result = return_picking.button_validate()
+        self._assertIsBackorderWizard(result)
+        self.assertNotEqual(return_picking.state, "done")
+
+    def test_return_no_backorder_when_declined(self):
+        """Test declining the backorder wizard on a return creates no backorder.
+
+        Scenario:
+            1. The partner has an 'Always' backorder policy.
+            2. A return is partially processed, triggering the standard
+               backorder prompt (see :meth:`test_return_ignores_partner_policy_always`).
+            3. The prompt is answered with 'No Backorder'.
+        Expected:
+            - The return is validated and no backorder is created, exactly
+              like a standard return without any partner policy.
+        """
+        self.commercial_partner.backorder_policy = "always"
+        picking = self._create_picking(qty=10.0)
+        self._set_qty_done(picking, 10.0)  # full delivery
+        picking.button_validate()
+
+        return_picking = self._create_return(picking, quantity=4.0)
+        self._set_qty_done(return_picking, 2.0)  # partial
+
+        result = return_picking.button_validate()
+        backorder_wizard = Form(
+            self.env["stock.backorder.confirmation"].with_context(**result["context"])
+        ).save()
+        backorder_wizard.process_cancel_backorder()
+
+        self.assertEqual(return_picking.state, "done")
+        self.assertFalse(
+            return_picking.backorder_ids,
+            "No backorder should have been created after declining the wizard",
         )

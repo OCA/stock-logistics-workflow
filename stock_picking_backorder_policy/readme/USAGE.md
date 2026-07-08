@@ -13,3 +13,8 @@ When the transfer is validated with a missing quantity:
 - **Ask**: the usual backorder prompt is shown.
 - **Always**: a backorder is created automatically.
 - **Never**: the remaining quantity is cancelled.
+
+Returns and exchanges are never subject to the partner/transfer backorder
+policy: they always follow the operation type's own *Create Backorder*
+setting, since the customer-facing policy is not relevant to goods coming
+back in.
