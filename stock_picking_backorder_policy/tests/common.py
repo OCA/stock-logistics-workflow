@@ -50,3 +50,14 @@ class BackorderPolicyCommon(BaseCommon):
             ml.quantity = qty
             if qty > 0:
                 ml.picked = True
+
+    def _create_return(self, picking, quantity):
+        """Create and confirm a return picking for the given quantity."""
+        wizard = (
+            self.env["stock.return.picking"]
+            .with_context(active_id=picking.id, active_model="stock.picking")
+            .create({})
+        )
+        wizard.product_return_moves.quantity = quantity
+        res = wizard.action_create_returns()
+        return self.env["stock.picking"].browse(res["res_id"])
