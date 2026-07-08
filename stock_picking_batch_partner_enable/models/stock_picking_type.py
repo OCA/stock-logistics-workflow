@@ -1,12 +1,13 @@
 # Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import api, models
 
 
 class StockPickingType(models.Model):
     _inherit = "stock.picking.type"
 
+    @api.model
     def fields_get(self, allfields=None, attributes=None):
         # OVERRIDE to add important information in the help message
         res = super().fields_get(allfields, attributes)
