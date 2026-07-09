@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-09 09:46+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__display_name
@@ -21,7 +23,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_return_picking_line__display_name
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_product_product__id
@@ -30,7 +32,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_return_picking_line__id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -38,37 +40,39 @@ msgstr ""
 msgid ""
 "Inconsistencies between reserved quant and lot restriction on stock move"
 msgstr ""
+"Uoverensstemmelser mellem reserveret quant og lot-restriktion på "
+"lagerflytning"
 
 #. module: stock_restrict_lot
 #: model_terms:ir.ui.view,arch_db:stock_restrict_lot.custom_stock_picking_search_view
 msgid "Lot"
-msgstr ""
+msgstr "Lot"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariant"
 
 #. module: stock_restrict_lot
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_move__restrict_lot_id
 #: model:ir.model.fields,field_description:stock_restrict_lot.field_stock_picking__restrict_lot_id
 msgid "Restrict Lot"
-msgstr ""
+msgstr "Begræns lot"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Returplukkelinje"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Lagerflytning"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Lagerregel"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -77,11 +81,13 @@ msgid ""
 "The lot(s) %(move_line_lot)s being moved is inconsistent with the "
 "restriction on lot %(move_restrict_lot)s set on the move"
 msgstr ""
+"Den/de lot(s) %(move_line_lot)s, der flyttes, er ikke i overensstemmelse med "
+"lot-restriktionen %(move_restrict_lot)s angivet på flytningen"
 
 #. module: stock_restrict_lot
 #: model:ir.model,name:stock_restrict_lot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Overførsel"
 
 #. module: stock_restrict_lot
 #. odoo-python
@@ -90,3 +96,5 @@ msgid ""
 "You can't modify the Lot/Serial number because at least one move in the "
 "chain has already been done with another Lot/Serial number."
 msgstr ""
+"Du kan ikke ændre lot-/serienummeret, fordi mindst én flytning i kæden "
+"allerede er udført med et andet lot-/serienummer."
