@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-07-09 09:46+0000\n"
+"Last-Translator: Laura V <laura.valls@forgeflow.com>\n"
 "Language-Team: none\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_landed_costs_purchase_auto
 #. odoo-python
@@ -22,6 +24,9 @@ msgid ""
 " is configured for landed costs. Please set it in Inventory > Configuration "
 "> Settings."
 msgstr ""
+"Kan ikke oprette en anskaffelsespris for indkøbsordre %(order)s: der er ikke "
+"konfigureret nogen standardjournal for anskaffelsespriser. Angiv den "
+"venligst under Lager > Konfiguration > Indstillinger."
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__display_name
@@ -29,7 +34,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__display_name
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__id
@@ -37,40 +42,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__id
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__landed_cost_number
 msgid "Landed Cost Number"
-msgstr ""
+msgstr "Anskaffelsesprisnummer"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__landed_cost_ids
 #: model_terms:ir.ui.view,arch_db:stock_landed_costs_purchase_auto.purchase_order_form
 msgid "Landed Costs"
-msgstr ""
+msgstr "Anskaffelsespriser"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__purchase_id
 msgid "Purchase"
-msgstr ""
+msgstr "Indkøb"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_purchase_order
 msgid "Purchase Order"
-msgstr ""
+msgstr "Indkøbsordre"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_purchase_order_line
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Indkøbsordrelinje"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_landed_cost
 msgid "Stock Landed Cost"
-msgstr ""
+msgstr "Lager landede omkostninger"
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Overførsel"
