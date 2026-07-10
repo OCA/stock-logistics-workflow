@@ -25,6 +25,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 19.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 19.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
 [sale_stock_partner_delivery_window](sale_stock_partner_delivery_window/) | 19.0.1.0.3 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Use the partner's 'Delivery schedule preference' in Sales Orders
 [sale_stock_picking_invoice_link](sale_stock_picking_invoice_link/) | 19.0.1.0.0 |  | Adds link between pickings and invoices
