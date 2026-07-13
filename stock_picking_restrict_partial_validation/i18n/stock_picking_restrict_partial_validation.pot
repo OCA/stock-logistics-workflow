@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_restrict_partial_validation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_restrict_partial_validation
+#. odoo-python
+#: code:addons/stock_picking_restrict_partial_validation/models/stock_picking.py:0
+msgid ""
+"%(picking)s cannot be validated: %(product)s is reserved beyond the stock "
+"physically available in %(location)s. Correct the stock or the reservation "
+"first."
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#. odoo-python
+#: code:addons/stock_picking_restrict_partial_validation/models/stock_picking.py:0
+msgid ""
+"%(picking)s cannot be validated: this operation type requires the transfer "
+"to be fully reserved before it can be processed."
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#. odoo-python
+#: code:addons/stock_picking_restrict_partial_validation/models/stock_picking.py:0
+msgid ""
+"%(picking)s must be processed in full: partial validation is not allowed on "
+"this operation type (%(product)s: %(qty)s of %(demand)s)."
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#: model:ir.model,name:stock_picking_restrict_partial_validation.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#: model:ir.model.fields,field_description:stock_picking_restrict_partial_validation.field_stock_picking_type__restrict_partial_validation
+msgid "Restrict Partial Validation"
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#: model:ir.model,name:stock_picking_restrict_partial_validation.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_restrict_partial_validation
+#: model:ir.model.fields,help:stock_picking_restrict_partial_validation.field_stock_picking_type__restrict_partial_validation
+msgid ""
+"Transfers of this operation type can only be validated when they are fully "
+"reserved and processed in full: validation is blocked while the transfer is "
+"not in Ready state, and when any line is processed for less than the "
+"demanded quantity, so no backorder can be created."
+msgstr ""
