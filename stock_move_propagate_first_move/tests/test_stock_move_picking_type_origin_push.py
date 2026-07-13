@@ -67,11 +67,15 @@ class TestStockMovePickingTypeOriginPush(TestStockMovePickingTypeOrigin):
         )
         moves = self.stock_model.search([("group_id", "=", pg_in.id)])
         self.assertEqual(len(moves), 3)
-        self.assertEqual(moves[0].first_picking_type_id, self.picking_type_in)
+
         self.assertEqual(moves[0].picking_type_id, self.picking_type_in)
+        self.assertFalse(moves[0].first_move_id)
+        self.assertFalse(moves[0].first_picking_type_id)
+
         self.assertEqual(moves[1].first_picking_type_id, self.picking_type_in)
-        self.assertEqual(moves[1].picking_type_id, self.picking_type_inter)
-        self.assertEqual(moves[2].first_picking_type_id, self.picking_type_in)
-        self.assertEqual(moves[2].picking_type_id, self.picking_type_inter)
         self.assertEqual(moves[1].first_move_id, moves[0])
+        self.assertEqual(moves[1].picking_type_id, self.picking_type_inter)
+
+        self.assertEqual(moves[2].first_picking_type_id, self.picking_type_in)
         self.assertEqual(moves[2].first_move_id, moves[0])
+        self.assertEqual(moves[2].picking_type_id, self.picking_type_inter)

@@ -1,3 +1,4 @@
 from . import test_stock_move_picking_type_origin_pull
 from . import test_stock_move_picking_type_origin_push
 from . import test_stock_move_picking_type_origin_pull_push
+from . import test_stock_move_propagate_first_move
