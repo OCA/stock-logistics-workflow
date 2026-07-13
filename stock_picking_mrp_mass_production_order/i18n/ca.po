@@ -1,0 +1,111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_mrp_mass_production_order
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-10 13:57+0000\n"
+"PO-Revision-Date: 2025-09-10 13:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/wizards/mrp_mass_production_order.py:0
+#, python-format
+msgid "All products from BOM '{bom}' must exist in the picking lines."
+msgstr "Tots els productes de la BOM '{bom}' han d'existir a les línies d'albarà."
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model.fields,field_description:stock_picking_mrp_mass_production_order.field_stock_move__consumed_quantity
+msgid "Consumed Quantity"
+msgstr "Quantitat consumida"
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/wizards/mrp_mass_production_order.py:0
+#, python-format
+msgid "Consumed product '{prod}' is not present in the picking lines."
+msgstr "El producte consumit '{prod}' no està present a les línies de l'albarà."
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/models/stock_picking.py:0
+#: model_terms:ir.ui.view,arch_db:stock_picking_mrp_mass_production_order.view_picking_form_inherit
+#, python-format
+msgid "Create Mass Production Orders"
+msgstr "Crear Múltiples Ordres de Fabricació"
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model.fields,field_description:stock_picking_mrp_mass_production_order.field_mrp_production__manufacturing_picking_id
+msgid "Manufacturing Picking"
+msgstr "Albarà de fabricació"
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model.fields,field_description:stock_picking_mrp_mass_production_order.field_stock_picking__mrp_picking_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_mrp_mass_production_order.view_picking_form_inherit
+msgid "Manufacturing Picking Orders"
+msgstr "Albarans de fabricació"
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model.fields,field_description:stock_picking_mrp_mass_production_order.field_stock_picking__mrp_picking_count
+msgid "Mrp Picking Count"
+msgstr ""
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model,name:stock_picking_mrp_mass_production_order.model_mrp_mass_production_order_wizard
+msgid "Multiple MRP production order"
+msgstr "Múltiples ordres de fabricació"
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Operation not allowed: this action can only be performed when the transfer "
+"is validated and the picking type is either 'Incoming' or 'Internal' or "
+"'Stock Request Order'."
+msgstr ""
+"Operació no permesa: aquesta acció només es pot realitzar quan la "
+"transferència està validada i el tipus d'albarà és 'Recepció', "
+"'Transferència interna' o 'Sol·licitud d’estoc'."
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model,name:stock_picking_mrp_mass_production_order.model_mrp_production
+msgid "Production Order"
+msgstr "Ordre de producció"
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/wizards/mrp_mass_production_order.py:0
+#: code:addons/stock_picking_mrp_mass_production_order/wizards/mrp_mass_production_order.py:0
+#, python-format
+msgid ""
+"Quantity to produce ({qty}) is greater than the quantity of the stock move "
+"({uom_qty}) for product '{prod}'"
+msgstr ""
+"La quantitat a produir ({qty}) és més gran que la quantitat del moviment "
+"d'estoc ({uom_qty}) per al producte '{prod}'."
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model,name:stock_picking_mrp_mass_production_order.model_stock_move
+msgid "Stock Move"
+msgstr "Moviment d'estoc"
+
+#. module: stock_picking_mrp_mass_production_order
+#. odoo-python
+#: code:addons/stock_picking_mrp_mass_production_order/models/stock_picking.py:0
+#, python-format
+msgid "There are no products to consume"
+msgstr "No hi ha productes per consumir"
+
+#. module: stock_picking_mrp_mass_production_order
+#: model:ir.model,name:stock_picking_mrp_mass_production_order.model_stock_picking
+msgid "Transfer"
+msgstr "Transferència"
