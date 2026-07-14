@@ -5,7 +5,8 @@
 from itertools import groupby
 
 from odoo import _, api, fields, models
-from odoo.fields import first
+from odoo.exceptions import UserError
+from odoo.fields import Command
 
 
 class StockPicking(models.Model):
@@ -87,21 +88,72 @@ class StockPicking(models.Model):
 
     def _create_backorder(self, backorder_moves=None):
         backorders = self.browse()
-        for picking in self:
-            if not picking._is_grouping_disabled():
-                picking = picking.with_context(picking_no_copy_if_can_group=1)
-            picking_backorder_moves = None
-            if backorder_moves:
-                picking_backorder_moves = backorder_moves.filtered(
-                    lambda x, picking=picking: x.picking_id == picking
-                )
-            backorder = super(StockPicking, picking)._create_backorder(
-                backorder_moves=picking_backorder_moves
+        bo_to_assign = self.browse()
+        if picking_no_grouping := self.filtered(lambda p: p._is_grouping_disabled()):
+            backorders += super(StockPicking, picking_no_grouping)._create_backorder(
+                backorder_moves=backorder_moves
             )
-            if backorder and not picking._is_grouping_disabled():
-                backorder._merge_procurement_groups()
-                backorder._update_merged_origin()
-            backorders |= backorder
+        if picking_grouping := self - picking_no_grouping:
+            moves = picking_grouping.move_ids
+            for old_picking in moves.picking_id:
+                if backorder_moves:
+                    moves_to_backorder = backorder_moves.filtered(
+                        lambda m, old_picking=old_picking: m.picking_id == old_picking
+                    )
+                else:
+                    moves_to_backorder = old_picking._get_moves_to_backorder()
+                if not moves_to_backorder:
+                    continue
+                moves_to_backorder._recompute_state()
+                moves_to_backorder.filtered("picked").picked = False
+                moves_to_backorder.with_context(
+                    _assign_picking_excluded=old_picking
+                )._assign_picking()
+                for new_picking, moves in moves_to_backorder.grouped(
+                    "picking_id"
+                ).items():
+                    if old_picking == new_picking:
+                        raise UserError(
+                            self.env._(
+                                "Backorder moves cannot be assigned to the same picking"
+                            )
+                        )
+                    backorders |= new_picking
+
+                    # Create a new procurement group to remove the link from moves
+                    # done in the original group and therefore avoid that a sale order
+                    # linked to the picking and entirely delivered is no more linked
+                    # to the backorder.
+                    if any(
+                        ogroup not in new_picking.move_ids.original_group_id
+                        for ogroup in old_picking.move_ids.original_group_id
+                    ):
+                        moves.group_id = new_picking.group_id.copy(
+                            self._prepare_merge_procurement_group_values(
+                                moves.original_group_id
+                            )
+                        )
+
+                    move_lines = moves.move_line_ids.filtered(
+                        lambda ml, new_picking=new_picking: ml.picking_id != new_picking
+                    )
+                    if move_lines:
+                        moves.move_line_ids.package_level_id.picking_id = new_picking
+                        moves.move_line_ids.picking_id = new_picking
+
+                    if not new_picking.backorder_id:
+                        new_picking.backorder_id = old_picking
+                    old_picking.message_post(
+                        body=_(
+                            "The backorder %s has been created.",
+                            new_picking._get_html_link(),
+                        )
+                    )
+
+                    if new_picking.picking_type_id.reservation_method == "at_confirm":
+                        bo_to_assign |= new_picking
+        if bo_to_assign:
+            bo_to_assign.action_assign()
         return backorders
 
     def _prepare_merged_origin(self):
@@ -126,32 +178,23 @@ class StockPicking(models.Model):
                 "Merged procurement for partners: %(partners_name)s",
                 partners_name=", ".join(partners.mapped("display_name")),
             )
-        return {"sale_ids": [(6, 0, sales.ids)], "name": name}
+        return {"sale_ids": [Command.set(sales.ids)], "name": name, "is_merged": True}
 
     def _merge_procurement_groups(self):
         self.ensure_one()
         if self._is_grouping_disabled():
             return False
-        if not self.picking_type_id.group_pickings:
-            return False
-        group_pickings = self.move_ids.group_id.picking_ids.filtered(
-            # Do no longer modify a printed or done transfer: they are
-            # started and their group is now fixed. It prevents keeping
-            # old, done sales orders in new groups forever
-            lambda picking: not (picking.printed or picking.state == "done")
-        )
-        moves = group_pickings.move_ids
-        base_group = self.group_id
 
-        # If we have moves of different procurement groups, it means moves
-        # have been merged in the same picking. In this case a new
-        # procurement group is required
-        if len(moves.original_group_id) > 1 and base_group in moves.original_group_id:
-            # Create a new procurement group
+        moves = self.move_ids
+        base_group = self.group_id
+        # When grouping is allowed, we create a "merged" procurement group
+        # that will be used to group the moves every time a new move is
+        # added to the picking from a different procurement group.
+        if not base_group.is_merged:
             new_group = base_group.copy(
                 self._prepare_merge_procurement_group_values(moves.original_group_id)
             )
-            group_pickings.move_ids.group_id = new_group
+            moves.group_id = new_group
             return True
 
         new_moves = moves.filtered(lambda move: move.group_id != base_group)
@@ -171,7 +214,7 @@ class StockPicking(models.Model):
                         moves.original_group_id
                     )
                 )
-                group_pickings.move_ids.group_id = new_group
+                self.move_ids.group_id = new_group
                 return True
 
             base_group.write(
@@ -182,23 +225,15 @@ class StockPicking(models.Model):
         new_moves.group_id = base_group
         return False
 
-    def copy(self, defaults=None):
-        if self.env.context.get("picking_no_copy_if_can_group") and self.move_ids:
-            # we are in the process of the creation of a backorder. If we can
-            # find a suitable picking, then use it instead of copying the one
-            # we are creating a backorder from
-            picking = first(self.move_ids)._search_picking_for_assignation()
-            if picking:
-                return picking
-        return super(
-            StockPicking, self.with_context(picking_no_copy_if_can_group=0)
-        ).copy(defaults)
-
     def _is_grouping_disabled(self):
         self.ensure_one()
         return (
             not self.picking_type_id.group_pickings
             or self.partner_id.disable_picking_grouping
+            or (
+                not self.picking_type_id.group_pickings_one
+                and self.group_id.move_type == "one"
+            )
         )
 
     def _group_moves_by_order(self, moves):

@@ -76,16 +76,20 @@ class StockMove(models.Model):
                 subtype_xmlid="mail.mt_note",
             )
 
-    def _search_picking_for_assignation_domain(self):
-        domain = super()._search_picking_for_assignation_domain()
-        if (
+    def _is_grouping_disabled(self):
+        self.ensure_one()
+        return (
             not self.picking_type_id.group_pickings
             or self.partner_id.disable_picking_grouping
             or (
                 not self.picking_type_id.group_pickings_one
                 and self.group_id.move_type == "one"
             )
-        ):
+        )
+
+    def _search_picking_for_assignation_domain(self):
+        domain = super()._search_picking_for_assignation_domain()
+        if self._is_grouping_disabled():
             return domain
 
         # remove group
@@ -114,10 +118,10 @@ class StockMove(models.Model):
             domain += [
                 ("carrier_id", "=", self.group_id.carrier_id.id),
             ]
-        if self.env.context.get("picking_no_copy_if_can_group"):
+        if excluded_picking := self.env.context.get("_assign_picking_excluded"):
             # we are in the context of the creation of a backorder:
             # don't consider the current move's picking
-            domain.append(("id", "!=", self.picking_id.id))
+            domain.append(("id", "!=", excluded_picking.id))
         return domain
 
     def _domain_search_picking_handle_move_type(self):
