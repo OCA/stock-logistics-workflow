@@ -27,6 +27,13 @@ msgid "All ordered items have been delivered."
 msgstr "Todos os artigos pedidos foron entregados."
 
 #. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "Backorder moves cannot be assigned to the same picking"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Cancel"
 msgstr "Cancelar"
@@ -135,6 +142,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__is_merged
+msgid "Is Merged"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge____last_update
 msgid "Last Modified on"
 msgstr "Última Modificación o"
@@ -203,8 +215,8 @@ msgstr "Tipo de Recollida"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid ""
-"Pickings should match these parameters: picking type is groupable, state not"
-" cancelled or done, not printed."
+"Pickings should match these parameters: picking type is groupable, state not "
+"cancelled or done, not printed."
 msgstr ""
 "As seleccións deben coincidir con estes parámetros: o tipo de selección é "
 "agrupable, o estado non cancelado ou realizado, non impreso."
@@ -214,6 +226,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking__group_id
 msgid "Procurement Group"
 msgstr "Grupo de Adquisicións"
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
+msgid "Propagate Original Group"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
+msgid ""
+"Propagate the original group on the created moves. This allows to prevent "
+"merging pulled moves. This allows to cancel a SO without canceling pulled "
+"moves from other SO (as we ensure they are not merged). You likely need this "
+"option if you don't propagate the merged procurement group to the pulled "
+"moves."
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
@@ -279,6 +306,13 @@ msgid ""
 msgstr ""
 "Campo técnico. Indica que a transferencia se cancela porque quedou baleira "
 "tras unha fusión manual."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+#, python-format
+msgid "The backorder %s has been created."
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
