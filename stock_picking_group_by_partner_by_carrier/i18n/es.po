@@ -44,6 +44,12 @@ msgid "Also group when policy is 'one'"
 msgstr "También agrupa cuando la política es 'uno'"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+msgid "Backorder moves cannot be assigned to the same picking"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
 msgid "Cancel"
 msgstr "Cancelar"
@@ -133,6 +139,11 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__is_merged
+msgid "Is Merged"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
 msgid "Last Updated by"
 msgstr "Última Actualización por"
@@ -206,6 +217,21 @@ msgid "Procurement Group"
 msgstr "Grupo de Adquisiciones"
 
 #. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
+msgid "Propagate Original Group"
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
+#: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
+msgid ""
+"Propagate the original group on the created moves. This allows to prevent "
+"merging pulled moves. This allows to cancel a SO without canceling pulled "
+"moves from other SO (as we ensure they are not merged). You likely need this "
+"option if you don't propagate the merged procurement group to the pulled "
+"moves."
+msgstr ""
+
+#. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
 msgid "Remaining to deliver:"
 msgstr "Pendiente de entrega:"
@@ -274,6 +300,12 @@ msgid ""
 msgstr ""
 "Campo técnico. Indica que la transferencia se cancela porque quedó vacía "
 "tras una fusión manual."
+
+#. module: stock_picking_group_by_partner_by_carrier
+#. odoo-python
+#: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
+msgid "The backorder %s has been created."
+msgstr ""
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
