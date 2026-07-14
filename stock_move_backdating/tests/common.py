@@ -53,6 +53,17 @@ class TestCommon(tests.TransactionCase):
         cls.customer_location.valuation_account_id = valuation_account
         cls.stock_location.valuation_account_id = valuation_account
 
+        # In the OCA CI, all repo modules share one database, so
+        # ``stock_landed_costs_purchase_auto`` may be co-installed. It overrides
+        # ``purchase.order._create_picking`` to auto-create a landed cost on every
+        # PO confirmation and raises a UserError when no default landed-cost
+        # journal is configured (``stock.landed.cost._default_account_journal_id``
+        # reads ``company.lc_journal_id``). Configure it defensively so the
+        # purchase-based tests here can confirm a PO regardless of what else is
+        # installed. Guarded on the field so the module still works standalone.
+        if "lc_journal_id" in company._fields and not company.lc_journal_id:
+            company.lc_journal_id = company.account_stock_journal_id
+
         cls.products = cls._create_real_time_products(
             [
                 {
