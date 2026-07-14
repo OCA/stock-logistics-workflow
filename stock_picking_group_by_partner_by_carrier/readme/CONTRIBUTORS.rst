@@ -6,4 +6,6 @@
 
 * Phuc Tran Thanh <phuc@trobz.com>
 
-* Denis Roussel <denis.roussel@acsone.eu>
+* ACSONE SA/NV:
+  * Denis Roussel <denis.roussel@acsone.eu>
+  * Laurent Mignon <laurent.mignon@acsone.eu>
