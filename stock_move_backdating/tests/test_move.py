@@ -34,8 +34,8 @@ class TestMove(TestCommon):
         self.assertFalse(self.picking.date_backdating)
 
     def test_get_price_unit_purchase_same_currency(self):
-        """Same-currency purchase: _convert is skipped but the override still
-        returns the dict-keyed-by-lot result."""
+        """Same-currency purchase: _convert is skipped and the override returns
+        the PO price as a plain float (never a dict)."""
         if "purchase.order" not in self.env:
             self.skipTest("purchase module not installed")
         partner = self.env["res.partner"].create({"name": "Test Vendor"})
@@ -63,7 +63,9 @@ class TestMove(TestCommon):
         in_move = po.picking_ids.move_ids[:1]
         date_backdating = self._get_datetime_backdating(1)
         result = in_move.with_context(date_backdating=date_backdating)._get_price_unit()
-        self.assertIsInstance(result, dict)
+        # Same currency: no conversion, the PO price is returned as a float.
+        self.assertIsInstance(result, float)
+        self.assertEqual(result, 50)
 
     def test_get_price_unit_purchase_backdating(self):
         """When a purchase line exists with a foreign currency, _get_price_unit
@@ -108,6 +110,14 @@ class TestMove(TestCommon):
         in_move = po.picking_ids.move_ids[:1]
         date_backdating = self._get_datetime_backdating(2)
         result = in_move.with_context(date_backdating=date_backdating)._get_price_unit()
-        # The override returns a dict keyed by stock.lot when the purchase
-        # branch is taken
-        self.assertIsInstance(result, dict)
+        # The override returns the price converted to company currency at the
+        # backdated date, as a float (never a dict).
+        self.assertIsInstance(result, float)
+        # Regression guard: a dict return here crashed real flows. Validating a
+        # backdated delivery runs stock_account's ``_update_standard_price``,
+        # which does ``standard_price = float(move._get_price_unit())`` for the
+        # last incoming move, and ``_get_in_svl_vals`` does ``abs(...)`` on it.
+        # A dict raised "TypeError: float() argument must be ... not 'dict'".
+        # Exercise the exact operations that broke so this can never regress.
+        self.assertEqual(float(result), result)
+        self.assertGreaterEqual(abs(result), 0)

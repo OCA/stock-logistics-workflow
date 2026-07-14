@@ -14,7 +14,14 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     def _get_price_unit(self):
-        """Set date for convert price unit multi currency."""
+        """Convert the purchase price at the backdated date.
+
+        Core ``stock.move._get_price_unit`` returns a float and every caller
+        (POS, sale_mrp, sale_stock_margin, anglo-saxon COGS...) does arithmetic
+        on the result, so this override must return a float too. Returning a
+        dict here raised ``TypeError`` as soon as any of those callers ran with
+        a ``date_backdating`` context active.
+        """
         self.ensure_one()
         price_unit = super()._get_price_unit()
         date_backdating = self.env.context.get("date_backdating", False)
@@ -36,7 +43,7 @@ class StockMove(models.Model):
                     date_backdating,
                     round=False,
                 )
-            return {self.env["stock.lot"]: converted_price}
+            return converted_price
         return price_unit
 
     def _action_done(self, cancel_backorder=False):
