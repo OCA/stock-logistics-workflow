@@ -5,3 +5,4 @@ from . import test_move_line
 from . import test_picking
 from . import test_quant
 from . import test_scrap
+from . import test_two_step_receipt
