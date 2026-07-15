@@ -1,6 +1,5 @@
 # Copyright (C) 2024 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 from odoo import api, fields, models
 from odoo.modules.registry import Registry
 
@@ -15,20 +14,19 @@ class StockPicking(models.Model):
         "and to send a notification.",
     )
 
-    def _write_multi(self, vals_list):
-        new_vals = list()
-        for vals in vals_list:
-            if "state" in vals:
-                vals = dict(vals)
-                vals.setdefault("to_web_notify", True)
-            new_vals.append(vals)
+    def _compute_state(self):
+        res = super()._compute_state()
+        templates_per_picking = self.env[
+            "stock.picking.notification.template"
+        ]._get_matching_templates(self)
+        for picking in self:
+            if picking in templates_per_picking:
+                picking.to_web_notify = True
 
         dbname = self.env.cr.dbname
         context = self.env.context
         uid = self.env.uid
-        res = super()._write_multi(new_vals)
 
-        # only the latest state needs to be sent
         @self.env.cr.postcommit.add
         def trigger_picking_notification():
             db_registry = Registry(dbname)

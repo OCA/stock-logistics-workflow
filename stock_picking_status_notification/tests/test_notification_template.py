@@ -87,8 +87,7 @@ class TestStockNotifyPicking(TransactionCase):
             }
         )
         picking.action_confirm()
-        # flush and clear everything for the new "transaction"
-        self.env.invalidate_all()
+        picking.flush_recordset()
 
         try:
             # enter to test mode because postcommit create new cr
@@ -142,14 +141,14 @@ class TestStockNotifyPicking(TransactionCase):
         )
         picking.action_confirm()
         # flush and clear everything for the new "transaction"
-        self.env.invalidate_all()
-
+        picking.flush_recordset()
         try:
             # enter to test mode because postcommit create new cr
             self.env.registry.enter_test_mode(self.cr)
             self.call_post_commit_hooks()
         finally:
             self.env.registry.leave_test_mode()
+        # self.env.cr.precommit.run()
 
         news = self.get_bus_notifications() - existing
 
@@ -186,7 +185,7 @@ class TestStockNotifyPicking(TransactionCase):
 
         existing = self.get_bus_notifications()
 
-        self.env["stock.picking"].create(
+        picking = self.env["stock.picking"].create(
             {
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
@@ -196,8 +195,7 @@ class TestStockNotifyPicking(TransactionCase):
         )
 
         # flush and clear everything for the new "transaction"
-        self.env.invalidate_all()
-
+        picking.flush_recordset()
         try:
             # enter to test mode because postcommit create new cr
             self.env.registry.enter_test_mode(self.cr)

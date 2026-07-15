@@ -3,6 +3,7 @@
 import re
 
 from odoo import _, fields, models
+from odoo.osv.expression import AND, OR
 
 
 class StockPickingNotificationTemplate(models.Model):
@@ -75,15 +76,44 @@ class StockPickingNotificationTemplate(models.Model):
     )
     filename = fields.Char()
 
+    def _get_matching_template_domain(self, pickings):
+        states = list(set(pickings.mapped("state")))
+        state_domain = []
+        for state in states:
+            if not state_domain:
+                state_domain = [(f"allow_notify_{state}", "=", True)]
+            else:
+                state_domain = OR(
+                    [state_domain, [(f"allow_notify_{state}", "=", True)]]
+                )
+        if self.ids:
+            state_domain = AND([state_domain, [("id", "in", self.ids)]])
+        return AND(
+            [[("picking_type_id", "in", pickings.picking_type_id.ids)], state_domain]
+        )
+
+    def _get_matching_templates(self, pickings):
+        """
+        Return the first matching notification template for the given picking.
+        """
+        templates_per_picking = dict()
+        templates = self.search(
+            self._get_matching_template_domain(pickings),
+            order="sequence ASC",
+        )
+        for picking in pickings:
+            for template in templates:
+                if template._matches_picking(picking):
+                    templates_per_picking[picking] = template
+                    break
+        return templates_per_picking
+
     def _get_matching_template(self, picking):
         """
         Return the first matching notification template for the given picking.
         """
         templates = self.search(
-            [
-                ("picking_type_id", "=", picking.picking_type_id.id),
-                (f"allow_notify_{picking.state}", "=", True),
-            ],
+            self._get_matching_template_domain(picking),
             order="sequence ASC",
         )
         for template in templates:
@@ -98,6 +128,9 @@ class StockPickingNotificationTemplate(models.Model):
         if self.source_document_regex and not re.match(
             self.source_document_regex, picking.origin or ""
         ):
+            return False
+
+        if not self.filtered_domain(self._get_matching_template_domain(picking)):
             return False
 
         return True
