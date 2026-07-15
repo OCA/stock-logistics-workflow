@@ -38,27 +38,51 @@ class StockMove(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         # Extract the tracking flag before calling super so it doesn't break standard create
-        split_first_move_ids = {}
+        split_first_move_id_by_move_index = {}
         for i, vals in enumerate(vals_list):
             if "_split_first_move_id" in vals:
-                split_first_move_ids[i] = vals.pop("_split_first_move_id")
+                split_first_move_id_by_move_index[i] = vals.pop("_split_first_move_id")
 
         moves = super().create(vals_list)
 
-        # Update the upstream moves to point to the newly created backorder
-        for i, move in enumerate(moves):
-            split_first_move_id = split_first_move_ids.get(i)
-            if not split_first_move_id:
-                continue
-            # Find all moves that were tied to the split first_move
-            # and have not yet been completed or cancelled.
-            moves_to_update = self.env["stock.move"].search(
-                [
-                    ("first_move_id", "=", split_first_move_id),
-                    ("state", "not in", ("done", "cancel")),
-                ]
-            )
-            if moves_to_update:
-                moves_to_update.write({"first_move_id": move.id})
+        self._propagate_first_move_after_create(
+            split_first_move_id_by_move_index, moves
+        )
 
         return moves
+
+    def _propagate_first_move_after_create(
+        self, split_first_move_id_by_move_index, moves
+    ):
+        """Propagate the new first_move_id to upstream moves created from a split."""
+        if not split_first_move_id_by_move_index:
+            return
+
+        split_first_move_ids = [
+            fm_id for fm_id in split_first_move_id_by_move_index.values() if fm_id
+        ]
+
+        # Find all ongoing moves tied to any of the split first_moves
+        groups = self.env["stock.move"].read_group(
+            domain=[
+                ("first_move_id", "in", split_first_move_ids),
+                ("state", "not in", ("done", "cancel")),
+            ],
+            fields=[
+                "first_move_id",
+                "move_ids:array_agg(id)",
+            ],
+            groupby=["first_move_id"],
+        )
+        grouped_moves_to_update = {
+            group["first_move_id"][0]: self.env["stock.move"].browse(group["move_ids"])
+            for group in groups
+        }
+
+        # Replace old first move with new one for each group
+        for i, move in enumerate(moves):
+            split_first_move_id = split_first_move_id_by_move_index.get(i)
+            if split_first_move_id and split_first_move_id in grouped_moves_to_update:
+                grouped_moves_to_update[split_first_move_id].write(
+                    {"first_move_id": move.id}
+                )
