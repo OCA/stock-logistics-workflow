@@ -6,8 +6,9 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-def pre_init_hook(cr):
+def pre_init_hook(env):
     """Create and initialize the started field"""
+    cr = env.cr
     _logger.info("Create the started field")
     cr.execute(
         """

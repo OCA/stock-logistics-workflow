@@ -65,6 +65,9 @@ Contributors
 ------------
 
 - Laurent Mignon <laurent.mignon@acsone.eu>
+- `Tecnativa <https://www.tecnativa.com>`__:
+
+  - Carlos Roca
 
 Maintainers
 -----------

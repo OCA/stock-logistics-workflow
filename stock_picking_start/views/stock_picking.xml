@@ -8,31 +8,28 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <xpath expr="//header/button[1]" position="before">
-                <field name="action_start_allowed" invisible="1" />
                 <button
                     name="action_start"
                     string="Start"
                     type="object"
-                    attrs="{'invisible': [('action_start_allowed', '!=', True)]}"
+                    invisible="not action_start_allowed"
                     class="oe_highlight"
                 />
             </xpath>
             <div name="button_box" position="after">
-                <field name="started" invisible="1" />
                 <widget
                     name="web_ribbon"
                     title="Started"
                     bg_color="bg-success"
-                    attrs="{'invisible': [('started', '=', False)]}"
+                    invisible="not started"
                 />
             </div>
             <xpath expr="//header/button[last()]" position="after">
-                <field name="action_cancel_start_allowed" invisible="1" />
                 <button
                     name="action_cancel_start"
                     string="Cancel Start"
                     type="object"
-                    attrs="{'invisible': [('action_cancel_start_allowed', '!=', True)]}"
+                    invisible="not action_cancel_start_allowed"
                 />
             </xpath>
         </field>
@@ -46,7 +43,7 @@
         <field name="arch" type="xml">
             <filter name="available" position="after">
                 <filter
-                    name="staretd"
+                    name="started"
                     string="Started"
                     domain="[('started', '=', True)]"
                 />
@@ -54,16 +51,16 @@
         </field>
     </record>
     <record id="stock_picking_tree_view" model="ir.ui.view">
-        <field name="name">stock.picking.tree (in stock_picking_start)</field>
+        <field name="name">stock.picking.list (in stock_picking_start)</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.vpicktree" />
         <field name="arch" type="xml">
-            <tree position="attributes">
+            <list position="attributes">
                 <attribute name="decoration-success">started</attribute>
-            </tree>
-            <tree position="inside">
-                <field name="started" invisible="1" />
-            </tree>
+            </list>
+            <list position="inside">
+                <field name="started" column_invisible="1" />
+            </list>
         </field>
     </record>
 </odoo>

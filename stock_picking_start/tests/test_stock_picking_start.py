@@ -1,15 +1,17 @@
 # Copyright 2022 ACSONE SA/NV
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
+from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, TransactionCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPickinStart(TransactionCase):
+class TestStockPickingStart(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.wh = cls.env["stock.warehouse"].create(
             {
                 "name": "Base Warehouse",
@@ -22,10 +24,10 @@ class TestStockPickinStart(TransactionCase):
         cls.loc_customer = cls.env.ref("stock.stock_location_customers")
         cls.picking_type = cls.env.ref("stock.picking_type_out")
         cls.product_1 = cls.env["product.product"].create(
-            {"name": "Test product 1", "type": "product"}
+            {"name": "Test product 1", "is_storable": True}
         )
         cls.product_2 = cls.env["product.product"].create(
-            {"name": "Test product 2", "type": "product"}
+            {"name": "Test product 2", "is_storable": True}
         )
         cls.picking = cls.env["stock.picking"].create(
             {
@@ -33,16 +35,14 @@ class TestStockPickinStart(TransactionCase):
                 "location_id": cls.loc_stock.id,
                 "location_dest_id": cls.loc_customer.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "test move",
                             "product_id": cls.product_1.id,
                             "product_uom_qty": 5,
                             "location_id": cls.loc_stock.id,
                             "location_dest_id": cls.loc_customer.id,
-                        },
+                        }
                     )
                 ],
             }
@@ -54,16 +54,14 @@ class TestStockPickinStart(TransactionCase):
                 "location_id": cls.loc_stock.id,
                 "location_dest_id": cls.loc_customer.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "test move",
                             "product_id": cls.product_2.id,
                             "product_uom_qty": 5,
                             "location_id": cls.loc_stock.id,
                             "location_dest_id": cls.loc_customer.id,
-                        },
+                        }
                     )
                 ],
             }
@@ -111,20 +109,26 @@ class TestStockPickinStart(TransactionCase):
 
     def test_picking_start_default_operator(self):
         # by default current user is proposed by default as operator
-        self.assertTrue(self.picking.default_get(["user_id"]))
+        self.assertEqual(
+            self.picking.default_get(["user_id"]).get("user_id"), self.env.uid
+        )
         # we set the company to assign operator at picking start
         self.env.user.company_id.stock_picking_assign_operator_at_start = True
         # the operator is not more proposed by default
-        self.assertTrue(self.picking.default_get(["user_id"]))
+        self.assertFalse(self.picking.default_get(["user_id"]).get("user_id"))
 
     def test_picking_start_set_operator(self):
-        self.assertFalse(self.assigned_picking.user_id)
-        # by default the action start does not set the operator
+        # by default (feature off) the responsible is assigned at creation to
+        # the current user, like in standard Odoo
+        self.assertEqual(self.assigned_picking.user_id, self.env.user)
+        # with the feature off, the action start does not change the operator
         self.assigned_picking.action_start()
         self.assertRecordValues(
-            self.assigned_picking, [{"user_id": False, "printed": True}]
+            self.assigned_picking, [{"user_id": self.env.uid, "printed": True}]
         )
         self.assigned_picking.printed = False
+        # clear the operator to check it gets assigned on start
+        self.assigned_picking.user_id = False
         # we set the company to assign operator at picking start
         self.env.user.company_id.stock_picking_assign_operator_at_start = True
         self.assigned_picking.action_start()

@@ -1,7 +1,7 @@
 # Copyright 2022 ACSONE SA/NV
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.models import BaseModel
 
@@ -11,7 +11,7 @@ class StockPicking(models.Model):
 
     user_id = fields.Many2one(
         "res.users",
-        default=lambda self: self._default_user_id,
+        default=lambda self: self._default_user_id(),
     )
     action_start_allowed = fields.Boolean(
         compute="_compute_action_start_allowed",
@@ -81,7 +81,7 @@ class StockPicking(models.Model):
         no_start_allowed = self.filtered(lambda p: not p.action_start_allowed)
         if no_start_allowed:
             raise UserError(
-                _(
+                self.env._(
                     "The following picking(s) can't be started:\n" "%(names)s",
                     names="\n".join(no_start_allowed.mapped("name")),
                 )
@@ -91,7 +91,7 @@ class StockPicking(models.Model):
         no_reset_allowed = self.filtered(lambda p: not p.action_cancel_start_allowed)
         if no_reset_allowed:
             raise UserError(
-                _(
+                self.env._(
                     "The 'started' status of the following picking(s) can't be "
                     "cancelled:\n"
                     "%(names)s",
