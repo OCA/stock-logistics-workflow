@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Carlos Dauden - Tecnativa
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_stock_move_operations" model="ir.ui.view">
+        <field name="name">stock.move.operations.form - owner restriction</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations" />
+        <field name="arch" type="xml">
+            <field name="move_line_ids" position="before">
+                <field name="owner_restriction" invisible="1" />
+                <field name="restricted_owner_id" invisible="1" />
+            </field>
+        </field>
+    </record>
+</odoo>
