@@ -55,6 +55,11 @@ class StockQuant(models.Model):
     ):
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if restricted_owner_id is not None:
+            # The context value can be a res.partner recordset (set by
+            # stock.move._action_assign) or an id; domains do not accept
+            # recordset values.
+            if isinstance(restricted_owner_id, models.BaseModel):
+                restricted_owner_id = restricted_owner_id.id
             domain = expression.AND([domain, [("owner_id", "=", restricted_owner_id)]])
         return super()._read_group(
             domain,
