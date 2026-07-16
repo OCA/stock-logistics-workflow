@@ -1,1 +1,4 @@
 odoo_test_helper
+odoo-addon-sale_line_vendor_comment @ git+https://github.com/OCA/sale-workflow@refs/pull/4427/head#subdirectory=sale_line_vendor_comment
+odoo-addon-purchase_line_vendor_comment @ git+https://github.com/OCA/purchase-workflow@refs/pull/3128/head#subdirectory=purchase_line_vendor_comment
+odoo-addon-stock_move_vendor_comment @ git+https://github.com/OCA/stock-logistics-workflow@refs/pull/2397/head#subdirectory=stock_move_vendor_comment
