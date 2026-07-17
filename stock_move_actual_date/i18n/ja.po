@@ -25,6 +25,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_move_actual_date.field_stock_valuation_layer__actual_date
 #: model_terms:ir.ui.view,arch_db:stock_move_actual_date.stock_move_line_view_search
 #: model_terms:ir.ui.view,arch_db:stock_move_actual_date.stock_scrap_search_view
+#: model_terms:ir.ui.view,arch_db:stock_move_actual_date.stock_valuation_layer_search
 #: model_terms:ir.ui.view,arch_db:stock_move_actual_date.view_move_search
 #: model_terms:ir.ui.view,arch_db:stock_move_actual_date.view_picking_internal_search
 msgid "Actual Date"
