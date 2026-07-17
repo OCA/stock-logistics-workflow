@@ -101,6 +101,7 @@ addon | version | maintainers | summary
 [stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 18.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
 [stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 18.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
 [stock_picking_partner_note](stock_picking_partner_note/) | 18.0.1.0.0 |  | Add partner notes on picking
+[stock_picking_partner_vat](stock_picking_partner_vat/) | 18.0.1.0.0 |  | This module extends the picking functionality. It allows: * Displaying the partner's VAT on the picking form view. * Displaying the partner's VAT on reports: * Picking Operations * Delivery Slip
 [stock_picking_progress](stock_picking_progress/) | 18.0.1.0.1 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> <a href='https://github.com/JuMiSanAr'><img src='https://github.com/JuMiSanAr.png' width='32' height='32' style='border-radius:50%;' alt='JuMiSanAr'/></a> | Compute the stock.picking progression
 [stock_picking_propagate_scheduled_date](stock_picking_propagate_scheduled_date/) | 18.0.1.0.0 |  | Propagate Stock Picking Scheduled Date
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 18.0.1.1.0 |  | Link between picking and purchase order
