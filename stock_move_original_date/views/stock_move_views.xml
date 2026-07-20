@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ForgeFlow S.L. (http://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree - stock_move_original_date</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="original_date" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">stock.move.form - stock_move_original_date</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="original_date" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
