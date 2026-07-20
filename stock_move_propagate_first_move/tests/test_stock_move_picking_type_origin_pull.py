@@ -51,13 +51,13 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
         move_pick = self.stock_model.search([("group_id", "=", pg_inter.id)])
         move_ship = self.stock_model.search([("group_id", "=", pg_out.id)])
 
-        self.assertEqual(move_pick.first_picking_type_id, self.picking_type_out)
-        self.assertEqual(move_pick.first_move_id, move_ship)
         self.assertEqual(move_pick.picking_type_id, self.picking_type_inter)
+        self.assertEqual(move_pick.first_move_id, move_ship)
+        self.assertEqual(move_pick.first_picking_type_id, self.picking_type_out)
 
-        self.assertEqual(move_ship.first_move_id, move_ship)
-        self.assertEqual(move_ship.first_picking_type_id, self.picking_type_out)
         self.assertEqual(move_ship.picking_type_id, self.picking_type_out)
+        self.assertFalse(move_ship.first_move_id)
+        self.assertFalse(move_ship.first_picking_type_id)
 
     def test_pull_three_steps(self):
         self.env["stock.quant"]._update_available_quantity(
@@ -133,14 +133,14 @@ class TestStockMovePickingTypeOriginPull(TestStockMovePickingTypeOrigin):
         move_pick_1 = self.stock_model.search([("group_id", "=", pg_inter_1.id)])
         move_pick_2 = self.stock_model.search([("group_id", "=", pg_inter_2.id)])
 
-        self.assertEqual(move_pick_1.first_picking_type_id, self.picking_type_out)
         self.assertEqual(move_pick_1.picking_type_id, self.picking_type_inter)
         self.assertEqual(move_pick_1.first_move_id, move_ship)
+        self.assertEqual(move_pick_1.first_picking_type_id, self.picking_type_out)
 
-        self.assertEqual(move_pick_2.first_picking_type_id, self.picking_type_out)
         self.assertEqual(move_pick_2.picking_type_id, self.picking_type_inter)
         self.assertEqual(move_pick_2.first_move_id, move_ship)
+        self.assertEqual(move_pick_2.first_picking_type_id, self.picking_type_out)
 
-        self.assertEqual(move_ship.first_move_id, move_ship)
-        self.assertEqual(move_ship.first_picking_type_id, self.picking_type_out)
         self.assertEqual(move_ship.picking_type_id, self.picking_type_out)
+        self.assertFalse(move_ship.first_move_id)
+        self.assertFalse(move_ship.first_picking_type_id)
