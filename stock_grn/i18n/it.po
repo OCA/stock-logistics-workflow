@@ -82,6 +82,16 @@ msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_grn__dock_ids
+msgid "Dock"
+msgstr ""
+
+#. module: stock_grn
+#: model:ir.model.fields,field_description:stock_grn.field_stock_picking__dock_ids
+msgid "Docks"
+msgstr ""
+
+#. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn__from_info
 msgid "From"
 msgstr "Da"
