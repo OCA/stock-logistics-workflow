@@ -6,7 +6,7 @@
     "name": "Empty Package At Picking Return",
     "summary": """Ensure that only package content is put in stock during
     a picking return""",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "ACSONE SA/NV, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "category": "Warehouse Management",

@@ -29,7 +29,6 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": "Test move 1a",
                             "product_id": cls.product.id,
                             "product_uom": cls.product.uom_id.id,
                             "product_uom_qty": 10,
@@ -43,7 +42,7 @@ class TestEmptyPackageAtPickingReturn(TransactionCase):
         cls.picking.action_confirm()
         cls.picking.action_assign()
         cls.picking.move_ids.picked = True
-        cls.picking._put_in_pack(cls.picking.move_line_ids)
+        cls.picking.move_line_ids._put_in_pack()
         cls.picking._action_done()
 
     @classmethod
