@@ -10,6 +10,9 @@ class StockMove(models.Model):
     can_reassign = fields.Boolean(
         help="Check this if you want to allow moves reassignation."
     )
+    can_reassign_strict = fields.Boolean(
+        help="Check this if you want to avoid reassignation in a chosen picking."
+    )
     default_move_reassign_picking_type_id = fields.Many2one(
         comodel_name="stock.picking.type",
         help="This is the default operation type that welcome the reassigned products.",

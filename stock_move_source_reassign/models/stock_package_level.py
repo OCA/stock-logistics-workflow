@@ -15,9 +15,15 @@ class StockPackageLevel(models.Model):
     @api.depends("move_line_ids.move_id.state")
     def _compute_can_be_reassigned(self):
         for level in self:
-            if (not level.picking_id.picking_type_id.can_reassign) or (
-                not level.move_line_ids
-                or any(move.state != "assigned" for move in level.move_ids)
+            if (
+                not self.env.user.has_group(
+                    "stock_move_source_reassign.group_can_reassign"
+                )
+                or (not level.picking_id.picking_type_id.can_reassign)
+                or (
+                    not level.move_line_ids
+                    or any(move.state != "assigned" for move in level.move_ids)
+                )
             ):
                 level.can_be_reassigned = False
             else:

@@ -11,6 +11,10 @@ class StockMoveReassign(models.TransientModel):
     move_ids = fields.Many2many(
         comodel_name="stock.move",
         ondelete="cascade",
+        readonly=True,
+    )
+    strict = fields.Boolean(
+        compute="_compute_strict",
     )
     reassigned_move_ids = fields.Many2many(
         comodel_name="stock.move",
@@ -71,6 +75,11 @@ class StockMoveReassign(models.TransientModel):
         store=True,
     )
 
+    @api.depends("move_ids")
+    def _compute_strict(self):
+        for wizard in self:
+            wizard.strict = first(wizard.move_ids).picking_type_id.can_reassign_strict
+
     @api.depends("reassigned_move_ids")
     def _compute_reassigned_picking_ids(self):
         for wizard in self:
@@ -122,8 +131,8 @@ class StockMoveReassign(models.TransientModel):
 
     def doit(self):
         for wizard in self:
-            self.move_ids._check_can_be_reassigned()
             if wizard.step == "ask_picking_type":
+                self.move_ids._check_can_be_reassigned()
                 wizard.write({"step": "ask_destination"})
                 return {
                     "type": "ir.actions.act_window",
@@ -134,6 +143,7 @@ class StockMoveReassign(models.TransientModel):
                     "target": "new",
                 }
             elif wizard.step == "ask_destination":
+                self.move_ids._check_can_be_reassigned()
                 wizard.write({"step": "ask_transfer"})
                 return {
                     "type": "ir.actions.act_window",
@@ -144,10 +154,12 @@ class StockMoveReassign(models.TransientModel):
                     "target": "new",
                 }
             elif wizard.step == "ask_transfer":
+                self.move_ids._check_can_be_reassigned()
                 reassigned_moves, transfer_moves = wizard.move_ids._source_reassign(
                     wizard.reassign_picking_type_id,
                     wizard.reassign_transfer_picking_type_id,
                     wizard.destination_picking_id,
+                    wizard.strict,
                 )
                 wizard.write(
                     {

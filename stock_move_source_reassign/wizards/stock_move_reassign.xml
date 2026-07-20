@@ -8,71 +8,102 @@
         <field name="name">Stock Move Reassign</field>
         <field name="arch" type="xml">
             <form string="Stock Move Reassign">
-                <group>
+
+                    <p
+                    class="badge rounded-pill text-bg-secondary"
+                    style="font-size: 12px;"
+                >These are the packages and the moves that will be reassigned to another picking:</p>
+                    <br />
                     <field
-                        name="package_level_ids"
-                        widget="many2many_tags"
-                        attrs="{'invisible': [('package_level_ids', '=', [])]}"
-                    />
+                    name="package_level_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('package_level_ids', '=', [])]}"
+                />
                     <field name="move_ids">
                         <tree>
                             <field name="product_id" />
                         </tree>
                     </field>
+
+                <group>
                     <field name="step" invisible="1" />
-                    <group
+                    <div
                         name="picking_type"
                         attrs="{'invisible': [('step', '!=', 'ask_picking_type')]}"
                     >
-                        Choose the operation type you want to reassign the chosen movements:
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the operation type you want to reassign the
+                            chosen movements:</p>
                         <field name="reassign_picking_type_domain" invisible="1" />
+                        <label for="reassign_picking_type_id" />
                         <field
                             name="reassign_picking_type_id"
                             domain="reassign_picking_type_domain"
+                            class="oe_inline"
                         />
-                    </group>
-                    <group
+                    </div>
+                    <div
                         name="picking"
                         attrs="{'invisible': [('step', '!=', 'ask_destination')]}"
                     >
-                        Choose the picking you want to reassign the choses movements:
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the picking you want to reassign the choses movements:</p>
                         <field name="destination_picking_domain" invisible="1" />
+                        <field name="strict" invisible="1" />
+                        <label for="destination_picking_id" />
                         <field
                             name="destination_picking_id"
                             domain="destination_picking_domain"
+                            attrs="{'invisible': [('strict', '=', True)]}"
+                            class="oe_inline"
                         />
-                    </group>
-                    <group
+                    </div>
+                    <div
                         name="transfer"
                         attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
                     >
-                        Choose the operation type for the transfer picking:
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the operation type for the transfer picking:</p>
                         <field
                             name="reassign_transfer_picking_type_domain"
                             invisible="1"
                         />
+                        <label for="reassign_transfer_picking_type_id" />
                         <field
                             name="reassign_transfer_picking_type_id"
                             domain="reassign_transfer_picking_type_domain"
+                            class="oe_inline"
                         />
-                    </group>
-                    <group
+                    </div>
+                    <div
                         name="result"
                         attrs="{'invisible': [('step', '!=', 'result')]}"
                     >
-                        The concerned moves have been reassigned to these pickings:
+                        <p
+                            class="badge rounded-pill text-bg-success"
+                            style="font-size: 12px;"
+                        >The concerned moves have been reassigned to these pickings:</p>
                         <field name="reassigned_picking_ids">
                             <tree>
                                 <field name="name" />
                             </tree>
                         </field>
-                        The transfer pickings have been generated:
+                        <p
+                            class="badge rounded-pill text-bg-success"
+                            style="font-size: 12px;"
+                        >The transfer pickings have been generated:</p>
                         <field name="transfer_picking_ids">
                             <tree>
                                 <field name="name" />
                             </tree>
                         </field>
-                    </group>
+                    </div>
                 </group>
                 <footer>
                     <button

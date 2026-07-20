@@ -115,6 +115,9 @@ class MoveSourceReassignCommon(BaseCommon):
             }
         )._apply_inventory()
 
+        cls.group_user = cls.env.ref("stock_move_source_reassign.group_can_reassign")
+        cls.env.user.groups_id |= cls.group_user
+
     def _create_needs(self, delivery_only=False):
         self.product_a.route_ids |= self.warehouse.delivery_route_id
         self.product_b.route_ids |= self.warehouse.delivery_route_id

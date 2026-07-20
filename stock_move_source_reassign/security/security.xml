@@ -3,10 +3,16 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
 
+     <record id="group_can_reassign" model="res.groups">
+        <field name="name">Can Reassign Stock Moves</field>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_manager'))]" />
+    </record>
+
+
     <record id="stock_move_reassign_access" model="ir.model.access">
         <field name="name">Stock Move Reassign Wizard</field>
         <field name="model_id" ref="model_stock_move_reassign" />
-        <field name="group_id" ref="stock.group_stock_manager" />
+        <field name="group_id" ref="stock_move_source_reassign.group_can_reassign" />
         <field name="perm_read" eval="1" />
         <field name="perm_create" eval="1" />
         <field name="perm_write" eval="1" />

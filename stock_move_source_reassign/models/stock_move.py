@@ -18,8 +18,10 @@ class StockMove(models.Model):
     @api.depends("state")
     def _compute_can_be_reassigned(self):
         for move in self:
-            move.can_be_reassigned = move.picking_type_id.can_reassign and bool(
-                move.state == "assigned"
+            move.can_be_reassigned = (
+                self.env.user.has_group("stock_move_source_reassign.group_can_reassign")
+                and move.picking_type_id.can_reassign
+                and bool(move.state == "assigned")
             )
 
     def _check_can_be_reassigned(self):
@@ -42,12 +44,19 @@ class StockMove(models.Model):
             "context": context,
         }
 
+    def _cancel_pickings_after_reassign(self):
+        """
+        If the original pickings are void, Odoo set them as draft.
+        Cancel them.
+        """
+
     def _source_reassign(
         self,
         destination_picking_type: PickingType,
         transfer_picking_type: PickingType,
         destination_picking: (Picking | bool) = False,
-    ) -> (tuple[Move, Move]):
+        strict=True,
+    ) -> tuple[Move, Move]:
         """
         This will reassign the concerned move to the destination picking.
         If the source location is different from the destination picking,
@@ -87,7 +96,10 @@ class StockMove(models.Model):
             moves._set_fields_before_reassign(
                 destination_picking_type, destination_picking
             )
-            if all(move._check_reassign_picking(destination_picking) for move in moves):
+            if all(
+                move._check_reassign_picking(destination_picking, strict)
+                for move in moves
+            ):
                 moves.picking_id = destination_picking
             else:
                 moves.picking_id = False
@@ -98,6 +110,12 @@ class StockMove(models.Model):
             reassigned_moves |= moves
             transfer_moves |= transfer_move
         self._source_reassign_log_picking(original_pickings)
+        to_cancel_pickings = self.env["stock.picking"].browse()
+        for original_picking in original_pickings.keys():
+            if not original_picking.move_ids and original_picking.state == "draft":
+                to_cancel_pickings |= original_picking
+        if to_cancel_pickings:
+            to_cancel_pickings.action_cancel()
         return reassigned_moves, transfer_moves
 
     def _source_reassign_log_picking(self, original_pickings):
@@ -121,6 +139,10 @@ class StockMove(models.Model):
     def _set_fields_before_reassign(
         self, destination_picking_type, destination_picking=False
     ):
+        """
+        Change here the mandatory fields that allow the movement to be reassigned
+        to the new picking.
+        """
         self.picking_type_id = destination_picking_type
         self.location_id = (
             destination_picking.location_id
@@ -128,9 +150,17 @@ class StockMove(models.Model):
             else destination_picking_type.default_location_src_id
         )
 
-    def _check_reassign_picking(self, picking):
+    def _check_reassign_picking(self, picking, strict=True):
+        """
+        This will check if the picking can be used for move reassignation
+
+        This can be bypassed if needed by setting strict=False.
+        """
         self.ensure_one()
-        picking = picking.filtered_domain(self._search_picking_for_assignation_domain())
+        if strict:
+            picking = picking.filtered_domain(
+                self._search_picking_for_assignation_domain()
+            )
         if not picking:
             return False
         return True
@@ -156,6 +186,9 @@ class StockMove(models.Model):
         return transfer_moves
 
     def _search_picking_for_assignation_domain(self):
+        """
+        This will exclude the picking we are coming from
+        """
         domain = super()._search_picking_for_assignation_domain()
         # Don't reassign the move to the same picking
         not_reassign_picking_id = self.env.context.get("not_reassign_picking_id")

@@ -10,8 +10,18 @@
             <group name="locations" position="after">
                 <group name="reassign" string="Reassignation">
                     <field name="can_reassign" />
-                    <field name="default_move_reassign_picking_type_id" />
-                    <field name="default_move_reassign_transfer_picking_type_id" />
+                    <field
+                        name="can_reassign_strict"
+                        attrs="{'invisible': [('can_reassign', '=', False)]}"
+                    />
+                    <field
+                        name="default_move_reassign_picking_type_id"
+                        attrs="{'invisible': [('can_reassign', '=', False)]}"
+                    />
+                    <field
+                        name="default_move_reassign_transfer_picking_type_id"
+                        attrs="{'invisible': [('can_reassign', '=', False)]}"
+                    />
                 </group>
 
             </group>
