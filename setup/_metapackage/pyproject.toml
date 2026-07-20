@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-stock-logistics-workflow"
-version = "18.0.20260717.2"
+version = "18.0.20260720.0"
 dependencies = [
     "odoo-addon-delivery_procurement_group_carrier==18.0.*",
     "odoo-addon-delivery_total_weight_from_packaging==18.0.*",
@@ -80,6 +80,7 @@ dependencies = [
     "odoo-addon-stock_picking_propagate_scheduled_date==18.0.*",
     "odoo-addon-stock_picking_purchase_order_link==18.0.*",
     "odoo-addon-stock_picking_restrict_cancel_printed==18.0.*",
+    "odoo-addon-stock_picking_restrict_cancel_with_orig_move==18.0.*",
     "odoo-addon-stock_picking_restrict_partial_validation==18.0.*",
     "odoo-addon-stock_picking_return_lot==18.0.*",
     "odoo-addon-stock_picking_return_restricted_qty==18.0.*",
