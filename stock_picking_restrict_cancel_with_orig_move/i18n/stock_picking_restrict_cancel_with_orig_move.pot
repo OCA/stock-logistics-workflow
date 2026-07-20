@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,26 +14,28 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_restrict_cancel_with_orig_move
+#. odoo-python
 #: code:addons/stock_picking_restrict_cancel_with_orig_move/models/stock_move.py:0
-#, python-format
 msgid ""
-"Cancelation of destination move is restricted if any previous move is not canceled or done.Original moves are not canceled or done on the following objects : \n"
+"Cancellation of destination move is restricted if any previous move is not canceled or done. Original moves are not canceled or done on the following objects : \n"
 "%s"
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_with_orig_move
-#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_with_orig_move.field_stock_move__display_name
-msgid "Display Name"
+#: model:ir.model.fields,help:stock_picking_restrict_cancel_with_orig_move.field_stock_picking_type__restrict_cancel_with_orig_move
+msgid ""
+"If enabled, cancellation of a picking is blocked when any of its moves has a"
+" previous move that is not yet cancelled or done."
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_with_orig_move
-#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_with_orig_move.field_stock_move__id
-msgid "ID"
+#: model:ir.model,name:stock_picking_restrict_cancel_with_orig_move.model_stock_picking_type
+msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_with_orig_move
-#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_with_orig_move.field_stock_move____last_update
-msgid "Last Modified on"
+#: model:ir.model.fields,field_description:stock_picking_restrict_cancel_with_orig_move.field_stock_picking_type__restrict_cancel_with_orig_move
+msgid "Restrict Cancellation with Original Moves"
 msgstr ""
 
 #. module: stock_picking_restrict_cancel_with_orig_move
