@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-06-23 06:55+0000\n"
+"PO-Revision-Date: 2026-07-20 07:56+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -48,6 +48,8 @@ msgstr "Raggruppa anche quando la politica è 'una'"
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
 msgid "Backorder moves cannot be assigned to the same picking"
 msgstr ""
+"I movimenti dell'ordine residuo non possono essere assegnati allo stesso "
+"prelievo"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.view_stock_picking_groupby_form
@@ -141,7 +143,7 @@ msgstr "ID"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_procurement_group__is_merged
 msgid "Is Merged"
-msgstr ""
+msgstr "È stato unito"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_picking_merge__write_uid
@@ -219,7 +221,7 @@ msgstr "Gruppo di approvvigionamento"
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,field_description:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
 msgid "Propagate Original Group"
-msgstr ""
+msgstr "Propaga gruppo originale"
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model.fields,help:stock_picking_group_by_partner_by_carrier.field_stock_rule__propagate_original_group
@@ -230,6 +232,12 @@ msgid ""
 "option if you don't propagate the merged procurement group to the pulled "
 "moves."
 msgstr ""
+"Propaga il gruppo originale ai movimenti creati. Ciò consente di impedire "
+"l'unione dei movimenti prelevati. Ciò consente di annullare un ordine di "
+"vendita senza annullare i movimenti prelevati da altri ordini di vendita "
+"(poiché si garantisca che non vengano unite). Probabilmente si avrà bisogno "
+"di questa opzione se non si propaga il gruppo di approvvigionamento unito ai "
+"movimenti prelevati."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model_terms:ir.ui.view,arch_db:stock_picking_group_by_partner_by_carrier.report_delivery_document
@@ -305,7 +313,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_picking_group_by_partner_by_carrier/models/stock_picking.py:0
 msgid "The backorder %s has been created."
-msgstr ""
+msgstr "L'ordine residuo %s è stato creato."
 
 #. module: stock_picking_group_by_partner_by_carrier
 #: model:ir.model,name:stock_picking_group_by_partner_by_carrier.model_stock_picking
