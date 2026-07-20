@@ -44,6 +44,7 @@ addon | version | maintainers | summary
 [stock_picking_batch_group_by_date](stock_picking_batch_group_by_date/) | 19.0.1.0.0 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Group batch pickings by date
 [stock_picking_batch_partner_enable](stock_picking_batch_partner_enable/) | 19.0.1.0.1 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Control the Automatic Batches grouping per partner
 [stock_picking_batch_substate](stock_picking_batch_substate/) | 19.0.1.0.0 |  | Batch Transfer Sub State
+[stock_picking_customer_ref](stock_picking_customer_ref/) | 19.0.1.0.0 |  | This module displays the sale reference/description in the pickings
 [stock_picking_filter_lot](stock_picking_filter_lot/) | 19.0.1.0.0 |  | In picking out lots' selection, filter lots based on their location
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 19.0.1.0.1 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 19.0.1.0.0 |  | Computes the kind of picking based on locations
