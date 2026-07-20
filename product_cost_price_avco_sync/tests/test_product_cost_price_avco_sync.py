@@ -80,11 +80,12 @@ class TestProductCostPriceAvcoSync(BaseCommon):
             }
         )
 
-    def _test_sync_cost_price(self):
+    def test_sync_cost_price(self):
         move_in = self.picking_in.move_ids[:1]
         move_in.product_uom_qty = 100
         move_in.price_unit = 5.0
-        move_in.quantity_done = move_in.product_uom_qty
+        move_in.quantity = move_in.product_uom_qty
+        move_in.picked = True
         self.picking_in._action_done()
         move_in.date = "2019-10-01 00:00:00"
         # Why do we a sleep during 1 second after avery move validation?
@@ -99,154 +100,149 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         picking_in_2 = self.picking_in.copy()
         move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
-        move_in_2.quantity_done = move_in_2.product_uom_qty
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
         picking_in_2._action_done()
         move_in_2.date = "2019-10-02 00:00:00"
         sleep(1)
 
         move_out = self.picking_out.move_ids[:1]
-        move_out.quantity_done = move_out.product_uom_qty
+        move_out.quantity = move_out.product_uom_qty
+        move_out.picked = True
         self.picking_out._action_done()
         move_out.date = "2019-10-03 00:00:00"
 
         picking_out_2 = self.picking_out.copy()
         move_out_2 = picking_out_2.move_ids[:1]
-        move_out_2.quantity_done = move_out_2.product_uom_qty
+        move_out_2.quantity = move_out_2.product_uom_qty
+        move_out_2.picked = True
         picking_out_2._action_done()
         move_out_2.date = "2019-10-04 00:00:00"
 
-        # Make an inventory
-        inventory = self.env["stock.inventory"].create(
-            {
-                "name": "Initial inventory",
-                "filter": "partial",
-                "location_id": self.warehouse.lot_stock_id.id,
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_id": self.product.id,
-                            "product_uom_id": self.product.uom_id.id,
-                            "product_qty": 200,
-                            "location_id": self.warehouse.lot_stock_id.id,
-                        },
-                    )
-                ],
-            }
+        quant = self.env["stock.quant"].search(
+            [
+                ("location_id", "=", self.warehouse.lot_stock_id.id),
+                ("product_id", "=", self.product.id),
+            ],
+            limit=1,
         )
-        inventory._action_done()
-        inventory.move_ids.date = "2019-10-05 00:00:00"
+        quant = quant.with_context(inventory_mode=True)
+        quant.inventory_quantity = 200
+        quant.action_apply_inventory()
+        inventory_move = self.env["stock.move"].search(
+            [("product_id", "=", self.product.id), ("is_inventory", "=", True)],
+            order="id DESC",
+            limit=1,
+        )
+        inventory_move.date = "2019-10-05 00:00:00"
         sleep(1)
 
         self.assertEqual(self.product.standard_price, 5.0)
-        move_in.price_unit = 2.0
+        move_in.stock_valuation_layer_ids.unit_cost = 2.0
         self.assertEqual(self.product.standard_price, 2.27)
-        self.assertAlmostEqual(move_out.price_unit, -2.27, 2)
-        self.assertAlmostEqual(move_out_2.price_unit, -2.27, 2)
+        self.assertAlmostEqual(move_out.stock_valuation_layer_ids.unit_cost, 2.27, 2)
+        self.assertAlmostEqual(move_out_2.stock_valuation_layer_ids.unit_cost, 2.27, 2)
 
-    def _test_sync_cost_price_and_history(self):
-        company_id = self.picking_in.company_id.id
+    def test_sync_cost_price_and_future_layers(self):
         move_in = self.picking_in.move_ids[:1]
-        move_in.quantity_done = move_in.product_uom_qty
+        move_in.quantity = move_in.product_uom_qty
+        move_in.picked = True
         self.picking_in._action_done()
         move_in.date = "2019-10-01 00:00:00"
 
         move_out = self.picking_out.move_ids[:1]
-        move_out.quantity_done = move_out.product_uom_qty
+        move_out.quantity = move_out.product_uom_qty
+        move_out.picked = True
         self.picking_out._action_done()
         move_out.date = "2019-10-01 01:00:00"
 
         picking_in_2 = self.picking_in.copy()
         move_in_2 = picking_in_2.move_ids[:1]
-        move_in_2.quantity_done = move_in_2.product_uom_qty
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
         picking_in_2._action_done()
         move_in_2.date = "2019-10-01 02:00:00"
 
         picking_out_2 = self.picking_out.copy()
         move_out_2 = picking_out_2.move_ids[:1]
         move_out_2.product_uom_qty = 15
-        move_out_2.quantity_done = move_out_2.product_uom_qty
+        move_out_2.quantity = move_out_2.product_uom_qty
+        move_out_2.picked = True
         picking_out_2._action_done()
         move_out_2.date = "2019-10-01 03:00:00"
 
         picking_in_3 = self.picking_in.copy()
         move_in_3 = picking_in_3.move_ids[:1]
-        move_in_3.quantity_done = move_in_3.product_uom_qty
         move_in_3.price_unit = 2.0
+        move_in_3.quantity = move_in_3.product_uom_qty
+        move_in_3.picked = True
         picking_in_3._action_done()
         move_in_3.date = "2019-10-01 04:00:00"
 
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
-        self.assertAlmostEqual(self.product.get_history_price(company_id), 2.0, 2)
-        self.product.standard_price = 20.0
-        self.assertAlmostEqual(self.product.get_history_price(company_id), 20.0, 2)
 
-        move_in.price_unit = 10.0
+        move_in.stock_valuation_layer_ids.unit_cost = 10.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
-        self.assertAlmostEqual(move_out.price_unit, -10.0, 2)
-        self.assertAlmostEqual(move_out_2.price_unit, -4.0, 2)
-        self.assertAlmostEqual(
-            self.product.get_history_price(
-                company_id, move_in_3._previous_instant_date()
-            ),
-            4.0,
-            2,
-        )
+        self.assertAlmostEqual(move_out.stock_valuation_layer_ids.unit_cost, 10.0, 2)
+        self.assertAlmostEqual(move_out_2.stock_valuation_layer_ids.unit_cost, 4.0, 2)
 
-        move_in_3.quantity_done = 5.0
+        move_in_3.quantity = 5.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
-        move_in_3.quantity_done = 0.0
+        move_in_3.quantity = 0.0
         self.assertAlmostEqual(self.product.standard_price, 4.0, 2)
 
-        (move_in | move_in_2 | move_in_3).write({"price_unit": 9.0})
+        (move_in | move_in_2 | move_in_3).stock_valuation_layer_ids.unit_cost = 9.0
         self.assertAlmostEqual(self.product.standard_price, 9.0, 2)
 
         svl_count = self.env["stock.valuation.layer"].search_count(
-            [("company_id", "=", company_id), ("product_id", "=", self.product.id)]
+            [
+                ("company_id", "=", self.picking_in.company_id.id),
+                ("product_id", "=", self.product.id),
+            ]
         )
-        self.assertEqual(svl_count, 4)  # TODO: Miralo que no se si es así
+        self.assertEqual(svl_count, 5)
 
-    def _test_sync_cost_price_multi_moves_done_at_same_time(self):
+    def test_sync_cost_price_multi_moves_done_at_same_time(self):
         move_in = self.picking_in.move_ids[:1]
         move_in.product_uom_qty = 10
         move_in.price_unit = 10.0
-        move_in.quantity_done = move_in.product_uom_qty
+        move_in.quantity = move_in.product_uom_qty
+        move_in.picked = True
 
         picking_in_2 = self.picking_in.copy()
         move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
         move_in_2.price_unit = 5.0
-        move_in_2.quantity_done = move_in_2.product_uom_qty
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
 
-        self.env["stock.immediate.transfer"].create(
-            {"pick_ids": [(6, 0, (self.picking_in + picking_in_2).ids)]}
-        ).process()
         (self.picking_in + picking_in_2)._action_done()
 
         self.assertEqual(self.product.standard_price, 7.5)
-        move_in_2.price_unit = 4.0
+        move_in_2.stock_valuation_layer_ids.unit_cost = 4.0
         self.assertEqual(self.product.standard_price, 7.0)
-        move_in.price_unit = 8.0
+        move_in.stock_valuation_layer_ids.unit_cost = 8.0
         self.assertEqual(self.product.standard_price, 6)
 
-        move_in.price_unit = 10.0
+        move_in.stock_valuation_layer_ids.unit_cost = 10.0
         self.assertEqual(self.product.standard_price, 7.0)
-        move_in_2.price_unit = 5.0
+        move_in_2.stock_valuation_layer_ids.unit_cost = 5.0
         self.assertEqual(self.product.standard_price, 7.5)
 
-    def _test_change_quantiy_price(self):
+    def test_change_quantiy_price(self):
         """Write quantity and price to zero in a stock valuation layer"""
         self.picking_in.action_assign()
         move_in = self.picking_in.move_ids[:1]
-        self.picking_in.move_line_ids.qty_done = move_in.product_uom_qty
+        self.picking_in.move_line_ids.quantity = move_in.product_uom_qty
+        self.picking_in.move_line_ids.picked = True
         self.picking_in._action_done()
 
         picking_in_2 = self.picking_in.copy()
         picking_in_2.action_assign()
         move_in_2 = picking_in_2.move_ids[:1]
         move_in_2.product_uom_qty = 10.0
-        move_in_2.quantity_done = move_in_2.product_uom_qty
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
         picking_in_2._action_done()
         move_in_2.stock_valuation_layer_ids.unit_cost = 2.0
         self.assertAlmostEqual(self.product.standard_price, 1.5, 2)
@@ -254,19 +250,19 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         # Change qty before price
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(self.product.standard_price, 1.0, 2)
-        move_in.quantity_done = 0.0
+        move_in.quantity = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
 
-        move_in.quantity_done = 10.0
+        move_in.move_line_ids.quantity = 10.0
         move_in.stock_valuation_layer_ids.unit_cost = 4.0
         self.assertAlmostEqual(self.product.standard_price, 3.0, 2)
 
-        move_in.quantity_done = 0.0
+        move_in.quantity = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
 
-        move_in.quantity_done = 10.0
+        move_in.move_line_ids.quantity = 10.0
         move_in.stock_valuation_layer_ids.unit_cost = 1.0
         self.product.with_context(import_file=True).standard_price = 6.0
         svl_manual = self.env["stock.valuation.layer"].search(
@@ -276,7 +272,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         move_in.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(svl_manual.value, 100.0, 2)
 
-    def create_picking(self, p_type="IN", qty=1.0, confirmed=True):
+    def create_picking(self, p_type="IN", qty=1.0, confirmed=True, price_unit=None):
         if p_type == "IN":
             picking_type = self.picking_type_in
             location_id = self.supplier_location
@@ -310,15 +306,50 @@ class TestProductCostPriceAvcoSync(BaseCommon):
                 }
             )
         )
+        move = picking.move_ids[:1]
+        if price_unit is not None:
+            move.price_unit = price_unit
         if confirmed:
             picking.action_assign()
-            move = picking.move_ids[:1]
             picking.move_line_ids.quantity = move.product_uom_qty
             picking.move_line_ids.picked = True
             picking._action_done()
         return picking, move
 
-    def _test_change_quantiy_price_xx(self):
+    def test_sync_cost_price_with_negative_accumulated_qty(self):
+        """Incoming moves after overselling must not reset the AVCO chain."""
+        _picking_in, move_in = self.create_picking("IN", qty=10.0)
+        _picking_out, move_out = self.create_picking("OUT", qty=10.0)
+        move_out.move_line_ids.quantity = 20.0
+        _picking_in_high_cost, move_in_high_cost = self.create_picking(
+            "IN", qty=2.0, price_unit=100.0
+        )
+
+        self.assertAlmostEqual(self.product.quantity_svl, -8.0, 2)
+        svl_in = move_in.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        svl_out = move_out.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        svl_in_high_cost = move_in_high_cost.stock_valuation_layer_ids.filtered(
+            lambda svl: not svl.stock_valuation_layer_id
+        )
+        self.assertEqual(len(svl_in), 1)
+        self.assertEqual(len(svl_out), 1)
+        self.assertEqual(len(svl_in_high_cost), 1)
+        self.assertAlmostEqual(svl_in.quantity, 10.0, 2)
+        self.assertAlmostEqual(svl_out.quantity, -20.0, 2)
+        self.assertAlmostEqual(svl_in_high_cost.quantity, 2.0, 2)
+
+        svl_in.unit_cost = 2.0
+
+        self.assertAlmostEqual(svl_in.value, 20.0, 2)
+        self.assertAlmostEqual(svl_out.value, -40.0, 2)
+        self.assertAlmostEqual(svl_in_high_cost.value, 200.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 18.33, 2)
+
+    def test_change_quantiy_price_with_inventory_adjustment(self):
         """Write quantity and price to zero in a stock valuation layer"""
         picking_in_01, move_in_01 = self.create_picking("IN", 10)
         quant = self.env["stock.quant"].search(
@@ -334,19 +365,19 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         # Change qty before price
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(self.product.standard_price, 1.0, 2)
-        move_in_01.quantity_done = 0.0
+        move_in_01.quantity = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
 
-        move_in_01.quantity_done = 10.0
+        move_in_01.move_line_ids.quantity = 10.0
         move_in_01.stock_valuation_layer_ids.unit_cost = 4.0
         self.assertAlmostEqual(self.product.standard_price, 3.0, 2)
 
-        move_in_01.quantity_done = 0.0
+        move_in_01.quantity = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
         move_in_01.stock_valuation_layer_ids.unit_cost = 0.0
         self.assertAlmostEqual(self.product.standard_price, 2.0, 2)
 
-        move_in_01.quantity_done = 10.0
+        move_in_01.move_line_ids.quantity = 10.0
         move_in_01.stock_valuation_layer_ids.unit_cost = 1.0
         self.product.with_context(import_file=True).standard_price = 6.0
         svl_manual = self.env["stock.valuation.layer"].search(
