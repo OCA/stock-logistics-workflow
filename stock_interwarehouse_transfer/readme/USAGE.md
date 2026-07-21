@@ -8,7 +8,9 @@ Go to _Inventory > Operations > Inter-Warehouse Transfers_ and create a new tran
 
 Two stock pickings are created automatically — an OUT picking at the source warehouse
 and an IN picking at the destination warehouse, connected through the company's internal
-transit location. Use the **Transfers** smart button to open them.
+transit location. Use the **Transfers** smart button to open them. Each picking takes
+the address of the other end as its partner: the OUT picking the address of the
+destination warehouse, the IN picking the address of the source warehouse.
 
 Validate the OUT picking when the goods leave the source warehouse. The transfer moves
 to _In Transit_. Validate the IN picking when the goods arrive at the destination. The

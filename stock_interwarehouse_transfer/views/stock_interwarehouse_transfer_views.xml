@@ -11,13 +11,13 @@
                         string="Confirm"
                         type="object"
                         class="btn-primary"
-                        invisible="state != 'draft'"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"
                     />
                     <button
                         name="action_cancel"
                         string="Cancel"
                         type="object"
-                        invisible="state in ('done', 'cancelled')"
+                        attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"
                     />
                     <field
                         name="state"
@@ -32,7 +32,7 @@
                             type="object"
                             class="oe_stat_button"
                             icon="fa-truck"
-                            invisible="picking_count == 0"
+                            attrs="{'invisible': [('picking_count', '=', 0)]}"
                         >
                             <field
                                 name="picking_count"
@@ -51,43 +51,59 @@
                         <group>
                             <field
                                 name="warehouse_from_id"
-                                readonly="state == 'done'"
+                                attrs="{'readonly': [('state', '=', 'done')]}"
                             />
-                            <field name="warehouse_to_id" readonly="state == 'done'" />
+                            <field
+                                name="warehouse_to_id"
+                                attrs="{'readonly': [('state', '=', 'done')]}"
+                            />
                         </group>
                         <group>
-                            <field name="location_id" readonly="state == 'done'" />
-                            <field name="location_dest_id" readonly="state == 'done'" />
-                            <field name="scheduled_date" readonly="state == 'done'" />
+                            <field
+                                name="location_id"
+                                attrs="{'readonly': [('state', '=', 'done')]}"
+                            />
+                            <field
+                                name="location_dest_id"
+                                attrs="{'readonly': [('state', '=', 'done')]}"
+                            />
+                            <field
+                                name="scheduled_date"
+                                attrs="{'readonly': [('state', '=', 'done')]}"
+                            />
                         </group>
                     </group>
                     <notebook>
                         <page string="Products">
                             <field
                                 name="line_ids"
-                                readonly="state in ('done', 'cancelled')"
+                                attrs="{'readonly': [('state', 'in', ['done', 'cancelled'])]}"
                             >
                                 <tree editable="bottom">
-                                    <field name="state" column_invisible="1" />
+                                    <field name="state" invisible="1" />
                                     <field name="product_id" />
                                     <field name="product_uom_qty" />
                                     <field name="product_uom" />
                                     <field
                                         name="qty_shipped"
                                         readonly="1"
-                                        column_invisible="parent.state == 'draft'"
+                                        attrs="{'column_invisible': [('parent.state', '=', 'draft')]}"
                                     />
                                     <field
                                         name="qty_received"
                                         readonly="1"
-                                        column_invisible="parent.state == 'draft'"
+                                        attrs="{'column_invisible': [('parent.state', '=', 'draft')]}"
                                     />
                                 </tree>
                             </field>
                         </page>
                     </notebook>
                 </sheet>
-                <chatter />
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>
@@ -122,7 +138,7 @@
     <menuitem
         id="menu_stock_interwarehouse_transfer"
         name="Inter-Warehouse Transfers"
-        parent="stock.menu_stock_transfers"
+        parent="stock.menu_stock_warehouse_mgmt"
         action="action_stock_interwarehouse_transfer"
         sequence="30"
     />
