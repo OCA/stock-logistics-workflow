@@ -22,10 +22,18 @@ class TestStockInterwarehouseTransfer(BaseCommon):
                 }
             )
         cls.wh_a = cls.env["stock.warehouse"].create(
-            {"name": "Warehouse A", "code": "WHA"}
+            {
+                "name": "Warehouse A",
+                "code": "WHA",
+                "partner_id": cls.env["res.partner"].create({"name": "WH A"}).id,
+            }
         )
         cls.wh_b = cls.env["stock.warehouse"].create(
-            {"name": "Warehouse B", "code": "WHB"}
+            {
+                "name": "Warehouse B",
+                "code": "WHB",
+                "partner_id": cls.env["res.partner"].create({"name": "WH B"}).id,
+            }
         )
         cls.product = cls.env["product.product"].create(
             {"name": "Test Product", "type": "product"}
@@ -76,7 +84,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
     def _validate_picking(cls, picking, qty=None):
         """Validate `picking`, for a partial `qty` when given (creates a backorder)."""
         for move in picking.move_ids:
-            move.quantity = move.product_uom_qty if qty is None else qty
+            move.quantity_done = move.product_uom_qty if qty is None else qty
         res = picking.button_validate()
         if (
             isinstance(res, dict)
@@ -185,6 +193,8 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         self.assertEqual(in_.location_id, transit)
         self.assertEqual(out.picking_type_id, self.wh_a.out_inter_wh_type_id)
         self.assertEqual(in_.picking_type_id, self.wh_b.in_inter_wh_type_id)
+        self.assertEqual(out.partner_id, self.wh_b.partner_id)
+        self.assertEqual(in_.partner_id, self.wh_a.partner_id)
 
     def test_09_confirm_moves_are_linked(self):
         transfer = self._create_transfer(qty=7.0)
@@ -213,14 +223,16 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         self.assertEqual(transfer.state, "confirmed")
 
     def test_11_state_in_transit_after_out_validated(self):
+        self.company.internal_transit_location_id.active = False
         transfer = self._create_transfer()
         transfer.action_confirm()
         out = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "outgoing"
         )
-        out.move_ids.quantity = 10.0
+        out.move_ids.quantity_done = 10.0
         out.button_validate()
         self.assertEqual(transfer.state, "in_transit")
+        self.assertEqual(self._stage_pickings(transfer, "incoming").state, "assigned")
 
     def test_12_state_done_after_in_validated(self):
         transfer = self._create_transfer()
@@ -228,12 +240,12 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         out = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "outgoing"
         )
-        out.move_ids.quantity = 10.0
+        out.move_ids.quantity_done = 10.0
         out.button_validate()
         in_ = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "incoming"
         )
-        in_.move_ids.quantity = 10.0
+        in_.move_ids.quantity_done = 10.0
         in_.button_validate()
         self.assertEqual(transfer.state, "done")
 
@@ -252,12 +264,9 @@ class TestStockInterwarehouseTransfer(BaseCommon):
     def test_15_backorder_linked_to_transfer(self):
         transfer = self._create_transfer(qty=10.0)
         transfer.action_confirm()
-        out = transfer.picking_ids.filtered(
-            lambda p: p.picking_type_id.code == "outgoing"
-        )
-        out.move_ids.quantity = 5.0
-        out._action_done()
-        backorders = out._create_backorder()
+        out = self._stage_pickings(transfer, "outgoing")
+        self._validate_picking(out, qty=5.0)
+        backorders = out.backorder_ids
         self.assertTrue(backorders)
         for bo in backorders:
             self.assertEqual(bo.interwarehouse_transfer_id, transfer)

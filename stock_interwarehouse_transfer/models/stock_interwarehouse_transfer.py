@@ -224,6 +224,12 @@ class StockInterwarehouseTransfer(models.Model):
             self.location_dest_id,
         )
 
+    def _get_stage_partner(self, stage):
+        self.ensure_one()
+        if stage == "outgoing":
+            return self.warehouse_to_id.partner_id
+        return self.warehouse_from_id.partner_id
+
     # === BUSINESS METHODS ===
 
     def _sync_stage_moves(self, lines=None):
@@ -278,4 +284,6 @@ class StockInterwarehouseTransfer(models.Model):
                     company=self.warehouse_from_id.company_id.name,
                 )
             )
+        if not transit_loc.active:
+            transit_loc.active = True
         return transit_loc

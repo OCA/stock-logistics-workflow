@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>Stock Inter-Warehouse Transfer</title>
 <style type="text/css">
 
 /*
@@ -451,7 +451,10 @@ default to each warehouse’s main stock location).</li>
 <p>Two stock pickings are created automatically — an OUT picking at the
 source warehouse and an IN picking at the destination warehouse,
 connected through the company’s internal transit location. Use the
-<strong>Transfers</strong> smart button to open them.</p>
+<strong>Transfers</strong> smart button to open them. Each picking takes the address
+of the other end as its partner: the OUT picking the address of the
+destination warehouse, the IN picking the address of the source
+warehouse.</p>
 <p>Validate the OUT picking when the goods leave the source warehouse. The
 transfer moves to <em>In Transit</em>. Validate the IN picking when the goods
 arrive at the destination. The transfer moves to <em>Done</em>.</p>
