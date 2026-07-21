@@ -10,7 +10,10 @@ class StockPicking(models.Model):
         "stock.interwarehouse.transfer", string="Inter-WH Transfer", copy=False
     )
 
-    def _create_backorder_picking(self):
-        backorder = super()._create_backorder_picking()
-        backorder.interwarehouse_transfer_id = self.interwarehouse_transfer_id
-        return backorder
+    def _create_backorder(self):
+        backorders = super()._create_backorder()
+        for backorder in backorders:
+            backorder.interwarehouse_transfer_id = (
+                backorder.backorder_id.interwarehouse_transfer_id
+            )
+        return backorders

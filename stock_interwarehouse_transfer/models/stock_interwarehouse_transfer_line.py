@@ -56,7 +56,7 @@ class StockInterwarehouseTransferLine(models.Model):
         for line in self:
             line.product_uom = line.product_id.uom_id
 
-    @api.depends("move_ids.state", "move_ids.quantity", "move_ids.product_uom")
+    @api.depends("move_ids.state", "move_ids.quantity_done", "move_ids.product_uom")
     def _compute_qty_progress(self):
         for line in self:
             line.qty_shipped = line._get_stage_done_qty("outgoing")
@@ -143,7 +143,9 @@ class StockInterwarehouseTransferLine(models.Model):
         moves = self._get_stage_moves(stage) if moves is None else moves
         qty = 0.0
         for move in moves:
-            move_qty = move.quantity if move.state == "done" else move.product_uom_qty
+            move_qty = (
+                move.quantity_done if move.state == "done" else move.product_uom_qty
+            )
             qty += move.product_uom._compute_quantity(
                 move_qty, self.product_uom, rounding_method="HALF-UP"
             )
@@ -181,6 +183,7 @@ class StockInterwarehouseTransferLine(models.Model):
             "group_id": group.id,
             "origin": transfer.name,
             "company_id": transfer.company_id.id,
+            "partner_id": transfer.warehouse_to_id.partner_id.id,
             "interwh_transfer_line_id": self.id,
         }
         if transfer.scheduled_date:
@@ -192,7 +195,8 @@ class StockInterwarehouseTransferLine(models.Model):
     def _sync_stage_moves(self):
         lines = self.filtered(lambda line: line.transfer_id.state in EDITABLE_STATES)
         moves = self.env["stock.move"]
-        for transfer, transfer_lines in lines.grouped("transfer_id").items():
+        for transfer in lines.transfer_id:
+            transfer_lines = lines.filtered(lambda line: line.transfer_id == transfer)
             moves |= transfer._sync_stage_moves(transfer_lines)
         return moves
 

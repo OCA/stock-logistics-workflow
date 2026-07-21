@@ -76,7 +76,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
     def _validate_picking(cls, picking, qty=None):
         """Validate `picking`, for a partial `qty` when given (creates a backorder)."""
         for move in picking.move_ids:
-            move.quantity = move.product_uom_qty if qty is None else qty
+            move.quantity_done = move.product_uom_qty if qty is None else qty
         res = picking.button_validate()
         if (
             isinstance(res, dict)
@@ -218,7 +218,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         out = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "outgoing"
         )
-        out.move_ids.quantity = 10.0
+        out.move_ids.quantity_done = 10.0
         out.button_validate()
         self.assertEqual(transfer.state, "in_transit")
 
@@ -228,12 +228,12 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         out = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "outgoing"
         )
-        out.move_ids.quantity = 10.0
+        out.move_ids.quantity_done = 10.0
         out.button_validate()
         in_ = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "incoming"
         )
-        in_.move_ids.quantity = 10.0
+        in_.move_ids.quantity_done = 10.0
         in_.button_validate()
         self.assertEqual(transfer.state, "done")
 
@@ -252,12 +252,9 @@ class TestStockInterwarehouseTransfer(BaseCommon):
     def test_15_backorder_linked_to_transfer(self):
         transfer = self._create_transfer(qty=10.0)
         transfer.action_confirm()
-        out = transfer.picking_ids.filtered(
-            lambda p: p.picking_type_id.code == "outgoing"
-        )
-        out.move_ids.quantity = 5.0
-        out._action_done()
-        backorders = out._create_backorder()
+        out = self._stage_pickings(transfer, "outgoing")
+        self._validate_picking(out, qty=5.0)
+        backorders = out.backorder_ids
         self.assertTrue(backorders)
         for bo in backorders:
             self.assertEqual(bo.interwarehouse_transfer_id, transfer)
