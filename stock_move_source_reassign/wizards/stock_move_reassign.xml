@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_move_reassign_form_view">
+        <field name="model">stock.move.reassign</field>
+        <field name="name">Stock Move Reassign</field>
+        <field name="arch" type="xml">
+            <form string="Stock Move Reassign">
+
+                    <p
+                    class="badge rounded-pill text-bg-secondary"
+                    style="font-size: 12px;"
+                >These are the packages and the moves that will be reassigned to another picking:</p>
+                    <br />
+                    <field
+                    name="package_level_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('package_level_ids', '=', [])]}"
+                />
+                    <field name="move_ids">
+                        <tree>
+                            <field name="product_id" />
+                        </tree>
+                    </field>
+
+                <group>
+                    <field name="step" invisible="1" />
+                    <div
+                        name="picking_type"
+                        attrs="{'invisible': [('step', '!=', 'ask_picking_type')]}"
+                    >
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the operation type you want to reassign the
+                            chosen movements:</p>
+                        <field name="reassign_picking_type_domain" invisible="1" />
+                        <label for="reassign_picking_type_id" />
+                        <field
+                            name="reassign_picking_type_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
+                            domain="reassign_picking_type_domain"
+                            class="oe_inline"
+                        />
+                    </div>
+                    <div
+                        name="picking"
+                        attrs="{'invisible': [('step', '!=', 'ask_destination')]}"
+                    >
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the picking you want to reassign the choses movements:</p>
+                        <field name="destination_picking_domain" invisible="1" />
+                        <field name="strict" invisible="1" />
+                        <label for="destination_picking_id" />
+                        <field
+                            name="destination_picking_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
+                            domain="destination_picking_domain"
+                            attrs="{'invisible': [('strict', '=', True)]}"
+                            class="oe_inline"
+                        />
+                    </div>
+                    <div
+                        name="transfer"
+                        attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
+                    >
+                        <p
+                            class="badge rounded-pill text-bg-info"
+                            style="font-size: 12px;"
+                        >Choose the operation type for the transfer picking:</p>
+                        <field
+                            name="reassign_transfer_picking_type_domain"
+                            invisible="1"
+                        />
+                        <label for="reassign_transfer_picking_type_id" />
+                        <field
+                            name="reassign_transfer_picking_type_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
+                            domain="reassign_transfer_picking_type_domain"
+                            class="oe_inline"
+                        />
+                    </div>
+                    <div
+                        name="result"
+                        attrs="{'invisible': [('step', '!=', 'result')]}"
+                    >
+                        <p
+                            class="badge rounded-pill text-bg-success"
+                            style="font-size: 12px;"
+                        >The concerned moves have been reassigned to these pickings:</p>
+                        <field name="reassigned_picking_ids">
+                            <tree>
+                                <field name="name" />
+                            </tree>
+                        </field>
+                        <div
+                            string="Transfer Pickings"
+                            name="transfer_pickings_success"
+                            attrs="{'invisible': [('transfer_picking_ids', '=',[])]}"
+                        >
+                            <p
+                                class="badge rounded-pill text-bg-success"
+                                style="font-size: 12px;"
+                            >The transfer pickings have been generated:</p>
+                            <field name="transfer_picking_ids">
+                                <tree>
+                                    <field name="name" />
+                                </tree>
+                            </field>
+
+
+                        </div>
+                        <div
+                            string="Transfer Pickings"
+                            name="transfer_pickings_none"
+                            attrs="{'invisible': [('transfer_picking_ids', '!=',[])]}"
+                        >
+                            <p
+                                class="badge rounded-pill text-bg-info"
+                                style="font-size: 12px;"
+                            >No transfer pickings have been generated. The source location are maybe the same on the origin and destination picking.</p>
+                        </div>
+
+                    </div>
+                </group>
+                <footer>
+                    <button
+                        name="doit"
+                        string="Next"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('step', 'in', ('ask_transfer', 'result'))]}"
+                    />
+                    <button
+                        name="doit"
+                        string="Reassign"
+                        class="btn-primary"
+                        icon="fa-random"
+                        type="object"
+                        attrs="{'invisible': [('step', '!=', 'ask_transfer')]}"
+                    />
+                    <button
+                        name="doit"
+                        string="Ok"
+                        class="btn-primary"
+                        type="object"
+                        attrs="{'invisible': [('step', '!=', 'result')]}"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="stock_move_reassign_act_window">
+        <field name="name">Stock Move Reassign</field>
+        <field name="res_model">stock.move.reassign</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
