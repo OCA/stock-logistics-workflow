@@ -56,6 +56,7 @@ class StockMove(models.Model):
         transfer_picking_type: PickingType,
         destination_picking: (Picking | bool) = False,
         strict=True,
+        **kwargs
     ) -> tuple[Move, Move]:
         """
         This will reassign the concerned move to the destination picking.

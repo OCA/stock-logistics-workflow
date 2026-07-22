@@ -30,6 +30,7 @@ class StockMoveReassign(models.TransientModel):
     transfer_picking_ids = fields.Many2many(
         comodel_name="stock.picking",
         ondelete="cascade",
+        readonly=True,
     )
     package_level_ids = fields.Many2many(
         comodel_name="stock.package_level", ondelete="cascade", readonly=True
@@ -155,11 +156,13 @@ class StockMoveReassign(models.TransientModel):
                 }
             elif wizard.step == "ask_transfer":
                 self.move_ids._check_can_be_reassigned()
+                extra_values = wizard._get_reassign_extra_values()
                 reassigned_moves, transfer_moves = wizard.move_ids._source_reassign(
                     wizard.reassign_picking_type_id,
                     wizard.reassign_transfer_picking_type_id,
                     wizard.destination_picking_id,
                     wizard.strict,
+                    **extra_values,
                 )
                 wizard.write(
                     {
@@ -180,3 +183,7 @@ class StockMoveReassign(models.TransientModel):
                 }
 
         return True
+
+    def _get_reassign_extra_values(self) -> dict:
+        self.ensure_one()
+        return {}
