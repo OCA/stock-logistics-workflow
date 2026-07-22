@@ -1,15 +1,23 @@
-# Copyright 2019 Vicent Cubells <pedro.baeza@tecnativa.com>
+# Copyright 2019 Tecnativa - Vicent Cubells
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import fields
-from odoo.tests import Form, common, tagged
+from odoo.tests import Form, tagged
+from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("-at_install", "post_install")
-class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
+class TestPurchaseSTockPickingInvoiceLink(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier for Test"})
+        # delivery_purchase compatibility: If the delivery module is installed, it sets
+        # ir.default to a specific value, which causes a carrier_id to be defined in
+        # the PO and, when the picking is done, an extra line to be automatically added
+        if "property_delivery_carrier_id" in cls.supplier._fields:
+            cls.supplier.property_delivery_carrier_id = False
         cls.product = cls.env["product.product"].create({"name": "Product for Test"})
         po_form = Form(cls.env["purchase.order"])
         po_form.partner_id = cls.supplier
@@ -69,6 +77,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
 
+    @mute_logger("odoo.models.unlink")
     def test_invoice_refund_invoice(self):
         """Check that the invoice created after a refund is linked to the stock
         picking.
@@ -102,6 +111,7 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         # Assert that new invoice has related picking
         self.assertEqual(new_inv.picking_ids, picking)
 
+    @mute_logger("odoo.models.unlink")
     def test_invoice_refund_modify(self):
         """Check that the invoice created when the option "Full refund and new draft
         invoice" is selected, is linked to the picking.
