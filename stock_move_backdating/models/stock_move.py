@@ -21,12 +21,18 @@ class StockMove(models.Model):
         on the result, so this override must return a float too. Returning a
         dict here raised ``TypeError`` as soon as any of those callers ran with
         a ``date_backdating`` context active.
+
+        It is also called on **multi-move recordsets** (e.g.
+        ``sale_stock_margin._compute_purchase_price`` ->
+        ``_get_price_unit_delivery`` -> ``regular_moves._get_price_unit()``),
+        so this override must not ``ensure_one()``. The backdating conversion
+        only applies to a single purchase-linked receipt move; every other
+        case (multi-move recordsets, deliveries) falls through to super().
         """
-        self.ensure_one()
-        price_unit = super()._get_price_unit()
         date_backdating = self.env.context.get("date_backdating", False)
         if (
-            hasattr(self, "purchase_line_id")
+            len(self) == 1
+            and hasattr(self, "purchase_line_id")
             and date_backdating
             and not self.origin_returned_move_id
             and self.purchase_line_id
@@ -44,7 +50,7 @@ class StockMove(models.Model):
                     round=False,
                 )
             return converted_price
-        return price_unit
+        return super()._get_price_unit()
 
     def _action_done(self, cancel_backorder=False):
         # Pass the (first) backdating date through the context so that

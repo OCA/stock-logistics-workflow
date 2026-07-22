@@ -7,7 +7,7 @@
 
 {
     "name": "Stock Move Backdating",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "category": "Stock Logistics",
     "license": "AGPL-3",
     "author": "Marco Dieckhoff, BREMSKERL, Agile Business Group, "
