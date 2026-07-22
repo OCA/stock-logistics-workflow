@@ -11,7 +11,17 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "data": ["views/stock_picking_type_views.xml", "views/stock_picking_views.xml"],
+    "data": [
+        "views/stock_move_line_views.xml",
+        "views/stock_move_views.xml",
+        "views/stock_picking_type_views.xml",
+        "views/stock_picking_views.xml",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "stock_owner_restriction/static/src/fields/stock_move_line_x2_many_field.esm.js",
+        ],
+    },
     "depends": ["stock"],
     "post_init_hook": "set_default_owner_restriction",
     "uninstall_hook": "uninstall_hook",
