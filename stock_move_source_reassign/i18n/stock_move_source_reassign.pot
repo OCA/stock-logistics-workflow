@@ -1,0 +1,329 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_source_reassign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-22 09:59+0000\n"
+"PO-Revision-Date: 2026-07-22 09:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields.selection,name:stock_move_source_reassign.selection__stock_move_reassign__step__ask_destination
+msgid "Ask Destination"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields.selection,name:stock_move_source_reassign.selection__stock_move_reassign__step__ask_picking_type
+msgid "Ask Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields.selection,name:stock_move_source_reassign.selection__stock_move_reassign__step__ask_transfer
+msgid "Ask Transfer"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move__can_be_reassigned
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_package_level__can_be_reassigned
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_picking__can_be_reassigned
+msgid "Can Be Reassigned"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_picking_type__can_reassign
+msgid "Can Reassign"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:res.groups,name:stock_move_source_reassign.group_can_reassign
+msgid "Can Reassign Stock Moves"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_picking_type__can_reassign_strict
+msgid "Can Reassign Strict"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_picking_type__can_reassign
+msgid "Check this if you want to allow moves reassignation."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_picking_type__can_reassign_strict
+msgid "Check this if you want to avoid reassignation in a chosen picking."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Choose the operation type for the transfer picking:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid ""
+"Choose the operation type you want to reassign the\n"
+"                            chosen movements:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Choose the picking you want to reassign the choses movements:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_picking_type__default_move_reassign_picking_type_id
+msgid "Default Move Reassign Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_picking_type__default_move_reassign_transfer_picking_type_id
+msgid "Default Move Reassign Transfer Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__destination_picking_id
+msgid "Destination Picking"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__destination_picking_domain
+msgid "Destination Picking Domain"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__move_ids
+msgid "Move"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Next"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid ""
+"No transfer pickings have been generated. The source location are maybe the "
+"same on the origin and destination picking."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Ok"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__package_level_ids
+msgid "Package Level"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model,name:stock_move_source_reassign.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.package_level_tree_view_picking
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.view_picking_form
+msgid "Reassign"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassign_picking_type_id
+msgid "Reassign Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassign_picking_type_domain
+msgid "Reassign Picking Type Domain"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassign_transfer_picking_type_id
+msgid "Reassign Transfer Picking Type"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassign_transfer_picking_type_domain
+msgid "Reassign Transfer Picking Type Domain"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.view_picking_type_form
+msgid "Reassignation"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassigned_move_ids
+msgid "Reassigned Move"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__reassigned_picking_ids
+msgid "Reassigned Picking"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields.selection,name:stock_move_source_reassign.selection__stock_move_reassign__step__result
+msgid "Result"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__step
+msgid "Step"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model,name:stock_move_source_reassign.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.actions.act_window,name:stock_move_source_reassign.stock_move_reassign_act_window
+#: model:ir.model,name:stock_move_source_reassign.model_stock_move_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Stock Move Reassign"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model,name:stock_move_source_reassign.model_stock_package_level
+msgid "Stock Package Level"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__strict
+msgid "Strict"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "The concerned moves have been reassigned to these pickings:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#. odoo-python
+#: code:addons/stock_move_source_reassign/models/stock_move.py:0
+#, python-format
+msgid ""
+"The following movements have been reassigned: %(move_names)s to the picking:"
+" %(picking_names)s"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "The transfer pickings have been generated:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid ""
+"These are the packages and the moves that will be reassigned to another "
+"picking:"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_picking_type__default_move_reassign_picking_type_id
+msgid ""
+"This is the default operation type that welcome the reassigned products."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_move_reassign__reassign_transfer_picking_type_id
+msgid ""
+"This is the operation type that will be used to transfer the already "
+"resserved products to the new picking."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_move_reassign__reassign_picking_type_id
+msgid ""
+"This is the operation type the system will look for a picking to reassign "
+"the selected products."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,help:stock_move_source_reassign.field_stock_move_reassign__destination_picking_id
+msgid ""
+"This is the picking to reassign the movements to. If no picking is provided,"
+" a new picking will be created."
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model,name:stock_move_source_reassign.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model:ir.model.fields,field_description:stock_move_source_reassign.field_stock_move_reassign__transfer_picking_ids
+msgid "Transfer Picking"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#: model_terms:ir.ui.view,arch_db:stock_move_source_reassign.stock_move_reassign_form_view
+msgid "Transfer Pickings"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#. odoo-python
+#: code:addons/stock_move_source_reassign/models/stock_move.py:0
+#: code:addons/stock_move_source_reassign/models/stock_picking.py:0
+#, python-format
+msgid "You cannot reassign moves that are not reserved!"
+msgstr ""
+
+#. module: stock_move_source_reassign
+#. odoo-python
+#: code:addons/stock_move_source_reassign/models/stock_package_level.py:0
+#, python-format
+msgid "You cannot reassign packages that are not reserved!"
+msgstr ""
