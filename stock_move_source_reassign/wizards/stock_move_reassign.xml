@@ -40,6 +40,7 @@
                         <label for="reassign_picking_type_id" />
                         <field
                             name="reassign_picking_type_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
                             domain="reassign_picking_type_domain"
                             class="oe_inline"
                         />
@@ -57,6 +58,7 @@
                         <label for="destination_picking_id" />
                         <field
                             name="destination_picking_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
                             domain="destination_picking_domain"
                             attrs="{'invisible': [('strict', '=', True)]}"
                             class="oe_inline"
@@ -77,6 +79,7 @@
                         <label for="reassign_transfer_picking_type_id" />
                         <field
                             name="reassign_transfer_picking_type_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
                             domain="reassign_transfer_picking_type_domain"
                             class="oe_inline"
                         />
@@ -94,15 +97,34 @@
                                 <field name="name" />
                             </tree>
                         </field>
-                        <p
-                            class="badge rounded-pill text-bg-success"
-                            style="font-size: 12px;"
-                        >The transfer pickings have been generated:</p>
-                        <field name="transfer_picking_ids">
-                            <tree>
-                                <field name="name" />
-                            </tree>
-                        </field>
+                        <div
+                            string="Transfer Pickings"
+                            name="transfer_pickings_success"
+                            attrs="{'invisible': [('transfer_picking_ids', '=',[])]}"
+                        >
+                            <p
+                                class="badge rounded-pill text-bg-success"
+                                style="font-size: 12px;"
+                            >The transfer pickings have been generated:</p>
+                            <field name="transfer_picking_ids">
+                                <tree>
+                                    <field name="name" />
+                                </tree>
+                            </field>
+
+
+                        </div>
+                        <div
+                            string="Transfer Pickings"
+                            name="transfer_pickings_none"
+                            attrs="{'invisible': [('transfer_picking_ids', '!=',[])]}"
+                        >
+                            <p
+                                class="badge rounded-pill text-bg-info"
+                                style="font-size: 12px;"
+                            >No transfer pickings have been generated. The source location are maybe the same on the origin and destination picking.</p>
+                        </div>
+
                     </div>
                 </group>
                 <footer>
