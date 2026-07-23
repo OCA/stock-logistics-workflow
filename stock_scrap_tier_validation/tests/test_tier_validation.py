@@ -6,11 +6,11 @@ from odoo.tests import common, tagged
 
 
 @tagged("-at_install", "post_install")
-class TestSaleTierValidation(common.TransactionCase):
+class TestStockTierValidation(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Get sale order model
+        # Get stock scrap model
         cls.scrap_model = cls.env.ref("stock.model_stock_scrap")
 
         # Create users
