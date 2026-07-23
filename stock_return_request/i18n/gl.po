@@ -308,7 +308,7 @@ msgid ""
 msgstr ""
 "Non hai suficientes movementos para devolver este produto.\n"
 "Non foi posible atopar suficientes movementos para devolver {line_quantity} "
-"{line_product_uom_ide_name}de {line_product_ide_displayname}. Pódese "
+"{line_product_uom_id_name} de {line_product_id_displayname}. Pódese "
 "devolver un máximo de {qty_found}."
 
 #. module: stock_return_request
