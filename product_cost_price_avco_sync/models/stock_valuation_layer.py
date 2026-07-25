@@ -83,7 +83,7 @@ class StockValuationLayer(models.Model):
         if (
             float_compare(
                 abs(new_svl_qty),
-                move.quantity_done,
+                move.quantity,
                 precision_digits=high_decimal_precision,
             )
             != 0
@@ -95,7 +95,7 @@ class StockValuationLayer(models.Model):
                         "stock valuation layer quantity"
                     )
                 )
-            move.quantity_done = abs(new_svl_qty)
+            move.quantity = abs(new_svl_qty)
         # Reasign qty variables
         qty = new_svl_qty
         svl_dic["quantity"] = new_svl_qty
