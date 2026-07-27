@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="move_type" position="after">
+                <field
+                    name="reservation_policy"
+                    invisible="picking_type_code == 'incoming'"
+                    readonly="state in ['cancel', 'done']"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
