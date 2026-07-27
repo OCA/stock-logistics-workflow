@@ -19,7 +19,6 @@ class StockQuant(models.Model):
         help="Original packing unit of measure stored on the lot.",
     )
     packing_qty = fields.Float(
-        string="Packing Qty",
         compute="_compute_packing_qty",
         digits="Product Unit of Measure",
         help="On-hand quantity converted to the lot packing UoM.",

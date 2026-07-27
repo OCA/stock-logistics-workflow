@@ -81,13 +81,13 @@
         </field>
     </record>
 
-    <record id="view_stock_quant_tree_inventory_editable_packing_uom" model="ir.ui.view">
+    <record
+        id="view_stock_quant_tree_inventory_editable_packing_uom"
+        model="ir.ui.view"
+    >
         <field name="name">stock.quant.tree.inventory.packing.uom</field>
         <field name="model">stock.quant</field>
-        <field
-            name="inherit_id"
-            ref="stock.view_stock_quant_tree_inventory_editable"
-        />
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable" />
         <field name="arch" type="xml">
             <field name="inventory_quantity" position="after">
                 <field

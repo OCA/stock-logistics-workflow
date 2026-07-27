@@ -22,16 +22,12 @@ class StockPicking(models.Model):
     def _collect_packing_info(self):
         """Store packing UoM/qty before validation creates/links lots."""
         packing_by_line = {}
-        for picking in self.filtered(
-            lambda p: p.picking_type_id.code == "incoming"
-        ):
+        for picking in self.filtered(lambda p: p.picking_type_id.code == "incoming"):
             for move in picking.move_ids.filtered(
                 lambda m: m.product_id.tracking != "none"
             ):
                 for line in move.move_line_ids:
-                    packing_by_line[line.id] = self._get_line_packing_info(
-                        move, line
-                    )
+                    packing_by_line[line.id] = self._get_line_packing_info(move, line)
         return packing_by_line
 
     def _apply_packing_info(self, packing_by_line):
@@ -50,10 +46,7 @@ class StockPicking(models.Model):
     def _get_line_packing_info(self, move, line):
         """Resolve packing UoM and qty from PO line, move, or move line."""
         base_uom = line.product_id.uom_id
-        if (
-            move.purchase_line_id
-            and move.purchase_line_id.product_uom != base_uom
-        ):
+        if move.purchase_line_id and move.purchase_line_id.product_uom != base_uom:
             packing_uom = move.purchase_line_id.product_uom
         elif move.product_uom != base_uom:
             packing_uom = move.product_uom
@@ -61,7 +54,5 @@ class StockPicking(models.Model):
             packing_uom = line.product_uom_id
         else:
             packing_uom = base_uom
-        packing_qty = line.product_uom_id._compute_quantity(
-            line.quantity, packing_uom
-        )
+        packing_qty = line.product_uom_id._compute_quantity(line.quantity, packing_uom)
         return packing_uom, packing_qty
