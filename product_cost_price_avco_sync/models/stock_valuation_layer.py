@@ -114,7 +114,20 @@ class StockValuationLayer(models.Model):
     def _get_avco_svl_price(self, previous_unit_cost, previous_qty, unit_cost, qty):
         """Helper method for computing AVCO price based on previous and current
         information,
+
+        When there are no positive units left to average against, that is, when
+        ~previous_qty~ is zero or negative because the product was oversold, the
+        incoming cost becomes the new average. The outstanding deficit will be
+        settled by future receipts and core's own negative stock vacuum
+        (`product._run_fifo_vacuum`) re-prices it with exactly that incoming
+        cost, so weighting against a quantity the company doesn't hold would
+        only make both ends disagree.
         """
+        precision_qty = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        if float_compare(previous_qty, 0.0, precision_digits=precision_qty) <= 0:
+            return unit_cost
         total_qty = previous_qty + qty
         return (
             (previous_unit_cost * previous_qty + unit_cost * qty) / total_qty
@@ -366,9 +379,19 @@ class StockValuationLayer(models.Model):
         svl_dic = svls_dic[(self.product_id, self.company_id)]
         svl_dic["svls"][self] = self._initialize_avco_sync_svl_dic()
         svl_data = svl_dic["svls"][self]
-        # Compatibility with landed cost
+        # Compatibility with landed cost and with core's negative stock vacuum,
+        # both of which only add value to the layer they correct. That extra
+        # value can only be spread over units the company actually holds, so it
+        # is skipped when there are none, the same way as in
+        # `_get_avco_svl_price`.
         if self.stock_valuation_layer_id:
-            if self.value and svl_dic["previous_qty"]:
+            if (
+                self.value
+                and float_compare(
+                    svl_dic["previous_qty"], 0.0, precision_digits=precision_qty
+                )
+                > 0
+            ):
                 svl_dic["previous_unit_cost"] += self.value / svl_dic["previous_qty"]
             return
         f_compare = float_compare(self.quantity, 0.0, precision_digits=precision_qty)
@@ -414,24 +437,12 @@ class StockValuationLayer(models.Model):
             # Normal incoming moves
             else:
                 svl_dic["unit_cost_processed"] = True
-                if float_is_zero(
-                    svl_dic["previous_qty"], precision_digits=precision_qty
-                ):
-                    # Set income svl.unit_cost as previous_unit_cost
-                    svl_dic["previous_unit_cost"] = svl_data["unit_cost"]
-                else:
-                    # previous_qty can be negative when stock was oversold due to
-                    # a correction on an already done stock move. In that case we
-                    # must still weight with the previous cost instead of blindly
-                    # discarding all history and adopting this single incoming
-                    # line's cost, as that would let one bad price wipe out the
-                    # whole average.
-                    svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
-                        svl_dic["previous_unit_cost"],
-                        abs(svl_dic["previous_qty"]),
-                        self.unit_cost,
-                        self.quantity,
-                    )
+                svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
+                    svl_dic["previous_unit_cost"],
+                    svl_dic["previous_qty"],
+                    svl_data["unit_cost"],
+                    self.quantity,
+                )
             svl_dic["previous_qty"] += self.quantity
         # Outgoing line in layer
         elif f_compare < 0:

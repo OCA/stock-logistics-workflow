@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Product cost price avco sync
 ============================
@@ -17,7 +13,7 @@ Product cost price avco sync
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -39,6 +35,24 @@ from stock moves price unit.
 
 .. contents::
    :local:
+
+Changelog
+=========
+
+18.0.1.0.2 (2026-07-27)
+-----------------------
+
+- Fix the cost price of oversold products. When the accumulated quantity
+  is zero or negative there are no units left to average against, so the
+  cost of the incoming move becomes the new average, which is also the
+  cost core's negative stock vacuum uses to settle the deficit once
+  enough real stock arrives. Odoo weighted it against the negative
+  quantity instead, and dividing by that negative denominator let a
+  receipt lower the average, or even turn it negative and, from there,
+  make every outgoing move add value to the stock valuation.
+- Let core's negative stock vacuum run again for average cost products.
+  It used to be disabled for every cost method, so nothing corrected the
+  deficit once real stock arrived.
 
 Bug Tracker
 ===========

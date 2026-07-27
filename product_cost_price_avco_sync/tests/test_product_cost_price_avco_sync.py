@@ -143,6 +143,104 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         self.assertAlmostEqual(move_out.stock_valuation_layer_ids.unit_cost, 2.27, 2)
         self.assertAlmostEqual(move_out_2.stock_valuation_layer_ids.unit_cost, 2.27, 2)
 
+    def test_negative_stock_receipt_recomputes_clean_avco(self):
+        """A receipt validated while on-hand quantity is negative must let
+        the core negative-stock vacuum (`_run_fifo_vacuum`, which also
+        applies to average costing, not just FIFO) re-price the deficit with
+        the real incoming cost, instead of leaving the product with the
+        runaway value that the raw weighted-average blend in
+        `product_price_update_before_done` produces for a negative previous
+        quantity.
+        """
+        move_in = self.picking_in.move_ids[:1]
+        move_in.product_uom_qty = 10.0
+        move_in.price_unit = 10.0
+        move_in.quantity = move_in.product_uom_qty
+        move_in.picked = True
+        self.picking_in._action_done()
+        self.assertEqual(self.product.standard_price, 10.0)
+
+        # Send more than what is in stock: on-hand quantity goes negative.
+        picking_out = self.picking_out.copy()
+        move_out = picking_out.move_ids[:1]
+        move_out.product_uom_qty = 20.0
+        move_out.quantity = move_out.product_uom_qty
+        move_out.picked = True
+        picking_out._action_done()
+        self.assertEqual(self.product.quantity_svl, -10.0)
+
+        # Receive real stock at a different cost while still negative. The
+        # naive blend would give (10 * -10 + 30 * 15) / 5 = 70, which is not
+        # a purchase price that ever existed. The vacuum instead uses the 30
+        # cost to fix the 10 units sent without real stock, leaving a clean
+        # average.
+        picking_in_2 = self.picking_in.copy()
+        move_in_2 = picking_in_2.move_ids[:1]
+        move_in_2.product_uom_qty = 15.0
+        move_in_2.price_unit = 30.0
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
+        picking_in_2._action_done()
+
+        self.assertEqual(self.product.quantity_svl, 5.0)
+        self.assertEqual(self.product.value_svl, 150.0)
+        self.assertEqual(self.product.standard_price, 30.0)
+
+    def _oversell_and_receive_partially(self):
+        """Receive 10 at 10, send 20, and receive back only 3 at 30, so the
+        product is left oversold by 7 units. Returns the layer of the first
+        receipt, which is the one to touch to trigger a full resync.
+        """
+        move_in = self.picking_in.move_ids[:1]
+        move_in.product_uom_qty = 10.0
+        move_in.price_unit = 10.0
+        move_in.quantity = move_in.product_uom_qty
+        move_in.picked = True
+        self.picking_in._action_done()
+
+        picking_out = self.picking_out.copy()
+        move_out = picking_out.move_ids[:1]
+        move_out.product_uom_qty = 20.0
+        move_out.quantity = move_out.product_uom_qty
+        move_out.picked = True
+        picking_out._action_done()
+        self.assertEqual(self.product.quantity_svl, -10.0)
+
+        picking_in_2 = self.picking_in.copy()
+        move_in_2 = picking_in_2.move_ids[:1]
+        move_in_2.product_uom_qty = 3.0
+        move_in_2.price_unit = 30.0
+        move_in_2.quantity = move_in_2.product_uom_qty
+        move_in_2.picked = True
+        picking_in_2._action_done()
+        return move_in.stock_valuation_layer_ids
+
+    def test_negative_stock_partial_receipt_keeps_real_cost(self):
+        """A receipt that doesn't cover the whole deficit leaves the product
+        oversold, and both of core's formulas then divide by that negative
+        quantity: the blend in `product_price_update_before_done` would give
+        (10 * -10 + 30 * 3) / -7 = 1.43, and the recompute closing
+        `_run_fifo_vacuum` would give -70 / -7 = 10, the cost the deficit was
+        booked at. The product has to keep the price actually paid instead.
+        """
+        self._oversell_and_receive_partially()
+        self.assertEqual(self.product.quantity_svl, -7.0)
+        self.assertEqual(self.product.value_svl, -70.0)
+        self.assertEqual(self.product.standard_price, 30.0)
+
+    def test_negative_stock_partial_receipt_survives_resync(self):
+        """The cost of an oversold product must be the same whether it comes
+        from validating the receipt or from replaying the whole layer history,
+        so that editing any past move doesn't move the price around.
+        """
+        svl_in = self._oversell_and_receive_partially()
+        self.assertEqual(self.product.standard_price, 30.0)
+        # Rewrite the first receipt cost with its own value to force a full
+        # AVCO resync over the whole chain without changing any figure.
+        svl_in.unit_cost = 10.0
+        self.assertEqual(self.product.quantity_svl, -7.0)
+        self.assertEqual(self.product.standard_price, 30.0)
+
     def test_sync_cost_price_and_future_layers(self):
         move_in = self.picking_in.move_ids[:1]
         move_in.quantity = move_in.product_uom_qty
@@ -317,7 +415,11 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         return picking, move
 
     def test_sync_cost_price_with_negative_accumulated_qty(self):
-        """Incoming moves after overselling must not reset the AVCO chain."""
+        """An incoming move received while oversold sets the AVCO chain to its
+        own cost: there are no units left to average against, and core's
+        negative stock vacuum will settle the outstanding deficit with that very
+        same cost once enough real stock arrives.
+        """
         _picking_in, move_in = self.create_picking("IN", qty=10.0)
         _picking_out, move_out = self.create_picking("OUT", qty=10.0)
         move_out.move_line_ids.quantity = 20.0
@@ -347,7 +449,7 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         self.assertAlmostEqual(svl_in.value, 20.0, 2)
         self.assertAlmostEqual(svl_out.value, -40.0, 2)
         self.assertAlmostEqual(svl_in_high_cost.value, 200.0, 2)
-        self.assertAlmostEqual(self.product.standard_price, 18.33, 2)
+        self.assertAlmostEqual(self.product.standard_price, 100.0, 2)
 
     def test_change_quantiy_price_with_inventory_adjustment(self):
         """Write quantity and price to zero in a stock valuation layer"""
