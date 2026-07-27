@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "depends": ["stock", "product_customerinfo"],
     "data": [
+        "report/report_deliveryslip.xml",
         "views/stock_picking_view.xml",
     ],
     "installable": True,
