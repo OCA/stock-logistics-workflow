@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quant_search_view_packing_uom" model="ir.ui.view">
+        <field name="name">stock.quant.search.packing.uom</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.quant_search_view" />
+        <field name="arch" type="xml">
+            <filter name="Lot_Serial_number" position="after">
+                <filter
+                    string="Packing UoM"
+                    name="group_by_packing_uom"
+                    context="{'group_by': 'packing_uom_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_packing_uom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.packing.uom</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field
+                    name="packing_qty"
+                    readonly="1"
+                    sum="Total Packing Qty"
+                    decoration-info="packing_qty != 0"
+                />
+                <field
+                    name="packing_uom_id"
+                    readonly="1"
+                    optional="show"
+                    decoration-info="packing_uom_id != False"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_editable_packing_uom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.editable.packing.uom</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
+        <field name="arch" type="xml">
+            <field name="inventory_quantity_auto_apply" position="after">
+                <field
+                    name="packing_qty"
+                    readonly="1"
+                    sum="Total Packing Qty"
+                    decoration-info="packing_qty != 0"
+                />
+                <field
+                    name="packing_uom_id"
+                    readonly="1"
+                    optional="show"
+                    decoration-info="packing_uom_id != False"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_simple_packing_uom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.simple.packing.uom</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_simple" />
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field
+                    name="packing_qty"
+                    readonly="1"
+                    sum="Total Packing Qty"
+                    decoration-info="packing_qty != 0"
+                />
+                <field
+                    name="packing_uom_id"
+                    readonly="1"
+                    optional="show"
+                    decoration-info="packing_uom_id != False"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_inventory_editable_packing_uom" model="ir.ui.view">
+        <field name="name">stock.quant.tree.inventory.packing.uom</field>
+        <field name="model">stock.quant</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_quant_tree_inventory_editable"
+        />
+        <field name="arch" type="xml">
+            <field name="inventory_quantity" position="after">
+                <field
+                    name="packing_qty"
+                    readonly="1"
+                    sum="Total Packing Qty"
+                    decoration-info="packing_qty != 0"
+                />
+                <field
+                    name="packing_uom_id"
+                    readonly="1"
+                    optional="show"
+                    decoration-info="packing_uom_id != False"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

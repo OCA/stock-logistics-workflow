@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_lot_packing_uom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-27 07:00+0000\n"
+"PO-Revision-Date: 2026-07-27 07:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_lot_packing_uom
+#: model:ir.model.fields,field_description:stock_lot_packing_uom.field_stock_quant__sow_packing_summary
+msgid "Deprecated Packing Field (Keep for Safe DB Upgrade)"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model.fields,field_description:stock_lot_packing_uom.field_stock_lot__received_qty
+msgid "Original Received Qty"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model.fields,field_description:stock_lot_packing_uom.field_stock_quant__packing_qty
+msgid "Packing Qty"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model.fields,field_description:stock_lot_packing_uom.field_stock_lot__packing_uom_id
+#: model:ir.model.fields,field_description:stock_lot_packing_uom.field_stock_quant__packing_uom_id
+#: model_terms:ir.ui.view,arch_db:stock_lot_packing_uom.quant_search_view_packing_uom
+msgid "Packing UoM"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model,name:stock_lot_packing_uom.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model,name:stock_lot_packing_uom.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_lot_packing_uom
+#: model:ir.model,name:stock_lot_packing_uom.model_stock_quant
+msgid "Quants"
+msgstr ""
