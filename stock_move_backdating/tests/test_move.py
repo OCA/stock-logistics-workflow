@@ -37,7 +37,7 @@ class TestMove(TestCommon):
         """Same-currency purchase: _convert is skipped and the override returns
         the PO price as a plain float (never a dict)."""
         if "purchase.order" not in self.env:
-            self.skipTest("purchase module not installed")
+            self.skipTest("purchase module not installed")  # pragma: no cover
         partner = self.env["res.partner"].create({"name": "Test Vendor"})
         product = self.products[0]
         po = self.env["purchase.order"].create(
@@ -71,7 +71,7 @@ class TestMove(TestCommon):
         """When a purchase line exists with a foreign currency, _get_price_unit
         returns the price_unit converted at the backdated date."""
         if "purchase.order" not in self.env:
-            self.skipTest("purchase module not installed")
+            self.skipTest("purchase module not installed")  # pragma: no cover
         company = self.env.company
         other_currency = (
             self.env["res.currency"]
@@ -82,7 +82,7 @@ class TestMove(TestCommon):
             )
         )
         if not other_currency:
-            self.skipTest("no alternative currency available")
+            self.skipTest("no alternative currency available")  # pragma: no cover
         other_currency.active = True
         partner = self.env["res.partner"].create({"name": "Test Vendor"})
         product = self.products[0]

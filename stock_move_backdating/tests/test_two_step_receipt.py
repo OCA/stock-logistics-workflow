@@ -126,7 +126,7 @@ class TestTwoStepReceipt(TestCommon):
         input -> stock internal transfer.
         """
         if "purchase.order" not in self.env:
-            self.skipTest("purchase not installed")
+            self.skipTest("purchase not installed")  # pragma: no cover
         date_backdating = self._get_datetime_backdating(5)
         po = self._create_purchase_order(3, 50)
         po.button_confirm()

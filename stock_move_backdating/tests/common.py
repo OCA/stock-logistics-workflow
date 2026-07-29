@@ -26,7 +26,7 @@ class TestCommon(tests.TransactionCase):
         company = cls.env.company
         company.inventory_valuation = "real_time"
         valuation_account = company.account_stock_valuation_id
-        if not valuation_account:
+        if not valuation_account:  # pragma: no cover
             valuation_account = cls.env["account.account"].create(
                 {
                     "name": "Stock Valuation (test)",
@@ -35,7 +35,7 @@ class TestCommon(tests.TransactionCase):
                 }
             )
             company.account_stock_valuation_id = valuation_account
-        if not company.account_stock_journal_id:
+        if not company.account_stock_journal_id:  # pragma: no cover
             stock_journal = cls.env["account.journal"].search(
                 [("type", "=", "general"), ("company_id", "=", company.id)],
                 limit=1,
@@ -163,7 +163,7 @@ class TestCommon(tests.TransactionCase):
         # context. When stock moves have different backdated dates, this
         # shared account_move date can't match each individual move's date —
         # so we accept any of the picking's backdated dates.
-        if not isinstance(valid_dates, (set, list, tuple)):
+        if not isinstance(valid_dates, (set, list, tuple)):  # pragma: no cover
             valid_dates = {valid_dates.date()}
         else:
             valid_dates = {d.date() if hasattr(d, "date") else d for d in valid_dates}
