@@ -6,49 +6,11 @@ from odoo.tools import float_compare, float_round
 
 
 class ProductProduct(models.Model):
-    _inherit = "product.product"
+    _name = "product.product"
+    _inherit = [_name, "product.cost.price.avco.sync.mixin"]
 
-    def _get_avco_valued_totals(self, company):
-        """Return the valued quantity and value of every product in self, keyed
-        by id.
-
-        The `quantity_svl` and `value_svl` fields can't be used for this. They
-        are computed with `@api.depends("stock_valuation_layer_ids")`, which
-        doesn't catch a quantity or value change on an already existing layer,
-        which is exactly what this module does all the time, so reading them
-        would leave a stale value in cache for the rest of the transaction.
-        """
-        groups = (
-            self.env["stock.valuation.layer"]
-            .sudo()
-            ._read_group(
-                [("product_id", "in", self.ids), ("company_id", "=", company.id)],
-                ["product_id"],
-                ["quantity:sum", "value:sum"],
-            )
-        )
-        totals = dict.fromkeys(self.ids, (0.0, 0.0))
-        totals.update({product.id: (qty, value) for product, qty, value in groups})
-        return totals
-
-    def _get_avco_oversold_quantities(self, company):
-        """Return the valued quantity of the average cost products in self that
-        are sold below zero, keyed by id.
-        """
-        products = self.with_company(company.id).filtered(
-            lambda x: x.cost_method == "average"
-        )
-        totals = products._get_avco_valued_totals(company)
-        return {
-            product.id: totals[product.id][0]
-            for product in products
-            if float_compare(
-                totals[product.id][0],
-                0.0,
-                precision_rounding=product.uom_id.rounding,
-            )
-            < 0
-        }
+    _avco_layer_link_field = "product_id"
+    _avco_keep_price_context_key = "avco_keep_price_product_ids"
 
     def _set_avco_standard_price_from_layers(self, company):
         """Derive the product cost from its own layers.
@@ -128,18 +90,6 @@ class ProductProduct(models.Model):
             avco_keep_price_lot_ids=keep_lot_ids,
         )
         return super(ProductProduct, products)._run_fifo_vacuum(company=company)
-
-    def write(self, vals):
-        keep_price_ids = self.env.context.get("avco_keep_price_product_ids")
-        if keep_price_ids and "standard_price" in vals:
-            keep_price = self.filtered(lambda x: x.id in keep_price_ids)
-            if keep_price:
-                other_vals = {k: v for k, v in vals.items() if k != "standard_price"}
-                res = True
-                if other_vals:
-                    res = super(ProductProduct, keep_price).write(other_vals)
-                return super(ProductProduct, self - keep_price).write(vals) and res
-        return super().write(vals)
 
 
 class ProductTemplate(models.Model):
