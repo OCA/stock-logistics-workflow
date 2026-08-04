@@ -10,8 +10,8 @@ from .common import BackorderPolicyCommon
 class TestStockBackorderPolicy(BackorderPolicyCommon):
     """Backorder policy exercised from pickings/moves created directly.
 
-    These tests drive the policy from the picking itself or from the partner,
-    without involving a sale order.
+    These tests drive the policy from the picking or its moves, without
+    involving a sale order.
     """
 
     def _create_picking(self, qty=10.0, backorder_policy=False):
@@ -39,28 +39,6 @@ class TestStockBackorderPolicy(BackorderPolicyCommon):
         picking.action_confirm()
         picking.action_assign()
         return picking
-
-    def test_picking_defaults_to_partner_policy(self):
-        """A transfer created directly defaults its policy from the partner.
-
-        Scenario:
-            1. The partner has a 'Always' backorder policy.
-            2. A transfer is created for that partner without an explicit policy.
-        Expected:
-            - The transfer inherits the partner's 'Always' policy.
-        """
-        self.commercial_partner.backorder_policy = "always"
-        picking = self._create_picking(qty=10.0)
-        self.assertEqual(picking.backorder_policy, "always")
-
-    def test_policy_propagates_to_contacts(self):
-        """Setting the policy on a company propagates it to its contacts."""
-        self.commercial_partner.backorder_policy = "always"
-        self.assertEqual(
-            self.delivery_partner.backorder_policy,
-            "always",
-            "Policy set on the commercial entity should sync to its contacts",
-        )
 
     def _assertIsBackorderWizard(self, result):
         """Assert ``button_validate`` returned the backorder confirmation wizard."""
@@ -277,22 +255,21 @@ class TestStockBackorderPolicy(BackorderPolicyCommon):
             "The policy must propagate through the MTO procurement chain",
         )
 
-    def test_return_ignores_partner_policy_always(self):
-        """Test the partner's 'Always' policy is ignored when processing a return.
+    def test_return_ignores_policy_always(self):
+        """Test the delivery's 'Always' policy is ignored when processing a return.
 
         Scenario:
-            1. The partner has an 'Always' backorder policy.
-            2. A delivery is fully processed, then a return is created for
-               part of the quantity.
-            3. Only part of the return quantity is processed.
+            1. A delivery with an 'Always' backorder policy is fully processed,
+               then a return is created for part of the quantity.
+            2. Only part of the return quantity is processed.
         Expected:
             - The standard backorder prompt is shown for the return (as if
               there was no policy), instead of auto-creating a backorder.
-            - The return's computed policy is still 'always': the fix bypasses
-              enforcement, it does not clear the field.
+            - The return still carries the 'Always' policy inherited from the
+              delivery: the fix bypasses enforcement, it does not clear the
+              field.
         """
-        self.commercial_partner.backorder_policy = "always"
-        picking = self._create_picking(qty=10.0)
+        picking = self._create_picking(qty=10.0, backorder_policy="always")
         self._set_qty_done(picking, 10.0)  # full delivery
         picking.button_validate()
 
@@ -304,17 +281,16 @@ class TestStockBackorderPolicy(BackorderPolicyCommon):
         self._assertIsBackorderWizard(result)
         self.assertNotEqual(return_picking.state, "done")
 
-    def test_return_ignores_partner_policy_never(self):
-        """Test the partner's 'Never' policy is ignored when processing a return.
+    def test_return_ignores_policy_never(self):
+        """Test the delivery's 'Never' policy is ignored when processing a return.
 
-        Scenario: as :meth:`test_return_ignores_partner_policy_always`, but
-        with a 'Never' policy.
+        Scenario: as :meth:`test_return_ignores_policy_always`, but with a
+        'Never' policy.
         Expected:
             - The standard backorder prompt is shown for the return, instead
               of silently cancelling the remaining demand.
         """
-        self.commercial_partner.backorder_policy = "never"
-        picking = self._create_picking(qty=10.0)
+        picking = self._create_picking(qty=10.0, backorder_policy="never")
         self._set_qty_done(picking, 10.0)  # full delivery
         picking.button_validate()
 
@@ -330,16 +306,15 @@ class TestStockBackorderPolicy(BackorderPolicyCommon):
         """Test declining the backorder wizard on a return creates no backorder.
 
         Scenario:
-            1. The partner has an 'Always' backorder policy.
+            1. A delivery has an 'Always' backorder policy.
             2. A return is partially processed, triggering the standard
-               backorder prompt (see :meth:`test_return_ignores_partner_policy_always`).
+               backorder prompt (see :meth:`test_return_ignores_policy_always`).
             3. The prompt is answered with 'No Backorder'.
         Expected:
             - The return is validated and no backorder is created, exactly
-              like a standard return without any partner policy.
+              like a standard return without any policy.
         """
-        self.commercial_partner.backorder_policy = "always"
-        picking = self._create_picking(qty=10.0)
+        picking = self._create_picking(qty=10.0, backorder_policy="always")
         self._set_qty_done(picking, 10.0)  # full delivery
         picking.button_validate()
 

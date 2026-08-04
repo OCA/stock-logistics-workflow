@@ -4,7 +4,7 @@
 from odoo import fields, models
 from odoo.fields import Domain
 
-from .res_partner import BACKORDER_POLICY_HELP, BACKORDER_POLICY_SELECTION
+from .stock_picking import BACKORDER_POLICY_HELP, BACKORDER_POLICY_SELECTION
 
 
 class StockMove(models.Model):
@@ -25,12 +25,9 @@ class StockMove(models.Model):
     def _get_new_picking_values(self):
         # Propagate the policy onto the picking the moves create. Moves grouped
         # into one picking share the same policy (see _key_assign_picking), so
-        # the first move is representative. Only override when a policy is set,
-        # otherwise let the picking fall back to its partner default.
+        # the first move is representative.
         vals = super()._get_new_picking_values()
-        policy = self[:1].backorder_policy
-        if policy:
-            vals["backorder_policy"] = policy
+        vals["backorder_policy"] = self[:1].backorder_policy
         return vals
 
     def _prepare_merge_moves_distinct_fields(self):
