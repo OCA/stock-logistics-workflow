@@ -9,20 +9,17 @@ from odoo.addons.stock_picking_backorder_policy.models.stock_picking import (
 )
 
 
-class SaleOrder(models.Model):
-    _inherit = "sale.order"
+class ResPartner(models.Model):
+    _inherit = "res.partner"
 
-    backorder_policy = fields.Selection(
+    sale_backorder_policy = fields.Selection(
         selection=BACKORDER_POLICY_SELECTION,
-        compute="_compute_backorder_policy",
-        store=True,
-        readonly=False,
-        copy=False,
         tracking=True,
         help=BACKORDER_POLICY_HELP,
     )
 
-    @api.depends("partner_shipping_id")
-    def _compute_backorder_policy(self):
-        for order in self:
-            order.backorder_policy = order.partner_shipping_id.sale_backorder_policy
+    @api.model
+    def _commercial_fields(self):
+        # Propagate the backorder policy from the commercial entity to all of
+        # its contacts (delivery addresses, etc.).
+        return super()._commercial_fields() + ["sale_backorder_policy"]

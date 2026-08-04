@@ -34,8 +34,9 @@ Sale Stock Picking Backorder Policy
 
 This module integrates ``stock_picking_backorder_policy`` with sales.
 
-It adds a *Backorder Policy* on the sale order, defaulted from the
-customer and adjustable per order.
+It adds a *Sale Backorder Policy* on the customer, and a *Backorder
+Policy* on the sale order, defaulted from the delivery address and
+adjustable per order.
 
 When the order is confirmed, the policy is carried over to the
 deliveries it generates.
@@ -48,9 +49,14 @@ deliveries it generates.
 Usage
 =====
 
+To set a customer's backorder policy:
+
+1. Open the contact form and go to the *Sales & Purchase* tab.
+2. Set a *Sale Backorder Policy* (Ask, Always or Never). It is shared
+   with the contact's delivery addresses.
+
 On a sale order, the *Backorder Policy* is set by default from the
-customer (or delivery address) and can be adjusted manually before
-confirmation.
+delivery address and can be adjusted manually before confirmation.
 
 When the order is confirmed, the policy is carried over to the
 deliveries it generates, including multi-step routes. On validation of a
@@ -59,9 +65,6 @@ partial delivery:
 - **Ask**: the usual backorder prompt is shown.
 - **Always**: a backorder is created automatically.
 - **Never**: the remaining quantity is cancelled.
-
-The customer's policy is configured on the contact form (see
-*stock_picking_backorder_policy*).
 
 Bug Tracker
 ===========

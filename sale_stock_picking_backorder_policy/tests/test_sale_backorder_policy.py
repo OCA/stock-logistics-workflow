@@ -27,12 +27,25 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
         )
 
     # -------------------------------------------------------------------------
+    # res.partner — sale_backorder_policy
+    # -------------------------------------------------------------------------
+
+    def test_policy_propagates_to_contacts(self):
+        """Setting the policy on a company propagates it to its contacts."""
+        self.commercial_partner.write({"sale_backorder_policy": "always"})
+        self.assertEqual(
+            self.delivery_partner.sale_backorder_policy,
+            "always",
+            "Policy set on the commercial entity should sync to its contacts",
+        )
+
+    # -------------------------------------------------------------------------
     # sale.order — backorder_policy (computed, stored, writeable)
     # -------------------------------------------------------------------------
 
     def test_backorder_policy_no_partner_policy(self):
         """An order for a customer with no policy has no backorder policy."""
-        self.commercial_partner.write({"backorder_policy": False})
+        self.commercial_partner.write({"sale_backorder_policy": False})
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.commercial_partner.id,
@@ -42,7 +55,7 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
 
     def test_backorder_policy_default_from_partner(self):
         """An order defaults its backorder policy from the customer."""
-        self.commercial_partner.write({"backorder_policy": "never"})
+        self.commercial_partner.write({"sale_backorder_policy": "never"})
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.commercial_partner.id,
@@ -52,8 +65,8 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
 
     def test_backorder_policy_delivery_address_wins(self):
         """An order takes its policy from the delivery address, not the company."""
-        self.commercial_partner.write({"backorder_policy": "never"})
-        self.delivery_partner.write({"backorder_policy": "always"})
+        self.commercial_partner.write({"sale_backorder_policy": "never"})
+        self.delivery_partner.write({"sale_backorder_policy": "always"})
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.commercial_partner.id,
@@ -64,11 +77,11 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
 
     def test_backorder_policy_recomputes_on_partner_change(self):
         """Changing the order's customer recomputes its backorder policy."""
-        self.commercial_partner.write({"backorder_policy": "ask"})
+        self.commercial_partner.write({"sale_backorder_policy": "ask"})
         partner2 = self.env["res.partner"].create(
             {
                 "name": "Partner 2",
-                "backorder_policy": "never",
+                "sale_backorder_policy": "never",
             }
         )
         order = self.env["sale.order"].create(
@@ -91,7 +104,7 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
         Expected:
             - The manual choice is kept, since the customer did not change.
         """
-        self.commercial_partner.write({"backorder_policy": "ask"})
+        self.commercial_partner.write({"sale_backorder_policy": "ask"})
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.commercial_partner.id,
@@ -119,11 +132,11 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
         Expected:
             - The policy is recomputed from the new customer.
         """
-        self.commercial_partner.write({"backorder_policy": "ask"})
+        self.commercial_partner.write({"sale_backorder_policy": "ask"})
         partner2 = self.env["res.partner"].create(
             {
                 "name": "Partner 2",
-                "backorder_policy": "always",
+                "sale_backorder_policy": "always",
             }
         )
         order = self.env["sale.order"].create(
@@ -147,7 +160,7 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
 
     def test_picking_gets_policy_from_order(self):
         """Confirming an order copies its policy onto the delivery."""
-        self.commercial_partner.write({"backorder_policy": "never"})
+        self.commercial_partner.write({"sale_backorder_policy": "never"})
         order = self._create_sale_order(self.commercial_partner)
         self.assertEqual(order.backorder_policy, "never")
         order.action_confirm()
@@ -155,17 +168,16 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
         for picking in order.picking_ids:
             self.assertEqual(picking.backorder_policy, "never")
 
-    def test_picking_keeps_order_override_over_partner_default(self):
-        """An order's policy wins over the partner default on the delivery.
+    def test_picking_keeps_order_override_over_customer_policy(self):
+        """A manual policy on the order wins over the customer's own.
 
         Scenario:
             1. The customer's policy is 'Always'.
             2. The order's policy is manually overridden to 'Never'.
         Expected:
-            - The delivery carries 'Never' (the order value propagated through
-              the moves), not the partner default of 'Always'.
+            - The delivery carries 'Never', the value set on the order.
         """
-        self.commercial_partner.write({"backorder_policy": "always"})
+        self.commercial_partner.write({"sale_backorder_policy": "always"})
         order = self._create_sale_order(self.commercial_partner)
         order.backorder_policy = "never"
         order.action_confirm()
@@ -184,7 +196,7 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
             - The chained ship step, created afterwards, also carries it.
         """
         self.warehouse.write({"delivery_steps": "pick_ship"})
-        self.commercial_partner.write({"backorder_policy": "always"})
+        self.commercial_partner.write({"sale_backorder_policy": "always"})
         order = self._create_sale_order(self.commercial_partner)
         order.action_confirm()
 
@@ -235,7 +247,7 @@ class TestSaleBackorderPolicy(BackorderPolicyCommon):
             - No backorder is left anywhere in the chain.
         """
         self.warehouse.write({"delivery_steps": "pick_pack_ship"})
-        self.commercial_partner.write({"backorder_policy": "never"})
+        self.commercial_partner.write({"sale_backorder_policy": "never"})
         # Dedicated product with a controlled shortage (6 available, 10 ordered).
         product = self.env["product.product"].create(
             {
