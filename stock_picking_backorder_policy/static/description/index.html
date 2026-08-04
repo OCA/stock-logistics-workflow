@@ -379,10 +379,10 @@ ul.auto-toc {
 backorder for the remaining quantity based on the <strong>backorder policy of
 the operation type</strong> (Ask, Always or Never).</p>
 <p>That default fits the warehouse, but the right answer is often driven by
-the <em>customer</em> instead: some customers always want the rest shipped
-later, others never do.</p>
-<p>This module lets you <strong>optionally override</strong> that operation type
-default, on the partner and on the transfer itself:</p>
+the document the transfer comes from: some customers always want the
+rest shipped later, others never do.</p>
+<p>This module lets you <strong>optionally override</strong> that operation type default
+on the transfer itself:</p>
 <ul class="simple">
 <li><strong>Ask</strong>: the user is prompted (standard behaviour).</li>
 <li><strong>Always</strong>: a backorder is created automatically for the remaining
@@ -390,11 +390,14 @@ quantity.</li>
 <li><strong>Never</strong>: the remaining quantity is cancelled and no backorder is
 created.</li>
 </ul>
-<p>The policy is shared by a company and its contacts (delivery addresses).
-A transfer created for a partner (for instance directly from the
-Inventory app) defaults to that partner’s policy, and the value can
-still be adjusted on the transfer. When left empty, the operation type’s
-own policy applies, exactly like standard Odoo.</p>
+<p>When left empty, the operation type’s own policy applies, exactly like
+standard Odoo.</p>
+<p>The policy is carried by the operations, so it survives multi-step
+routes and make-to-order chains. Modules building on top of this one
+seed it from their own documents:
+<tt class="docutils literal">sale_stock_picking_backorder_policy</tt> for deliveries generated from a
+sale order, <tt class="docutils literal">purchase_stock_picking_backorder_policy</tt> for receipts
+generated from a purchase order.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -410,25 +413,18 @@ own policy applies, exactly like standard Odoo.</p>
 </div>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
-<p>To set a partner’s backorder policy:</p>
-<ol class="arabic simple">
-<li>Open the contact form and go to the <em>Sales &amp; Purchase</em> tab.</li>
-<li>Set a <em>Backorder Policy</em> (Ask, Always or Never). It is shared with
-the contact’s delivery addresses.</li>
-</ol>
-<p>On a transfer, the <em>Backorder Policy</em> defaults from the partner and can
-be adjusted manually. The value set here takes precedence over the value
-set on the operation type; if left empty, the operation type’s value is
-used.</p>
+<p>On a transfer, set the <em>Backorder Policy</em> (Ask, Always or Never). The
+value set here takes precedence over the value set on the operation
+type; if left empty, the operation type’s value is used.</p>
 <p>When the transfer is validated with a missing quantity:</p>
 <ul class="simple">
 <li><strong>Ask</strong>: the usual backorder prompt is shown.</li>
 <li><strong>Always</strong>: a backorder is created automatically.</li>
 <li><strong>Never</strong>: the remaining quantity is cancelled.</li>
 </ul>
-<p>Returns and exchanges are never subject to the partner/transfer
-backorder policy: they always follow the operation type’s own <em>Create
-Backorder</em> setting, since the customer-facing policy is not relevant to
+<p>Returns and exchanges are never subject to the transfer’s backorder
+policy: they always follow the operation type’s own <em>Create Backorder</em>
+setting, since the policy of the original transfer is not relevant to
 goods coming back in.</p>
 </div>
 <div class="section" id="bug-tracker">

@@ -3,7 +3,19 @@
 
 from odoo import api, fields, models
 
-from .res_partner import BACKORDER_POLICY_HELP, BACKORDER_POLICY_SELECTION
+BACKORDER_POLICY_SELECTION = [
+    ("ask", "Ask"),
+    ("always", "Always"),
+    ("never", "Never"),
+]
+
+BACKORDER_POLICY_HELP = (
+    "If set, this overrides the operation type's backorder policy. "
+    "Leave empty to use the default operation type behavior.\n"
+    "- Ask: the user is always prompted.\n"
+    "- Always: backorders are created automatically.\n"
+    "- Never: remaining demand is cancelled without prompt."
+)
 
 
 class StockPicking(models.Model):
@@ -11,30 +23,17 @@ class StockPicking(models.Model):
 
     backorder_policy = fields.Selection(
         selection=BACKORDER_POLICY_SELECTION,
-        compute="_compute_backorder_policy",
-        store=True,
-        readonly=False,
         tracking=True,
         help=BACKORDER_POLICY_HELP,
     )
-
-    @api.depends("partner_id")
-    def _compute_backorder_policy(self):
-        # Default to the delivery partner's policy. This covers transfers
-        # created directly, e.g. from the Inventory app. Transfers generated
-        # from a sale order have their policy propagated through the moves
-        # instead (see stock.move._get_new_picking_values), which overrides
-        # this default.
-        for picking in self:
-            picking.backorder_policy = picking.partner_id.backorder_policy
 
     def _check_backorder(self):
         # Skip the backorder wizard for pickings with a deterministic policy.
         # 'always'/'never' are resolved without prompting (see _action_done);
         # 'ask' (or no policy) falls back to the standard behavior. Returns
         # and exchanges (`_should_ignore_backorders`) always go through the
-        # standard behavior too: the partner's policy is about outgoing
-        # deliveries and must not affect goods coming back in.
+        # standard behavior too: the policy is about the original transfer and
+        # must not affect goods coming back in.
         pickings = self.filtered(
             lambda p: p.backorder_policy not in ("always", "never")
             or p._should_ignore_backorders()

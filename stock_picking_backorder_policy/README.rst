@@ -37,11 +37,11 @@ backorder for the remaining quantity based on the **backorder policy of
 the operation type** (Ask, Always or Never).
 
 That default fits the warehouse, but the right answer is often driven by
-the *customer* instead: some customers always want the rest shipped
-later, others never do.
+the document the transfer comes from: some customers always want the
+rest shipped later, others never do.
 
-This module lets you **optionally override** that operation type
-default, on the partner and on the transfer itself:
+This module lets you **optionally override** that operation type default
+on the transfer itself:
 
 - **Ask**: the user is prompted (standard behaviour).
 - **Always**: a backorder is created automatically for the remaining
@@ -49,11 +49,15 @@ default, on the partner and on the transfer itself:
 - **Never**: the remaining quantity is cancelled and no backorder is
   created.
 
-The policy is shared by a company and its contacts (delivery addresses).
-A transfer created for a partner (for instance directly from the
-Inventory app) defaults to that partner's policy, and the value can
-still be adjusted on the transfer. When left empty, the operation type's
-own policy applies, exactly like standard Odoo.
+When left empty, the operation type's own policy applies, exactly like
+standard Odoo.
+
+The policy is carried by the operations, so it survives multi-step
+routes and make-to-order chains. Modules building on top of this one
+seed it from their own documents:
+``sale_stock_picking_backorder_policy`` for deliveries generated from a
+sale order, ``purchase_stock_picking_backorder_policy`` for receipts
+generated from a purchase order.
 
 **Table of contents**
 
@@ -63,16 +67,9 @@ own policy applies, exactly like standard Odoo.
 Usage
 =====
 
-To set a partner's backorder policy:
-
-1. Open the contact form and go to the *Sales & Purchase* tab.
-2. Set a *Backorder Policy* (Ask, Always or Never). It is shared with
-   the contact's delivery addresses.
-
-On a transfer, the *Backorder Policy* defaults from the partner and can
-be adjusted manually. The value set here takes precedence over the value
-set on the operation type; if left empty, the operation type's value is
-used.
+On a transfer, set the *Backorder Policy* (Ask, Always or Never). The
+value set here takes precedence over the value set on the operation
+type; if left empty, the operation type's value is used.
 
 When the transfer is validated with a missing quantity:
 
@@ -80,9 +77,9 @@ When the transfer is validated with a missing quantity:
 - **Always**: a backorder is created automatically.
 - **Never**: the remaining quantity is cancelled.
 
-Returns and exchanges are never subject to the partner/transfer
-backorder policy: they always follow the operation type's own *Create
-Backorder* setting, since the customer-facing policy is not relevant to
+Returns and exchanges are never subject to the transfer's backorder
+policy: they always follow the operation type's own *Create Backorder*
+setting, since the policy of the original transfer is not relevant to
 goods coming back in.
 
 Bug Tracker
