@@ -13,18 +13,18 @@ class StockLocation(models.Model):
         "used by default.",
     )
 
+    def _get_last_putaway_location_move_line_domain(self, product):
+        return [
+            ("product_id", "=", product.id),
+            ("location_dest_id", "child_of", self.id),
+            ("state", "=", "done"),
+        ]
+
     def _get_last_putaway_location(self, product):
+        domain = self._get_last_putaway_location_move_line_domain(product)
         return (
             self.env["stock.move.line"]
-            .search(
-                [
-                    ("product_id", "=", product.id),
-                    ("location_dest_id", "child_of", self.id),
-                    ("state", "=", "done"),
-                ],
-                order="date desc",
-                limit=1,
-            )
+            .search(domain, order="date desc", limit=1)
             .location_dest_id
         )
 
