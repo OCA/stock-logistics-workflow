@@ -70,3 +70,13 @@ class TestSaleLineReturnedQty(BaseCommon):
         # Make a return for 5 units
         self._return_picking(picking, 5.0, to_refund=True)
         self.assertEqual(so_line.qty_returned, 5.0)
+
+    def test_returned_qty_not_done_moves(self):
+        self.order.action_confirm()
+        so_line = self.order.order_line[0]
+        picking = self.order.picking_ids
+        picking.action_assign()
+        # Picking with moves not done, so qty_returned should be 0
+        self.assertEqual(picking.state, "assigned")
+        # qty_returned should be 0 because the picking is not done yet
+        self.assertEqual(so_line.qty_returned, 0.0)
