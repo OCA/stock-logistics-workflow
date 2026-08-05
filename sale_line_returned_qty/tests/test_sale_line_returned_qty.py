@@ -76,7 +76,22 @@ class TestSaleLineReturnedQty(BaseCommon):
         so_line = self.order.order_line[0]
         picking = self.order.picking_ids
         picking.action_assign()
-        # Picking with moves not done, so qty_returned should be 0
-        self.assertEqual(picking.state, "assigned")
-        # qty_returned should be 0 because the picking is not done yet
+        self._validate_picking(picking)
+        self.assertEqual(picking.state, "done")
+        # Create a return picking without validate it, so the returned qty should be 0
+        return_wiz_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_ids=picking.ids,
+                active_id=picking.ids[0],
+                active_model="stock.picking",
+            )
+        )
+        return_wiz = return_wiz_form.save()
+        return_wiz.product_return_moves.quantity = 5.0
+        return_wiz.product_return_moves.to_refund = True
+        res = return_wiz.action_create_returns()
+        return_picking = self.env["stock.picking"].browse(res["res_id"])
+        # Return picking is in assigned state, so the returned qty should be 0
+        self.assertEqual(return_picking.state, "assigned")
+        # qty_returned should be 0 because the return picking is not done yet
         self.assertEqual(so_line.qty_returned, 0.0)
