@@ -12,14 +12,14 @@ class SaleOrderLine(models.Model):
         string="Returned Qty",
         store=True,
         compute_sudo=True,
-        digits="Product Unit of Measure",
+        digits="Product Unit",
         default=0.0,
         copy=False,
     )
 
     @api.depends(
         "move_ids.state",
-        "move_ids.scrapped",
+        "move_ids.scrap_id",
         "move_ids.product_uom_qty",
         "move_ids.product_uom",
     )
@@ -33,7 +33,7 @@ class SaleOrderLine(models.Model):
                         continue
                     qty += move.product_uom._compute_quantity(
                         move.product_uom_qty,
-                        line.product_uom,
+                        line.product_uom_id,
                         rounding_method="HALF-UP",
                     )
             line.qty_returned = qty
