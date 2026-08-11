@@ -3,11 +3,26 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from collections import defaultdict
 
-from odoo import models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
     _inherit = "stock.move"
+
+    owner_restriction = fields.Selection(related="picking_type_id.owner_restriction")
+    restricted_owner_id = fields.Many2one(
+        comodel_name="res.partner",
+        compute="_compute_restricted_owner_id",
+    )
+
+    @api.depends(
+        "move_dest_ids.picking_id.owner_id",
+        "picking_id.owner_id",
+        "picking_id.partner_id",
+    )
+    def _compute_restricted_owner_id(self):
+        for move in self:
+            move.restricted_owner_id = move._get_owner_for_assign()[:1]
 
     def _get_moves_to_assign_with_standard_behavior(self):
         """This method is expected to be extended as necessary. e.g. you may not want to
@@ -52,8 +67,7 @@ class StockMove(models.Model):
                 and moves_to_assign.picking_type_id.owner_restriction
                 == "partner_or_unassigned"
                 and sum(
-                    move.reserved_availability - move.product_uom_qty
-                    for move in moves_to_assign
+                    move.quantity - move.product_uom_qty for move in moves_to_assign
                 )
                 < 0
             ):
@@ -63,23 +77,25 @@ class StockMove(models.Model):
                 )._action_assign(force_qty=force_qty)
         return res
 
-    def _update_reserved_quantity(
+    def _update_reserved_quantity_vals_update_reserved_quantity_vals(
         self,
         need,
-        available_quantity,
         location_id,
+        quant_ids=None,
         lot_id=None,
         package_id=None,
         owner_id=None,
         strict=True,
     ):
+        # Overridden instead of _update_reserved_quantity because the chained
+        # moves path in _action_assign calls this method directly.
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if not owner_id and restricted_owner_id is not None:
             owner_id = restricted_owner_id
-        return super()._update_reserved_quantity(
+        return super()._update_reserved_quantity_vals(
             need,
-            available_quantity,
             location_id,
+            quant_ids=quant_ids,
             lot_id=lot_id,
             package_id=package_id,
             owner_id=owner_id,
