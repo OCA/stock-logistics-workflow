@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Product Customerinfo Picking
 ============================
@@ -17,7 +13,7 @@ Product Customerinfo Picking
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -32,8 +28,14 @@ Product Customerinfo Picking
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Based on product_customerinfo, this module loads in every Stock move the
-customer code defined in the product.
+Based on product_customerinfo, this module loads in every stock move the
+customer code and customer name defined in the product.
+
+The lookup respects the partner hierarchy (delivery addresses resolve to
+their parent account) and falls back to the warehouse's linked partner
+when the picking partner has no matching code — covering consignment
+warehouse scenarios where the transfer counterpart differs from the
+warehouse owner.
 
 **Table of contents**
 
@@ -57,6 +59,7 @@ Authors
 -------
 
 * Agile Business Group
+* bosd
 
 Contributors
 ------------
@@ -66,6 +69,7 @@ Contributors
 - Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 - Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 - Aaron Henriquez <ahenriquez@forgeflow.com>
+- bosd <`https://github.com/bosd\\> <https://github.com/bosd\>>`__
 
 Maintainers
 -----------
