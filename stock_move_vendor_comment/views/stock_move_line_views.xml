@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="product_uom_id" position="after">
+                <field name="vendor_comment" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <!-- For hidden detailed operations setting -->
+    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+        <field name="arch" type="xml">
+            <field name="product_uom_id" position="after">
+                <field name="vendor_comment" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_line_tree_detailed" model="ir.ui.view">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree_detailed" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="vendor_comment" optional="show" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
