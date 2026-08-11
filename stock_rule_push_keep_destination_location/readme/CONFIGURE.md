@@ -1,0 +1,2 @@
+- Go to Inventory > Configuration > Warehouse > Rules
+- In the push rule, enable the 'Use Rule Destination Location' checkbox.
