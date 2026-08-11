@@ -6,3 +6,5 @@
 - [Tecnativa](https://www.tecnativa.com):
   - Pedro M. Baeza
   - Ernesto Tejeda
+- [Open Source Integrators](https://www.opensourceintegrators.com):
+  - Daniel Reis \<<dreis@opensourceintegrators.com>>

@@ -30,8 +30,14 @@ Stock Lock Lot
 
 This module allows you to define whether a Serial Number/lot is blocked
 or not. The default value can be set on the Product Category, in the
-field "Block new Serial Numbers/lots". Is possible to specify in a
+field "Block new Serial Numbers/lots". It's possible to specify in a
 location if locked lots are allowed to move there.
+
+Additionally, locked lots are automatically excluded from stock
+reservations, preventing them from being allocated to outgoing orders.
+This ensures that blocked inventory cannot be accidentally reserved or
+shipped. The reservation exclusion can be bypassed using the
+'force_allow_locked_lots' context when explicitly needed.
 
 **Table of contents**
 
@@ -61,6 +67,23 @@ To use this module, you need to:
 3. Now you cannot move that 'Lot/Serial Number' to any location that
    does not have the 'Allow Locked' field checked
 
+**Reservation Behavior:**
+
+-  Locked lots are automatically excluded from stock reservations
+-  When creating outgoing orders (sales orders, transfers, etc.), the
+   system will only reserve from unlocked lots
+-  This prevents blocked inventory from being allocated to orders
+-  To override this behavior, use the 'force_allow_locked_lots' context
+   in custom operations when explicitly needed
+
+**Example Scenarios:**
+
+-  **Quality Hold**: Lock a lot for quality inspection - it won't be
+   reserved for customer orders until unlocked
+-  **Expired Stock**: Lock expired lots to prevent them from being
+   shipped
+-  **Reserved Stock**: Lock lots for specific customers or projects
+
 Bug Tracker
 ===========
 
@@ -83,15 +106,19 @@ Authors
 Contributors
 ------------
 
-- Ana Juaristi <anajuaristi@avanzosc.es>
-- Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
-- Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
-- Lionel Sausin <ls@numerigraphe.com>
-- Ainara Galdona <ainaragaldona@avanzosc.es>
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  Ana Juaristi <anajuaristi@avanzosc.es>
+-  Alfredo de la Fuente <alfredodelafuente@avanzosc.es>
+-  Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
+-  Lionel Sausin <ls@numerigraphe.com>
+-  Ainara Galdona <ainaragaldona@avanzosc.es>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pedro M. Baeza
-  - Ernesto Tejeda
+   -  Pedro M. Baeza
+   -  Ernesto Tejeda
+
+-  `Open Source Integrators <https://www.opensourceintegrators.com>`__:
+
+   -  Daniel Reis <dreis@opensourceintegrators.com>
 
 Maintainers
 -----------
