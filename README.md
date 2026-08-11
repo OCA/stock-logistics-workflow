@@ -65,6 +65,7 @@ addon | version | maintainers | summary
 [stock_move_quantity_product_uom](stock_move_quantity_product_uom/) | 18.0.1.0.2 |  | computes stock.move's quantity in the uom of the product.
 [stock_move_source_relocate](stock_move_source_relocate/) | 18.0.1.2.0 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Change source location of unavailable moves
 [stock_move_source_relocate_dynamic_routing](stock_move_source_relocate_dynamic_routing/) | 18.0.1.2.0 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Glue module
+[stock_move_vendor_comment](stock_move_vendor_comment/) | 18.0.1.0.0 |  | Add the vendor comment field to stock move
 [stock_no_negative](stock_no_negative/) | 18.0.1.0.2 |  | Disallow negative stock levels by default
 [stock_owner_restriction](stock_owner_restriction/) | 18.0.1.0.1 |  | Do not reserve quantity with assigned owner
 [stock_partner_delivery_window](stock_partner_delivery_window/) | 18.0.1.2.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Define preferred delivery time windows for partners
