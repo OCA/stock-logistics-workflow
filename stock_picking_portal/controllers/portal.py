@@ -97,7 +97,7 @@ class CustomerPortal(portal.CustomerPortal):
         date_end=None,
         sortby=None,
         filterby=None,
-        **kwargs
+        **kwargs,
     ):
         """
         Prepares the value required for rendering the stock operations
@@ -180,7 +180,7 @@ class CustomerPortal(portal.CustomerPortal):
         access_token=None,
         message=False,
         download=False,
-        **kw
+        **kw,
     ):
         """
         Render the stock operation page for a given operation ID.
