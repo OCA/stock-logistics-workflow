@@ -14,9 +14,7 @@ class StockPicking(models.Model):
             weight = 0.0
             for move_line in picking.move_line_ids:
                 if move_line.product_id and not move_line.result_package_id:
-                    weight += move_line.product_id.get_total_weight_from_packaging(
-                        move_line.quantity
-                    )
+                    weight += move_line._get_weight_from_packaging()
             picking.weight_bulk = weight
 
     def _get_estimated_weight(self):

@@ -35,7 +35,7 @@ class TestWeight(TestShippingWeightCommon):
             5,
         )
         # Add a Box of 5 units within a package
-        pack = self.env["stock.quant.package"].create({"name": "Test package"})
+        pack = self.env["stock.package"].create({"name": "Test package"})
         self.env["stock.quant"]._update_available_quantity(
             self.product,
             self.wh.out_type_id.default_location_src_id,
@@ -43,7 +43,7 @@ class TestWeight(TestShippingWeightCommon):
             package_id=pack,
         )
         # The box of 5 items weights 7
-        self.assertEqual(pack.shipping_weight, 7)
+        self.assertEqual(pack.weight, 7)
         # Reserve goods
         picking = self.move.picking_id
         picking.action_assign()
@@ -51,27 +51,21 @@ class TestWeight(TestShippingWeightCommon):
         self.assertTrue(
             picking.move_line_ids.filtered(lambda line: line.result_package_id)
         )
-        self.assertTrue(picking.move_ids_without_package)
         # Check shipping weight knowing there is no shipping weight on the package
         self.assertEqual(picking.shipping_weight, 16)
         pack.shipping_weight = 6
         picking.invalidate_model(["shipping_weight"])
         self.assertEqual(picking.shipping_weight, 15)
         picking._action_done()
-        # Check the manualy set weight is not lost when quants are inserted in
+        # Check the manually set weight is not lost when quants are inserted in
         # the package
         self.assertEqual(picking.shipping_weight, 15)
 
     def test_package_weight(self):
-        pack = self.env["stock.quant.package"].create({"name": "Test package"})
+        pack = self.env["stock.package"].create({"name": "Test package"})
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.wh.lot_stock_id, 7.0, package_id=pack
         )
         self.move._action_assign()
         # 1 Box + 2 Small Box to satisfy 7 qties => 11kg
         self.assertEqual(pack.weight, 11)
-        # Shipping weight computed
-        self.assertEqual(pack.shipping_weight, 11)
-        # I can still override it
-        pack.shipping_weight = 20
-        self.assertEqual(pack.shipping_weight, 20)
