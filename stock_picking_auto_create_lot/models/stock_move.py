@@ -9,14 +9,15 @@ class StockMove(models.Model):
     @api.depends(
         "has_tracking",
         "picking_type_id.auto_create_lot",
-        "product_id.auto_create_lot",
+        "product_id.auto_create_lot_option",
         "picking_type_id.use_existing_lots",
         "state",
     )
     def _compute_display_assign_serial(self):
         super()._compute_display_assign_serial()
         moves_not_display = self.filtered(
-            lambda m: m.picking_type_id.auto_create_lot and m.product_id.auto_create_lot
+            lambda m: m.picking_type_id.auto_create_lot
+            and m.product_id.auto_create_lot_option
         )
         for move in moves_not_display:
             move.display_assign_serial = False
@@ -30,7 +31,7 @@ class StockMove(models.Model):
                 continue
             if (
                 move.product_id.tracking == "none"
-                or not move.product_id.auto_create_lot
+                or not move.product_id.auto_create_lot_option
                 or not move.picking_type_id.auto_create_lot
             ):
                 continue

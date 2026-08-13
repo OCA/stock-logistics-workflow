@@ -1,7 +1,6 @@
 To use this module you need to:
 
-1.  Go to a *Product \> General Information tab*.
-2.  Set a tracking option for this product.
-3.  Set auto create lot.
-4.  Go to *Inventory \> Incoming* and create one.
-5.  Validate picking without lot.
+1. Create an incoming inventory operation
+2. Do not add lots or serial numbers manually
+3. Validate the operation
+4. Lots/serial numbers will be created automatically

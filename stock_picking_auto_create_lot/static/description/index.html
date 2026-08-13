@@ -388,23 +388,50 @@ create lots for incoming pickings.</p>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<p>To configure this module, you need to:</p>
+<p>To use the auto-create feature you need to enable tracking by
+lots/serial numbers:</p>
 <ol class="arabic simple">
-<li>Go to a <em>Inventory &gt; Configuration &gt; Operation Types</em>.</li>
-<li>Set ‘auto create lot’ option for this operation type.</li>
-<li>Go to a <em>Inventory &gt; Master Data &gt; Products</em>.</li>
-<li>Set ‘auto create lot’ option for the products you need.</li>
+<li>Go to “Inventory &gt; Configuration &gt; Settings” and scroll down to the
+“Traceability” section;</li>
+<li>Enable the “Lots &amp; Serial Numbers” setting;</li>
+<li>You can select the number of trailing zeroes for the SKU-based
+lots/serial numbers in the “SKU Based Numbers Trailing” field located
+in the same section. Default value is “0”.</li>
+</ol>
+<p>Configure the operation types:</p>
+<ol class="arabic simple">
+<li>Go to “Inventory &gt; Configuration &gt; Operation Types”;</li>
+<li>Enable the “Auto Create Lot” setting located in the “Lots/Serial
+numbers” section.</li>
+</ol>
+<p>Configure the products you want to enable lot/serial number
+auto-creation:</p>
+<ol class="arabic simple">
+<li>Open the product form;</li>
+<li>Activate the “Track Inventory” setting and select either “By Unique
+Serial Number” or “By Lots” option;</li>
+<li>Select an option you would like to use for creating lots/serial
+numbers for this product in the “Auto Create Lot” field. Default
+options are:<ol class="arabic">
+<li>Odoo sequence. Will use default Odoo sequence for newly created
+lots;</li>
+<li>SKU based. Will use product reference as a base of the sequence
+and a number as a suffix joined by the “-” symbol. Eg for product
+with SKU “CHAIR-L-R” serial numbers will be “CHAIR-L-R-1”,
+“CHAIR-L-R-2” etc. Note: if a product doesn’t have an SKU default
+Odoo sequence will be used.</li>
+</ol>
+</li>
 </ol>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
 <p>To use this module you need to:</p>
 <ol class="arabic simple">
-<li>Go to a <em>Product &gt; General Information tab</em>.</li>
-<li>Set a tracking option for this product.</li>
-<li>Set auto create lot.</li>
-<li>Go to <em>Inventory &gt; Incoming</em> and create one.</li>
-<li>Validate picking without lot.</li>
+<li>Create an incoming inventory operation</li>
+<li>Do not add lots or serial numbers manually</li>
+<li>Validate the operation</li>
+<li>Lots/serial numbers will be created automatically</li>
 </ol>
 </div>
 <div class="section" id="bug-tracker">
@@ -434,6 +461,11 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Valentin Vinagre &lt;<a class="reference external" href="mailto:valentin.vinagre&#64;sygel.es">valentin.vinagre&#64;sygel.es</a>&gt;</li>
 <li><a class="reference external" href="https://www.quartile.co">Quartile</a>:<ul>
 <li>Aung Ko Ko Lin</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://cetmix.com/">Cetmix</a><ul>
+<li>Ivan Sokolov</li>
+<li>Dmitry Meita</li>
 </ul>
 </li>
 </ul>
