@@ -390,3 +390,17 @@ class ChangeLotCase(TransactionCase):
         self.assert_quant_reserved_qty(
             line, lambda: line.reserved_qty, package=new_package
         )
+
+    def test_write_recordset(self):
+        """
+        Test that writing a recordset on stock.move.line#lot_id works
+        """
+        lot = self._create_lot(self.product_a)
+        self._update_qty_in_location(self.shelf1, self.product_a, 10, lot=lot)
+        picking = self._create_picking(lines=[(self.product_a, 10)])
+        picking.action_assign()
+        line = picking.move_line_ids
+        line.write({"lot_id": lot})
+        self.assert_quant_reserved_qty(line, lambda: 10, lot=lot)
+        line.write({"lot_id": self.env["stock.lot"]})
+        self.assert_quant_reserved_qty(line, lambda: 0, lot=lot)
