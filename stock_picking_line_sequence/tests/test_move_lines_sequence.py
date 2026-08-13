@@ -11,6 +11,7 @@ class TestStockMove(common.TransactionCase):
         super().setUp()
         # Useful models
         self.Picking = self.env["stock.picking"]
+        self.SaleOrder = self.env["sale.order"]
         self.product_id_1 = self.env.ref("product.product_product_8")
         self.product_id_2 = self.env.ref("product.product_product_11")
         self.product_id_3 = self.env.ref("product.product_product_6")
@@ -66,6 +67,32 @@ class TestStockMove(common.TransactionCase):
             }
         )
         return picking
+
+    def _create_saleorder(self):
+        """Create a Sale Order."""
+        order = self.SaleOrder.create(
+            {
+                "partner_id": self.env.ref("base.res_partner_3").id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_id_1.id, "product_uom_qty": 5.0},
+                    ),
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_id_2.id, "product_uom_qty": 5.0},
+                    ),
+                    (
+                        0,
+                        0,
+                        {"product_id": self.product_id_3.id, "product_uom_qty": 5.0},
+                    ),
+                ],
+            }
+        )
+        return order
 
     def test_move_lines_sequence(self):
         self.picking = self._create_picking()
@@ -131,3 +158,13 @@ class TestStockMove(common.TransactionCase):
                 agg_mls[key]["sequence2"],
                 "The Sequence is not copied properly in " "the aggregated move lines",
             )
+
+    def test_move_lines_sequence_on_saleorder(self):
+        order = self._create_saleorder()
+        order.action_confirm()
+        moves = order.picking_ids[0].move_ids
+        self.assertEqual(
+            moves.mapped("sequence2"),
+            list(range(1, len(moves) + 1)),
+            "Wrong sequence on delivery generated from a sale order",
+        )

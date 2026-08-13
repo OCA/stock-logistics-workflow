@@ -28,3 +28,11 @@ class StockMove(models.Model):
         if not self.env.context.get("keep_line_sequence", False):
             move.picking_id._reset_sequence()
         return move
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "picking_id" in vals and not self.env.context.get(
+            "keep_line_sequence", False
+        ):
+            self.picking_id._reset_sequence()
+        return res
