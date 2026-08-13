@@ -36,14 +36,11 @@ class ResConfigSettings(models.TransientModel):
     @api.model
     def get_values(self):
         res = super().get_values()
-        visible_ids = (
-            self.env["stock.picking.type"]
-            .search(
-                [
-                    ("portal_visible", "=", True),
-                ],
-            )
-            .ids
+        visible_ids = self.env["stock.picking.type"].search(
+            [("portal_visible", "=", True)]
         )
-        res.update(portal_visible_operation_ids=visible_ids)
+        if visible_ids:
+            res.update(
+                {"portal_visible_operation_ids": [(4, vid) for vid in visible_ids.ids]}
+            )
         return res

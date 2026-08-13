@@ -23,9 +23,9 @@ class CustomerPortal(portal.CustomerPortal):
             list: domain to search for operations for the given partner.
 
         """
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
+        portal_visible_operation_ids = (
+            request.env["stock.picking.type"].sudo()._get_available_operations()
+        )
         return [
             ("partner_id", "=", partner.id),
             ("picking_type_id", "in", portal_visible_operation_ids),
@@ -48,6 +48,9 @@ class CustomerPortal(portal.CustomerPortal):
                 stock_operations_count if stock_operations_count > 0 else "0"
             )
         return values
+
+    def _get_stock_operations_base_url(self):
+        return "/my/stock_operations"
 
     @http.route(
         ["/my/stock_operations", "/my/stock_operations/page/<int:page>"],
@@ -97,6 +100,8 @@ class CustomerPortal(portal.CustomerPortal):
         date_end=None,
         sortby=None,
         filterby=None,
+        domain=None,
+        base_url=None,
         **kwargs,
     ):
         """
@@ -114,6 +119,13 @@ class CustomerPortal(portal.CustomerPortal):
                 Defaults to "date".
             filterby (str, optional): The filter to apply to the stock pickings.
                 Defaults to "all".
+            domain (list, optional): Domain overriding the default one returned by
+                `_get_prepared_operation_domain`. Allows extending modules to
+                specialize the listing without altering the request context.
+                Defaults to None.
+            base_url (str, optional): Base URL overriding the one returned by
+                `_get_stock_operations_base_url`, used to build the pager and
+                default URLs. Defaults to None.
             **kwargs: Additional keyword arguments.
 
         Returns:
@@ -122,16 +134,21 @@ class CustomerPortal(portal.CustomerPortal):
         """
         partner = request.env.user.partner_id
         StockPicking = request.env["stock.picking"]
-        url = "/my/stock_operations"
-        domain = self._get_prepared_operation_domain(partner)
+        url = base_url or self._get_stock_operations_base_url()
+        if domain is None:
+            domain = self._get_prepared_operation_domain(partner)
+        searchbar_sortings = self._get_stock_operations_searchbar_sortings()
+        searchbar_filters = self._get_stock_operations_searchbar_filters()
         if not sortby:
+            sortby = "date"
+        elif sortby not in searchbar_sortings:
             sortby = "date"
         if not filterby:
             filterby = "all"
-        searchbar_filters = self._get_stock_operations_searchbar_filters()
+        elif filterby not in searchbar_filters:
+            filterby = "all"
         domain += searchbar_filters[filterby]["domain"]
         values = self._prepare_portal_layout_values()
-        searchbar_sortings = self._get_stock_operations_searchbar_sortings()
         sort_order = searchbar_sortings[sortby]["order"]
         if date_begin and date_end:
             domain += [
@@ -143,7 +160,12 @@ class CustomerPortal(portal.CustomerPortal):
             total=StockPicking.search_count(domain),
             page=page,
             step=self._items_per_page,
-            url_args={"date_begin": date_begin, "date_end": date_end, "sortby": sortby},
+            url_args={
+                "date_begin": date_begin,
+                "date_end": date_end,
+                "sortby": sortby,
+                "filterby": filterby,
+            },
         )
         operations = StockPicking.search(
             domain,
@@ -187,8 +209,9 @@ class CustomerPortal(portal.CustomerPortal):
 
         Args:
             operation_id (int): The ID of the stock operation to render.
-            report_type (str, optional): The type of report to generate for the stock operation.
-                Can be "html", "pdf", or "text". Defaults to None.
+            report_type (str, optional): The type of report to generate for the
+            stock operation.
+            Can be "html", "pdf", or "text". Defaults to None.
             access_token (str, optional): The access token for the stock operation.
                                           Defaults to None.
             message (bool or str, optional): A message to display on the page.
@@ -210,9 +233,9 @@ class CustomerPortal(portal.CustomerPortal):
                 report_ref="stock.action_report_delivery",
                 download=download,
             )
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
+        portal_visible_operation_ids = (
+            request.env["stock.picking.type"].sudo()._get_available_operations()
+        )
         if (
             not portal_visible_operation_ids
             or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
@@ -275,12 +298,13 @@ class CustomerPortal(portal.CustomerPortal):
             access_token (str, optional): The access token for the portal user.
                 If not provided, it will be retrieved from the query string.
             name (str, optional): The name of the user accepting the operation.
-            signature (str, optional): The signature of the user accepting the operation.
+            signature (str, optional): The signature of the user accepting
+            the operation.
 
         Returns:
-            dict: A dictionary containing the URL to redirect the user to after accepting
-                the operation, and a flag to indicate whether to force a refresh of the
-                page."""
+            dict: A dictionary containing the URL to redirect the user
+            to after accepting the operation, and a flag to indicate
+            whether to force a refresh of the page."""
         access_token = access_token or request.httprequest.args.get("access_token")
         try:
             operation_sudo = self._document_check_access(

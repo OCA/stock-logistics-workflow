@@ -1,15 +1,18 @@
 # Copyright (C) 2024 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestPortalConfigSettings(TransactionCase):
+class TestPortalConfigSettings(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.PickingType = cls.env["stock.picking.type"]
+        cls.PickingType.search([]).write({"portal_visible": False})
         cls.type_outgoing = cls.PickingType.search([("code", "=", "outgoing")], limit=1)
         cls.type_incoming = cls.PickingType.search([("code", "=", "incoming")], limit=1)
         cls.type_outgoing.write({"portal_visible": False})
@@ -60,8 +63,8 @@ class TestPortalConfigSettings(TransactionCase):
         visible_ids = values.get("portal_visible_operation_ids", [])
 
         self.assertEqual(
-            set(visible_ids),
-            {self.type_outgoing.id, self.type_incoming.id},
+            visible_ids,
+            [(4, self.type_incoming.id), (4, self.type_outgoing.id)],
             "Should return IDs of both visible types",
         )
 
@@ -71,12 +74,12 @@ class TestPortalConfigSettings(TransactionCase):
         visible_ids = values.get("portal_visible_operation_ids", [])
 
         self.assertIn(
-            self.type_outgoing.id,
+            (4, self.type_outgoing.id),
             visible_ids,
             "Outgoing ID should still be in visible list",
         )
         self.assertNotIn(
-            self.type_incoming.id,
+            (4, self.type_incoming.id),
             visible_ids,
             "Incoming ID should be excluded after making it invisible",
         )
