@@ -42,4 +42,4 @@ class TestStockLockLot(common.TransactionCase):
         # This should work correctly
         lot = self.env["stock.lot"].create(self._get_lot_default_vals())
         with self.assertRaises(exceptions.AccessError):
-            lot.locked = False
+            lot.write({"locked": False})
