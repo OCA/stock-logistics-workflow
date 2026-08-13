@@ -11,7 +11,7 @@
             <field name="package_id" position="after">
                 <field
                     name="package_dest_id"
-                    attrs="{'readonly': [('state', 'in', ('confirmed', 'assigned', 'done', 'cancel'))]}"
+                    readonly="state in ('confirmed', 'assigned', 'done', 'cancel')"
                     options="{'no_create': True}"
                 />
             </field>

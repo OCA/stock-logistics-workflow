@@ -1,10 +1,10 @@
 # Copyright (C) 2023 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPicking(TransactionCase):
+class TestStockPicking(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -61,7 +61,7 @@ class TestStockPicking(TransactionCase):
         product1 = self.Product.create(
             {
                 "name": "Test Product 1",
-                "type": "product",
+                "is_storable": True,
                 "default_code": "TEST_PROD1",
                 "tracking": "none",
             }
@@ -69,7 +69,7 @@ class TestStockPicking(TransactionCase):
         product2 = self.Product.create(
             {
                 "name": "Test Product 2",
-                "type": "product",
+                "is_storable": True,
                 "default_code": "TEST_PROD2",
                 "tracking": "none",
             }
@@ -90,7 +90,7 @@ class TestStockPicking(TransactionCase):
             {
                 "product_id": product1.id,
                 "product_uom_id": self.uom_unit.id,
-                "qty_done": 3.0,
+                "quantity": 3.0,
                 "picking_id": incoming_picking1.id,
             }
         )
@@ -123,7 +123,7 @@ class TestStockPicking(TransactionCase):
             {
                 "product_id": product2.id,
                 "product_uom_id": self.uom_unit.id,
-                "qty_done": 2.0,
+                "quantity": 2.0,
                 "picking_id": incoming_picking2.id,
             }
         )
@@ -142,6 +142,7 @@ class TestStockPicking(TransactionCase):
         # Move package2 to package1
         package_level2.package_dest_id = package1
         self.assertTrue(package_level2.is_done)
+        self.assertEqual(package_level2.package_id, package2)
 
         # Validate the picking
         internal_picking2.action_confirm()
@@ -198,7 +199,7 @@ class TestStockPicking(TransactionCase):
         product1 = self.Product.create(
             {
                 "name": "Test Product 11",
-                "type": "product",
+                "is_storable": True,
                 "default_code": "TEST_PROD11",
                 "tracking": "lot",
             }
@@ -206,7 +207,7 @@ class TestStockPicking(TransactionCase):
         product2 = self.Product.create(
             {
                 "name": "Test Product 22",
-                "type": "product",
+                "is_storable": True,
                 "default_code": "TEST_PROD22",
                 "tracking": "serial",
             }
@@ -227,7 +228,7 @@ class TestStockPicking(TransactionCase):
             {
                 "product_id": product1.id,
                 "product_uom_id": self.uom_unit.id,
-                "qty_done": 3.0,
+                "quantity": 3.0,
                 "picking_id": incoming_picking1.id,
                 "lot_name": "LOT11",
             }
@@ -261,7 +262,7 @@ class TestStockPicking(TransactionCase):
             {
                 "product_id": product2.id,
                 "product_uom_id": self.uom_unit.id,
-                "qty_done": 1.0,
+                "quantity": 1.0,
                 "picking_id": incoming_picking2.id,
                 "lot_name": "SERIAL22",
             }
@@ -281,6 +282,7 @@ class TestStockPicking(TransactionCase):
         # Move package2 to package1
         package_level2.package_dest_id = package1
         self.assertTrue(package_level2.is_done)
+        self.assertEqual(package_level2.package_id, package2)
 
         # Validate the picking
         internal_picking2.action_confirm()

@@ -34,14 +34,20 @@ class StockPackageLevel(models.Model):
 
     def _inverse_package_dest_id(self):
         """
-        Inverse method for `package_dest_id`. Flags the package level as done if needed and
-        updates `result_package_id` on related move lines.
+        Inverse method for `package_dest_id`. Flags the package level as done
+        if needed and updates `result_package_id` on related move lines.
         """
         for level in self:
             if level.package_dest_id and not level.is_done:
                 level.is_done = True
 
             if level.package_dest_id:
+                source_package = level.package_id
                 level.move_line_ids.write(
                     {"result_package_id": level.package_dest_id.id}
                 )
+                # In Odoo 18, changing a move line destination package also
+                # changes its package level package. Keep the source package
+                # on the package level while its move lines target the
+                # selected destination package.
+                level.package_id = source_package
