@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Antoni Marroig(APSL-Nagarro)<amarroig@apsl.net>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="view_stock_quant_tree_editable_inherit">
+        <field name="name">stock.quant.tree.editable.inherit</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='inventory_quantity_auto_apply']"
+                position="after"
+            >
+                <field name="inventory_weight" sum="Total Weight" />
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_quant_tree_inherit">
+        <field name="name">stock.quant.tree.inherit</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quantity']" position="after">
+                <field name="inventory_weight" on_change="1" />
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,1 @@
+This module extends the stock management features of Odoo to improve logistics and weight tracking. It automatically calculates and displays the total weight of stock moves, pickings, and related operations based on product weight and the selected unit of measure (UoM).
