@@ -134,9 +134,14 @@ class CustomerPortal(portal.CustomerPortal):
         """
         partner = request.env.user.partner_id
         StockPicking = request.env["stock.picking"]
+<<<<<<< HEAD
         url = base_url or self._get_stock_operations_base_url()
         if domain is None:
             domain = self._get_prepared_operation_domain(partner)
+=======
+        url = "/my/stock_operations"
+        domain = self._get_prepared_operation_domain(partner)
+>>>>>>> d4e206929 ([MIG] stock_picking_portal: Migration to 17.0)
         searchbar_sortings = self._get_stock_operations_searchbar_sortings()
         searchbar_filters = self._get_stock_operations_searchbar_filters()
         if not sortby:
