@@ -23,10 +23,12 @@ class TestStockPickingPortal(HttpCase):
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.config_obj = cls.env["res.config.settings"]
         cls.stock_picking_obj = cls.env["stock.picking"]
+        cls.stock_picking_type_obj = cls.env["stock.picking.type"]
         cls.picking_link_wizard = cls.env["picking.link.wizard"]
 
         company_id = cls.env.ref("base.main_company").id
         cls.CustomerPortalController = CustomerPortal()
+        cls.env["stock.picking.type"].search([]).write({"portal_visible": False})
         cls.operation_types = cls.env["stock.picking.type"].search(
             [
                 ("code", "in", ["incoming", "outgoing"]),
@@ -101,8 +103,8 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_1(self):
-        """Ensure that it is possible to open Stock Operations, either using the access token
-        or being connected as portal user"""
+        """Ensure that it is possible to open Stock Operations, either using
+        the access token or being connected as portal user"""
 
         picking = self._get_picking()
         login = None
@@ -119,7 +121,7 @@ class TestStockPickingPortal(HttpCase):
         )
         picking._portal_ensure_token()
         picking_token = picking.access_token
-        picking_url = "%s?access_token=%s" % (picking_url, picking_token)
+        picking_url = f"{picking_url}?access_token={picking_token}"
 
         response = self.url_open(
             url=picking_url,
@@ -149,8 +151,8 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_2(self):
-        """Check that it is possible to open Stock Operations, either using the access token
-        or being connected as portal user"""
+        """Check that it is possible to open Stock Operations, either using
+        the access token or being connected as portal user"""
 
         picking = self._get_picking()
         login = self.portal_user_1.login
@@ -218,8 +220,10 @@ class TestStockPickingPortal(HttpCase):
         date_begin = datetime.now() + relativedelta(days=-1)
         date_end = datetime.now() + relativedelta(days=1)
         response = self.url_open(
-            url="/my/stock_operations?date_begin=%s&date_end=%s"
-            % (date_begin.strftime("%Y-%m-%d"), date_end.strftime("%Y-%m-%d")),
+            url=(
+                f"/my/stock_operations?date_begin={date_begin.strftime('%Y-%m-%d')}"
+                f"&date_end={date_end.strftime('%Y-%m-%d')}"
+            ),
             allow_redirects=True,
         )
         self.assertEqual(
@@ -242,7 +246,7 @@ class TestStockPickingPortal(HttpCase):
         """Check that the portal_visible_operation_ids are correctly set"""
 
         self.assertFalse(
-            self.stock_picking_obj._get_available_operations(),
+            self.stock_picking_type_obj._get_available_operations(),
             msg="No operations should be available",
         )
 
@@ -253,7 +257,7 @@ class TestStockPickingPortal(HttpCase):
         )
         config.execute()
         portal_visible_operation_ids = (
-            self.stock_picking_obj._get_available_operations()
+            self.stock_picking_type_obj._get_available_operations()
         )
         self.assertEqual(
             portal_visible_operation_ids,
@@ -266,15 +270,12 @@ class TestStockPickingPortal(HttpCase):
         picking = self._get_picking()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = "/my/stock_operations/%s?access_token=%s&message=sign_ok" % (
-            picking.id,
-            access_token,
+        redirect_url = (
+            f"/my/stock_operations/{picking.id}?access_token={access_token}"
+            "&message=sign_ok"
         )
         base_url = picking.get_base_url()
-        url = "/my/stock_operations/%s/accept?access_token=%s" % (
-            picking.id,
-            access_token,
-        )
+        url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
         data = {
             "params": {
                 "name": self.portal_user_1.name,
@@ -337,8 +338,8 @@ class TestStockPickingPortal(HttpCase):
         picking_link._compute_link()
         self.assertEqual(
             picking_link.link,
-            "%s/my/stock_operations/%s?access_token=%s"
-            % (picking.get_base_url(), picking.id, picking.access_token),
+            f"{picking.get_base_url()}/my/stock_operations/{picking.id}"
+            f"?access_token={picking.access_token}",
             msg="The signature link should be correctly generated",
         )
 
@@ -479,6 +480,7 @@ class TestStockPickingPortal(HttpCase):
         base = picking.get_base_url()
         url = f"{base}/my/stock_operations/{picking.id}?access_token={token}"
 
+        self.authenticate(self.portal_user_1.login, self.portal_user_1.login)
         response = self.opener.get(url)
         self.assertEqual(
             response.status_code, 200, "First GET with access_token should return 200."

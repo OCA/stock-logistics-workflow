@@ -23,9 +23,9 @@ class CustomerPortal(portal.CustomerPortal):
             list: domain to search for operations for the given partner.
 
         """
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
+        portal_visible_operation_ids = (
+            request.env["stock.picking.type"].sudo()._get_available_operations()
+        )
         return [
             ("partner_id", "=", partner.id),
             ("picking_type_id", "in", portal_visible_operation_ids),
@@ -48,6 +48,9 @@ class CustomerPortal(portal.CustomerPortal):
                 stock_operations_count if stock_operations_count > 0 else "0"
             )
         return values
+
+    def _get_stock_operations_base_url(self):
+        return "/my/stock_operations"
 
     @http.route(
         ["/my/stock_operations", "/my/stock_operations/page/<int:page>"],
@@ -187,8 +190,9 @@ class CustomerPortal(portal.CustomerPortal):
 
         Args:
             operation_id (int): The ID of the stock operation to render.
-            report_type (str, optional): The type of report to generate for the stock operation.
-                Can be "html", "pdf", or "text". Defaults to None.
+            report_type (str, optional): The type of report to generate for the
+            stock operation.
+            Can be "html", "pdf", or "text". Defaults to None.
             access_token (str, optional): The access token for the stock operation.
                                           Defaults to None.
             message (bool or str, optional): A message to display on the page.
@@ -210,9 +214,9 @@ class CustomerPortal(portal.CustomerPortal):
                 report_ref="stock.action_report_delivery",
                 download=download,
             )
-        portal_visible_operation_ids = request.env[
-            "stock.picking"
-        ]._get_available_operations()
+        portal_visible_operation_ids = (
+            request.env["stock.picking.type"].sudo()._get_available_operations()
+        )
         if (
             not portal_visible_operation_ids
             or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
@@ -275,12 +279,13 @@ class CustomerPortal(portal.CustomerPortal):
             access_token (str, optional): The access token for the portal user.
                 If not provided, it will be retrieved from the query string.
             name (str, optional): The name of the user accepting the operation.
-            signature (str, optional): The signature of the user accepting the operation.
+            signature (str, optional): The signature of the user accepting
+            the operation.
 
         Returns:
-            dict: A dictionary containing the URL to redirect the user to after accepting
-                the operation, and a flag to indicate whether to force a refresh of the
-                page."""
+            dict: A dictionary containing the URL to redirect the user
+            to after accepting the operation, and a flag to indicate
+            whether to force a refresh of the page."""
         access_token = access_token or request.httprequest.args.get("access_token")
         try:
             operation_sudo = self._document_check_access(

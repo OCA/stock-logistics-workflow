@@ -1,11 +1,13 @@
 # Copyright (C) 2025 Cetmix OÜ
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import tagged
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestPickingLinkWizard(TransactionCase):
+class TestPickingLinkWizard(BaseCommon):
     def setUp(self):
         super().setUp()
         # Create test product

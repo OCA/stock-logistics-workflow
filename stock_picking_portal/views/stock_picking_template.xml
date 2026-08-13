@@ -27,11 +27,18 @@
         priority="99"
     >
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
-            <t t-call="portal.portal_docs_entry">
-                <t t-set="title">Stock Operations</t>
-                <t t-set="url" t-value="'/my/stock_operations'" />
-                <t t-set="placeholder_count" t-value="'stock_operations_count'" />
-            </t>
+            <div class="o_portal_category row g-2 mt-3" id="portal_stock_category">
+                <t t-call="portal.portal_docs_entry">
+                    <t
+                        t-set="icon"
+                        t-value="'/stock_picking_portal/static/src/img/stock.svg'"
+                    />
+                    <t t-set="title">Stock Operations</t>
+                    <t t-set="url" t-value="'/my/stock_operations'" />
+                    <t t-set="text">Follow, view your operations</t>
+                    <t t-set="placeholder_count" t-value="'stock_operations_count'" />
+                </t>
+            </div>
         </xpath>
     </template>
     <template id="portal_my_stock_operations" name="My Stock Operations">
@@ -74,7 +81,7 @@
                             />
                         </td>
                         <td class="text-center">
-                            <t t-out="operation.partner_id.name" />
+                            <t t-out="operation.partner_id.sudo().name" />
                         </td>
                         <td class="text-center">
                             <span
@@ -338,7 +345,7 @@
                         <td>
                             <span t-field="move.product_id" />
                             <p
-                                t-if="move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
+                                t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
                             >
                                 <span t-field="move.description_picking" />
                             </p>
@@ -348,7 +355,7 @@
                             <span t-field="move.product_uom" />
                         </td>
                         <td>
-                            <span t-field="move.quantity_done" />
+                            <span t-field="move.quantity" />
                             <span t-field="move.product_uom" />
                         </td>
                     </tr>
