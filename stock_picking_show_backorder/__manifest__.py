@@ -7,7 +7,7 @@
     "category": "Warehouse Management",
     "summary": "Provides a new field on stock pickings, allowing to display "
     "the corresponding backorders.",
-    "author": "ForgeFlow, " "Odoo Community Association (OCA)",
+    "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock"],
     "data": ["views/stock_view.xml"],
