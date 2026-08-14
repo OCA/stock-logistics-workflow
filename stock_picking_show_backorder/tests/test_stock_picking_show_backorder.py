@@ -1,18 +1,18 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestStockPickingShowBackorder(TransactionCase):
+class TestStockPickingShowBackorder(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.src_location = cls.env.ref("stock.stock_location_stock")
         cls.dest_location = cls.env.ref("stock.stock_location_customers")
         cls.product = cls.env["product.product"].create({"name": "Test product"})
-        cls.partner = cls.env["res.partner"].create({"name": "Test partner"})
         cls.picking = cls.env["stock.picking"].create(
             {
                 "partner_id": cls.partner.id,
@@ -23,7 +23,6 @@ class TestStockPickingShowBackorder(TransactionCase):
         )
         cls.move = cls.env["stock.move"].create(
             {
-                "name": "/",
                 "picking_id": cls.picking.id,
                 "product_id": cls.product.id,
                 "product_uom_qty": 20,
