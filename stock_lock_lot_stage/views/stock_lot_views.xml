@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_production_lot_form" model="ir.ui.view">
+        <field name="name">stock.lot.form.inherit.lock.stage</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <field
+                        name="stage_id"
+                        widget="statusbar"
+                        options="{'clickable': '1'}"
+                    />
+                </header>
+            </sheet>
+            <field name="locked" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <notebook position="inside">
+                <page string="Quality Control" name="quality_control">
+                    <group>
+                        <group name="qc_quantities">
+                            <field name="partial_approved_qty" />
+                        </group>
+                        <group name="qc_tracking">
+                            <field name="usable_location_qty" />
+                            <field name="last_unlocked_by" />
+                            <field name="last_unlocked_at" />
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree" model="ir.ui.view">
+        <field name="name">stock.lot.tree.inherit.lock.stage</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            <field name="create_date" position="after">
+                <field name="stage_id" optional="show" />
+            </field>
+            <field name="product_qty" position="after">
+                <field name="usable_location_qty" optional="hide" />
+                <field name="last_unlocked_by" optional="hide" />
+                <field name="last_unlocked_at" optional="hide" />
+            </field>
+            <field name="locked" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="search_product_lot_filter" model="ir.ui.view">
+        <field name="name">stock.lot.search.inherit.lock.stage</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter" />
+        <field name="arch" type="xml">
+            <filter name="group_by_product" position="before">
+                <filter
+                    name="group_by_stage"
+                    string="Stage"
+                    domain="[]"
+                    context="{'group_by': 'stage_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="stock.action_production_lot_form" model="ir.actions.act_window">
+        <field
+            name="context"
+        >{'search_default_group_by_stage': 1, 'search_default_on_hand': 1, 'display_complete': True, 'default_company_id': allowed_company_ids[0]}</field>
+    </record>
+
+</odoo>
