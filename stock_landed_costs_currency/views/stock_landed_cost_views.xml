@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id='view_stock_landed_cost_form' model='ir.ui.view'>
+    <record id="view_stock_landed_cost_form" model="ir.ui.view">
         <field name="name">stock.landed.cost.form</field>
         <field name="model">stock.landed.cost</field>
         <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form" />
@@ -8,15 +8,15 @@
             <xpath expr="//field[@name='account_journal_id']" position="after">
                 <field
                     name="currency_id"
-                    attrs="{'readonly': [('state', '=', 'done')]}"
+                    readonly="state == 'done'"
                     groups="base.group_multi_currency"
                 />
             </xpath>
-            <xpath expr="//tree/field[@name='price_unit']" position="before">
+            <xpath expr="//list/field[@name='price_unit']" position="before">
                 <field name="currency_price_unit" />
-                <field name="currency_id" invisible="1" />
+                <field name="currency_id" column_invisible="1" />
             </xpath>
-            <xpath expr="//tree/field[@name='price_unit']" position="attributes">
+            <xpath expr="//list/field[@name='price_unit']" position="attributes">
                 <attribute name="readonly">1</attribute>
                 <attribute name="force_save">1</attribute>
                 <attribute name="groups">base.group_multi_currency</attribute>
