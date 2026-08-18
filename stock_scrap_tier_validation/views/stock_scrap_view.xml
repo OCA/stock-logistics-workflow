@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_scrap_filter" model="ir.ui.view">
+        <field name="name">stock.scrap.select - sale_tier_validation</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="after">
+                <filter
+                    name="needs_review"
+                    string="Needs my Review"
+                    domain="[('reviewer_ids','in',uid), ('state', '=', 'draft')]"
+                    help="My Scraps to review"
+                />
+                <filter
+                    name="tier_validated"
+                    string="Validated"
+                    domain="[('validated', '=', True)]"
+                    help="Scraps validated and ready to be confirmed"
+                />
+            </xpath>
+        </field>
+    </record>
+    <!--
+         Boost this minimal view with sheet and header tags,
+         for compatibility with base_tier_validation's automatic
+         view manipulation.
+    -->
+    <record id="stock_scrap_form_view2" model="ir.ui.view">
+        <field name="inherit_id" ref="stock.stock_scrap_form_view2" />
+        <field name="model">stock.scrap</field>
+        <field name="priority" eval="999" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/group" position="before">
+                <header>
+                    <!-- Include some buttons from the primary form -->
+                    <button
+                        name="action_validate"
+                        invisible="state != 'draft'"
+                        string="Validate"
+                        type="object"
+                        class="oe_highlight"
+                        context="{'not_unlink_on_discard': True}"
+                        data-hotkey="v"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,done"
+                    />
+                </header>
+                <sheet />
+                <footer position="replace" />
+            </xpath>
+            <sheet position="inside">
+                <xpath expr="/form/group" position="move" />
+            </sheet>
+        </field>
+    </record>
+</odoo>
