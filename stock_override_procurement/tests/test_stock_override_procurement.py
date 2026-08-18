@@ -32,6 +32,7 @@ class TestStockOverrideProcurement(TransactionCase):
                                 "picking_type_id": cls.picking_type_out.id,
                                 "location_src_id": cls.stock_location.id,
                                 "location_dest_id": cls.customer_location.id,
+                                "location_dest_from_rule": True,
                             },
                         )
                     ],
@@ -48,6 +49,7 @@ class TestStockOverrideProcurement(TransactionCase):
                                 "picking_type_id": cls.picking_type_internal.id,
                                 "location_src_id": cls.stock_location.id,
                                 "location_dest_id": cls.output_location.id,
+                                "location_dest_from_rule": True,
                             },
                         )
                     ],

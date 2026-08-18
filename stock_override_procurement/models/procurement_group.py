@@ -5,7 +5,6 @@ from odoo import api, models
 
 
 class ProcurementGroup(models.Model):
-
     _inherit = "procurement.group"
 
     @api.model
