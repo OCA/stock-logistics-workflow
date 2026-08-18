@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_delivery_document_inherit"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath
+            expr="//table[@name='stock_move_table']//span[@t-field='move.product_id']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not move.company_id.display_customer_product_info_report or not move.product_customer_name</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_move_table']//span[@t-field='move.product_id']"
+            position="after"
+        >
+            <t t-else="">
+                <span t-out="'[%s]' % move.product_customer_code" />
+                <span t-field="move.product_customer_name" />
+            </t>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_backorder_table']//span[@t-field='bo_line.product_id']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not bo_line.company_id.display_customer_product_info_report or not bo_line.product_customer_name</attribute>
+        </xpath>
+        <xpath
+            expr="//table[@name='stock_backorder_table']//span[@t-field='bo_line.product_id']"
+            position="after"
+        >
+            <t t-else="">
+                <span t-out="'[%s]' % bo_line.product_customer_code" />
+                <span t-field="bo_line.product_customer_name" />
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line_inherit"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//td/span[@t-field='move_line.product_id']" position="attributes">
+            <attribute
+                name="t-if"
+            >not move_line.company_id.display_customer_product_info_report or not move_line.move_id.product_customer_name</attribute>
+        </xpath>
+        <xpath expr="//td/span[@t-field='move_line.product_id']" position="after">
+            <t t-else="">
+                <span t-out="'[%s]' % move_line.move_id.product_customer_code" />
+                <span t-field="move_line.move_id.product_customer_name" />
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_report_delivery_aggregated_move_lines_inherit"
+        inherit_id="stock.stock_report_delivery_aggregated_move_lines"
+    >
+        <xpath
+            expr="//td/span[@t-out=&quot;aggregated_lines[line]['name']&quot;]"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not aggregated_lines[line]['move'] or not aggregated_lines[line]['move'].company_id.display_customer_product_info_report or not aggregated_lines[line]['move'].product_customer_name</attribute>
+        </xpath>
+        <xpath
+            expr="//td/span[@t-out=&quot;aggregated_lines[line]['name']&quot;]"
+            position="after"
+        >
+            <t t-else="">
+                <span
+                    t-out="'[%s]' % aggregated_lines[line]['move'].product_customer_code"
+                />
+                <span t-field="aggregated_lines[line]['move'].product_customer_name" />
+            </t>
+        </xpath>
+    </template>
+</odoo>

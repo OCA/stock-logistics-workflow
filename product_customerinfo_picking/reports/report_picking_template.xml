@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_picking_inherit" inherit_id="stock.report_picking">
+        <xpath
+            expr="//table[hasclass('o_main_table')]//span[@t-field='move.product_id.display_name']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >not move.company_id.display_customer_product_info_report or not move.product_customer_name</attribute>
+        </xpath>
+        <xpath
+            expr="//table[hasclass('o_main_table')]//span[@t-field='move.product_id.display_name']"
+            position="after"
+        >
+            <t t-else="">
+                <span t-out="'[%s]' % move.product_customer_code" />
+                <span t-field="move.product_customer_name" />
+            </t>
+        </xpath>
+    </template>
+</odoo>
