@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock.menu_warehouse_report" model="ir.ui.menu">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('stock_reporting_access.group_stock_reporting_user'))]"
+        />
+    </record>
+</odoo>
