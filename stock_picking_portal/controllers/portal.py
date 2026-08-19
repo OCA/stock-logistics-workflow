@@ -100,8 +100,6 @@ class CustomerPortal(portal.CustomerPortal):
         date_end=None,
         sortby=None,
         filterby=None,
-        domain=None,
-        base_url=None,
         **kwargs,
     ):
         """
@@ -119,13 +117,6 @@ class CustomerPortal(portal.CustomerPortal):
                 Defaults to "date".
             filterby (str, optional): The filter to apply to the stock pickings.
                 Defaults to "all".
-            domain (list, optional): Domain overriding the default one returned by
-                `_get_prepared_operation_domain`. Allows extending modules to
-                specialize the listing without altering the request context.
-                Defaults to None.
-            base_url (str, optional): Base URL overriding the one returned by
-                `_get_stock_operations_base_url`, used to build the pager and
-                default URLs. Defaults to None.
             **kwargs: Additional keyword arguments.
 
         Returns:
@@ -134,26 +125,16 @@ class CustomerPortal(portal.CustomerPortal):
         """
         partner = request.env.user.partner_id
         StockPicking = request.env["stock.picking"]
-<<<<<<< HEAD
-        url = base_url or self._get_stock_operations_base_url()
-        if domain is None:
-            domain = self._get_prepared_operation_domain(partner)
-=======
         url = "/my/stock_operations"
         domain = self._get_prepared_operation_domain(partner)
->>>>>>> d4e206929 ([MIG] stock_picking_portal: Migration to 17.0)
-        searchbar_sortings = self._get_stock_operations_searchbar_sortings()
-        searchbar_filters = self._get_stock_operations_searchbar_filters()
         if not sortby:
-            sortby = "date"
-        elif sortby not in searchbar_sortings:
             sortby = "date"
         if not filterby:
             filterby = "all"
-        elif filterby not in searchbar_filters:
-            filterby = "all"
+        searchbar_filters = self._get_stock_operations_searchbar_filters()
         domain += searchbar_filters[filterby]["domain"]
         values = self._prepare_portal_layout_values()
+        searchbar_sortings = self._get_stock_operations_searchbar_sortings()
         sort_order = searchbar_sortings[sortby]["order"]
         if date_begin and date_end:
             domain += [
@@ -165,12 +146,7 @@ class CustomerPortal(portal.CustomerPortal):
             total=StockPicking.search_count(domain),
             page=page,
             step=self._items_per_page,
-            url_args={
-                "date_begin": date_begin,
-                "date_end": date_end,
-                "sortby": sortby,
-                "filterby": filterby,
-            },
+            url_args={"date_begin": date_begin, "date_end": date_end, "sortby": sortby},
         )
         operations = StockPicking.search(
             domain,
