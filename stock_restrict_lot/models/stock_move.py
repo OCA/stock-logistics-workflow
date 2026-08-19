@@ -121,7 +121,11 @@ class StockMove(models.Model):
         Check that the lot set on move lines
         is the same as the restricted lot set on the move
         """
-        for move in self:
+        # ``_action_done`` may unlink some of the moves it processed (e.g. when a
+        # product is converted to a kit, the original move is replaced by its
+        # component moves), so ``self`` can still reference deleted records here.
+        # Iterate only over the ones that still exist to avoid a MissingError.
+        for move in self.exists():
             if not (move.restrict_lot_id and move.move_line_ids):
                 continue
             move_line_lot = move.mapped("move_line_ids.lot_id")
