@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.date.done</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="date_done" position="before">
+                <field name="is_date_done_editable" invisible="1" />
+                <field name="date_done_edited" invisible="1" />
+            </field>
+            <field name="date_done" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="readonly">not is_date_done_editable</attribute>
+            </field>
+            <field name="date_done" position="after">
+                <field name="origin_date_done" invisible="not date_done_edited" />
+            </field>
+        </field>
+    </record>
+</odoo>
