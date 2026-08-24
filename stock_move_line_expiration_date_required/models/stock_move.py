@@ -3,7 +3,7 @@
 
 import datetime
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class StockMove(models.Model):
@@ -19,6 +19,34 @@ class StockMove(models.Model):
             record.all_expiry_dates_set = not record.use_expiration_date or all(
                 record.move_line_ids.filtered("quantity").mapped("expiration_date")
             )
+
+    @api.model
+    def action_generate_lot_line_vals(
+        self, context_data, mode, first_lot, count, lot_text
+    ):
+        """Override to not default an `expiration_date` on the generated lines."""
+        vals_list = super().action_generate_lot_line_vals(
+            context_data, mode, first_lot, count, lot_text
+        )
+        product = self.env["product.product"].browse(
+            context_data.get("default_product_id")
+        )
+        if not product.use_expiration_date or product.expiration_time > 0:
+            return vals_list
+        if mode == "generate":
+            # In generate mode all expiration_dates are defaulting, since
+            # no expiration_time, these will be wrongly set dates. Setting
+            # them to False.
+            for vals in vals_list:
+                vals["expiration_date"] = False
+            return vals_list
+        # In import mode, users can import expiration dates.
+        # Lines with no expiration_date get their date defaulted, so we need
+        # to set to False only the lines for which no date was given during import.
+        for vals, lot in zip(vals_list, self.split_lots(lot_text), strict=False):
+            if not lot.get("expiration_date"):
+                vals["expiration_date"] = False
+        return vals_list
 
     def _generate_serial_move_line_commands(
         self, field_data, location_dest_id=False, origin_move_line=None
