@@ -191,10 +191,16 @@ class StockPicking(models.Model):
         if new_moves.original_group_id - old_moves.original_group_id:
             # A move with a new procurement group has been added. Adapt
             # the procurement group
-            closed_pickings = self.move_ids.group_id.picking_ids.filtered(
-                lambda picking: picking.printed or picking.state == "done"
+            has_closed_picking = self.env["stock.picking"].search_count(
+                [
+                    ("group_id", "in", self.move_ids.group_id.ids),
+                    "|",
+                    ("printed", "=", True),
+                    ("state", "=", "done"),
+                ],
+                limit=1,
             )
-            if closed_pickings:
+            if has_closed_picking:
                 # Do no longer modify a printed or done transfer: they
                 # are started and their group is now fixed. So create a
                 # new procurement group
