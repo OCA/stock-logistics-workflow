@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <group name="locations" position="after">
+                <group name="cancel_pickings_scheduler" string="Cancel Pickings">
+                    <field name="cancel_waiting_picking_with_scheduler" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>

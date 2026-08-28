@@ -1,0 +1,2 @@
+- Go to Inventory > Configuration > Warehouse > Operation Types
+- For the selected operation type, check the box 'Cancel Waiting Picking With Scheduler'
