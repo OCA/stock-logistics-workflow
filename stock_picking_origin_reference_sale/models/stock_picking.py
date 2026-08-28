@@ -16,9 +16,17 @@ class StockPicking(models.Model):
         res = super()._compute_origin_reference()
         for picking in self:
             if not picking.origin_reference:
-                rel_sale = self.env[SO_MODEL_NAME].search(
-                    [("name", "=", picking.origin)], limit=1
+                so_name = (
+                    picking.origin.split(" - ")[0]
+                    if picking.origin
+                    and isinstance(picking.origin, str)
+                    and " - " in picking.origin
+                    else picking.origin
                 )
-                if rel_sale:
-                    picking.origin_reference = f"{SO_MODEL_NAME},{rel_sale.id}"
+                if so_name:
+                    rel_sale = self.env[SO_MODEL_NAME].search(
+                        [("name", "=", so_name)], limit=1
+                    )
+                    if rel_sale:
+                        picking.origin_reference = f"{SO_MODEL_NAME},{rel_sale.id}"
         return res

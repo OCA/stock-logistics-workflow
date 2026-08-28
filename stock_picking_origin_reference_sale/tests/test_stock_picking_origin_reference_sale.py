@@ -47,3 +47,24 @@ class TestStockPickingOriginReferenceSale(
         self.assertEqual(
             picking.origin_reference, sale, "The Transfer should reference the SO."
         )
+
+    def test_02_check_correct_value_with_client_order_ref(self):
+        """
+        Check Transfer references SO when client_order_ref is set.
+
+        When client_order_ref is set, the picking origin becomes
+        'SO.name - client_order_ref', so we must extract just the SO name.
+        """
+        sale = self._create_sale(self.partner, self.product)
+        sale.client_order_ref = "CUSTOMER_REF_123"
+        sale.action_confirm()
+        self.assertTrue(sale.picking_ids)
+        self.assertEqual(
+            len(sale.picking_ids), 1, "Only one Transfer should be created."
+        )
+        picking = sale.picking_ids
+        self.assertEqual(
+            picking.origin_reference,
+            sale,
+            "Transfer should reference SO with client_order_ref.",
+        )
