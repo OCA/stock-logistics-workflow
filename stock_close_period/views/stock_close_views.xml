@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_close_period_tree" model="ir.ui.view">
+        <field name="name">stock.close.period.tree</field>
+        <field name="model">stock.close.period</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="close_date" />
+                <field name="amount" />
+                <field name="work_start" />
+                <field name="work_end" />
+                <field name="state" />
+                <field name="force_archive" />
+                <field name="company_id" readonly="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_close_period_form" model="ir.ui.view">
+        <field name="name">stock.close.period.form</field>
+        <field name="model">stock.close.period</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_start"
+                        states="draft"
+                        string="Start"
+                        type="object"
+                        class="oe_highlight"
+                        groups="stock_close_period.group_stock_close_period_manager"
+                    />
+                    <button
+                        name="action_recalculate_purchase"
+                        states="confirm"
+                        string="Compute Purchase"
+                        type="object"
+                        class="oe_highlight"
+                        groups="stock_close_period.group_stock_close_period_manager"
+                    />
+                    <button
+                        name="action_done"
+                        string="Validate"
+                        type="object"
+                        class="oe_highlight"
+                        groups="stock_close_period.group_stock_close_period_manager"
+                        attrs="{'invisible': [('state', 'not in', ['confirm'])]}"
+                    />
+                    <button
+                        name="action_cancel"
+                        states="confirm,done"
+                        string="Cancel"
+                        type="object"
+                        groups="stock_close_period.group_stock_close_period_manager"
+                    />
+                    <button
+                        name="action_set_to_draft"
+                        states="cancel"
+                        string="Set to Draft"
+                        type="object"
+                        groups="stock_close_period.group_stock_close_period_manager"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirm,done"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" />
+                            <h1><field
+                                    name="name"
+                                    placeholder="e.g. Annual Closing YEAR"
+                                /></h1>
+                        </div>
+                        <group>
+                            <field name="close_date" />
+                            <label for="amount" />
+                            <div class="o_row">
+                                <field name="amount" />
+                                <button
+                                    type="object"
+                                    name="action_recompute_amount"
+                                    class="btn-secondary"
+                                    icon="fa-refresh"
+                                    aria-label="Update amount"
+                                    title="Update amount"
+                                />
+                            </div>
+                            <field name="last_closed_id" />
+                            <field name="last_close_date" />
+                            <field
+                                name="force_evaluation_method"
+                                attrs="{'readonly': [('purchase_ok', '=', True)]}"
+                            />
+                            <field name="force_archive" />
+                            <field name="company_id" readonly="1" />
+                            <field name="purchase_ok" />
+                            <field name="bypass_negative_qty" />
+                            <field name="no_recompute_lines" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product list">
+                            <field name="line_ids">
+                                <tree editable="top">
+                                    <field name="product_id" />
+                                    <field name="categ_name" />
+                                    <field name="location_id" />
+                                    <field name="lot_id" />
+                                    <field name="owner_id" />
+                                    <field name="evaluation_method" />
+                                    <field name="product_uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="price_unit" />
+                                    <field name="amount_line" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_stock_close_group"
+        name="Stock Close Period"
+        parent="stock.menu_stock_root"
+        sequence="5"
+        groups="stock_close_period.group_stock_close_period_user_readonly"
+    />
+
+    <record id="action_stock_close_form" model="ir.actions.act_window">
+        <field name="name">Stock Close Period</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.close.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_action_stock_close_form"
+        action="stock_close_period.action_stock_close_form"
+        parent="stock_close_period.menu_stock_close_group"
+        sequence="10"
+    />
+
+</odoo>
