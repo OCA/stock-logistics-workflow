@@ -1,0 +1,26 @@
+<odoo>
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form (product_stock_all_companies)</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//page[@name='inventory']//field[@name='description_picking']/.."
+                position="after"
+            >
+                <group
+                    string="Stock by companies"
+                    invisible="product_variant_count == 1"
+                >
+                    <field name="stock_by_company_ids" nolabel="1" colspan="2">
+                        <list>
+                            <field name="company_id" />
+                            <field name="quantity_available" />
+                            <field name="uom_id" />
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
