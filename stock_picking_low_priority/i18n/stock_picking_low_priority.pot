@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_low_priority
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-20 14:00+0000\n"
+"PO-Revision-Date: 2023-01-20 14:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_low_priority
+#: model:ir.model.fields.selection,name:stock_picking_low_priority.selection__stock_move__priority__-1
+#: model:ir.model.fields.selection,name:stock_picking_low_priority.selection__stock_picking__priority__-1
+msgid "Not urgent"
+msgstr ""
+
+#. module: stock_picking_low_priority
+#: model:ir.model.fields,field_description:stock_picking_low_priority.field_stock_move__priority
+#: model:ir.model.fields,field_description:stock_picking_low_priority.field_stock_picking__priority
+msgid "Priority"
+msgstr ""
+
+#. module: stock_picking_low_priority
+#: model:ir.model.fields,help:stock_picking_low_priority.field_stock_picking__priority
+msgid ""
+"Products will be reserved first for the transfers with the highest "
+"priorities."
+msgstr ""
+
+#. module: stock_picking_low_priority
+#: model:ir.model,name:stock_picking_low_priority.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_low_priority
+#: model:ir.model,name:stock_picking_low_priority.model_stock_picking
+msgid "Transfer"
+msgstr ""

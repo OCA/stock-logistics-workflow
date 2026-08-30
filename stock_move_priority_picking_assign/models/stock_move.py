@@ -35,6 +35,6 @@ class StockMove(models.Model):
             domain += [("priority", "=", first(self).priority)]
         return domain
 
-    def _compute_priority(self):
-        move_without_priority = self.filtered(lambda m: not m.priority)
-        return super(StockMove, move_without_priority)._compute_priority()
+    # def _compute_priority(self):
+    #     move_without_priority = self.filtered(lambda m: not m.priority)
+    #     return super(StockMove, move_without_priority)._compute_priority()
