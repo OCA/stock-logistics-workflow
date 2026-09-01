@@ -6,15 +6,23 @@ from openupgradelib import openupgrade
 
 @openupgrade.migrate()
 def migrate(env, version):
+    # "batch_sequence" on stock.picking is also provided by core's own
+    # stock_picking_batch module (same name, same purpose: ordering pickings
+    # within a batch) -- by the time this script runs, stock_picking_batch's
+    # own auto_init has already created the column, so renaming into it
+    # raises psycopg2.errors.DuplicateColumn. Copy the data across instead.
+    if openupgrade.column_exists(env.cr, "stock_picking", "sequence"):
+        openupgrade.logged_query(
+            env.cr,
+            """
+            UPDATE stock_picking
+            SET batch_sequence = sequence
+            WHERE sequence IS NOT NULL
+            """,
+        )
     openupgrade.rename_fields(
         env,
         [
-            (
-                "stock.picking",
-                "stock_picking",
-                "sequence",
-                "batch_sequence",
-            ),
             (
                 "stock.move",
                 "stock_move",
