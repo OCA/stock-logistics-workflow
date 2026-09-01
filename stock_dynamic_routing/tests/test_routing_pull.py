@@ -1155,6 +1155,213 @@ class TestRoutingPull(TestRoutingPullCommon):
             ],
         )
 
+    def test_inserted_routing_moves_from_split_source_are_merged(self):
+        """Inserted routing moves from different sources are merged.
+
+        Highbay → Handover → |
+                             | Packing → Output/QA
+                  Shelving → |
+
+        One pick+ship order for a quantity of 10 of the same product, with the
+        stock split between the Highbay (6) and the Shelving (4). Both source
+        go through a Packing location before reaching the Output: the
+        Highbay through the Handover, the Shelving directly.
+
+        """
+        location_qa = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "QA"}
+        )
+        location_packing = self.env["stock.location"].create(
+            {"name": "Packing", "location_id": self.wh.lot_stock_id.id}
+        )
+        # Routing product from the Highbay to the Packing area
+        pick_type_packing = self.env["stock.picking.type"].create(
+            {
+                "name": "Packing",
+                "code": "internal",
+                "sequence_code": "WH/PACK",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": self.location_handover.id,
+                "default_location_dest_id": location_packing.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": self.location_handover.id,
+                "picking_type_id": self.wh.pick_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {"method": "pull", "picking_type_id": pick_type_packing.id},
+                    )
+                ],
+            }
+        )
+        # Routing product from the Shelving to the Packing area
+        pick_type_packing_shelf = self.env["stock.picking.type"].create(
+            {
+                "name": "Packing from Shelving",
+                "code": "internal",
+                "sequence_code": "WH/PACK/SHELF",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": self.location_shelving.id,
+                "default_location_dest_id": location_packing.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": self.location_shelving.id,
+                "picking_type_id": self.wh.pick_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": pick_type_packing_shelf.id,
+                        },
+                    )
+                ],
+            }
+        )
+        # Routing product to QA before delivery
+        pick_type_qa = self.env["stock.picking.type"].create(
+            {
+                "name": "QA",
+                "code": "internal",
+                "sequence_code": "WH/QA",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": self.wh.lot_stock_id.id,
+                "default_location_dest_id": location_qa.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": self.wh.lot_stock_id.id,
+                "picking_type_id": self.wh.pick_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {"method": "pull", "picking_type_id": pick_type_qa.id},
+                    )
+                ],
+            }
+        )
+        # Delivery routing: once the delivery move source has been switched to
+        # Output/QA, reclassify it as Delivery (after QA).
+        pick_type_routing_delivery = self.env["stock.picking.type"].create(
+            {
+                "name": "Delivery (after QA)",
+                "code": "outgoing",
+                "sequence_code": "OUT(R)",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": location_qa.id,
+                "default_location_dest_id": self.customer_loc.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": location_qa.id,
+                "picking_type_id": self.wh.out_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": pick_type_routing_delivery.id,
+                        },
+                    )
+                ],
+            }
+        )
+
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(self.product1, 10)]
+        )
+        out_move = customer_picking.move_ids
+        # 6 from the Highbay, 4 from the Shelving
+        self._update_product_qty_in_location(self.location_hb_1_2, self.product1, 6)
+        self._update_product_qty_in_location(self.location_shelf_1, self.product1, 4)
+        pick_picking.action_assign()
+        # Original pick picking is cancelled, all its moves rerouted to other picking
+        self.assertEqual(pick_picking.state, "cancel")
+        # The delivery move has been reclassified and its source switched to
+        # the QA location by the cascade of routing rules.
+        self.assertEqual(out_move.location_id, location_qa)
+        self.assertEqual(
+            out_move.picking_id.picking_type_id, pick_type_routing_delivery
+        )
+        self.assert_dest_customer(out_move)
+        self.assertEqual(out_move.state, "waiting")
+        # The Highbay part is rerouted through the Handover.
+        ho_move_hb = self.env["stock.move"].search(
+            [
+                ("picking_type_id", "=", self.pick_type_routing_op.id),
+                ("state", "!=", "cancel"),
+            ]
+        )
+        self.assertEqual(ho_move_hb.product_uom_qty, 6)
+        self.assert_src_highbay(ho_move_hb)
+        self.assert_dest_handover(ho_move_hb)
+        self.assertEqual(ho_move_hb.state, "assigned")
+        # The Highbay inserted move is narrowed to go to the Packing location
+        # and reclassified as Packing.
+        packing_move_hb = ho_move_hb.move_dest_ids
+        self.assertEqual(packing_move_hb.picking_type_id, pick_type_packing)
+        self.assertEqual(packing_move_hb.product_uom_qty, 6)
+        self.assert_src_handover(packing_move_hb)
+        self.assertEqual(packing_move_hb.location_dest_id, location_packing)
+        self.assertEqual(packing_move_hb.state, "waiting")
+        # The Shelving part is rerouted to the Packing location as well and
+        # reclassified as Packing from Shelving.
+        packing_move_shelf = self.env["stock.move"].search(
+            [
+                ("picking_type_id", "=", pick_type_packing_shelf.id),
+                ("state", "!=", "cancel"),
+            ]
+        )
+        self.assertEqual(packing_move_shelf.product_uom_qty, 4)
+        self.assertEqual(packing_move_shelf.location_id, self.location_shelving)
+        self.assertEqual(packing_move_shelf.location_dest_id, location_packing)
+        self.assertEqual(packing_move_shelf.state, "assigned")
+        # Both packing moves insert a move from Packing to Output, which matches
+        # the QA rule and is reclassified as QA (Packing -> Output/QA). The two
+        # are identical and are merged into a single move, quantity 10
+        qa_move = self.env["stock.move"].search(
+            [
+                ("picking_type_id", "=", pick_type_qa.id),
+                ("state", "!=", "cancel"),
+            ]
+        )
+        self.assertEqual(qa_move.product_uom_qty, 10)
+        self.assertEqual(qa_move.location_id, location_packing)
+        self.assertEqual(qa_move.location_dest_id, location_qa)
+        self.assertEqual(qa_move.state, "waiting")
+        self.assertEqual(qa_move.move_orig_ids, packing_move_hb + packing_move_shelf)
+        # The QA move is the single predecessor of the delivery
+        self.assertEqual(out_move.move_orig_ids, qa_move)
+        # Process the handover move
+        self.process_operations(ho_move_hb)
+        self.assertEqual(packing_move_hb.state, "assigned")
+        # Process both packing moves
+        self.process_operations(packing_move_hb)
+        self.process_operations(packing_move_shelf)
+        self.assertEqual(qa_move.state, "assigned")
+        # Process the QA move, the delivery is ready
+        self.process_operations(qa_move)
+        self.assertEqual(out_move.state, "assigned")
+
     def test_route_waiting_moves(self):
         """Routing of waiting moves.
 
