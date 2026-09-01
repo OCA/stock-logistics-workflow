@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_valuation_layer_revaluation_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.revaluation.form</field>
+        <field name="model">stock.valuation.layer.revaluation</field>
+        <field
+            name="inherit_id"
+            ref="stock_account.stock_valuation_layer_revaluation_form_view"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='added_value']" position="before">
+                <field name="display_lot_id" invisible="1" />
+                <field
+                    name="lot_id"
+                    attrs="{'invisible': [('display_lot_id', '=', False)]}"
+                />
+                <label
+                    for="current_value_lot"
+                    string="Current Value for Lot"
+                    attrs="{'invisible': [('lot_id', '=', False)]}"
+                />
+                <div class="o_row" attrs="{'invisible': [('lot_id', '=', False)]}">
+                    <span>
+                        <field
+                            name="current_value_lot"
+                            class="oe_inline"
+                            widget="monetary"
+                        /> for <field
+                            name="current_quantity_lot"
+                            class="oe_inline"
+                        /> <field name="product_uom_name" class="oe_inline" />
+                    </span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
