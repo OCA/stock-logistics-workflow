@@ -137,6 +137,30 @@ class TestSourceRelocate(SourceRelocateCommon):
             ],
         )
 
+    def test_relocate_reserve_in_new_location(self):
+        # the rule applies on the parent location, so the relocation location
+        # is not searched by the first reservation attempt made on Shelf 1
+        self._create_relocate_rule(
+            self.loc_shelf, self.loc_replenish, self.wh.pick_type_id
+        )
+        self._update_qty_in_location(self.loc_replenish, self.product, 10)
+        move = self._create_single_move(
+            self.product,
+            self.wh.pick_type_id,
+            custom_vals={"location_id": self.loc_shelf_1.id},
+        )
+        self.assertRecordValues(
+            move,
+            [
+                {
+                    "state": "assigned",
+                    "product_qty": 10.0,
+                    "quantity": 10.0,
+                    "location_id": self.loc_replenish.id,
+                }
+            ],
+        )
+
     def test_relocate_domain(self):
         self._create_relocate_rule(
             self.wh.lot_stock_id,
