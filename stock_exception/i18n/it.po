@@ -1,0 +1,181 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_exception
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-11-06 09:42+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_exception
+#: model_terms:ir.ui.view,arch_db:stock_exception.view_picking_form
+msgid "<strong>There are exceptions blocking this stock picking:</strong>"
+msgstr ""
+"<strong>Ci sono delle eccezioni che bloccano questo prelievo di "
+"magazzino:</strong>"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__model
+msgid "Apply on"
+msgstr "Applica a"
+
+#. module: stock_exception
+#: model_terms:ir.ui.view,arch_db:stock_exception.view_picking_internal_search
+msgid "Blocked in Draft"
+msgstr "Bloccati in bozza"
+
+#. module: stock_exception
+#: model_terms:ir.ui.view,arch_db:stock_exception.view_picking_form
+msgid ""
+"Click here to be able to confirm this stock picking regardless of the "
+"exceptions."
+msgstr ""
+"Fare clic qui per poter confermare questo prelievo di magazzino "
+"indipendentemente dalle eccezioni."
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_exception
+#: model:exception.rule,name:stock_exception.sm_excep_product_uom_qty_check
+msgid "Demand Quantity not positive"
+msgstr "Quantità richiesta non positiva"
+
+#. module: stock_exception
+#: model:exception.rule,description:stock_exception.sm_excep_product_uom_qty_check
+msgid "Demand quantity must be positive"
+msgstr "La quantità richiesta deve essere positiva"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__display_name
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__display_name
+#: model:ir.model.fields,field_description:stock_exception.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_exception
+#: model:ir.model,name:stock_exception.model_exception_rule
+msgid "Exception Rule"
+msgstr "Regola eccezione"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__exception_ids
+msgid "Exceptions"
+msgstr "Eccezioni"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__exceptions_summary
+msgid "Exceptions Summary"
+msgstr "Riepilogo eccezioni"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__exception_ids
+msgid "Exceptions to resolve"
+msgstr "Eccezioni da risolvere"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__id
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__id
+#: model:ir.model.fields,field_description:stock_exception.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__ignore
+#: model:ir.model.fields,field_description:stock_exception.field_stock_move__ignore_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__ignore_exception
+#: model_terms:ir.ui.view,arch_db:stock_exception.view_picking_form
+msgid "Ignore Exceptions"
+msgstr "Ignora eccezioni"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_exception_rule____last_update
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm____last_update
+#: model:ir.model.fields,field_description:stock_exception.field_stock_move____last_update
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_picking__main_exception_id
+msgid "Main Exception"
+msgstr "Eccezione principale"
+
+#. module: stock_exception
+#: model:exception.rule,description:stock_exception.sp_excep_no_partner
+#: model:exception.rule,name:stock_exception.sp_excep_no_partner
+msgid "No Partner"
+msgstr "Nessun partner"
+
+#. module: stock_exception
+#: model:ir.actions.act_window,name:stock_exception.action_stock_exception_confirm
+msgid "Outstanding exceptions to manage"
+msgstr "Eccezione rilevante da gestire"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__picking_ids
+msgid "Pickings"
+msgstr "Prelievi"
+
+#. module: stock_exception
+#: model:ir.actions.act_window,name:stock_exception.action_stock_test_tree
+#: model:ir.ui.menu,name:stock_exception.menu_stock_test
+msgid "Stock Exception Rules"
+msgstr "Regole eccezione magazzino"
+
+#. module: stock_exception
+#: model:ir.model,name:stock_exception.model_stock_move
+#: model:ir.model.fields.selection,name:stock_exception.selection__exception_rule__model__stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_exception
+#: model:ir.model.fields,field_description:stock_exception.field_stock_exception_confirm__related_model_id
+#: model:ir.model.fields.selection,name:stock_exception.selection__exception_rule__model__stock_picking
+msgid "Stock Picking"
+msgstr "Prelievo di magazzino"
+
+#. module: stock_exception
+#: model:ir.model,name:stock_exception.model_stock_exception_confirm
+msgid "Stock exception wizard"
+msgstr "Procedura guidata eccezione di magazzino"
+
+#. module: stock_exception
+#: model:ir.actions.server,name:stock_exception.ir_cron_test_stock_picking_except_ir_actions_server
+#: model:ir.cron,cron_name:stock_exception.ir_cron_test_stock_picking_except
+#: model:ir.cron,name:stock_exception.ir_cron_test_stock_picking_except
+msgid "Stock: Test Draft Pickings Exception"
+msgstr "Magazzino: test bozza eccezione prelievi"
+
+#. module: stock_exception
+#: model:ir.model,name:stock_exception.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
