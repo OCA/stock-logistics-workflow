@@ -28,10 +28,10 @@ class TestStockInterwarehouseTransfer(BaseCommon):
             {"name": "Warehouse B", "code": "WHB"}
         )
         cls.product = cls.env["product.product"].create(
-            {"name": "Test Product", "type": "product"}
+            {"name": "Test Product", "type": "consu", "is_storable": True}
         )
         cls.product_b = cls.env["product.product"].create(
-            {"name": "Test Product B", "type": "product"}
+            {"name": "Test Product B", "type": "consu", "is_storable": True}
         )
         cls.env["stock.quant"].create(
             [
@@ -316,7 +316,6 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         with self.assertRaises(ValidationError):
             self.env["stock.move"].create(
                 {
-                    "name": self.product.name,
                     "product_id": self.product.id,
                     "product_uom": self.product.uom_id.id,
                     "product_uom_qty": 1.0,
@@ -336,7 +335,6 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         )
         move = self.env["stock.move"].create(
             {
-                "name": self.product.name,
                 "product_id": self.product.id,
                 "product_uom": self.product.uom_id.id,
                 "product_uom_qty": 1.0,
@@ -453,7 +451,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         self.assertEqual(len(out_pickings), 2)
         new_out_picking = out_pickings - out_picking
         self.assertEqual(new_out_picking.interwarehouse_transfer_id, transfer)
-        self.assertEqual(new_out_picking.group_id, transfer.procurement_group_id)
+        self.assertEqual(new_out_picking.reference_ids, transfer.reference_id)
         self.assertEqual(new_out_picking.move_ids.product_uom_qty, 2.0)
         in_move = self._stage_moves(line, "incoming")
         self.assertEqual(in_move.product_uom_qty, 12.0)

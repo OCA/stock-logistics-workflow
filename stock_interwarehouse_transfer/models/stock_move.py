@@ -1,6 +1,6 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -25,7 +25,7 @@ class StockMove(models.Model):
             wh_to = move.location_dest_id.warehouse_id
             if wh_from and wh_to and wh_from != wh_to:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Cannot create an internal move between locations of "
                         "different warehouses (%(wh_from)s → %(wh_to)s). "
                         "Use an Inter-Warehouse Transfer instead.",

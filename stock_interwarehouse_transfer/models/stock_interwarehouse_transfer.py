@@ -1,8 +1,7 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_is_zero
 
 STAGES = ("outgoing", "incoming")
 
@@ -66,9 +65,9 @@ class StockInterwarehouseTransfer(models.Model):
         compute="_compute_picking_count",
         string="Transfer Count",
     )
-    procurement_group_id = fields.Many2one(
-        "procurement.group",
-        string="Procurement Group",
+    reference_id = fields.Many2one(
+        "stock.reference",
+        string="Reference",
         copy=False,
     )
     state = fields.Selection(
@@ -129,11 +128,11 @@ class StockInterwarehouseTransfer(models.Model):
         for rec in self:
             if rec.warehouse_from_id.company_id != rec.warehouse_to_id.company_id:
                 raise ValidationError(
-                    _("Both warehouses must belong to the same company.")
+                    self.env._("Both warehouses must belong to the same company.")
                 )
             if rec.warehouse_from_id == rec.warehouse_to_id:
                 raise ValidationError(
-                    _("Source and destination warehouse must be different.")
+                    self.env._("Source and destination warehouse must be different.")
                 )
 
     # === CRUD METHODS ===
@@ -152,13 +151,15 @@ class StockInterwarehouseTransfer(models.Model):
     def action_confirm(self):
         for rec in self:
             if not rec.line_ids:
-                raise ValidationError(_("Cannot confirm a transfer without lines."))
+                raise ValidationError(
+                    self.env._("Cannot confirm a transfer without lines.")
+                )
             rec._ensure_transit_location()
             rec.warehouse_from_id._ensure_inter_wh_op_types()
             rec.warehouse_to_id._ensure_inter_wh_op_types()
             pickings = rec._sync_stage_moves().mapped("picking_id")
             rec.message_post(
-                body=_(
+                body=self.env._(
                     "Transfer confirmed. OUT: %(out)s, IN: %(in_picking)s",
                     out=", ".join(
                         pickings.filtered(
@@ -185,10 +186,10 @@ class StockInterwarehouseTransfer(models.Model):
         return {
             "type": "ir.actions.act_window",
             "res_model": "stock.picking",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": [("interwarehouse_transfer_id", "=", self.id)],
             "context": {"group_by": ["picking_type_id"]},
-            "name": _("Transfers"),
+            "name": self.env._("Transfers"),
         }
 
     # === GETTERS ===
@@ -203,7 +204,7 @@ class StockInterwarehouseTransfer(models.Model):
         lines_qty = {}
         for line in lines:
             qty = line.product_uom_qty - line._get_stage_qty(stage)
-            if float_is_zero(qty, precision_rounding=line.product_uom.rounding):
+            if line.product_uom.is_zero(qty):
                 continue
             line._check_stage_decrease(stage, qty)
             lines_qty[line] = qty
@@ -248,31 +249,29 @@ class StockInterwarehouseTransfer(models.Model):
         self.ensure_one()
         if not lines_qty:
             return self.env["stock.move"]
-        group = self._ensure_procurement_group()
+        reference = self._ensure_stock_reference()
         picking_type, location, location_dest = self._get_stage_config(stage)
         return self.env["stock.move"].create(
             [
                 line._get_stock_move_vals(
-                    picking_type, location, location_dest, group, qty=qty
+                    picking_type, location, location_dest, reference, qty=qty
                 )
                 for line, qty in lines_qty.items()
             ]
         )
 
-    def _ensure_procurement_group(self):
+    def _ensure_stock_reference(self):
         self.ensure_one()
-        if not self.procurement_group_id:
-            self.procurement_group_id = self.env["procurement.group"].create(
-                {"name": self.name}
-            )
-        return self.procurement_group_id
+        if not self.reference_id:
+            self.reference_id = self.env["stock.reference"].create({"name": self.name})
+        return self.reference_id
 
     def _ensure_transit_location(self):
         self.ensure_one()
         transit_loc = self.warehouse_from_id.company_id.internal_transit_location_id
         if not transit_loc:
             raise ValidationError(
-                _(
+                self.env._(
                     "No internal transit location configured for company %(company)s.",
                     company=self.warehouse_from_id.company_id.name,
                 )
