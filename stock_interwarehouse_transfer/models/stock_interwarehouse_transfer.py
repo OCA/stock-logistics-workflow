@@ -273,8 +273,7 @@ class StockInterwarehouseTransfer(models.Model):
         if not transit_loc:
             raise ValidationError(
                 _(
-                    "No internal transit location configured for company "
-                    "%(company)s.",
+                    "No internal transit location configured for company %(company)s.",
                     company=self.warehouse_from_id.company_id.name,
                 )
             )
