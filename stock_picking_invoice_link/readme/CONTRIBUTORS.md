@@ -22,3 +22,5 @@
 - Joel Matías Zilli \<<joz@adhoc.com.ar>\>
 - [Trobz](https://trobz.com):  
   - Thao Le \<<thaolt@trobz.com>\>
+- [ADHOC SA](https://www.adhoc.com.ar)
+  - Juan Ignacio Carreras
