@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_valuation_layer_view_search" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.search</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.view_inventory_valuation_search" />
+        <field name="arch" type="xml">
+            <filter name="outgoing" position="after">
+                <separator />
+                <filter
+                    name="removal_date"
+                    string="Removal Date"
+                    date="removal_date"
+                    end_month="3"
+                    end_year="1"
+                />
+            </filter>
+            <filter name="group_by_lot_id" position="after">
+                <filter
+                    string="Removal Date"
+                    name="group_by_removal_date"
+                    context="{'group_by': 'removal_date'}"
+                />
+            </filter>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_view_form" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="removal_date" invisible="not removal_date" />
+            </field>
+        </field>
+    </record>
+    <record id="stock_valuation_layer_view_list" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.list</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree" />
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="removal_date" optional="hide" />
+            </field>
+        </field>
+    </record>
+</odoo>
