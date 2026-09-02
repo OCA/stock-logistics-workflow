@@ -1,8 +1,7 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_compare
 
 EDITABLE_STATES = ("confirmed", "in_transit")
 
@@ -41,12 +40,12 @@ class StockInterwarehouseTransferLine(models.Model):
     qty_shipped = fields.Float(
         string="Shipped",
         compute="_compute_qty_progress",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     qty_received = fields.Float(
         string="Received",
         compute="_compute_qty_progress",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
 
     # === COMPUTE METHODS ===
@@ -68,7 +67,7 @@ class StockInterwarehouseTransferLine(models.Model):
         for line in self:
             if line.transfer_id.state in ("done", "cancelled"):
                 raise UserError(
-                    _(
+                    self.env._(
                         "Transfer %(transfer)s is done or cancelled, its products "
                         "can no longer be modified.",
                         transfer=line.transfer_id.name,
@@ -77,14 +76,14 @@ class StockInterwarehouseTransferLine(models.Model):
 
     def _check_stage_decrease(self, stage, qty):
         self.ensure_one()
-        rounding = self.product_uom.rounding
-        if float_compare(qty, 0.0, precision_rounding=rounding) >= 0:
+        uom = self.product_uom
+        if uom.compare(qty, 0.0) >= 0:
             return
         open_qty = self._get_stage_open_qty(stage)
-        if float_compare(-qty, open_qty, precision_rounding=rounding) <= 0:
+        if uom.compare(-qty, open_qty) <= 0:
             return
         raise UserError(
-            _(
+            self.env._(
                 "The quantity of %(product)s cannot be decreased below the quantity "
                 "already processed. Instead, create a return in your inventory.",
                 product=self.product_id.display_name,
@@ -116,7 +115,7 @@ class StockInterwarehouseTransferLine(models.Model):
         ):
             if line.qty_shipped or line.qty_received:
                 raise UserError(
-                    _(
+                    self.env._(
                         "%(product)s has already been processed and cannot be "
                         "removed. Instead, create a return in your inventory.",
                         product=line.product_id.display_name,
@@ -166,19 +165,18 @@ class StockInterwarehouseTransferLine(models.Model):
         )
 
     def _get_stock_move_vals(
-        self, picking_type, location, location_dest, group, qty=None
+        self, picking_type, location, location_dest, reference, qty=None
     ):
         self.ensure_one()
         transfer = self.transfer_id
         vals = {
-            "name": self.product_id.name,
             "product_id": self.product_id.id,
             "product_uom": self.product_uom.id,
             "product_uom_qty": self.product_uom_qty if qty is None else qty,
             "picking_type_id": picking_type.id,
             "location_id": location.id,
             "location_dest_id": location_dest.id,
-            "group_id": group.id,
+            "reference_ids": [fields.Command.set(reference.ids)],
             "origin": transfer.name,
             "company_id": transfer.company_id.id,
             "partner_id": transfer.warehouse_to_id.partner_id.id,
@@ -203,14 +201,8 @@ class StockInterwarehouseTransferLine(models.Model):
             if not out_moves:
                 continue
             for move in line._get_stage_moves("incoming"):
-                rounding = move.product_uom.rounding
                 if move.state == "done" or move.move_orig_ids == out_moves:
                     continue
-                if (
-                    float_compare(
-                        move.product_uom_qty, 0.0, precision_rounding=rounding
-                    )
-                    <= 0
-                ):
+                if move.product_uom.compare(move.product_uom_qty, 0.0) <= 0:
                     continue
                 move.move_orig_ids = [fields.Command.set(out_moves.ids)]

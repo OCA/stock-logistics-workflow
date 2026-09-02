@@ -21,13 +21,13 @@ Stock Inter-Warehouse Transfer
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_interwarehouse_transfer
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_interwarehouse_transfer
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_interwarehouse_transfer
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-19-0/stock-logistics-workflow-19-0-stock_interwarehouse_transfer
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -60,10 +60,10 @@ Companies with multiple warehouses sometimes need to initiate stock
 transfers based on an operational decision — not triggered by
 procurement demand. Typical use cases:
 
-- Proactively balancing inventory between locations.
-- Reviewing and confirming both the outgoing and incoming legs before
-  any stock moves.
-- Tracing the full inter-warehouse operation as a single document.
+-  Proactively balancing inventory between locations.
+-  Reviewing and confirming both the outgoing and incoming legs before
+   any stock moves.
+-  Tracing the full inter-warehouse operation as a single document.
 
 Odoo's standard resupply routes are demand-driven and do not provide a
 single document grouping both legs of a transfer.
@@ -84,13 +84,13 @@ validated — making it impossible to review both legs before stock moves.
 
 **Useful Information**
 
-- Requires an **Internal Transit Location** configured on the company
-  (``Inventory > Configuration > Warehouses``).
-- Designed for single-company, multi-warehouse setups.
-- Source and destination locations default to each warehouse's main
-  stock location and can be overridden per transfer.
-- Works with Odoo's standard backorder flow: partial validations create
-  backorders automatically linked to the same transfer document.
+-  Requires an **Internal Transit Location** configured on the company
+   (``Inventory > Configuration > Warehouses``).
+-  Designed for single-company, multi-warehouse setups.
+-  Source and destination locations default to each warehouse's main
+   stock location and can be overridden per transfer.
+-  Works with Odoo's standard backorder flow: partial validations create
+   backorders automatically linked to the same transfer document.
 
 Usage
 =====
@@ -121,14 +121,14 @@ line or removing one propagates to the stock moves of both legs. The
 **Shipped** and **Received** columns show how much of each line is
 already validated.
 
-- Increasing a quantity extends the open moves. If a leg has no open
-  picking left — for instance the OUT was already validated — a new
-  picking is created for the additional quantity.
-- Decreasing a quantity reduces the open moves, and cancels them when it
-  reaches zero. A quantity cannot be decreased below what is already
-  validated on that leg; create a return instead.
-- Removing a line cancels its moves. A line that is already partly
-  validated cannot be removed.
+-  Increasing a quantity extends the open moves. If a leg has no open
+   picking left — for instance the OUT was already validated — a new
+   picking is created for the additional quantity.
+-  Decreasing a quantity reduces the open moves, and cancels them when
+   it reaches zero. A quantity cannot be decreased below what is already
+   validated on that leg; create a return instead.
+-  Removing a line cancels its moves. A line that is already partly
+   validated cannot be removed.
 
 Internal transfers between locations of different warehouses are no
 longer allowed outside this document: attempting to create such an
@@ -138,11 +138,11 @@ Transfer instead.
 Known issues / Roadmap
 ======================
 
-- Inter-company transfers (source and destination warehouses belonging
-  to different companies) are not yet supported. Both warehouses must
-  currently belong to the same company.
-- Decreasing a line below the quantity already validated on a leg is
-  blocked rather than reversed: the return has to be created manually.
+-  Inter-company transfers (source and destination warehouses belonging
+   to different companies) are not yet supported. Both warehouses must
+   currently belong to the same company.
+-  Decreasing a line below the quantity already validated on a leg is
+   blocked rather than reversed: the return has to be created manually.
 
 Bug Tracker
 ===========
@@ -150,7 +150,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_interwarehouse_transfer%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_interwarehouse_transfer%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -165,9 +165,9 @@ Authors
 Contributors
 ------------
 
-- ForgeFlow S.L.
+-  ForgeFlow S.L.
 
-  - Guillem Casassas <guillem.casassas@forgeflow.com>
+   -  Guillem Casassas <guillem.casassas@forgeflow.com>
 
 Maintainers
 -----------
@@ -190,6 +190,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-GuillemCForgeFlow| 
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_interwarehouse_transfer>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_interwarehouse_transfer>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
