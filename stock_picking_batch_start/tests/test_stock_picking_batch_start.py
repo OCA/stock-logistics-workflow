@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command
-from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
 
@@ -92,28 +91,23 @@ class TestStockPickingBatchStart(TransactionCase):
     def test_00(self):
         """test action start and user are propagated"""
         self.env.company.stock_picking_assign_operator_at_start = True
+
         self.assertFalse(self.batch.started)
         self.assertFalse(self.batch.action_start_allowed)
         self.assertFalse(self.batch.action_cancel_start_allowed)
+
         self.assertFalse(self.assigned_batch.started)
         self.assertTrue(self.assigned_batch.action_start_allowed)
         self.assertFalse(self.assigned_batch.action_cancel_start_allowed)
+
         self.assigned_batch.user_id = self.user
         self.assertFalse(self.assigned_picking.user_id)
-        with self.assertRaises(
-            UserError, msg="The following picking(s) can't be started"
-        ):
-            self.batch.action_start()
-        with self.assertRaises(
-            UserError,
-            msg="he 'started' status of the following picking(s) can't be cancelled",
-        ):
-            self.batch.action_cancel_start()
         self.assigned_batch.action_start()
         self.assertTrue(self.assigned_batch.started)
         self.assertTrue(self.assigned_picking.started)
         self.assertTrue(self.assigned_batch.action_cancel_start_allowed)
         self.assertEqual(self.assigned_picking.user_id, self.user)
+
         self.assigned_batch.action_cancel_start()
         self.assertFalse(self.assigned_batch.started)
         self.assertFalse(self.assigned_picking.user_id)
@@ -149,3 +143,52 @@ class TestStockPickingBatchStart(TransactionCase):
             }
         )
         self.assertFalse(self.assigned_picking.user_id)
+
+    def test_action_start_some_pickings_already_started(self):
+        self._update_qty_in_location(self.loc_stock, self.product_2, 10)
+
+        pick_1 = self.assigned_picking
+
+        pick_2 = pick_1.copy()
+        pick_2.action_assign()
+
+        batch = self.env["stock.picking.batch"].create(
+            {
+                "picking_ids": [Command.set([self.picking.id, pick_2.id])],
+            }
+        )
+        pick_1.action_start()
+
+        self.assertTrue(pick_1.started)
+        self.assertFalse(pick_2.started)
+        self.assertFalse(batch.started)
+        self.assertTrue(batch.action_start_allowed)
+
+        batch.action_start()
+        self.assertTrue(pick_1.started)
+        self.assertTrue(pick_2.started)
+
+    def test_action_cancel_start_some_pickings_already_started(self):
+        self._update_qty_in_location(self.loc_stock, self.product_2, 10)
+
+        pick_1 = self.assigned_picking
+
+        pick_2 = pick_1.copy()
+        pick_2.action_assign()
+
+        batch = self.env["stock.picking.batch"].create(
+            {
+                "picking_ids": [Command.set([pick_1.id, pick_2.id])],
+            }
+        )
+        batch.action_start()
+        pick_1.action_cancel_start()
+
+        self.assertFalse(pick_1.started)
+        self.assertTrue(pick_2.started)
+        self.assertFalse(batch.started)
+        self.assertTrue(batch.action_cancel_start_allowed)
+
+        batch.action_cancel_start()
+        self.assertFalse(pick_1.started)
+        self.assertFalse(pick_2.started)
