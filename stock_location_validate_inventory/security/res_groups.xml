@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+
+    <record model="res.groups" id="group_stock_location_can_validate_inventory">
+        <field name="name">Inventory: Location inventory validation</field>
+        <field name="category_id" ref="base.module_category_usability" />
+    </record>
+
+    <record model="res.groups" id="stock.group_stock_manager">
+        <field
+            name="implied_ids"
+            eval="[(4, ref('stock_location_validate_inventory.group_stock_location_can_validate_inventory'))]"
+        />
+    </record>
+
+</odoo>
