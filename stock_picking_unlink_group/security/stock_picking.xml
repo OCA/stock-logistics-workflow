@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <function model="ir.model.access" name="write">
+        <value eval="[ref('stock.access_stock_picking_user')]" />
+        <value eval="{'perm_unlink': False}" />
+    </function>
+    <function model="ir.model.access" name="write">
+        <value eval="[ref('stock.access_stock_picking_manager')]" />
+        <value eval="{'perm_unlink': False}" />
+    </function>
+    <record model="res.groups" id="group_stock_picking_unlink">
+        <field name="name">Allow deletion of stock transfers</field>
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+</odoo>
