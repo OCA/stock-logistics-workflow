@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Demo Incoming Pickings -->
+    <!-- Picking 1: Delivery 01 -->
+    <record id="demo_picking_matching_1" model="stock.picking">
+        <field name="partner_id" ref="base.res_partner_1" />
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field
+            name="move_ids"
+            eval="[
+            (5, 0, 0),
+            (0, 0, {'name': 'Delivery 01', 'product_id': ref('product.product_delivery_01'), 'product_uom_qty': 10, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_suppliers'), 'location_dest_id': ref('stock.stock_location_stock')}),
+        ]"
+        />
+    </record>
+
+    <!-- Picking 2: Product 25 -->
+    <record id="demo_picking_matching_2" model="stock.picking">
+        <field name="partner_id" ref="base.res_partner_1" />
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field
+            name="move_ids"
+            eval="[
+            (5, 0, 0),
+            (0, 0, {'name': 'Product 25', 'product_id': ref('product.product_product_25'), 'product_uom_qty': 5, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_suppliers'), 'location_dest_id': ref('stock.stock_location_stock')})
+        ]"
+        />
+    </record>
+</odoo>
