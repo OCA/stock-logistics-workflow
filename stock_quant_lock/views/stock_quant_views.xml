@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_quant_form_editable_quant_lock" model="ir.ui.view">
+        <field name="name">stock.quant.form.editable.quant.lock</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_form_editable" />
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <div class="oe_button_box" name="button_box">
+                    <button
+                        name="action_view_lock_moves"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-history"
+                        attrs="{'invisible': [('lock_move_count', '=', 0)]}"
+                    >
+                        <field
+                            name="lock_move_count"
+                            widget="statinfo"
+                            string="Lock Moves"
+                        />
+                    </button>
+                </div>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_editable_quant_lock" model="ir.ui.view">
+        <field name="name">stock.quant.tree.editable.quant.lock</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable" />
+        <field name="arch" type="xml">
+            <field name="reserved_quantity" position="after">
+                <field name="lock_move_count" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_tree_quant_lock" model="ir.ui.view">
+        <field name="name">stock.quant.tree.quant.lock</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field name="lock_move_count" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+    <record id="quant_search_view_quant_lock" model="ir.ui.view">
+        <field name="name">stock.quant.search.quant.lock</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.quant_search_view" />
+        <field name="arch" type="xml">
+            <filter name="reserved" position="after">
+                <separator />
+                <filter
+                    name="locked_by_picking"
+                    string="Locked by picking"
+                    domain="[('is_locked_by_picking', '=', True)]"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
