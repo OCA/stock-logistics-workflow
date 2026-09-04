@@ -1,0 +1,127 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_lock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-10 15:44+0000\n"
+"PO-Revision-Date: 2026-09-10 15:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_picking_type__allow_quant_lock
+msgid "Allow quant lock"
+msgstr "Autoriser le verrouillage de quants"
+
+#. module: stock_quant_lock
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,help:stock_quant_lock.field_stock_picking_type__allow_quant_lock
+msgid "If checked, this operation type can be used to lock stock quants."
+msgstr ""
+"Si cette case est cochée, ce type d'opération peut être utilisé pour "
+"verrouiller des quants de stock."
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: stock_quant_lock
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Lock"
+msgstr "Verrouiller"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__lock_move_count
+msgid "Lock Move Count"
+msgstr "Nombre de mouvements de verrouillage"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__lock_move_ids
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_form_editable_quant_lock
+msgid "Lock Moves"
+msgstr "Mouvements de verrouillage"
+
+#. module: stock_quant_lock
+#: model:ir.actions.act_window,name:stock_quant_lock.action_stock_quant_lock_wizard
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Lock Quants"
+msgstr "Verrouiller les quants"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__is_locked_by_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.quant_search_view_quant_lock
+msgid "Locked by issue"
+msgstr "Verrouillé pour incident"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_move__quant_lock_quant_id
+msgid "Locked quant"
+msgstr "Quant verrouillé"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__picking_type_id
+msgid "Operation Type"
+msgstr "Type d'opération"
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Type de transfert"
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_quant
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__quant_ids
+msgid "Quants"
+msgstr "Quants"
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_move
+msgid "Stock Move"
+msgstr "Mouvement de stock"
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_quant_lock_wizard
+msgid "Stock Quant Lock Wizard"
+msgstr "Assistant de verrouillage de quants"
