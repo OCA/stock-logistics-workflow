@@ -1,0 +1,424 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-25 09:25+0000\n"
+"PO-Revision-Date: 2026-08-25 09:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "&amp;nbsp;"
+msgstr "&amp;nbsp;"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "<i class=\"fa fa-download\"/> Download"
+msgstr "<i class=\"fa fa-download\"/> Descargar"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid ""
+"<i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                <b>Preparation</b>"
+msgstr ""
+"<i class=\"fa fa-fw fa-clock-o\"/>\n"
+"                                <b>Preparación</b>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid ""
+"<i class=\"fa fa-fw fa-times\"/>\n"
+"                                <b>Cancelled</b>"
+msgstr ""
+"<i class=\"fa fa-fw fa-times\"/>\n"
+"                                <b>Cancelado</b>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid ""
+"<i class=\"fa fa-fw fa-truck\"/>\n"
+"                                <b>Shipped</b>"
+msgstr ""
+"<i class=\"fa fa-fw fa-truck\"/>\n"
+"                                <b>Enviado</b>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "<i class=\"fa fa-print\"/> Print"
+msgstr "<i class=\"fa fa-print\"/> Imprimir"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "<span class=\"d-none d-md-inline\">Document #</span>"
+msgstr "<span class=\"d-none d-md-inline\">Documento n.º</span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid ""
+"<span>\n"
+"                            <strong>Customer Address:</strong>\n"
+"                        </span>"
+msgstr ""
+"<span>\n"
+"                            <strong>Dirección del cliente:</strong>\n"
+"                        </span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid ""
+"<span>\n"
+"                            <strong>Vendor Address:</strong>\n"
+"                        </span>"
+msgstr ""
+"<span>\n"
+"                            <strong>Dirección del proveedor:</strong>\n"
+"                        </span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid ""
+"<span>\n"
+"                        <strong>Delivery Address:</strong>\n"
+"                    </span>"
+msgstr ""
+"<span>\n"
+"                        <strong>Dirección de entrega:</strong>\n"
+"                    </span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid ""
+"<span>\n"
+"                        <strong>Warehouse Address:</strong>\n"
+"                    </span>"
+msgstr ""
+"<span>\n"
+"                        <strong>Dirección del almacén:</strong>\n"
+"                    </span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<span>Remaining quantities not yet delivered:</span>"
+msgstr "<span>Cantidades restantes aún no entregadas:</span>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Delivered</strong>"
+msgstr "<strong>Entregado</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Order:</strong>"
+msgstr "<strong>Pedido:</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Ordered</strong>"
+msgstr "<strong>Solicitado</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Product</strong>"
+msgstr "<strong>Producto</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Cantidad</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Shipping Date:</strong>"
+msgstr "<strong>Fecha de envío:</strong>"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "<strong>Signature</strong>"
+msgstr "<strong>Firma</strong>"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking__access_warning
+msgid "Access warning"
+msgstr "Advertencia de acceso"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "All"
+msgstr "Todos"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.picking_link_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: stock_picking_portal
+#: model:ir.model,name:stock_picking_portal.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,help:stock_picking_portal.field_stock_picking__access_url
+msgid "Customer Portal URL"
+msgstr "URL del portal del cliente"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "Delivery address"
+msgstr "Dirección de entrega"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "Document date"
+msgstr "Fecha del documento"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Download"
+msgstr "Descargar"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_home_stock_operations
+msgid "Follow, view your operations"
+msgstr "Siga y consulte sus operaciones"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.picking_link_wizard_view_form
+msgid "Generate picking Link"
+msgstr "Generar enlace del albarán"
+
+#. module: stock_picking_portal
+#: model:ir.actions.act_window,name:stock_picking_portal.action_stock_picking_generate_link
+#: model:ir.model,name:stock_picking_portal.model_picking_link_wizard
+msgid "Generate signature link"
+msgstr "Generar enlace de firma"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "History"
+msgstr "Historial"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,help:stock_picking_portal.field_stock_picking_type__portal_visible
+msgid ""
+"If checked, pickings of this type will be shown in the customer portal."
+msgstr ""
+"Si se marca, los albaranes de este tipo se mostrarán en el portal del cliente."
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Invalid Stock Operation."
+msgstr "Operación de inventario no válida."
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Invalid signature data."
+msgstr "Datos de firma no válidos."
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_document
+msgid "Lot/Serial Number"
+msgstr "Número de lote/serie"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Order Date"
+msgstr "Fecha del pedido"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__picking_id
+msgid "Picking"
+msgstr "Albarán"
+
+#. module: stock_picking_portal
+#: model:ir.model,name:stock_picking_portal.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de albarán"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking__access_url
+msgid "Portal Access URL"
+msgstr "URL de acceso al portal"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_res_config_settings__portal_visible_operation_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.res_config_settings_view_inherit
+msgid "Portal Visible Operations"
+msgstr "Operaciones visibles en el portal"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Receipt"
+msgstr "Recepción"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking__access_token
+msgid "Security Token"
+msgstr "Token de seguridad"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.res_config_settings_view_inherit
+msgid "Select operation types..."
+msgstr "Seleccione los tipos de operación..."
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.res_config_settings_view_inherit
+msgid "Select which stock operation types should be visible to portal users."
+msgstr "Seleccione los tipos de operación de inventario que serán visibles para los usuarios del portal."
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Sign now"
+msgstr "Firmar ahora"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Signature is missing."
+msgstr "Falta la firma."
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_picking_link_wizard__link
+msgid "Signature link"
+msgstr "Enlace de firma"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Signed"
+msgstr "Firmado"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking__signed_by
+msgid "Signed By"
+msgstr "Firmado por"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking__signed_on
+msgid "Signed On"
+msgstr "Firmado el"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+#, python-format
+msgid "State"
+msgstr "Estado"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Stock Operation signed by %s"
+msgstr "Operación de inventario firmada por %s"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "Stock Operation viewed by customer %s"
+msgstr "Operación de inventario vista por el cliente %s"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_home_menu_stock_operations
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_home_stock_operations
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "Stock Operations"
+msgstr "Operaciones de inventario"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.portal_my_stock_operations
+msgid "There are currently no stock operations for your account."
+msgstr "Actualmente no hay operaciones de inventario para su cuenta."
+
+#. module: stock_picking_portal
+#: model:ir.model,name:stock_picking_portal.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
+
+#. module: stock_picking_portal
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal.stock_operation_portal_template
+msgid "Validate Stock Operation"
+msgstr "Validar operación de inventario"
+
+#. module: stock_picking_portal
+#: model:ir.model.fields,field_description:stock_picking_portal.field_stock_picking_type__portal_visible
+msgid "Visible in Portal"
+msgstr "Visible en el portal"
+
+#. module: stock_picking_portal
+#. odoo-python
+#: code:addons/stock_picking_portal/controllers/portal.py:0
+#, python-format
+msgid "You don't have the access rights to Stock Operations."
+msgstr "No tiene permisos de acceso a las operaciones de inventario."
