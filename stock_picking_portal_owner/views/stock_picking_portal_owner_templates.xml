@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_owner_stock_operations"
+        name="Portal layout: Consigned Pickings menu entry"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="100"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'owner_stock_operations' or owner_stock_operations"
+                t-attf-class="breadcrumb-item #{'active ' if not owner_stock_operations else ''}"
+            >
+                <a
+                    t-if="owner_stock_operations"
+                    t-attf-href="/my/stock_operations/owner?{{ keep_query() }}"
+                >My Consigned Pickings</a>
+                <t t-else="">My Consigned Pickings</t>
+            </li>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_owner_stock_operations"
+        name="Show Consigned Pickings"
+        customize_show="True"
+        inherit_id="stock_picking_portal.portal_my_home_stock_operations"
+        priority="99"
+    >
+        <div id="portal_stock_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t
+                    t-set="icon"
+                    t-value="'/stock_picking_portal_owner/static/src/img/consigned.svg'"
+                />
+                <t t-set="title">My Consigned Pickings</t>
+                <t t-set="url" t-value="'/my/stock_operations/owner'" />
+                <t t-set="text">Follow your consigned pickings</t>
+                <t t-set="placeholder_count" t-value="'owner_stock_operations_count'" />
+            </t>
+        </div>
+    </template>
+</odoo>
