@@ -5,3 +5,4 @@
 - Valentin Vinagre \<<valentin.vinagre@sygel.es>\>
 - [Quartile](https://www.quartile.co):
   - Aung Ko Ko Lin
+- Eduardo de Miguel \<<info@moduon.team>\>
