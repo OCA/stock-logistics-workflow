@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_portal_owner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-25 08:40+0000\n"
+"PO-Revision-Date: 2026-08-25 08:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
+msgid "Follow your consigned pickings"
+msgstr "Sigue tus pickings en consignación"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_menu_owner_stock_operations
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
+msgid "My Consigned Pickings"
+msgstr "Mis pickings en consignación"

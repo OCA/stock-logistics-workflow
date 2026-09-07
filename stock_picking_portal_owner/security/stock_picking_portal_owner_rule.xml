@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <!-- Portal users may additionally read pickings where they are the
+       consignment owner, on top of the partner_id based access granted by
+       stock_picking_portal. Being OR-combined with that rule (same group),
+       the portal_visible condition still applies to both cases. -->
+  <record id="rule_portal_picking_owner" model="ir.rule">
+    <field name="name">Stock Picking Portal Owner Access</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="domain_force">
+      ['&amp;',
+       ('picking_type_id.portal_visible', '=', True),
+       ('owner_id', '=', user.partner_id.id)]
+    </field>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_write" eval="0" />
+    <field name="perm_create" eval="0" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+</odoo>
