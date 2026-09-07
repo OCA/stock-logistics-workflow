@@ -28,6 +28,11 @@ msgid "Product Customer Name"
 msgstr "Artikelnummer beim Kunden"
 
 #. module: product_customerinfo_picking
+#: model:ir.model,name:product_customerinfo_picking.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: product_customerinfo_picking
 #: model:ir.model,name:product_customerinfo_picking.model_stock_move
 msgid "Stock Move"
 msgstr "Lagerbewegung"
