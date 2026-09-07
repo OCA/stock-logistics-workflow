@@ -132,3 +132,47 @@ class TestQuantityLoss(OperationLossQuantityCommon):
 
         self.assertEqual(line.state, "assigned")
         self.assertEqual(line.reserved_uom_qty, 9)
+
+    def test_unreserve_unprocessed_qty_converts_to_move_uom(self):
+        """`_unreserve_unprocessed_qty` must return the freed quantity
+        expressed in the move's UoM, not the move line's own UoM: it is
+        summed and compared against `move.product_uom` in `_lose_quantity`.
+        """
+        dozen = self.env.ref("uom.product_uom_dozen")
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.pick_type_out.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "name": "Test move",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_2.uom_id.id,
+                "product_uom_qty": 12,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move._action_confirm()
+        self._create_quantities(self.product_2, 12.0)
+        picking.action_assign()
+
+        line = move.move_line_ids
+        self.assertEqual(line.reserved_uom_qty, 12.0)
+
+        # Switch the line to a coarser UoM of the same category (1 dozen ==
+        # 12 units), keeping the same physical reserved quantity, then mark
+        # a quarter of it as done.
+        line.write({"product_uom_id": dozen.id, "reserved_uom_qty": 1.0})
+        line.qty_done = 0.25
+
+        unprocessed_qty = line._unreserve_unprocessed_qty()
+
+        # 0.75 dozen unprocessed, converted to the move's UoM (units): 9.0,
+        # not 0.75.
+        self.assertEqual(unprocessed_qty, 9.0)
+        self.assertEqual(line.reserved_uom_qty, 0.25)
