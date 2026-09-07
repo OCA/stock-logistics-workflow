@@ -4,5 +4,4 @@ He usually has the direct vision on stock level at that moment and can declare l
 easily.
 
 If real-time accounting is enabled, this can help to reduce unwanted stock movements as
-we'll reserve the possible loss quantities in a new assigned picking, confirm or cancel
-loss in a second time.
+we'll reserve the possible loss quantities in a new assigned picking.

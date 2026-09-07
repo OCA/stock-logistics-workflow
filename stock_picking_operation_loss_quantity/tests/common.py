@@ -5,12 +5,14 @@
 
 from odoo.tests import TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class OperationLossQuantityCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.quant_obj = cls.env["stock.quant"]
 
         cls.product_1 = cls.env["product.product"].create(
@@ -51,13 +53,6 @@ class OperationLossQuantityCommon(TransactionCase):
         cls.pick_type_out = cls.env.ref("stock.picking_type_out")
         cls.warehouse = wh
         cls.warehouse.use_loss_picking = True
-
-        # Set user in notification group
-        group = cls.env.ref(
-            "stock_picking_operation_loss_quantity.group_loss_notification"
-        )
-        cls.user_demo = cls.env.ref("base.user_demo")
-        group.users += cls.user_demo
 
     @classmethod
     def initiate_values(cls):

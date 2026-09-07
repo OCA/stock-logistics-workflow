@@ -2,9 +2,11 @@
 # Copyright 2018 Okia SPRL <sylvain@okia.be>
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from collections import defaultdict
+
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
-from odoo.fields import Command, first, float_compare
+from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_is_zero
 
 
 class StockMoveLine(models.Model):
@@ -31,138 +33,55 @@ class StockMoveLine(models.Model):
             raise UserError(_("You are not allowed to declare loss quantities"))
         return self._lose_quantity()
 
-    def _prepare_loss_move_vals(self, unprocessed_qty):
-        loss_pick_type = self.location_id.warehouse_id.loss_type_id
-        return {
-            "name": self.product_id.display_name,
-            "product_id": self.product_id.id,
-            "product_uom_qty": unprocessed_qty,  # This is the "demand"
-            "product_uom": self.product_uom_id.id,
-            "location_id": self.location_id.id,
-            "location_dest_id": loss_pick_type.default_location_dest_id.id,
-            "lot_ids": [Command.set(self.lot_id.ids)] if self.lot_id else False,
-        }
-
-    def _prepare_loss_picking_vals(self):
-        loss_pick_type = self.location_id.warehouse_id.loss_type_id
-        return {
-            "picking_type_id": loss_pick_type.id,
-            "location_id": self.location_id.id,
-            "location_dest_id": loss_pick_type.default_location_dest_id.id,
-        }
-
-    def _find_loss_picking_moves_domain(self):
-        loss_pick_type = self.location_id.warehouse_id.loss_type_id
-        return [
-            ("reserved_uom_qty", ">", 0.0),
-            ("product_id", "=", self.product_id.id),
-            ("location_id", "=", self.location_id.id),
-            ("lot_id", "=", self.lot_id.id),
-            ("package_id", "=", self.package_id.id),
-            ("owner_id", "=", self.owner_id.id),
-            ("state", "not in", ("done", "cancel")),
-            ("picking_type_id", "=", loss_pick_type.id),
-            (
-                "location_dest_id",
-                "=",
-                loss_pick_type.default_location_dest_id.id,
-            ),
-        ]
-
-    def _find_loss_picking(self):
-        similar_loss_lines = self.env["stock.move.line"].search(
-            self._find_loss_picking_moves_domain()
-        )
-        loss_picking = first(similar_loss_lines.picking_id)
-        return loss_picking
-
-    def _create_loss_move_line(self, unprocessed_qty: float):
-        self.ensure_one()
-        loss_pick_type = self.location_id.warehouse_id.loss_type_id
-        if not loss_pick_type:
-            raise ValidationError(
-                _(
-                    "You don't have a Loss picking type enabled on your Warehouse! "
-                    "Please check the 'Enable the Loss feature' in your warehouse "
-                    "configuration."
-                )
-            )
-        if not loss_pick_type.default_location_dest_id:
-            raise ValidationError(
-                _(
-                    "You don't have any default destination set on your Loss picking type!"
-                )
-            )
-        if (
-            float_compare(
-                unprocessed_qty, 0, precision_rounding=self.product_uom_id.rounding
-            )
-            <= 0
-        ):
-            raise ValidationError(
-                _("You try to create a Loss picking without any loss quantity!")
-            )
-
-        # Search for an already existing LOSS picking for this quant
-        loss_picking = self._find_loss_picking()
-        if not loss_picking:
-            loss_picking = self.env["stock.picking"].create(
-                self._prepare_loss_picking_vals()
-            )
-
-        new_loss_move_vals = self._prepare_loss_move_vals(unprocessed_qty)
-        new_loss_move = self.env["stock.move"].create(
-            {**new_loss_move_vals, "picking_id": loss_picking.id}
-        )
-        new_loss_move._action_confirm()
-        loss_picking.loss_declaration_count += 1
-
-        if (
-            self.location_id.warehouse_id.loss_auto_clear_threshold
-            and loss_picking.loss_declaration_count
-            >= self.location_id.warehouse_id.loss_auto_clear_threshold
-        ):
-            quants_available_quantity = self.env["stock.quant"]._get_available_quantity(
-                product_id=self.product_id,
-                location_id=self.location_id,
-                lot_id=self.lot_id,
-                package_id=self.package_id,
-                owner_id=self.owner_id,
-            )
-            if quants_available_quantity > 0:
-                new_loss_move = self.env["stock.move"].create(
-                    {
-                        **new_loss_move_vals,
-                        "product_uom_qty": quants_available_quantity,
-                        "picking_id": loss_picking.id,
-                    }
-                )
-                new_loss_move._action_confirm()
-
-        loss_picking.action_assign()
-        return loss_picking
-
     def _unreserve_unprocessed_qty(self) -> float:
         self.ensure_one()
         unprocessed_qty = self.reserved_uom_qty - self.qty_done
-        # Free the quantity that the operator was not able to do
+        # Free the quantity that the operator was not able to process
         self.reserved_uom_qty = self.qty_done
         return unprocessed_qty
 
+    def _reservation_is_updatable(self, quantity, reserved_quant):
+        self.ensure_one()
+        if self.env.context.get(
+            "loss_quantity_prevent_reservation_update_on_done_lines"
+        ) and not float_is_zero(
+            self.qty_done, precision_rounding=self.product_uom_id.rounding
+        ):
+            # The operator already processed (fully or partially) this
+            # operation: any quantity re-reserved for the same
+            # product/location/lot/package/owner must land on a new move
+            # line rather than silently topping up one the operator
+            # already considers closed.
+            return False
+        return super()._reservation_is_updatable(quantity, reserved_quant)
+
     def _lose_quantity(self):
         """
-        This is the main function to call in order to declare a loss.
+        Main method used to declare a loss.
 
-        It will check if operation is in progress (if operator has found the
-        whole quantity, do not allow to declare a loss).
-
-        Then, lock the quant that should be reserved by the loss picking and
-        create that loss picking.
+        It performs the following steps:
+        1. Gather the quants related to the move line.
+        2. Unreserve the quantity for the unprocessed part of the move line.
+           If nothing was ever done on the line, it is left empty for now
+           (see step 4).
+        3. Lock the quants for the remaining available quantity using the
+           warehouse's loss picking type.
+        4. Re-reserve the move for the remaining quantity. Thanks to
+           `_reservation_is_updatable`, this never updates a move line
+           already processed by the operator: it creates a new move line
+           instead. When this actually creates a new line for the move, the
+           empty line(s) left by step 2 are dropped, as they are now
+           redundant. If no new line is created (nothing else was available,
+           or the freed quantity was merged into another not-yet-processed
+           line), the empty line is kept as a visible placeholder.
         """
-        loss_lines = self.filtered(lambda line: line.progress != 100.0)
-        loss_moves_quants_to_ignore = {move: [] for move in loss_lines.move_id}
-        for line in loss_lines:
-            # Lock quants until the end of the transaction to avoid furter reservations
+        empty_lines_by_move = defaultdict(lambda: self.browse())
+        unprocessed_by_move = defaultdict(float)
+        for line in self:
+            if not line.is_action_lose_quantity_allowed:
+                continue
+            # strict is required when editing a line to match the exact quants
+            # related to this move line.
             quants = self.env["stock.quant"]._gather(
                 product_id=line.product_id,
                 location_id=line.location_id,
@@ -171,29 +90,28 @@ class StockMoveLine(models.Model):
                 owner_id=line.owner_id,
             )
             quants._lock_quants_for_loss()
-
-            unprocessed_qty = line._unreserve_unprocessed_qty()
-            loss_picking = line._create_loss_move_line(unprocessed_qty)
-            loss_picking._schedule_loss_activity()
-
-            loss_moves_quants_to_ignore[line.move_id].extend(quants.ids)
-
-            if (
-                float_compare(
-                    line.reserved_uom_qty,
-                    0,
-                    precision_rounding=self.product_uom_id.rounding,
-                )
-                <= 0
+            unprocessed_by_move[line.move_id] += line._unreserve_unprocessed_qty()
+            quants._lock_with_picking_type(line.location_id.warehouse_id.loss_type_id)
+            if float_is_zero(
+                line.reserved_uom_qty, precision_rounding=line.product_uom_id.rounding
             ):
-                line.unlink()
+                empty_lines_by_move[line.move_id] |= line
 
-        for move, quants_to_ignore_ids in loss_moves_quants_to_ignore.items():
-            move._try_reallocate_loss_qty(quants_to_ignore_ids)
-
-    def _apply_putaway_strategy(self):
-        # Override to prevent the loss-ignored quants context from blinding
-        # the stock engine during downstream line destination/pack updates.
-        if self.env.context.get("_loss_ignored_quant_ids"):
-            self = self.with_context(_loss_ignored_quant_ids=False)
-        return super()._apply_putaway_strategy()
+        for move, unprocessed_qty in unprocessed_by_move.items():
+            if float_is_zero(
+                unprocessed_qty, precision_rounding=move.product_uom.rounding
+            ):
+                continue
+            # Unreserving a move line does not demote the move's state on its
+            # own (Odoo only does this from write()/unlink() on the whole
+            # move line recordset being processed together): force it so
+            # `_action_assign` below does not skip a move it still considers
+            # fully `assigned`.
+            move._recompute_state()
+            existing_line_ids = set(move.move_line_ids.ids)
+            move.with_context(
+                loss_quantity_prevent_reservation_update_on_done_lines=True
+            )._action_assign()
+            new_line_created = bool(set(move.move_line_ids.ids) - existing_line_ids)
+            if new_line_created:
+                empty_lines_by_move[move].unlink()

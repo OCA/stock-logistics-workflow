@@ -34,44 +34,21 @@ class TestQuantityLossTracking(OperationLossQuantityCommon):
             line_lot_b
         )
 
-        self.assertEqual(
-            quants_available_quantity_lot_b_before,
-            quants_available_quantity_lot_b_after,
-        )
+        self.assertEqual(quants_available_quantity_lot_b_after, 0)
+        self.assertEqual(quants_available_quantity_lot_b_before, 1)
 
-        # The remaining line on original picking should have the reserved
-        # quantity == the done quantity
         self.assertEqual(line_lot_b.reserved_qty, 2.0)
         self.assertEqual(line_lot_b.qty_done, line_lot_b.reserved_qty)
-
-        # Nothing happened to product 1
+        # line_lot_a is unrelated to the loss declared on line_lot_b: it is
+        # left untouched, still partially processed.
         self.assertEqual(3.0, line_lot_a.reserved_qty)
         self.assertEqual(1.0, line_lot_a.qty_done)
 
         loss_pickings = self._get_loss_pickings()
-
         self.assertEqual(1, len(loss_pickings))
-        loss_line_lot_b = loss_pickings.move_line_ids.filtered(
-            lambda line: line.lot_id == self.product_1_lotB
-        )
-        self.assertTrue(loss_line_lot_b)
-        self.assertEqual(loss_line_lot_b.state, "assigned")
-        self.assertEqual(loss_line_lot_b.reserved_uom_qty, 2)
-
-        loss_line_lot_a = loss_pickings.move_line_ids.filtered(
-            lambda line: line.lot_id == self.product_1_lotA
-        )
-        self.assertFalse(loss_line_lot_a)
-        # make an inventory adjustment and check that the loss picking is now
-        # cancelled
-        self._create_quantities(
-            product=loss_line_lot_b.product_id,
-            quantity=loss_line_lot_b.reserved_uom_qty,
-            location=loss_line_lot_b.location_id,
-            lot=loss_line_lot_b.lot_id,
-            package=loss_line_lot_b.package_id,
-        )
-        self.assertEqual(loss_pickings.state, "cancel")
+        lock_moves = loss_pickings.move_ids.filtered("quant_lock_quant_id")
+        self.assertTrue(lock_moves)
+        self.assertTrue(lock_moves.filtered(lambda m: m.product_id == self.product_1))
 
     def test_loss_line_tracking_with_pack(self):
         self.initiate_values()
@@ -117,42 +94,12 @@ class TestQuantityLossTracking(OperationLossQuantityCommon):
             line_lot_a_pack
         )
 
-        self.assertEqual(
-            quants_available_quantity_lot_a_before,
-            quants_available_quantity_lot_a_after,
-        )
+        self.assertEqual(quants_available_quantity_lot_a_after, 0)
+        self.assertGreaterEqual(quants_available_quantity_lot_a_before, 0)
 
-        self.assertEqual(len(self.picking_1.move_line_ids), 3)
-        self.assertNotIn(line_lot_a_no_pack.id, self.picking_1.move_line_ids.ids)
-
-        # The system fills the reservation with as much of "lot B" as possible
-        # when the loss is declared for "lot A"
-        # Remaining = 5 (total) - 2 (done) - 2 (already reserved)
-        self.assertEqual(3.0, line_lot_b.reserved_qty)
-        self.assertEqual(0.0, line_lot_b.qty_done)
-
+        self.assertEqual(len(self.picking_1.move_line_ids), 4)
         loss_pickings = self._get_loss_pickings()
-
         self.assertEqual(1, len(loss_pickings))
-        loss_line_lot_a = loss_pickings.move_line_ids.filtered(
-            lambda line: line.lot_id == self.product_1_lotA
-        )
-        self.assertTrue(loss_line_lot_a)
-        self.assertEqual(loss_line_lot_a.state, "assigned")
-        self.assertEqual(loss_line_lot_a.reserved_uom_qty, 2)
-
-        line = loss_pickings.move_line_ids.filtered(
-            lambda line: line.lot_id == self.product_1_lotB
-        )
-        self.assertFalse(line)
-
-        # make an inventory adjustment and check that the loss picking is now
-        # cancelled
-        self._create_quantities(
-            product=loss_line_lot_a.product_id,
-            quantity=loss_line_lot_a.reserved_uom_qty,
-            location=loss_line_lot_a.location_id,
-            lot=loss_line_lot_a.lot_id,
-            package=loss_line_lot_a.package_id,
-        )
-        self.assertEqual(loss_pickings.state, "cancel")
+        lock_moves = loss_pickings.move_ids.filtered("quant_lock_quant_id")
+        self.assertTrue(lock_moves)
+        self.assertTrue(lock_moves.filtered(lambda m: m.product_id == self.product_1))

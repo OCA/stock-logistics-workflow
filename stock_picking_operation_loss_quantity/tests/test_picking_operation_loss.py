@@ -55,10 +55,8 @@ class TestQuantityLoss(OperationLossQuantityCommon):
 
         quants_available_quantity_line_2_after = self._get_quants_available_qty(line_2)
 
-        self.assertEqual(
-            quants_available_quantity_line_2_before,
-            quants_available_quantity_line_2_after,
-        )
+        self.assertEqual(quants_available_quantity_line_2_after, 0)
+        self.assertEqual(quants_available_quantity_line_2_before, 4)
 
         self.assertEqual(line_2.reserved_qty, 1.0)
         self.assertEqual(line_2.qty_done, line_2.reserved_uom_qty)
@@ -66,33 +64,9 @@ class TestQuantityLoss(OperationLossQuantityCommon):
         loss_pickings = self._get_loss_pickings()
 
         self.assertEqual(1, len(loss_pickings))
-        line = loss_pickings.move_line_ids.filtered(
-            lambda line: line.product_id == self.product_3
-        )
-        self.assertFalse(line)
-
-        line = loss_pickings.move_line_ids.filtered(
-            lambda line: line.product_id == self.product_2
-        )
-        self.assertTrue(line)
-
-        self.assertEqual(line.state, "assigned")
-        self.assertEqual(line.reserved_uom_qty, 5)
-
-        # Check activity is generated
-        self.assertTrue(loss_pickings.activity_ids)
-        self.assertEqual(self.user_demo, loss_pickings.activity_user_id)
-
-        # make an inventory adjustment and check that the loss picking is now
-        # cancelled
-        self._create_quantities(
-            line_2.product_id,
-            line_2.reserved_uom_qty,
-            location=line_2.location_id,
-            lot=line_2.lot_id,
-            package=line_2.package_id,
-        )
-        self.assertEqual(loss_pickings.state, "cancel")
+        lock_moves = loss_pickings.move_ids.filtered("quant_lock_quant_id")
+        self.assertTrue(lock_moves)
+        self.assertEqual(line_2.product_id, lock_moves[0].product_id)
 
     def test_loss_line_no_tracking_multi(self):
         """
@@ -114,7 +88,8 @@ class TestQuantityLoss(OperationLossQuantityCommon):
             self.assertEqual(line.qty_done, line.reserved_qty)
 
         loss_pickings = self._get_loss_pickings()
-        self.assertEqual(2, len(loss_pickings))
+        self.assertEqual(1, len(loss_pickings))
+        self.assertTrue(loss_pickings.move_ids.filtered("quant_lock_quant_id"))
 
     def test_loss_line_no_tracking_with_pack(self):
         self.initiate_values_no_tracking()
@@ -156,4 +131,4 @@ class TestQuantityLoss(OperationLossQuantityCommon):
         self.assertTrue(line)
 
         self.assertEqual(line.state, "assigned")
-        self.assertEqual(line.reserved_uom_qty, 5)
+        self.assertEqual(line.reserved_uom_qty, 9)

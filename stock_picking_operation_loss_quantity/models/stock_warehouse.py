@@ -23,13 +23,6 @@ class StockWarehouse(models.Model):
         comodel_name="stock.route",
         help="This is a dummy field in order to create other values correctly",
     )
-    loss_auto_clear_threshold = fields.Integer(
-        string="Loss Auto-Clear Threshold",
-        default=0,
-        help="Number of loss declarations required before the system automatically "
-        "resets the remaining stock quantity to zero. If set to 0, "
-        "the auto-clear behavior is deactivated.",
-    )
 
     def write(self, vals):
         warehouses = self.with_context(active_test=False)
@@ -92,6 +85,7 @@ class StockWarehouse(models.Model):
                     "show_reserved": True,
                     "show_operations": True,
                     "sequence_code": "LOSS",
+                    "allow_quant_lock": True,
                     "company_id": self.company_id.id,
                 }
             }
