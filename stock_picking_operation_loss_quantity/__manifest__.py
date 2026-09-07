@@ -6,20 +6,18 @@
 {
     "name": "Stock Picking Operation Loss Quantity",
     "summary": """
-        This module allows to decalre loss product quantities during picking operations""",
+        Declare loss product quantities during picking operations, locking the
+        missing stock so it cannot be reserved elsewhere""",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, Okia, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": [
         "stock",
-        "stock_picking_progress",
+        "stock_quant_lock",
     ],
     "data": [
-        "security/security.xml",
         "views/stock_move_line.xml",
         "views/stock_warehouse.xml",
-        "data/mail_activity_type.xml",
-        "views/stock_picking.xml",
     ],
 }

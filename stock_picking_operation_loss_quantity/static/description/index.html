@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>Stock Picking Operation Loss Quantity</title>
 <style type="text/css">
 
 /*
@@ -377,9 +377,19 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_operation_loss_quantity"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_operation_loss_quantity"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module allows to declare loss product quantities during picking
 operations.</p>
-<p>To avoid unwanted stock losses if it is not justified, movements will
-instead be reaffected to a “LOSS” picking type.</p>
-<p>This module take into account the flows with product lot management,
+<p>When an operator cannot find the whole reserved quantity for an
+operation, declaring the loss locks the remaining available quantity of
+the affected quant (product, location, lot, package, owner) through a
+stock move of the warehouse’s “Loss” picking type. This prevents any
+other operation from reserving that quantity until the loss is
+investigated and either confirmed (the lock move is validated) or
+dismissed (the lock move is cancelled, releasing the quant back to
+stock).</p>
+<p>The picking is then given the opportunity to still be completed: Odoo
+looks for the missing quantity on other available stock (another
+location or lot). If some is found, it is reserved on a new operation
+line, never on one the operator already processed.</p>
+<p>This module takes into account the flows with product lot management,
 packages, owners.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
@@ -405,7 +415,7 @@ try to transfer product quantities. He usually has the direct vision on
 stock level at that moment and can declare losses easily.</p>
 <p>If real-time accounting is enabled, this can help to reduce unwanted
 stock movements as we’ll reserve the possible loss quantities in a new
-assigned picking, confirm or cancel loss in a second time.</p>
+assigned picking.</p>
 </div>
 <div class="section" id="configuration">
 <h2><a class="toc-backref" href="#toc-entry-2">Configuration</a></h2>
@@ -414,10 +424,17 @@ assigned picking, confirm or cancel loss in a second time.</p>
 <li>Enable ‘Storage Locations’ and ‘Multi-Step Routes’.</li>
 <li>Go To Inventory &gt; Configuration &gt; Warehouse Management &gt; Warehouses</li>
 <li>On the selected Warehouse, check the ‘Enable the Loss feature’ under
-‘Loss’ section.</li>
-<li>Set the “Loss Auto-Clear threshold” if you want to use the
-“auto-clear” feature (or let 0 if you do not want to use it)</li>
+‘Loss’ section. This automatically creates a dedicated ‘Loss’
+operation type for the warehouse, with the ‘Allow quant lock’ option
+(from the <tt class="docutils literal">stock_quant_lock</tt> module this module depends on) enabled
+and a destination location set.</li>
 </ul>
+<p>This module relies on <tt class="docutils literal">stock_quant_lock</tt> to actually lock the quant
+when a loss is declared: locking is only possible on an operation type
+that has ‘Allow quant lock’ enabled and a destination location
+configured. If the warehouse’s ‘Loss’ operation type is later edited
+(Inventory &gt; Configuration &gt; Operations Types) and either of these is
+removed, declaring a loss will fail with an error.</p>
 </div>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-3">Usage</a></h2>
@@ -431,18 +448,22 @@ usual.</li>
 <li>If for one line, you don’t find physically the whole product quantity,
 you’ll be able to declare the loss for the difference between the
 reserved one and the done one.</li>
-<li>To do so, fill in the found quantity in Done column, then click on
-‘Loss’ button.</li>
-<li>The reserved quantity will be equal to the done quantity and a Loss
-picking is waiting for a check on the ‘Loss’ picking type.</li>
-<li>That loss picking is now reserving the possible missing quantity in
-order to avoid another picking that want to take a quantity that
-possibly does not exist anymore.</li>
-<li>Then, an operator can decide to validate the inventory loss or to
-cancel the picking.</li>
-<li>If a “Loss Auto-Clear Threshold” is configured (value greater than 0),
-once this threshold is reached, the system automatically reserves the
-entire remaining quantity of that quant in the Loss Picking.</li>
+<li>To do so, fill in the found quantity in the Done column, then click on
+the ‘Loss’ button.</li>
+<li>The reserved quantity of that line is reduced to the done quantity,
+and a stock move of the ‘Loss’ picking type is created and reserves
+whatever remains available on that same quant (product, location, lot,
+package, owner). This locks it: no other operation can reserve it
+while the loss is being investigated.</li>
+<li>Odoo then tries to find the missing quantity elsewhere in stock so the
+picking can still be completed. If other stock is found (another
+location or lot), it is reserved on a new operation line - the line
+the operator already processed is never modified. If nothing else is
+available, the line is simply left with nothing reserved.</li>
+<li>An operator can then check the pickings of the ‘Loss’ picking type and
+either validate them (confirming the loss) or cancel them (releasing
+the locked quantity back to stock). Applying an inventory adjustment
+on a locked quant also releases it automatically.</li>
 </ul>
 </div>
 <div class="section" id="known-issues-roadmap">
@@ -477,6 +498,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Sylvain Van Hoof <a class="reference external" href="mailto:sylvain&#64;okia.be">sylvain&#64;okia.be</a></li>
 <li>Denis Roussel <a class="reference external" href="mailto:denis.roussel&#64;acsone.eu">denis.roussel&#64;acsone.eu</a></li>
 <li>Nicolas Delbovier <a class="reference external" href="mailto:nicolas.delbovier&#64;acsone.eu">nicolas.delbovier&#64;acsone.eu</a></li>
+<li>Laurent Mignon <a class="reference external" href="mailto:laurent.mignon&#64;acsone.eu">laurent.mignon&#64;acsone.eu</a></li>
 </ul>
 </div>
 <div class="section" id="maintainers">
