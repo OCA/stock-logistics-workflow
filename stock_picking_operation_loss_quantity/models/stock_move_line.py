@@ -34,11 +34,17 @@ class StockMoveLine(models.Model):
         return self._lose_quantity()
 
     def _unreserve_unprocessed_qty(self) -> float:
+        """Unreserve the unprocessed quantity of this move line and return it
+        expressed in the move's UoM.
+        """
         self.ensure_one()
         unprocessed_qty = self.reserved_uom_qty - self.qty_done
         # Free the quantity that the operator was not able to process
         self.reserved_uom_qty = self.qty_done
-        return unprocessed_qty
+        # Convert the unprocessed quantity to the move's UoM before returning it
+        return self.product_uom_id._compute_quantity(
+            unprocessed_qty, self.move_id.product_uom, rounding_method="HALF-UP"
+        )
 
     def _reservation_is_updatable(self, quantity, reserved_quant):
         self.ensure_one()
