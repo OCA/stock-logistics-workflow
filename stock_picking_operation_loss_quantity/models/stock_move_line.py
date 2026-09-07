@@ -94,10 +94,14 @@ class StockMoveLine(models.Model):
                 lot_id=line.lot_id,
                 package_id=line.package_id,
                 owner_id=line.owner_id,
+                strict=True,
             )
             quants._lock_quants_for_loss()
             unprocessed_by_move[line.move_id] += line._unreserve_unprocessed_qty()
-            quants._lock_with_picking_type(line.location_id.warehouse_id.loss_type_id)
+            for quant in quants:
+                quant._lock_with_picking_type(
+                    line.location_id.warehouse_id.loss_type_id
+                )
             if float_is_zero(
                 line.reserved_uom_qty, precision_rounding=line.product_uom_id.rounding
             ):
