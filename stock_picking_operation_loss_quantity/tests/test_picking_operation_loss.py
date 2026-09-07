@@ -176,3 +176,143 @@ class TestQuantityLoss(OperationLossQuantityCommon):
         # not 0.75.
         self.assertEqual(unprocessed_qty, 9.0)
         self.assertEqual(line.reserved_uom_qty, 0.25)
+
+    def test_lose_quantity_does_not_touch_quants_in_child_location(self):
+        """`_lose_quantity` must only lock the exact quant behind the move
+        line being declared as lost (`_gather(..., strict=True)`), never a
+        quant that merely lives in a child of that location: `_gather`
+        without `strict` matches locations `child_of` the one requested, so
+        it would wrongly pick up unrelated stock stored in a sub-location.
+        """
+        shelf = self.env["stock.location"].create(
+            {
+                "name": "Shelf",
+                "usage": "internal",
+                "location_id": self.loc_stock.id,
+            }
+        )
+        # Only loc_stock has stock at assignment time: the reservation is
+        # deterministically made there, not on the (still empty) shelf.
+        self._create_quantities(self.product_2, 5.0, location=self.loc_stock)
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.pick_type_out.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "name": "Test move",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_2.uom_id.id,
+                "product_uom_qty": 5,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move._action_confirm()
+        picking.action_assign()
+
+        line = move.move_line_ids
+        self.assertEqual(line.location_id, self.loc_stock)
+        line.qty_done = 2.0
+
+        # Unrelated stock, added after the reservation, in a child location.
+        self._create_quantities(self.product_2, 3.0, location=shelf)
+
+        # Without `strict=True`, `_gather` would also match the shelf quant
+        # (child of loc_stock) and lock it too, even though the line was
+        # never reserved on it.
+        line.action_lose_quantity()
+
+        loc_stock_quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product_2.id),
+                ("location_id", "=", self.loc_stock.id),
+            ]
+        )
+        # The quant actually behind the move line is the one locked...
+        self.assertTrue(loc_stock_quant.is_locked_by_picking)
+        self.assertEqual(
+            loc_stock_quant.lock_move_ids.quant_lock_quant_id, loc_stock_quant
+        )
+        # ...the unrelated shelf quant is left alone by the locking itself
+        shelf_quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product_2.id),
+                ("location_id", "=", shelf.id),
+            ]
+        )
+        self.assertFalse(shelf_quant.is_locked_by_picking)
+
+    def test_lose_quantity_does_not_touch_quants_of_another_owner(self):
+        """`_lose_quantity` must only lock the exact quant behind the move
+        line being declared as lost, never a quant of another owner:
+        `_gather` without `strict` does not filter on `owner_id` at all when
+        the line itself has none set, so it would wrongly pick up stock
+        owned by someone else.
+        """
+        owner = self.env["res.partner"].create({"name": "Another owner"})
+        # Only the un-owned stock exists at assignment time: the reservation
+        # is deterministically made on it.
+        self._create_quantities(self.product_2, 5.0)
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.pick_type_out.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "name": "Test move",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_2.uom_id.id,
+                "product_uom_qty": 5,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move._action_confirm()
+        picking.action_assign()
+
+        line = move.move_line_ids
+        self.assertFalse(line.owner_id)
+        line.qty_done = 2.0
+
+        # Unrelated stock, added after the reservation, owned by a partner.
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": self.product_2.id,
+                "inventory_quantity": 3.0,
+                "location_id": self.loc_stock.id,
+                "owner_id": owner.id,
+            }
+        )._apply_inventory()
+
+        # Without `strict=True`, `_gather` would also match the owned quant
+        # (the owner filter is only applied when the line itself has one)
+        # and lock it too, even though the line was never reserved on it.
+        line.action_lose_quantity()
+
+        unowned_quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product_2.id),
+                ("location_id", "=", self.loc_stock.id),
+                ("owner_id", "=", False),
+            ]
+        )
+        owned_quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product_2.id),
+                ("location_id", "=", self.loc_stock.id),
+                ("owner_id", "=", owner.id),
+            ]
+        )
+        self.assertTrue(unowned_quant.is_locked_by_picking)
+        self.assertFalse(owned_quant.is_locked_by_picking)
