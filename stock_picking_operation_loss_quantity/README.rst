@@ -35,10 +35,21 @@ Stock Picking Operation Loss Quantity
 This module allows to declare loss product quantities during picking
 operations.
 
-To avoid unwanted stock losses if it is not justified, movements will
-instead be reaffected to a "LOSS" picking type.
+When an operator cannot find the whole reserved quantity for an
+operation, declaring the loss locks the remaining available quantity of
+the affected quant (product, location, lot, package, owner) through a
+stock move of the warehouse's "Loss" picking type. This prevents any
+other operation from reserving that quantity until the loss is
+investigated and either confirmed (the lock move is validated) or
+dismissed (the lock move is cancelled, releasing the quant back to
+stock).
 
-This module take into account the flows with product lot management,
+The picking is then given the opportunity to still be completed: Odoo
+looks for the missing quantity on other available stock (another
+location or lot). If some is found, it is reserved on a new operation
+line, never on one the operator already processed.
+
+This module takes into account the flows with product lot management,
 packages, owners.
 
 **Table of contents**
@@ -56,7 +67,7 @@ stock level at that moment and can declare losses easily.
 
 If real-time accounting is enabled, this can help to reduce unwanted
 stock movements as we'll reserve the possible loss quantities in a new
-assigned picking, confirm or cancel loss in a second time.
+assigned picking.
 
 Configuration
 =============
@@ -65,43 +76,46 @@ Configuration
 - Enable 'Storage Locations' and 'Multi-Step Routes'.
 - Go To Inventory > Configuration > Warehouse Management > Warehouses
 - On the selected Warehouse, check the 'Enable the Loss feature' under
-  'Loss' section.
-- Set the "Loss Auto-Clear threshold" if you want to use the
-  "auto-clear" feature (or let 0 if you do not want to use it)
+  'Loss' section. This automatically creates a dedicated 'Loss'
+  operation type for the warehouse, with the 'Allow quant lock' option
+  (from the ``stock_quant_lock`` module this module depends on) enabled
+  and a destination location set.
+
+This module relies on ``stock_quant_lock`` to actually lock the quant
+when a loss is declared: locking is only possible on an operation type
+that has 'Allow quant lock' enabled and a destination location
+configured. If the warehouse's 'Loss' operation type is later edited
+(Inventory > Configuration > Operations Types) and either of these is
+removed, declaring a loss will fail with an error.
 
 Usage
 =====
 
 - You need to have enabled the 'Show Detailed Operations' on the Picking
   type(s) you want.
-
 - Go to Inventory > Operations > Transfers
-
 - Choose the one you want to manage.
-
 - In the 'Detailed Operations' tab, fill in the done quantities as
   usual.
-
 - If for one line, you don't find physically the whole product quantity,
   you'll be able to declare the loss for the difference between the
   reserved one and the done one.
-
-- To do so, fill in the found quantity in Done column, then click on
-  'Loss' button.
-
-- The reserved quantity will be equal to the done quantity and a Loss
-  picking is waiting for a check on the 'Loss' picking type.
-
-- That loss picking is now reserving the possible missing quantity in
-  order to avoid another picking that want to take a quantity that
-  possibly does not exist anymore.
-
-- Then, an operator can decide to validate the inventory loss or to
-  cancel the picking.
-
-- If a "Loss Auto-Clear Threshold" is configured (value greater than 0),
-  once this threshold is reached, the system automatically reserves the
-  entire remaining quantity of that quant in the Loss Picking.
+- To do so, fill in the found quantity in the Done column, then click on
+  the 'Loss' button.
+- The reserved quantity of that line is reduced to the done quantity,
+  and a stock move of the 'Loss' picking type is created and reserves
+  whatever remains available on that same quant (product, location, lot,
+  package, owner). This locks it: no other operation can reserve it
+  while the loss is being investigated.
+- Odoo then tries to find the missing quantity elsewhere in stock so the
+  picking can still be completed. If other stock is found (another
+  location or lot), it is reserved on a new operation line - the line
+  the operator already processed is never modified. If nothing else is
+  available, the line is simply left with nothing reserved.
+- An operator can then check the pickings of the 'Loss' picking type and
+  either validate them (confirming the loss) or cancel them (releasing
+  the locked quantity back to stock). Applying an inventory adjustment
+  on a locked quant also releases it automatically.
 
 Known issues / Roadmap
 ======================
@@ -136,6 +150,7 @@ Contributors
 - Sylvain Van Hoof sylvain@okia.be
 - Denis Roussel denis.roussel@acsone.eu
 - Nicolas Delbovier nicolas.delbovier@acsone.eu
+- Laurent Mignon laurent.mignon@acsone.eu
 
 Maintainers
 -----------
