@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="ir_cron_lot_allocation_backfill" model="ir.cron">
+        <field name="name">Stock Valuation: Backfill Lot Allocations</field>
+        <field name="model_id" ref="stock_account.model_stock_valuation_layer" />
+        <field name="state">code</field>
+        <field name="code">model._cron_backfill_lot_allocations()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <!-- Activated by the post_init_hook, and deactivated by the cron itself
+             once the backlog is drained. -->
+        <field name="active" eval="False" />
+    </record>
+
+    <record id="action_backfill_lot_allocations" model="ir.actions.server">
+        <field name="name">Run Lot Allocation Backfill</field>
+        <field name="model_id" ref="stock_account.model_stock_valuation_layer" />
+        <field name="state">code</field>
+        <field name="code">model._cron_backfill_lot_allocations()</field>
+    </record>
+
+</odoo>
