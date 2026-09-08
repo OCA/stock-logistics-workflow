@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_move_line_lock_qty_done
-#: model:res.groups,name:stock_move_line_lock_qty_done.group_stock_move_can_edit_done_qty
-msgid "Can edit done quantity for done stock moves"
-msgstr ""
-
-#. module: stock_move_line_lock_qty_done
 #: model:ir.model,name:stock_move_line_lock_qty_done.model_res_company
 msgid "Companies"
 msgstr ""
@@ -26,6 +21,11 @@ msgstr ""
 #. module: stock_move_line_lock_qty_done
 #: model:ir.model,name:stock_move_line_lock_qty_done.model_res_config_settings
 msgid "Config Settings"
+msgstr ""
+
+#. module: stock_move_line_lock_qty_done
+#: model:res.groups,name:stock_move_line_lock_qty_done.group_stock_move_can_edit_done_qty
+msgid "Inventory: Edit done quantity of done stock moves"
 msgstr ""
 
 #. module: stock_move_line_lock_qty_done
