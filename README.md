@@ -55,7 +55,7 @@ addon | version | maintainers | summary
 [stock_move_line_change_lot](stock_move_line_change_lot/) | 16.0.1.2.0 |  | Stock Move Line Change Lot
 [stock_move_line_dates](stock_move_line_dates/) | 16.0.1.0.1 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Add Date Scheduled and Deadline dates in move lines
 [stock_move_line_expiration_date_required](stock_move_line_expiration_date_required/) | 16.0.1.0.2 |  | Stock Move Line Expiration Date Required
-[stock_move_line_lock_qty_done](stock_move_line_lock_qty_done/) | 16.0.1.1.0 |  | Restrict modifications to the done quantity in validated stock moves
+[stock_move_line_lock_qty_done](stock_move_line_lock_qty_done/) | 16.0.1.2.0 |  | Restrict modifications to the done quantity in validated stock moves
 [stock_move_line_reserved_quant](stock_move_line_reserved_quant/) | 16.0.1.0.0 | <a href='https://github.com/rousseldenis'><img src='https://github.com/rousseldenis.png' width='32' height='32' style='border-radius:50%;' alt='rousseldenis'/></a> | This module allows to get the link from a stock move line to the reserved quant
 [stock_move_line_serial_unique](stock_move_line_serial_unique/) | 16.0.1.0.0 |  | Stock Move Line Serial Unique
 [stock_move_manage_priority](stock_move_manage_priority/) | 16.0.1.1.0 |  | Stock Move Priority Management
