@@ -32,6 +32,11 @@ msgid "Enable setting priority at stock move level."
 msgstr "Permitir establecer la prioridad a nivel de movimiento de existencias."
 
 #. module: stock_move_manage_priority
+#: model:res.groups,name:stock_move_manage_priority.group_stock_move_priority_manager
+msgid "Inventory: Change stock move priority"
+msgstr ""
+
+#. module: stock_move_manage_priority
 #: model:ir.model.fields,field_description:stock_move_manage_priority.field_stock_move__is_priority_editable
 msgid "Is Priority Editable"
 msgstr "Es Prioridad Editable"
@@ -52,7 +57,5 @@ msgstr "Prioridad"
 msgid "Stock Move"
 msgstr "Movimiento de Existencias"
 
-#. module: stock_move_manage_priority
-#: model:res.groups,name:stock_move_manage_priority.group_stock_move_priority_manager
-msgid "stock move priority manager"
-msgstr "gestor de prioridad de movimientos de existencias"
+#~ msgid "stock move priority manager"
+#~ msgstr "gestor de prioridad de movimientos de existencias"
