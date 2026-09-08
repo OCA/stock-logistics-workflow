@@ -26,8 +26,7 @@ class StockPickingToBatch(models.TransientModel):
         comodel_name="stock.picking.batch.creator.group.field",
         inverse_name="picking_to_batch_id",
         string="Group by field",
-        help="If set any, multiple batch picking will be created, one per "
-        "group field",
+        help="If set any, multiple batch picking will be created, one per group field",
     )
     batch_max_pickings = fields.Integer(
         "Maximum transfers",
