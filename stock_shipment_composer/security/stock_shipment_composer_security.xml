@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record model="ir.rule" id="stock_shipment_composer_multicompany_rule">
+        <field name="name">stock.shipment.composer multi-company</field>
+        <field name="model_id" ref="model_stock_shipment_composer" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record model="ir.rule" id="stock_shipment_composer_line_multicompany_rule">
+        <field name="name">stock.shipment.composer.line multi-company</field>
+        <field name="model_id" ref="model_stock_shipment_composer_line" />
+        <field
+            name="domain_force"
+        >[('composer_id.company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
