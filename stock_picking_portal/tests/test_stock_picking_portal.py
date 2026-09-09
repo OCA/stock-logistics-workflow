@@ -10,9 +10,9 @@ from odoo import Command
 from odoo.http import Request
 from odoo.tests import HttpCase, tagged
 
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.portal.controllers import portal
 from odoo.addons.stock_picking_portal.controllers.portal import CustomerPortal
-from odoo.addons.website.tools import MockRequest
 
 
 @tagged("post_install", "-at_install")
@@ -54,7 +54,7 @@ class TestStockPickingPortal(HttpCase):
                     "email": user,
                     "name": user,
                     "password": user,
-                    "groups_id": [Command.set([portal_group.id])],
+                    "group_ids": [Command.set([portal_group.id])],
                 }
             )
         )
@@ -108,7 +108,7 @@ class TestStockPickingPortal(HttpCase):
 
         picking = self._get_picking()
         login = None
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
         response = self.url_open(
             url=picking_url,
@@ -156,7 +156,7 @@ class TestStockPickingPortal(HttpCase):
 
         picking = self._get_picking()
         login = self.portal_user_1.login
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
 
         response = self.url_open(
@@ -269,6 +269,7 @@ class TestStockPickingPortal(HttpCase):
         """Check that the portal user can accept a picking"""
         picking = self._get_picking()
         picking._portal_ensure_token()
+        self.authenticate(None, None)
         access_token = picking.access_token
         redirect_url = (
             f"/my/stock_operations/{picking.id}?access_token={access_token}"
@@ -288,7 +289,7 @@ class TestStockPickingPortal(HttpCase):
             "Signature is missing.",
             msg="Should be a signature error",
         )
-        e_url = "/my/stock_operations/%s/accept?" % picking.id
+        e_url = f"/my/stock_operations/{picking.id}/accept?"
         res = self.opener.post(base_url + e_url, json={})
         result = res.json()
         self.assertEqual(
@@ -491,4 +492,36 @@ class TestStockPickingPortal(HttpCase):
             response2.status_code,
             200,
             "Second GET with same token should also return 200.",
+        )
+
+    def test_portal_page_validated_picking(self):
+        """Check that a validated picking is rendered in the portal"""
+        picking = self._get_picking()[0]
+        picking.move_ids.write({"quantity": 1, "picked": True})
+        picking.button_validate()
+        self.assertEqual(
+            picking.state, "done", msg="The picking should have been validated"
+        )
+        self.config_obj.create(
+            {
+                "portal_visible_operation_ids": self.operation_types.ids,
+            }
+        ).execute()
+
+        picking._portal_ensure_token()
+        url = (
+            f"{picking.get_base_url()}/my/stock_operations/{picking.id}"
+            f"?access_token={picking.access_token}"
+        )
+        self.authenticate(self.portal_user_1.login, self.portal_user_1.login)
+        response = self.opener.get(url)
+        self.assertEqual(
+            response.status_code,
+            200,
+            "A validated picking should be accessible in the portal",
+        )
+        self.assertIn(
+            "stock_move_line_table",
+            response.text,
+            msg="The move line table should be rendered for a validated picking",
         )

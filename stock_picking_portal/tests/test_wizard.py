@@ -35,7 +35,7 @@ class TestPickingLinkWizard(BaseCommon):
                     "name": "Portal User",
                     "login": "portal_user",
                     "password": "portal",
-                    "groups_id": [(6, 0, [portal_group.id])],
+                    "group_ids": [(6, 0, [portal_group.id])],
                 }
             )
         )

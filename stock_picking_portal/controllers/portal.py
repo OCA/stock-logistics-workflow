@@ -3,12 +3,13 @@
 
 import binascii
 
-from odoo import _, fields, http
-from odoo.exceptions import AccessDenied, AccessError, MissingError, UserError
+from werkzeug.exceptions import Forbidden
+
+from odoo import fields, http
+from odoo.exceptions import AccessError, MissingError, UserError
 from odoo.http import request
 
 from odoo.addons.portal.controllers import portal
-from odoo.addons.portal.controllers.mail import _message_post_helper
 from odoo.addons.portal.controllers.portal import pager as portal_pager
 
 
@@ -72,23 +73,26 @@ class CustomerPortal(portal.CustomerPortal):
 
     def _get_stock_operations_searchbar_sortings(self):
         return {
-            "date": {"label": _("Order Date"), "order": "scheduled_date desc"},
-            "name": {"label": _("Reference"), "order": "name"},
-            "state": {"label": _("State"), "order": "state"},
+            "date": {
+                "label": self.env._("Order Date"),
+                "order": "scheduled_date desc",
+            },
+            "name": {"label": self.env._("Reference"), "order": "name"},
+            "state": {"label": self.env._("State"), "order": "state"},
         }
 
     def _get_stock_operations_searchbar_filters(self):
         return {
             "all": {
-                "label": _("All"),
+                "label": self.env._("All"),
                 "domain": [("picking_type_id.code", "in", ("outgoing", "incoming"))],
             },
             "outgoing": {
-                "label": _("Delivery"),
+                "label": self.env._("Delivery"),
                 "domain": [("picking_type_id.code", "=", "outgoing")],
             },
             "incoming": {
-                "label": _("Receipt"),
+                "label": self.env._("Receipt"),
                 "domain": [("picking_type_id.code", "=", "incoming")],
             },
         }
@@ -221,32 +225,33 @@ class CustomerPortal(portal.CustomerPortal):
             not portal_visible_operation_ids
             or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
         ):
-            raise AccessDenied(
-                _("You don't have the access rights to Stock Operations.")
+            raise Forbidden(
+                self.env._("You don't have the access rights to Stock Operations.")
             )
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
             session_obj_date = request.session.get(
-                "view_stock_operation_%s" % operation_sudo.id
+                f"view_stock_operation_{operation_sudo.id}"
             )
             if session_obj_date != today:
-                request.session["view_stock_operation_%s" % operation_sudo.id] = today
-                msg = _(
-                    "Stock Operation viewed by customer %s",
-                    (
-                        operation_sudo.partner_id.name
-                        if request.env.user._is_public()
-                        else request.env.user.partner_id.name
-                    ),
+                request.session[f"view_stock_operation_{operation_sudo.id}"] = today
+                author = (
+                    operation_sudo.partner_id
+                    if request.env.user._is_public()
+                    else request.env.user.partner_id
                 )
-                _message_post_helper(
-                    "stock.picking",
-                    operation_sudo.id,
-                    message=msg,
-                    token=operation_sudo.access_token,
-                    message_type="notification",
-                    subtype_xmlid="mail.mt_note",
-                    partner_ids=operation_sudo.user_id.sudo().partner_id.ids,
+                msg = self.env._("Stock Operation viewed by customer %s", author.name)
+                post_values = {
+                    "body": msg,
+                    "author_id": author.id,
+                    "message_type": "notification",
+                    "subtype_xmlid": "mail.mt_note",
+                    "partner_ids": operation_sudo.user_id.sudo().partner_id.ids,
+                }
+                if author.email:
+                    post_values["email_from"] = author.email_formatted
+                operation_sudo.with_context(mail_create_nosubscribe=True).message_post(
+                    **post_values
                 )
         values = {
             "stock_operations": operation_sudo,
@@ -264,7 +269,7 @@ class CustomerPortal(portal.CustomerPortal):
 
     @http.route(
         ["/my/stock_operations/<int:operation_id>/accept"],
-        type="json",
+        type="jsonrpc",
         auth="public",
         website=True,
     )
@@ -292,10 +297,10 @@ class CustomerPortal(portal.CustomerPortal):
                 "stock.picking", operation_id, access_token=access_token
             )
         except (AccessError, MissingError):
-            return {"error": _("Invalid Stock Operation.")}
+            return {"error": self.env._("Invalid Stock Operation.")}
 
         if not signature:
-            return {"error": _("Signature is missing.")}
+            return {"error": self.env._("Signature is missing.")}
 
         try:
             operation_sudo.write(
@@ -306,7 +311,7 @@ class CustomerPortal(portal.CustomerPortal):
                 }
             )
         except (TypeError, binascii.Error, UserError):
-            return {"error": _("Invalid signature data.")}
+            return {"error": self.env._("Invalid signature data.")}
 
         pdf = (
             request.env["ir.actions.report"]
@@ -314,12 +319,22 @@ class CustomerPortal(portal.CustomerPortal):
             ._render_qweb_pdf("stock.action_report_delivery", [operation_sudo.id])[0]
         )
 
-        _message_post_helper(
-            "stock.picking",
-            operation_sudo.id,
-            _("Stock Operation signed by %s", name),
-            attachments=[("%s.pdf" % operation_sudo.name, pdf)],
-            token=access_token,
+        author = (
+            operation_sudo.partner_id
+            if request.env.user._is_public()
+            else request.env.user.partner_id
+        )
+        post_values = {
+            "body": self.env._("Stock Operation signed by %s", name),
+            "author_id": author.id,
+            "message_type": "comment",
+            "subtype_xmlid": "mail.mt_comment",
+            "attachments": [(f"{operation_sudo.name}.pdf", pdf)],
+        }
+        if author.email:
+            post_values["email_from"] = author.email_formatted
+        operation_sudo.with_context(mail_create_nosubscribe=True).message_post(
+            **post_values
         )
         query_string = "&message=sign_ok"
         return {

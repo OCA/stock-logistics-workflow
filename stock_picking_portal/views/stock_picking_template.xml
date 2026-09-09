@@ -119,7 +119,7 @@
         primary="True"
     >
         <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
-            <div class="row mt16 o_portal_sale_sidebar">
+            <div class="row mt16">
                 <t t-call="portal.portal_record_sidebar">
                     <t t-set="classes" t-value="'col-lg-auto d-print-none'" />
 
@@ -318,6 +318,7 @@
                     </t>
                 </div>
             </div>
+            <t t-set="format_number" t-value="lambda x: int(x) if x == int(x) else x" />
             <table
                 class="table table-sm"
                 t-if="o.state!='done'"
@@ -395,7 +396,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-if="o.has_packages" name="has_packages">
+                    <t t-if="o.packages_count" name="has_packages">
                         <t
                             t-set="packages"
                             t-value="o.move_line_ids.mapped('result_package_id')"
