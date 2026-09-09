@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <odoo noupdate='1'>
     <record id="outgoing_shipment_stock_picking_portal" model="stock.picking">
-            <field name="picking_type_id" ref="stock.picking_type_out" />
-            <field name="origin">stock_picking_portal outgoing shipment</field>
-            <field name="user_id" />
-            <field name="partner_id" ref="base.partner_admin" />
-            <field name="scheduled_date" eval="DateTime.today()" />
-            <field name="location_id" ref="stock.stock_location_stock" />
-            <field name="location_dest_id" ref="stock.stock_location_customers" />
-            <field
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="origin">stock_picking_portal outgoing shipment</field>
+        <field name="user_id" />
+        <field name="partner_id" ref="base.partner_admin" />
+        <field name="scheduled_date" eval="DateTime.today()" />
+        <field name="location_id" ref="stock.stock_location_stock" />
+        <field name="location_dest_id" ref="stock.stock_location_customers" />
+        <field
             name="move_ids"
             model="stock.move"
             eval="[(0, 0, {
@@ -21,18 +21,18 @@
                 'location_dest_id': ref('stock.stock_location_customers'),
             })]"
         />
-        </record>
+    </record>
 
     <record id="incomming_stock_picking_portal" model="stock.picking">
-            <field name="picking_type_id" ref="stock.picking_type_in" />
-            <field name="origin">stock_picking_portal incoming shipment</field>
-            <field name="user_id" />
-            <field name="scheduled_date" eval="DateTime.today()" />
-            <field name="location_id" ref="stock.stock_location_suppliers" />
-            <field name="location_dest_id" ref="stock.stock_location_shop0" />
-            <field name="partner_id" ref="base.partner_admin" />
-            <field name="company_id" ref="base.main_company" />
-            <field
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="origin">stock_picking_portal incoming shipment</field>
+        <field name="user_id" />
+        <field name="scheduled_date" eval="DateTime.today()" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_shop0" />
+        <field name="partner_id" ref="base.partner_admin" />
+        <field name="company_id" ref="base.main_company" />
+        <field
             name="move_ids"
             model="stock.move"
             eval="[(0, 0, {
@@ -46,5 +46,5 @@
                 'company_id': ref('base.main_company'),
             })]"
         />
-        </record>
+    </record>
 </odoo>

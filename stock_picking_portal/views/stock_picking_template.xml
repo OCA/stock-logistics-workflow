@@ -71,14 +71,14 @@
                         </td>
                         <td class="text-center">
                             <span
-                                t-field="operation.scheduled_date"
-                                t-options="{'widget': 'date'}"
-                            />&amp;nbsp;
+                            t-field="operation.scheduled_date"
+                            t-options="{'widget': 'date'}"
+                        />&amp;nbsp;
                             <span
-                                class='d-none d-md-inline'
-                                t-field="operation.scheduled_date"
-                                t-options="{'time_only': True}"
-                            />
+                            class='d-none d-md-inline'
+                            t-field="operation.scheduled_date"
+                            t-options="{'time_only': True}"
+                        />
                         </td>
                         <td class="text-center">
                             <t t-out="operation.partner_id.sudo().name" />
@@ -120,17 +120,16 @@
     >
         <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
             <div class="row mt16 o_portal_sale_sidebar">
-            <t t-call="portal.portal_record_sidebar">
+                <t t-call="portal.portal_record_sidebar">
                     <t t-set="classes" t-value="'col-lg-auto d-print-none'" />
 
-                    <t t-set="title">
-                    </t>
-                      <t t-set="entries">
-                    <ul
+                    <t t-set="title" />
+                    <t t-set="entries">
+                        <ul
                             class="list-group list-group-flush flex-wrap flex-row flex-lg-column"
                         >
-                        <li class="list-group-item d-grid align-content-start">
-                            <a
+                            <li class="list-group-item d-grid align-content-start">
+                                <a
                                     t-if="not object.is_signed"
                                     role="button"
                                     class="btn btn-primary mb8"
@@ -138,27 +137,29 @@
                                     data-bs-target="#modalaccept"
                                     href="#"
                                 >
-                                <i class="fa fa-check" /><t>Sign now</t>
-                            </a>
-                            <a
+                                    <i class="fa fa-check" />
+                                    <t>Sign now</t>
+                                </a>
+                                <a
                                     t-if="object.is_signed"
                                     role="button"
                                     class="btn btn-primary mb8"
                                 >
-                                <i class="fa fa-check" /><t>Signed</t>
-                            </a>
-                            <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
-                                <div class="btn-group flex-grow-1 me-1 mb-1">
-                                    <a
+                                    <i class="fa fa-check" />
+                                    <t>Signed</t>
+                                </a>
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <div class="btn-group flex-grow-1 me-1 mb-1">
+                                        <a
                                             class="btn btn-secondary o_download_btn"
                                             t-att-href="object.get_portal_url(report_type='pdf', download=True)"
                                             title="Download"
                                         >
                                         <i class="fa fa-download" /> Download
                                     </a>
-                                </div>
-                                <div class="btn-group flex-grow-1 mb-1">
-                                    <a
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a
                                             class="btn btn-secondary o_print_btn o_portal_invoice_print"
                                             t-att-href="object.get_portal_url(report_type='pdf')"
                                             id="print_invoice_report"
@@ -167,17 +168,16 @@
                                         >
                                         <i class="fa fa-print" /> Print
                                     </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </t>
+                            </li>
+                        </ul>
+                    </t>
                 </t>
 
                 <div id="quote_content" class="col-12 col-lg justify-content-end">
                     <div class="o_portal_html_view shadow p-3">
-                        <div class="o_portal_html_loader text-center">
-                        </div>
+                        <div class="o_portal_html_loader text-center" />
                         <t
                             t-call="stock_picking_portal.stock_operation_document"
                             t-lang="object._get_report_lang()"
@@ -253,7 +253,7 @@
                         t-field="o.move_ids[0].partner_id"
                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                     />
-                    </div>
+                </div>
                 <div
                     name="outgoing_warehouse_address"
                     t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id"
@@ -265,7 +265,7 @@
                         t-field="o.picking_type_id.warehouse_id.partner_id"
                         t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'
                     />
-                    </div>
+                </div>
             </div>
         </t>
         <t t-set="information_block">
@@ -295,7 +295,7 @@
                             t-field="partner.commercial_partner_id"
                             t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": True}'
                         />
-                            </div>
+                    </div>
                 </div>
             </div>
         </t>
@@ -423,7 +423,7 @@
                                 <t
                                     t-call="stock.stock_report_delivery_aggregated_move_lines"
                                 />
-                                    </t>
+                            </t>
                         </t>
                         <t
                             t-set="move_lines"
@@ -452,7 +452,7 @@
                                 <t
                                     t-call="stock.stock_report_delivery_aggregated_move_lines"
                                 />
-                                    </t>
+                            </t>
                         </t>
                     </t>
                     <t t-else="">
@@ -471,7 +471,7 @@
                             <t
                                 t-call="stock.stock_report_delivery_aggregated_move_lines"
                             />
-                                </t>
+                        </t>
                     </t>
                 </tbody>
             </table>
