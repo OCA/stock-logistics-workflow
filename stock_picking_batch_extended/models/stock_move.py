@@ -9,6 +9,4 @@ class StockMove(models.Model):
     batch_id = fields.Many2one(
         comodel_name="stock.picking.batch",
         related="picking_id.batch_id",
-        store=True,
-        index=True,
     )

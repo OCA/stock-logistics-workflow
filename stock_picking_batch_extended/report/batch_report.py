@@ -20,7 +20,7 @@ class ReportPrintBatchPicking(models.AbstractModel):
     def new_level_0(self, operation):
         location_name = operation.location_id.display_name
         location_dest_name = operation.location_dest_id.display_name
-        level_0_name = f"{location_name} \u21e8 {location_dest_name}"
+        level_0_name = f"{location_name} → {location_dest_name}"
         return {
             "name": level_0_name,
             "location": operation.location_id,
@@ -46,10 +46,8 @@ class ReportPrintBatchPicking(models.AbstractModel):
         return sorted(
             rec_list,
             key=lambda rec: (
-                rec["location"].posx,
-                rec["location"].posy,
-                rec["location"].posz,
-                rec["location"].name,
+                rec["location"].complete_name,
+                rec["location"].id,
             ),
         )
 

@@ -60,7 +60,6 @@ class TestBatchPicking(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": "Test move",
                             "product_id": product_id,
                             "product_uom_qty": 10,
                             "location_id": cls.stock_location.id,
@@ -433,3 +432,9 @@ class TestBatchPicking(BaseCommon):
         )
         batch_action = wiz.action_create_batch()
         self.assertEqual(len(batch_action.get("domain")[0][2]), 2)
+
+    def test_create_batch_using_form(self):
+        batch_form = Form(self.env["stock.picking.batch"])
+        batch_form.picking_type_id = self.picking_type_out
+        batch = batch_form.save()
+        self.assertNotEqual(batch.name, "New")

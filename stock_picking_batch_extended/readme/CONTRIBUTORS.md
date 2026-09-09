@@ -25,6 +25,7 @@
   - Sergio Teruel
   - César A. Sánchez
   - Carlos Lopez
+  - Andrii Kompaniiets
 
 - [Trobz](https://trobz.com):
 

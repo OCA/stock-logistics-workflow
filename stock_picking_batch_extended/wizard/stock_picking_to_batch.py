@@ -78,9 +78,11 @@ class StockPickingToBatch(models.TransientModel):
         return warehouse.default_user_id
 
     def _prepare_stock_batch_picking(self):
+        pickings = self.env["stock.picking"].browse(self.env.context.get("active_ids"))
         vals = {
             "notes": self.notes,
             "description": self.description,
+            "picking_type_id": pickings[0].picking_type_id.id,
             "user_id": self.user_id.id,
         }
         if self.name:
@@ -117,21 +119,19 @@ class StockPickingToBatch(models.TransientModel):
         """Create n batch pickings by grouped fields selected"""
         StockPicking = self.env["stock.picking"]
         groupby = [f.field_id.name for f in self.group_field_ids]
-        pickings_grouped = StockPicking.read_group(domain, groupby, groupby, lazy=False)
+        pickings_grouped = StockPicking._read_group(
+            domain, groupby=groupby, aggregates=["id:recordset"]
+        )
         if not pickings_grouped:
             raise UserError(self._raise_message_error())
-        batchs = self.env["stock.picking.batch"].browse()
-        for group in pickings_grouped:
-            batchs += self._assign_to_batch(group)
-        return batchs
-
-    def _get_pickings_group(self, group):
-        return self.env["stock.picking"].search(group["__domain"])
+        batches = self.env["stock.picking.batch"].browse()
+        for *_, pickings in pickings_grouped:
+            batches += self._assign_to_batch(pickings)
+        return batches
 
     def _assign_to_batch(self, group):
-        all_pickings = self._get_pickings_group(group)
         batches = self.env["stock.picking.batch"].browse()
-        for pickings in self.split_chunks(all_pickings):
+        for pickings in self.split_chunks(group):
             batch = self.create_batch_picking()
             pickings.write({"batch_id": batch.id})
             self.confirm_batch_picking(batch)
