@@ -60,7 +60,6 @@ class TestBatchPicking(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": "Test move",
                             "product_id": product_id,
                             "product_uom_qty": 10,
                             "location_id": cls.stock_location.id,

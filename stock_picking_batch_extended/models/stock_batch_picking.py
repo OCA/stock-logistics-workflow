@@ -91,10 +91,8 @@ class StockPickingBatch(models.Model):
         ]
         return action
 
-    def action_picking_move_line_tree(self):
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "stock.stock_move_line_action"
-        )
+    def action_batch_detailed_operations(self):
+        action = super().action_batch_detailed_operations()
         action["views"] = [
             (
                 self.env.ref("stock_picking_batch_extended.view_move_line_tree").id,
