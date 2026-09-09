@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ametras-xsolutions\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Crowdin-Project: ametras-xsolutions\n"
+"X-Crowdin-Project-ID: 530964\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /[AmetrasIntelligence.oca-migrated] 16.0/stock_move_line_reference_link/i18n/stock_move_line_reference_link.pot\n"
+"X-Crowdin-File-ID: 21432\n"
+"Language: fr_FR\n"
+"PO-Revision-Date: 2024-09-25 12:08\n"
+
+#. module: stock_move_line_reference_link
+#: model:ir.model,name:stock_move_line_reference_link.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_move_line_reference_link
+#: model_terms:ir.ui.view,arch_db:stock_move_line_reference_link.view_move_line_form
+msgid "Reference Link"
+msgstr ""
+
+#. module: stock_move_line_reference_link
+#: model:ir.model.fields.selection,name:stock_move_line_reference_link.selection__stock_move_line__linked_reference__stock_move
+msgid "stock.move"
+msgstr ""
+
