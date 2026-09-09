@@ -14,6 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_picking_auto_create_lot
+#: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_category__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_product__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_product_template__auto_create_lot
 #: model:ir.model.fields,field_description:stock_picking_auto_create_lot.field_stock_picking_type__auto_create_lot
@@ -31,8 +32,18 @@ msgid "Product"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: stock_picking_auto_create_lot
 #: model:ir.model,name:stock_picking_auto_create_lot.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_auto_create_lot
+#: model:ir.model,name:stock_picking_auto_create_lot.model_ir_actions_report
+msgid "Report Action"
 msgstr ""
 
 #. module: stock_picking_auto_create_lot
