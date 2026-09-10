@@ -1,0 +1,125 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_lock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-10 15:44+0000\n"
+"PO-Revision-Date: 2026-09-10 15:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_picking_type__allow_quant_lock
+msgid "Allow quant lock"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,help:stock_quant_lock.field_stock_picking_type__allow_quant_lock
+msgid "If checked, this operation type can be used to lock stock quants."
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Lock"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__lock_move_count
+msgid "Lock Move Count"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__lock_move_ids
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_form_editable_quant_lock
+msgid "Lock Moves"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.actions.act_window,name:stock_quant_lock.action_stock_quant_lock_wizard
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+msgid "Lock Quants"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant__is_locked_by_picking
+#: model_terms:ir.ui.view,arch_db:stock_quant_lock.quant_search_view_quant_lock
+msgid "Locked by issue"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_move__quant_lock_quant_id
+msgid "Locked quant"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_quant
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__quant_ids
+msgid "Quants"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_quant_lock_wizard
+msgid "Stock Quant Lock Wizard"
+msgstr ""

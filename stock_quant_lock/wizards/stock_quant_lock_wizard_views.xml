@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_quant_lock_wizard_form" model="ir.ui.view">
+        <field name="name">stock.quant.lock.wizard.form</field>
+        <field name="model">stock.quant.lock.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Lock Quants">
+                <group>
+                    <field name="picking_type_id" />
+                    <field name="quant_ids" widget="many2many_tags" />
+                </group>
+                <footer>
+                    <button
+                        name="action_lock"
+                        type="object"
+                        string="Lock"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_quant_lock_wizard" model="ir.actions.act_window">
+        <field name="name">Lock Quants</field>
+        <field name="res_model">stock.quant.lock.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_quant" />
+        <field name="binding_view_types">list,form</field>
+    </record>
+</odoo>
