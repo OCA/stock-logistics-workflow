@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_picking_form">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_form_inherit" />
+        <field name="arch" type="xml">
+            <field name="batch_id" position="attributes">
+                <attribute name="readonly">state in ('done', 'cancel')</attribute>
+                <attribute name="domain">[
+                    ('state', 'in', ['draft', 'in_progress']),
+                    '|',
+                        ('picking_type_id', '=', picking_type_id),
+                        ('picking_type_id', '=', False),
+                    ]</attribute>
+                <attribute
+                    name="context"
+                >{'default_picking_type_id': picking_type_id}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_internal_search">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <filter name="activities_exception" position="after">
+                <separator />
+                <filter
+                    string="Without batch"
+                    name="without_batch"
+                    domain="[('batch_id', '=', False)]"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>

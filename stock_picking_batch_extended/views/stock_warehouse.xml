@@ -1,0 +1,11 @@
+<odoo>
+    <record id="view_warehouse" model="ir.ui.view">
+        <field name="inherit_id" ref="stock.view_warehouse" />
+        <field name="model">stock.warehouse</field>
+        <field name="arch" type="xml">
+            <field name="reception_steps" position="before">
+                <field name="default_user_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
