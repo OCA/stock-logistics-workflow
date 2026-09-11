@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Product cost price avco sync
 ============================
@@ -17,7 +13,7 @@ Product cost price avco sync
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -32,13 +28,338 @@ Product cost price avco sync
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to sync cost price products with average cost method
-from stock moves price unit.
+Odoo works out the average cost of a product from its stock valuation
+layers, and never restates one once it is written: a correction is
+always booked as a new layer, dated the day it is made, and everything
+that was valued in between keeps the figures it was given. That is a
+sound rule when the stock valuation is posted movement by movement, and
+it is exactly what falls short when it is not.
+
+This module restates the layer instead. When the cost or the quantity of
+an already validated valuation layer is corrected, the layer is
+rewritten as if it had always held the corrected figures, and the whole
+chain is replayed from there on. That is what it buys:
+
+- **A mistake made on a receipt can really be undone.** Somebody types
+  the price of a purchase wrong, or enters the quantity in the wrong
+  unit, and it is only noticed days later. Correcting the receipt is
+  enough: the layer, the cost of the product and everything valued
+  afterwards line up with what actually happened.
+
+- **The outgoing moves valued in between are re-priced.** The units that
+  left stock while the mistake was in place had been valued with the
+  wrong average. They are given the cost they should have had, so the
+  cost of goods sold stops carrying the error, and anything that reads
+  the cost of an outgoing layer follows along. The margin
+  ``sale_margin_sync`` writes on the sale order line is one such reader.
+
+- **A stock valuation asked for a past date comes out corrected.** The
+  valuation report adds up the current value of the layers created up to
+  the requested date, so restating them is what makes a valuation as of
+  last month right once a mistake made last month is fixed this one.
+  Where the stock valuation is posted periodically rather than movement
+  by movement, this is what allows the period to be closed with
+  corrected figures instead of dragging the error into the next one.
+
+- **The cost of an oversold product or lot doesn't run away.** With no
+  units left to average against, Odoo still weighs the incoming cost
+  against the negative quantity, and dividing by it returns a price that
+  is not an average of anything and that can even be negative, which
+  every outgoing move then copies. Here the cost of the receipt becomes
+  the new average, which is also the cost Odoo's own negative stock
+  vacuum uses to settle the deficit once enough real stock arrives, so
+  both ends agree and the cost is always a price that was really paid.
+
+- **Products valuated by lot are supported.** Each lot is replayed as
+  its own chain, so a correction only re-prices what left that very lot
+  and the other lots keep their own cost. Products valuated as a whole
+  and products valuated by lot can coexist, and a product can be
+  switched from one to the other at any time.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+The module acts on the products whose category uses the **Average Cost
+(AVCO)** costing method. Products costed at standard price or FIFO are
+left untouched.
+
+Not compatible with automated inventory valuation
+-------------------------------------------------
+
+Use it only on product categories whose inventory valuation is
+**manual**.
+
+With automated valuation every valuation layer has a journal entry
+posted along with it. This module rewrites the layer when a past mistake
+is corrected, and it does not touch that entry, which was posted for the
+figures the layer used to hold and may well sit in a period that is
+already closed. Stock valuation and accounting would drift apart,
+silently, by the amount of every correction.
+
+The whole point of restating the past is to reach companies that post
+the stock valuation periodically, from the valuation report, rather than
+movement by movement. Those that post it automatically already have each
+correction booked on the day it was made, which is what Odoo does on its
+own and what their accounting expects.
+
+Valuation by lot/serial number
+------------------------------
+
+Both models are supported and can coexist in the same database, so
+ticking or unticking **Valuation by Lot/Serial number** on a product
+needs no special care from this module's point of view: the layers it
+already had keep replaying as the chain they were, and the new ones
+replay per lot.
+
+Bear in mind that enabling it is Odoo's own operation, not this
+module's: it empties the stock out and puts it back, giving **every
+existing lot the current average cost of the product**, because the cost
+each lot was really bought at is not recorded anywhere before that
+point. It also refuses to run while any lot has a negative quantity in a
+valued location.
+
+Landed costs and vendor bill price differences
+----------------------------------------------
+
+Both add value to a receipt layer without touching its cost, and both
+read the remaining quantity to know how much of it is still on hand.
+They are kept in step: correcting the cost or the quantity of a layer
+adjusts its remaining value by the difference, so what a landed cost or
+a bill added to it survives the correction and later corrections are
+priced right.
+
+Correcting a price on the vendor bill is covered by
+``purchase_stock_price_unit_sync``, which applies it to the whole
+receipt instead of only to what is still on hand, so that route ends up
+equivalent to correcting the receipt or the layer.
+
+Usage
+=====
+
+Correcting a mistake
+--------------------
+
+There are four ways of correcting a purchase, and all of them end up in
+the same place: the layer is restated as if it had always held the
+corrected figures, the outgoing moves valued in between are re-priced,
+and the cost of the product, or of the lot, follows.
+
++----------------------+----------------------+----------------------+
+| What you correct     | Where                | What it takes        |
++======================+======================+======================+
+| The **cost** of a    | The ``unit_cost`` of | This module          |
+| receipt              | its valuation layer  |                      |
++----------------------+----------------------+----------------------+
+| The **quantity** of  | The quantity of the  | This module          |
+| a done move,         | move line            |                      |
+| incoming or outgoing |                      |                      |
++----------------------+----------------------+----------------------+
+| The **price** of a   | The order line       | ``purchase_sto       |
+| purchase order       |                      | ck_price_unit_sync`` |
+| already received     |                      |                      |
++----------------------+----------------------+----------------------+
+| The **price** on the | The invoice line     | ``purchase_sto       |
+| vendor bill          |                      | ck_price_unit_sync`` |
++----------------------+----------------------+----------------------+
+
+Correcting the same price twice, on the order and then on the bill, does
+not count it twice: the second one finds the layer already worth what it
+says and does nothing.
+
+Forcing it by hand
+------------------
+
+For the times a correction could not run on its own, such as layers
+written while this module was not installed, the **Recompute average
+cost from here** action is available from the Action menu of the stock
+valuation layers list. Select one or more layers and the chain is
+replayed from each of them.
+
+Only the oldest layer of each chain in the selection is used, because
+replaying corrects everything that comes after the starting point and
+the rest would redo the same work. On a product valuated by lot each lot
+is a chain of its own, so the oldest layer of each lot is kept.
+
+Replaying a long chain rewrites every layer after the starting point, in
+a single transaction. On a product with hundreds of thousands of layers,
+start as late in the chain as the correction allows.
+
+What happens with everything else
+---------------------------------
+
+These flows need nothing from you and are not disturbed by a correction:
+
+- **Landed costs**, applied before or after the correction, and split
+  per lot. What they added to the layer is not purchase cost, so it
+  survives untouched and the correction only moves the cost of the
+  goods.
+
+- **The stock revaluation wizard**. What it adds is spread over the
+  units on hand, the same way a landed cost is, so the cost of the
+  product keeps matching what its layers are worth.
+
+- **Negative stock.** With no units left to average against, a receipt
+  sets the cost to the price actually paid, and Odoo's own vacuum
+  settles the outstanding deficit with that same price once enough real
+  stock arrives. Correcting a receipt down below what had already been
+  delivered records the shortfall as the deficit the vacuum looks for,
+  so those units get re-priced too.
+
+  That shortfall is recorded on the **last** outgoing move of the chain,
+  which is where it would have fallen short in chronological order,
+  rather than on whichever delivery took each particular unit.
+  Reconstructing that would mean replaying the consumption backwards,
+  and it would change nothing: an average cost is spread over the whole
+  quantity, so what matters is that the deficit exists and is settled,
+  not which delivery it is attached to.
+
+- **Inventory adjustments** and **returns** are valued at the cost of
+  the moment rather than averaged in, and a correction re-prices them
+  along with the rest.
+
+- **Switching a product to or from valuation by lot**, at any time. The
+  layers it already had keep replaying as the single chain they were.
+
+What is left to Odoo
+--------------------
+
+- **Vendor bill refunds**, which Odoo compensates against the original
+  bill with a logic of its own.
+- **Layers created straight from code**, outside a stock move and
+  without running Odoo's negative stock vacuum, as a third party module
+  could do. They do not trigger anything: use the server action above if
+  a chain ever needs it.
+- Products that are not average costed, and automated inventory
+  valuation, which is not compatible at all. See the configuration
+  notes.
+
+Changelog
+=========
+
+18.0.2.0.0 (2026-07-28)
+-----------------------
+
+**Support for valuation by lot/serial number.** Odoo keeps one average
+cost per product, or one per lot when the product has "Valuation by
+Lot/Serial number" ticked, and both kinds of product live in the same
+database. The module now replays one valuation chain per lot for the
+latter and one per product for the former, so correcting the cost of a
+lot re-prices what left that lot and leaves every other lot alone. Until
+now it averaged over the whole product, which on a product valuated by
+lot flattened the real cost of every lot into a single average.
+
+The layers a product already had before being switched to valuation by
+lot, which carry no lot, keep replaying as the single chain they were,
+so a product can be switched at any time.
+
+**Fix the cost price of oversold products and lots.** When the
+accumulated quantity is zero or negative there are no units left to
+average against, so the cost of the incoming move becomes the new
+average, which is also the cost Odoo's own negative stock vacuum uses to
+settle the deficit once enough real stock arrives. Odoo weighted it
+against the negative quantity instead, and dividing by that negative
+denominator let a receipt lower the average, or even turn it negative
+and, from there, make every outgoing move add value to the stock
+valuation. The three divisions Odoo leaves unguarded are neutralised:
+``product_price_update_before_done``, the tail of ``_run_fifo_vacuum``
+for both the product and its lots, and
+``_product_price_update_after_done``.
+
+**Let Odoo's negative stock vacuum run again for average cost
+products.** It used to be disabled for every cost method, so nothing
+corrected the deficit once real stock arrived.
+
+**The vacuum no longer rewrites the cost of what is in stock.** Odoo
+closes it with ``standard_price = value_svl / quantity_svl``, and by
+then ``value_svl`` carries the layers it has just written to settle the
+deficit, which have no quantity: they correct units that already left
+the company and say nothing about what the stock still on hand is worth.
+On a history that is internally consistent both figures agree, so
+nothing changes; on one carrying the damage this module exists to repair
+they do not, and the ratio wins over the real purchase price. Seen in
+production: a manufacturing order left a product at 6,6567 EUR/unit and
+the vacuum immediately rewrote it to 8,3811, which is
+``1141,67 / 136,220`` once three
+``Revaluation of ... (negative inventory)`` layers had added 210,41 EUR
+settling 52,18 units delivered a month and a half earlier — the units on
+hand got 26% more expensive because of goods that were no longer there.
+What stands now is the price derived from the real incoming cost, which
+is the rule ``_is_avco_spreadable_value`` already applies when replaying
+a chain, so both paths agree on the cost.
+
+**Quantity corrections keep the remaining quantity in step.** Correcting
+the quantity of an already validated move still restates its layer, as
+it always did, so a stock valuation asked for a date before the
+correction comes out right and the outgoing moves valued in between are
+re-priced. What was missing is that the restatement never touched
+``remaining_qty`` and ``remaining_value``, the bookkeeping Odoo needs
+for the negative stock vacuum and for the vendor bill price difference,
+which were left understated by the corrected amount. They are now kept
+in step, the correction is applied to the layer of the right lot, and
+the vacuum is run afterwards just like Odoo does.
+
+**The remaining value follows a correction.** Correcting the cost or the
+quantity of a layer now adjusts its ``remaining_value``, which Odoo
+reads to know what the units still on hand are worth: the negative stock
+vacuum prices what it takes from a layer with it, ``stock_landed_costs``
+accumulates on it and the vendor bill price difference corrects over it.
+It was left behind before, so later deficits were settled at the cost
+that had just been proven wrong. The adjustment is a delta, so whatever
+a landed cost or a bill added to it survives.
+
+**Deficits created by a correction are recorded.** Correcting a receipt
+below what had already been delivered leaves the chain short by the
+difference. That shortfall is now written as the negative remaining
+quantity Odoo's negative stock vacuum looks for, so the next receipt
+re-prices those units with what was really paid. It used to be silently
+dropped, and the stock kept the value of goods that were never received.
+
+**Value-only layers raise the cost instead of being ignored, and only
+when they belong to the stock on hand.** A layer that only carries value
+and names no target cost, which is what the stock revaluation wizard
+writes, is now spread over the units on hand while replaying, the way a
+landed cost is. It used to be skipped, so a later correction left the
+product with a cost that contradicted what its own layers were worth.
+
+Not every one of them belongs to that stock, though, and the sign of the
+layer it hangs from says which: a child of an incoming layer is a landed
+cost or a vendor bill price difference, part of what those units cost,
+while a child of an outgoing layer is one of core's negative stock
+revaluations, settling units that have already left the company.
+Spreading the latter over what is still on hand divided a value by a
+quantity that had nothing to do with it: a revaluation of -1120 EUR
+landing when 0,22 units were held worked out to -5062 EUR/unit, and from
+there every later layer in the chain inherited a negative cost. And a
+negative average cost is not a low valuation, it is a corruption — it
+flips the sign of the value of every layer after it, so outgoing moves
+start ADDING value and the product's totals cancel out to something
+plausible while every single layer inside is wrong, which is exactly
+what hides the damage from any report that reads the totals. So a
+value-only layer never takes the average below zero, and the ones
+settling units already gone no longer touch it at all.
+
+**A server action to force the replay.** *Recompute average cost from
+here*, from the stock valuation layers list, replays the chain of the
+selected layers. Only the oldest layer of each chain, and of each lot
+when the product is valuated by lot, is used: the rest would redo the
+same work.
+
+**Performance.** The chain is now walked in batches instead of asking
+for the next layer one at a time, which was a query per layer, and the
+dry replay that works out the starting cost no longer keeps a dictionary
+per layer only to throw it away. On a real database, replaying the chain
+of a product with 68.644 layers went from not finishing in ten minutes
+to twelve seconds.
+
+**Removed.** The inventory adjustment branch, which rewrote the quantity
+and swapped the locations of the underlying stock move, and the
+``keep_avco_inventory`` context that drove it. An inventory adjustment
+layer is simply re-priced with the running cost, like a return.
 
 Bug Tracker
 ===========
