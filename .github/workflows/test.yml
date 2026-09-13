@@ -43,10 +43,21 @@ jobs:
             name: test with OCB
             makepot: "true"
           - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
-            exclude: "stock_picking_batch_extended"
+            exclude: "stock_picking_batch_extended,stock_customer_deposit"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
             exclude: "stock_picking_batch_extended"
+            include: "stock_customer_deposit"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            include: "stock_customer_deposit"
+            name: test with OCB
+            makepot: "true"
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            exclude: "stock_customer_deposit"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            exclude: "stock_customer_deposit"
             name: test with OCB
             makepot: "true"
     services:
