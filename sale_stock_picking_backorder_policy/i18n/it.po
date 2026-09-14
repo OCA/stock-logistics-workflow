@@ -6,50 +6,52 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-09-14 17:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__res_partner__sale_backorder_policy__always
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__sale_order__backorder_policy__always
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__res_partner__sale_backorder_policy__ask
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__sale_order__backorder_policy__ask
 msgid "Ask"
-msgstr ""
+msgstr "Chiedi"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_sale_order__backorder_policy
 #: model_terms:ir.ui.view,arch_db:sale_stock_picking_backorder_policy.view_partner_form
 msgid "Backorder Policy"
-msgstr ""
+msgstr "Politica ordine residuo"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model,name:sale_stock_picking_backorder_policy.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_res_partner__display_name
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_res_partner__id
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields,help:sale_stock_picking_backorder_policy.field_res_partner__sale_backorder_policy
@@ -61,25 +63,31 @@ msgid ""
 "- Always: backorders are created automatically.\n"
 "- Never: remaining demand is cancelled without prompt."
 msgstr ""
+"Se impostato, questo sovrascrive la politica dell'ordine residuo del tipo di "
+"operazione. Lasciare vuoto per utilizzare il comportamento predefinito del "
+"tipo di operazione.\n"
+"- Chiedi: all'utente viene sempre chiesto.\n"
+"- Sempre: gli ordini di reso vengono creati automaticamente.\n"
+"- Mai: la domanda residua viene annullata senza richiesta."
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__res_partner__sale_backorder_policy__never
 #: model:ir.model.fields.selection,name:sale_stock_picking_backorder_policy.selection__sale_order__backorder_policy__never
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_res_partner__sale_backorder_policy
 #: model:ir.model.fields,field_description:sale_stock_picking_backorder_policy.field_res_users__sale_backorder_policy
 msgid "Sale Backorder Policy"
-msgstr ""
+msgstr "Politica ordine residuo vendite"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model,name:sale_stock_picking_backorder_policy.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Ordine di vendita"
 
 #. module: sale_stock_picking_backorder_policy
 #: model:ir.model,name:sale_stock_picking_backorder_policy.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Riga ordine di vendita"
