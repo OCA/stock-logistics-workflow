@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record
+        model="ir.model.access"
+        id="stock_picking_operation_destination_suggest_access"
+    >
+        <field name="name">stock.picking.operation.destination.suggest</field>
+        <field
+            name="model_id"
+            ref="stock_picking_operation_destination_suggestion.model_stock_picking_operation_destination_suggestion"
+        />
+        <field name="group_id" ref="stock.group_stock_user" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+</odoo>
