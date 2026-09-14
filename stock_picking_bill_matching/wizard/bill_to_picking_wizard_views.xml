@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="bill_to_picking_wizard_form" model="ir.ui.view">
+        <field name="name">bill.to.picking.wizard.form</field>
+        <field name="model">bill.to.picking.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create / Add to Picking">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong
+                        >Tip:</strong> Leave the picking field empty to automatically generate a brand new Incoming Receipt for these items.
+                        <br />
+                    </div>
+                    <group>
+                        <field name="partner_id" invisible="1" />
+                        <field
+                            name="picking_id"
+                            placeholder="Leave empty to create a new receipt..."
+                        />
+                        <field
+                            name="auto_validate"
+                            attrs="{'invisible': [('picking_id', '!=', False)]}"
+                        />
+                    </group>
+                    <footer>
+                        <button
+                            name="action_add_to_picking"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                        />
+                        <button
+                            string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
