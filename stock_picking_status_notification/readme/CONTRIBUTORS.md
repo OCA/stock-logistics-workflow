@@ -1,0 +1,4 @@
+- \[Cetmix\](<https://cetmix.com/>)
+  - Dinar Gabbasov \<<https://github.com/GabbasovDinar>\>
+- \[Acsone\](<https://acsone.eu>)
+  - Denis Roussel \<<denis.roussel@acsone.eu>\>
