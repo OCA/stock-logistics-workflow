@@ -31,12 +31,22 @@ class StockQuant(models.Model):
             )
             disallowed_by_location = not quant.location_id.allow_negative_stock
             if (
-                float_compare(quant.quantity, 0, precision_digits=p) == -1
-                and quant.product_id.is_storable
+                quant.product_id.is_storable
                 and quant.location_id.usage in ["internal", "transit"]
                 and disallowed_by_product
                 and disallowed_by_location
             ):
+                gathered_quants = self.with_context(quants_cache=None)._gather(
+                    self.product_id,
+                    self.location_id,
+                    lot_id=self.lot_id,
+                    package_id=self.package_id,
+                    owner_id=self.owner_id,
+                    strict=True,
+                )
+                quantity = sum(q.quantity for q in gathered_quants)
+                if float_compare(quantity, 0, precision_digits=p) >= 0:
+                    return
                 msg_add = ""
                 if quant.lot_id:
                     msg_add = _(" lot %(name)s", name=quant.lot_id.display_name)
