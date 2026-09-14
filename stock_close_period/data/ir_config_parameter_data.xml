@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="last_close_date_config_parameter" model="ir.config_parameter">
+        <field name="key">stock_close_period.last_close_date</field>
+        <field name="value">2010-01-01</field>
+    </record>
+
+</odoo>

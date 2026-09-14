@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+     <record id="stock_close_print_wizard" model="ir.ui.view">
+        <field name="name">Stock Close Print</field>
+        <field name="model">stock.close.print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Choose Close Period">
+                <group>
+                    <field name="close_name" required="True" />
+                </group>
+                <footer>
+                    <button
+                        name="generate_report"
+                        string="Compute"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_close_print_wizard" model="ir.actions.act_window">
+        <field name="name">Stock Close Print</field>
+        <field name="res_model">stock.close.print.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="stock_close_print_wizard" />
+    </record>
+
+    <menuitem
+        id="menu_stock_close_print_wizard"
+        action="action_stock_close_print_wizard"
+        parent="menu_stock_close_group"
+        sequence="100"
+    />
+
+
+</odoo>
