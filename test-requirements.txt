@@ -1,2 +1,3 @@
 odoo-test-helper
 freezegun
+odoo-addon-stock-quant-lock @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2449/head#subdirectory=setup/stock_quant_lock
