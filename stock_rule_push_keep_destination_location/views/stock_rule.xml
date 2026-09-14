@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_rule_form_view">
+        <field name="model">stock.rule</field>
+        <field name="inherit_id" ref="stock.view_stock_rule_form" />
+        <field name="arch" type="xml">
+            <field name="partner_address_id" position="after">
+                <field
+                    name="use_rule_destination_location"
+                    invisible="action != 'push'"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
