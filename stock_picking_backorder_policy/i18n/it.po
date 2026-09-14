@@ -6,45 +6,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-09-14 17:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_move__backorder_policy__always
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_picking__backorder_policy__always
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_move__backorder_policy__ask
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_picking__backorder_policy__ask
 msgid "Ask"
-msgstr ""
+msgstr "Chiedi"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_move__backorder_policy
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_picking__backorder_policy
 msgid "Backorder Policy"
-msgstr ""
+msgstr "Politica ordine residuo"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_move__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_move__id
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_picking_backorder_policy.field_stock_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields,help:stock_picking_backorder_policy.field_stock_move__backorder_policy
@@ -55,12 +57,18 @@ msgid ""
 "- Always: backorders are created automatically.\n"
 "- Never: remaining demand is cancelled without prompt."
 msgstr ""
+"Se impostato, questo sovrascrive la politica dell'ordine residuo del tipo di "
+"operazione. Lasciare vuoto per utilizzare il comportamento predefinito del "
+"tipo di operazione.\n"
+"- Chiedi: all'utente viene sempre chiesto.\n"
+"- Sempre: gli ordini di reso vengono creati automaticamente.\n"
+"- Mai: la domanda residua viene annullata senza richiesta."
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_move__backorder_policy__never
 #: model:ir.model.fields.selection,name:stock_picking_backorder_policy.selection__stock_picking__backorder_policy__never
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #. module: stock_picking_backorder_policy
 #. odoo-python
@@ -69,18 +77,21 @@ msgid ""
 "Processed with backorder policy: %(policy_name)s, instead of the operation "
 "type %(operation_type_name)s’s policy (%(operation_type_backorder)s)"
 msgstr ""
+"Elaborato con la politica di ordine residuo: %(policy_name)s, invece della "
+"politica del tipo di operazione %(operation_type_name)s (%"
+"(operation_type_backorder)s)"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model,name:stock_picking_backorder_policy.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model,name:stock_picking_backorder_policy.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Regola di giacenza"
 
 #. module: stock_picking_backorder_policy
 #: model:ir.model,name:stock_picking_backorder_policy.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Trasferimento"
