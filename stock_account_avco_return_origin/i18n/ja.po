@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_account_avco_return_origin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-23 01:40+0000\n"
+"PO-Revision-Date: 2026-07-23 01:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_account_avco_return_origin
+#: model:ir.model,name:stock_account_avco_return_origin.model_res_company
+msgid "Companies"
+msgstr "会社"
+
+#. module: stock_account_avco_return_origin
+#: model:ir.model,name:stock_account_avco_return_origin.model_res_config_settings
+msgid "Config Settings"
+msgstr "コンフィグ設定"
+
+#. module: stock_account_avco_return_origin
+#. odoo-python
+#: code:addons/stock_account_avco_return_origin/models/product.py:0
+#, python-format
+msgid ""
+"Original receipt price would result in negative inventory valuation; unit "
+"cost capped at the remaining inventory value to keep the valuation non-"
+"negative."
+msgstr ""
+"元の入荷価格では在庫評価額がマイナスになるため、単位原価を残存在庫評価額に制限"
+"し、評価額がマイナスにならないようにしています。"
+
+#. module: stock_account_avco_return_origin
+#: model:ir.model,name:stock_account_avco_return_origin.model_product_product
+msgid "Product Variant"
+msgstr "プロダクトバリアント"
+
+#. module: stock_account_avco_return_origin
+#: model:ir.model,name:stock_account_avco_return_origin.model_stock_move
+msgid "Stock Move"
+msgstr "在庫移動"
+
+#. module: stock_account_avco_return_origin
+#: model:ir.model.fields,field_description:stock_account_avco_return_origin.field_res_company__avco_return_origin_cost
+#: model:ir.model.fields,field_description:stock_account_avco_return_origin.field_res_config_settings__avco_return_origin_cost
+msgid "Value AVCO Returns at Origin Cost"
+msgstr "AVCO返品を元の原価で評価"
+
+#. module: stock_account_avco_return_origin
+#: model_terms:ir.ui.view,arch_db:stock_account_avco_return_origin.res_config_settings_view_form
+msgid ""
+"Value supplier returns of AVCO products at the\n"
+"                            original receipt price instead of the current\n"
+"                            average cost."
+msgstr ""
+"AVCO製品の仕入先返品を現在の平均原価ではなく\n"
+"                            元の入荷価格で評価します。"
+
+#. module: stock_account_avco_return_origin
+#. odoo-python
+#: code:addons/stock_account_avco_return_origin/models/product.py:0
+#, python-format
+msgid "Valued at the original receipt price."
+msgstr "元の入荷価格で評価されています。"
