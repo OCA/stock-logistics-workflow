@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general']" position="inside">
+                <group name="fiscal_position">
+                    <group
+                        string="Fiscal Position"
+                        name="stock_picking_type_fiscal_position"
+                    >
+                        <field name="fiscal_position_id" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,1 @@
+This module extends stock accounting so that journal entries created under perpetual inventory follow the configured Fiscal Position.
