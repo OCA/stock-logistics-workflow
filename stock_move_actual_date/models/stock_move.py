@@ -24,9 +24,19 @@ class StockMove(models.Model):
         # record. For example, in mrp_stock_actual_date, the actual_date is passed via
         # context when validating an unbuild order or a scrap.
         actual_date_source = self.env.context.get("actual_date_source")
-        if actual_date_source:
-            for vals in vals_list:
+        for vals in vals_list:
+            if vals.get("actual_date_source"):
+                continue
+            if actual_date_source:
                 vals["actual_date_source"] = actual_date_source
+                continue
+            # A move added to a picking that already has an actual_date (e.g. a new
+            # PO line creating a move in an existing receipt) should inherit it.
+            picking_id = vals.get("picking_id")
+            if picking_id:
+                picking = self.env["stock.picking"].browse(picking_id)
+                if picking.actual_date:
+                    vals["actual_date_source"] = picking.actual_date
         return super().create(vals_list)
 
     @api.depends("date", "actual_date_source")
