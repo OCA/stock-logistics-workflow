@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_stock_move_form_inherit" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='main_grp_col2']" position="inside">
+                <field name="move_value" groups="account.group_account_invoice" />
+                <field
+                    name="move_origin_value"
+                    groups="account.group_account_invoice"
+                />
+                <field
+                    name="value_discrepancy"
+                    groups="account.group_account_invoice"
+                />
+                <field name="value_currency_id" invisible="1" />
+                <field
+                    name="to_review_discrepancy"
+                    string="To Review"
+                    widget="boolean_toggle"
+                    groups="account.group_account_invoice"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field
+                    name="move_value"
+                    sum="Total Value"
+                    groups="account.group_account_invoice"
+                    optional="show"
+                />
+                <field
+                    name="move_origin_value"
+                    sum="Total Origin Value"
+                    groups="account.group_account_invoice"
+                    optional="show"
+                />
+                <field
+                    name="value_discrepancy"
+                    sum="Total Discrepancy"
+                    groups="account.group_account_invoice"
+                    optional="show"
+                />
+                <field name="value_currency_id" invisible="1" />
+                <field
+                    name="to_review_discrepancy"
+                    string="To Review"
+                    widget="boolean_toggle"
+                    groups="account.group_account_invoice"
+                    optional="show"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_move_search_inherit" model="ir.ui.view">
+        <field name="name">stock.move.search.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inventory']" position="after">
+                <separator />
+                <filter
+                    name="has_return_value_discrepancy"
+                    string="Return Value Discrepancy"
+                    domain="[('value_discrepancy','!=',0.0)]"
+                />
+                <filter
+                    name="to_review_discrepancy"
+                    string="To Review Discrepancy"
+                    domain="[('to_review_discrepancy','=',True)]"
+                />
+                <filter
+                    name="discrepancy_reviewed"
+                    string="Discrepancy Reviewed"
+                    domain="[('value_discrepancy','!=',0.0),('to_review_discrepancy','=',False)]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
