@@ -1,0 +1,2 @@
+This module checks the variance between the purchase price and the product's standard price at the time of receipt picking validation.
+If the variance exceeds a given threshold, the notification can be left in the chatter. Additionally, an error can be triggered before receiving the stock if needed.
