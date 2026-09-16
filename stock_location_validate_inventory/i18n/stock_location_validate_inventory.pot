@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_location_validate_inventory
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_location_validate_inventory
+#: model:ir.model,name:stock_location_validate_inventory.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
+
+#. module: stock_location_validate_inventory
+#: model:res.groups,name:stock_location_validate_inventory.group_stock_location_can_validate_inventory
+msgid "Inventory: Location inventory validation"
+msgstr ""
+
+#. module: stock_location_validate_inventory
+#: model:ir.actions.server,name:stock_location_validate_inventory.action_location_validate_inventory
+msgid "Validate Inventory"
+msgstr ""
+
+#. module: stock_location_validate_inventory
+#. odoo-python
+#: code:addons/stock_location_validate_inventory/models/stock_location.py:0
+#, python-format
+msgid "You are not allowed to validate the location inventory"
+msgstr ""
