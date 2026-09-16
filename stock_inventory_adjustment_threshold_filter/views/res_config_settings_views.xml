@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.stock.inventory.adjustment.threshold.filter</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='annual_inventory_date']" position="after">
+                <field name="currency_id" invisible="1" />
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    id="threshold_filter_thresholds"
+                    groups="stock.group_stock_manager"
+                >
+                    <div class="o_setting_right_pane">
+                        <label
+                            for="threshold_filter_cost_min"
+                            string="Inventory Adjustment Threshold Filter"
+                        />
+                        <div class="text-muted">
+                            Default thresholds proposed on the inventory
+                            adjustment threshold filter search panel.
+                        </div>
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label
+                                    for="threshold_filter_cost_min"
+                                    string="Adjustment Cost Threshold"
+                                    class="col-lg-3 o_light_label"
+                                />
+                                <field
+                                    name="threshold_filter_cost_min"
+                                    class="oe_inline"
+                                />
+                            </div>
+                            <div class="row mt8">
+                                <label
+                                    for="threshold_filter_qty_diff_min"
+                                    string="Quantity Difference Threshold"
+                                    class="col-lg-3 o_light_label"
+                                />
+                                <field
+                                    name="threshold_filter_qty_diff_min"
+                                    class="oe_inline"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
