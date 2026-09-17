@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-10 15:44+0000\n"
-"PO-Revision-Date: 2026-09-10 15:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -82,8 +80,11 @@ msgid "Lock Moves"
 msgstr ""
 
 #. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
 #: model:ir.actions.act_window,name:stock_quant_lock.action_stock_quant_lock_wizard
 #: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+#, python-format
 msgid "Lock Quants"
 msgstr ""
 
@@ -99,13 +100,55 @@ msgid "Locked quant"
 msgstr ""
 
 #. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "No available quantity to lock for quant '%s'."
+msgstr ""
+
+#. module: stock_quant_lock
 #: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__picking_type_id
 msgid "Operation Type"
 msgstr ""
 
 #. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Operation type '%(op)s' cannot be used for quant lock."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Operation type '%(op)s' must define at least one default location."
+msgstr ""
+
+#. module: stock_quant_lock
 #: model:ir.model,name:stock_quant_lock.model_stock_picking_type
 msgid "Picking Type"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant '%(quant)s' is already locked."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant lock for %s"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant lock: %s"
 msgstr ""
 
 #. module: stock_quant_lock
@@ -122,4 +165,28 @@ msgstr ""
 #. module: stock_quant_lock
 #: model:ir.model,name:stock_quant_lock.model_stock_quant_lock_wizard
 msgid "Stock Quant Lock Wizard"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Unable to create lock picking for quant '%s'."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Unable to reserve full available quantity for quant '%(quant)s'. Expected "
+"%(expected)s %(uom)s, reserved %(reserved)s %(uom)s."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"You cannot unlock quant '%(quant)s' because lock move '%(move)s' is done."
 msgstr ""
