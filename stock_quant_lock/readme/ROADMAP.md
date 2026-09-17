@@ -1,0 +1,3 @@
+- Add a dedicated smart button on quants to open lock transfer history.
+- Add optional reason and expiration date on lock operations.
+- Add optional security groups to restrict lock and unlock operations.
