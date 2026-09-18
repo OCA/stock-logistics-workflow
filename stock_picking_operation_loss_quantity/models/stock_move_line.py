@@ -61,7 +61,7 @@ class StockMoveLine(models.Model):
             return False
         return super()._reservation_is_updatable(quantity, reserved_quant)
 
-    def _lose_quantity(self):
+    def _lose_quantity(self, unlink_empty_lines=True):
         """
         Main method used to declare a loss.
 
@@ -69,19 +69,28 @@ class StockMoveLine(models.Model):
         1. Gather the quants related to the move line.
         2. Unreserve the quantity for the unprocessed part of the move line.
            If nothing was ever done on the line, it is left empty for now
-           (see step 4).
+           (see step 5).
         3. Lock the quants for the remaining available quantity using the
            warehouse's loss picking type.
         4. Re-reserve the move for the remaining quantity. Thanks to
            `_reservation_is_updatable`, this never updates a move line
            already processed by the operator: it creates a new move line
-           instead. When this actually creates a new line for the move, the
-           empty line(s) left by step 2 are dropped, as they are now
-           redundant. If no new line is created (nothing else was available,
-           or the freed quantity was merged into another not-yet-processed
-           line), the empty line is kept as a visible placeholder.
+           instead.
+        5. If `unlink_empty_lines` is True (the default), every line in
+           `self` that ends up with neither `reserved_uom_qty` nor
+           `qty_done` is unlinked: it no longer represents anything the
+           operator can act on, whether or not step 4 reserved the freed
+           quantity elsewhere.
+
+        Since step 5 can unlink some of the lines in `self`, callers that
+        keep a reference to those lines (or to `self`) must not assume they
+        still exist after this call: accessing a field on an unlinked one
+        raises `MissingError`. Either pass `unlink_empty_lines=False` to
+        keep every line untouched and manage their fate yourself, or, if
+        the default unlinking is fine, call `.exists()` on your own
+        reference afterwards to drop the now-invalid ones before using it
+        further.
         """
-        empty_lines_by_move = defaultdict(lambda: self.browse())
         unprocessed_by_move = defaultdict(float)
         for line in self:
             if not line.is_action_lose_quantity_allowed:
@@ -102,10 +111,6 @@ class StockMoveLine(models.Model):
                 quant._lock_with_picking_type(
                     line.location_id.warehouse_id.loss_type_id
                 )
-            if float_is_zero(
-                line.reserved_uom_qty, precision_rounding=line.product_uom_id.rounding
-            ):
-                empty_lines_by_move[line.move_id] |= line
 
         for move, unprocessed_qty in unprocessed_by_move.items():
             if float_is_zero(
@@ -118,10 +123,21 @@ class StockMoveLine(models.Model):
             # `_action_assign` below does not skip a move it still considers
             # fully `assigned`.
             move._recompute_state()
-            existing_line_ids = set(move.move_line_ids.ids)
             move.with_context(
                 loss_quantity_prevent_reservation_update_on_done_lines=True
             )._action_assign()
-            new_line_created = bool(set(move.move_line_ids.ids) - existing_line_ids)
-            if new_line_created:
-                empty_lines_by_move[move].unlink()
+        # at this point we check if any of the move lines are now unreserved and have
+        # no qty_done, if so we unlink them as it's not possible for the operator
+        # to process them anymore
+        if unlink_empty_lines:
+            lines_to_unlink = self.env["stock.move.line"]
+            for line in self:
+                if float_is_zero(
+                    line.reserved_uom_qty,
+                    precision_rounding=line.product_uom_id.rounding,
+                ) and float_is_zero(
+                    line.qty_done, precision_rounding=line.product_uom_id.rounding
+                ):
+                    lines_to_unlink |= line
+            if lines_to_unlink:
+                lines_to_unlink.unlink()

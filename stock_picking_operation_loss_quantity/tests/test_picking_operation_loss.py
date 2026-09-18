@@ -192,7 +192,7 @@ class TestQuantityLoss(OperationLossQuantityCommon):
             }
         )
         # Only loc_stock has stock at assignment time: the reservation is
-        # deterministically made there, not on the (still empty) shelf.
+        # deterministically made there, not on the (still empty) shelf.>
         self._create_quantities(self.product_2, 5.0, location=self.loc_stock)
 
         picking = self.env["stock.picking"].create(
@@ -316,3 +316,78 @@ class TestQuantityLoss(OperationLossQuantityCommon):
         )
         self.assertTrue(unowned_quant.is_locked_by_picking)
         self.assertFalse(owned_quant.is_locked_by_picking)
+
+    def test_lose_quantity_does_not_create_new_move(self):
+        """`_lose_quantity` must end the processing of
+        the move line without creating a new move to
+        transfer the unprocessed
+        """
+        self._create_quantities(self.product_2, 5.0)
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.pick_type_out.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "name": "Test move",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_2.uom_id.id,
+                "product_uom_qty": 5,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move._action_confirm()
+        picking.action_assign()
+
+        line = move.move_line_ids
+        line.qty_done = 2.0
+
+        line.action_lose_quantity()
+
+        self.assertEqual(line.reserved_qty, 2.0)
+        self.assertEqual(line.qty_done, line.reserved_uom_qty)
+
+        # Only one move exists: the original one. No new move has been created.
+        moves = self.env["stock.move"].search([("picking_id", "=", picking.id)])
+        self.assertEqual(len(moves), 1)
+
+    def test_lose_quantity_unlink_line(self):
+        """`_lose_quantity` must unlink the move line after processing
+        the loss quantity, if no quantity reserved anymore on the line.
+        """
+        self._create_quantities(self.product_2, 5.0)
+
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.pick_type_out.id,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "name": "Test move",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_2.uom_id.id,
+                "product_uom_qty": 5,
+                "location_id": self.loc_stock.id,
+                "location_dest_id": self.loc_customer.id,
+            }
+        )
+        move._action_confirm()
+        picking.action_assign()
+
+        line = move.move_line_ids
+
+        line.action_lose_quantity()
+
+        # The move line has been unlinked after processing the loss quantity.
+        lines = self.env["stock.move.line"].search([("move_id", "=", move.id)])
+        self.assertEqual(len(lines), 0)
