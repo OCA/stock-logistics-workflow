@@ -393,7 +393,10 @@ class TestStockBillMatching(common.TransactionCase):
         match_lines = self.env["picking.bill.line.match"].search(
             [
                 ("partner_id", "=", self.partner_a.id),
-                ("account_move_id", "=", bill.id),
+                # Same domain as ``action_picking_matching``: the bill own lines
+                # plus the receipt lines, whose ``account_move_id`` is empty until
+                # they get matched.
+                ("account_move_id", "in", (bill.id, False)),
             ]
         )
         self.assertEqual(
