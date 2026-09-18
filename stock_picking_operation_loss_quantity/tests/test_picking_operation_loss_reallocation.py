@@ -55,7 +55,7 @@ class TestPickingOperationLossNewReservation(OperationLossQuantityCommon):
 
         # Nothing was ever done on the shelf A line: it is dropped and the
         # whole demand is re-reserved on the only other available stock.
-        self.assertNotIn(initial_line, self.move.move_line_ids)
+        self.assertFalse(initial_line.exists())
         self.assertEqual(len(self.move.move_line_ids), 1)
         new_line = self.move.move_line_ids[0]
         self.assertEqual(new_line.location_id, self.shelf_b)
@@ -87,10 +87,9 @@ class TestPickingOperationLossNewReservation(OperationLossQuantityCommon):
         line_shelf_b.action_lose_quantity()
 
         # Nothing else is available anywhere: no new line is created, so the
-        # now-empty shelf B line is kept as a visible placeholder instead of
-        # being silently dropped.
-        self.assertIn(line_shelf_b, self.move.move_line_ids)
-        self.assertEqual(len(self.move.move_line_ids), 2)
+        # now-empty shelf B line removed.
+        self.assertFalse(line_shelf_b.exists())
+        self.assertEqual(len(self.move.move_line_ids), 1)
         lock_moves = self.env["stock.move"].search(
             [("quant_lock_quant_id", "!=", False)],
             order="id desc",
