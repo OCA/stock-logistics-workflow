@@ -50,6 +50,35 @@ class TestQuantityLossTracking(OperationLossQuantityCommon):
         self.assertTrue(lock_moves)
         self.assertTrue(lock_moves.filtered(lambda m: m.product_id == self.product_1))
 
+    def test_loss_line_tracking_no_new_line(self):
+        self.initiate_values()
+        lines = self.picking_1.move_line_ids
+        self.assertEqual(len(lines), 2)
+        line_lot_a = lines.filtered(lambda line: line.lot_id == self.product_1_lotA)
+        line_lot_b = lines.filtered(lambda line: line.lot_id == self.product_1_lotB)
+        # we partially process line_lot_a
+        line_lot_a.qty_done = line_lot_a.reserved_uom_qty - 1
+        # we fully process line_lot_b
+        line_lot_b.qty_done = line_lot_b.reserved_uom_qty
+
+        # declare loss on the same move line, a new move line is created
+        # since our picking is for 7 units and we have 8 units in stock
+        # in 2 diffrent lots. If we declare a loss on line_lot_a,
+        # we still have 1 unit in stock on lot_b
+        line_lot_a.action_lose_quantity()
+
+        self.assertEqual(line_lot_a.reserved_qty, line_lot_a.qty_done)
+        lines = self.picking_1.move_line_ids
+        self.assertEqual(len(lines), 3)
+        new_line = lines - line_lot_a - line_lot_b
+        self.assertEqual(new_line.lot_id, self.product_1_lotB)
+        self.assertEqual(new_line.reserved_uom_qty, 1.0)
+        # if we declare a loss on line_lot_b, we should not create a new line
+        # since we have no more stock available and we have not processed
+        # any quantity on line_lot_b,
+        new_line.action_lose_quantity()
+        self.assertFalse(new_line.exists())
+
     def test_loss_line_tracking_with_pack(self):
         self.initiate_values()
         lines = self.picking_1.move_line_ids
@@ -97,7 +126,7 @@ class TestQuantityLossTracking(OperationLossQuantityCommon):
         self.assertEqual(quants_available_quantity_lot_a_after, 0)
         self.assertGreaterEqual(quants_available_quantity_lot_a_before, 0)
 
-        self.assertEqual(len(self.picking_1.move_line_ids), 4)
+        self.assertEqual(len(self.picking_1.move_line_ids), 3)
         loss_pickings = self._get_loss_pickings()
         self.assertEqual(1, len(loss_pickings))
         lock_moves = loss_pickings.move_ids.filtered("quant_lock_quant_id")
