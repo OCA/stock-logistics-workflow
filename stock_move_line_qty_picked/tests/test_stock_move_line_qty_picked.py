@@ -1,5 +1,6 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+from odoo import Command
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
@@ -13,9 +14,9 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         group_production_lot = cls.env.ref("stock.group_production_lot")
         cls.env.user.write(
             {
-                "groups_id": [
-                    (4, group_stock_multi_locations.id),
-                    (4, group_production_lot.id),
+                "group_ids": [
+                    Command.link(group_stock_multi_locations.id),
+                    Command.link(group_production_lot.id),
                 ]
             }
         )
@@ -36,7 +37,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
             picking = cls._create_transfer(from_location, to_location)
         picking_form = Form(picking)
         picking_moves = picking.move_ids
-        with picking_form.move_ids_without_package.new() as move_form:
+        with picking_form.move_ids.new() as move_form:
             move_form.product_id = product
             move_form.product_uom_qty = quantity
         picking = picking_form.save()
@@ -247,3 +248,72 @@ class TestStockMoveLineQtyPicked(TransactionCase):
             product, self.stock_location, lot_id=lot_map["LOT-004"]
         )
         self.assertEqual(lot_4_quant.quantity, 10)
+
+    def test_move_pick_qty_different_uom(self):
+        box_uom = self.env["uom.uom"].create(
+            {
+                "name": "Box of 10",
+                "relative_factor": 10.0,
+                "relative_uom_id": self.product.uom_id.id,
+            }
+        )
+        self.product.uom_ids = [Command.link(box_uom.id)]
+        move = self._create_move(
+            self.product, 20.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+        move_line.product_uom_id = box_uom
+        move_line.quantity = 1.0
+
+        move_line.qty_picked = 1.5
+
+        self.assertEqual(move_line.qty_picked, 1.5)
+        self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 15.0)
+        self.assertEqual(move_line.quantity, 1.5)
+
+        move.picking_id.with_context(skip_backorder=True).button_validate()
+        self.assertEqual(move.quantity, 15.0)
+
+    def test_move_get_picked_quantity_without_qty_picked(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+
+        self.assertFalse(move.picked)
+        self.assertEqual(move.qty_picked, 0)
+        self.assertEqual(move._get_picked_quantity(), 5)
+
+    def test_picked_zero_quantity_line_is_kept(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+        move_form = Form(move, view="stock.view_stock_move_operations")
+        with move_form.move_line_ids.new():
+            pass
+        move_form.save()
+
+        zero_line = move.move_line_ids.filtered(lambda line: not line.quantity)
+        self.assertEqual(len(zero_line), 1)
+
+        zero_line.picked = True
+
+        self.assertTrue(zero_line.picked)
+        self.assertEqual(zero_line.qty_picked, 0)
+        self.assertEqual(zero_line.quantity, 0)
+
+    def test_picked_quantity_can_increase_reserved_quantity(self):
+        move = self._create_move(
+            self.product, 2.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+
+        move.quantity = 1
+        self.assertEqual(move_line.quantity, 1)
+
+        move_line.qty_picked = 1.5
+
+        self.assertEqual(move_line.qty_picked, 1.5)
+        self.assertTrue(move_line.picked)
+        self.assertEqual(move_line.quantity, 1.5)
+        self.assertEqual(move.quantity, 1.5)
