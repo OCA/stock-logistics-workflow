@@ -699,3 +699,94 @@ class TestStockBillMatching(common.TransactionCase):
             "picking.bill.line.match",
             "Mismatched quantities should open the matching view instead.",
         )
+
+    def test_22_auto_validate_matched_picking(self):
+        """A perfect match validates the picking when configured."""
+        self.env.company.auto_validate_matched_picking = True
+        picking = self.create_picking([(self.product_a, 5)])
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+
+        action = bill.action_picking_matching()
+        self.assertEqual(action["res_model"], "stock.picking")
+        self.assertEqual(action["res_id"], picking.id)
+        self.assertEqual(
+            picking.state, "done", "Auto-validate should finalize the picking."
+        )
+        self.assertTrue(picking.is_picking_matched)
+
+    def test_23_draft_picking_confirmed_on_match(self):
+        """Matching confirms and reserves a draft picking."""
+        picking = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "picking_type_id": self.picking_type_in.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": self.picking_type_in.default_location_dest_id.id,
+            }
+        )
+        self.env["stock.move"].create(
+            {
+                "name": self.product_a.name,
+                "product_id": self.product_a.id,
+                "product_uom_qty": 10,
+                "product_uom": self.product_a.uom_id.id,
+                "picking_id": picking.id,
+                "location_id": picking.location_id.id,
+                "location_dest_id": picking.location_dest_id.id,
+            }
+        )
+        self.assertEqual(picking.state, "draft")
+
+        bill = self.create_bill([(self.product_a, 4, 50.0)])
+        self.env.flush_all()
+        lines = self.view_lines(self.partner_a)
+        lines.action_match_lines()
+
+        self.assertEqual(picking.state, "done")
+        self.assertEqual(picking.move_ids.quantity_done, 4)
+        self.assertTrue(bill.invoice_line_ids.move_line_ids)
+        backorder = self.env["stock.picking"].search(
+            [("backorder_id", "=", picking.id)]
+        )
+        self.assertTrue(backorder)
+        self.assertEqual(backorder.move_ids.product_uom_qty, 6)
+
+    def test_24_multiple_pickings_perfect_match(self):
+        """A perfect match spanning several pickings opens the tree view."""
+        pick1 = self.create_picking([(self.product_a, 3)])
+        pick2 = self.create_picking([(self.product_a, 3)])
+        bill = self.create_bill([(self.product_a, 6, 50.0)])
+
+        action = bill.action_picking_matching()
+        self.assertEqual(action["res_model"], "stock.picking")
+        self.assertEqual(action["view_mode"], "tree,form")
+        domain_ids = [dom[2] for dom in action["domain"] if dom[0] == "id"][0]
+        self.assertEqual(sorted(domain_ids), sorted([pick1.id, pick2.id]))
+        self.assertTrue(pick1.is_picking_matched)
+        self.assertTrue(pick2.is_picking_matched)
+
+    def test_25_wizard_auto_validate_new_picking(self):
+        """The wizard validates a brand new picking when auto-validating."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        self.env.flush_all()
+
+        view_lines = self.view_lines(self.partner_a, line_type="vendor_bill")
+        wizard_action = view_lines.action_add_to_picking()
+        wizard = (
+            self.env["bill.to.picking.wizard"]
+            .with_context(**wizard_action["context"])
+            .create(
+                {
+                    "partner_id": self.partner_a.id,
+                    "auto_validate": True,
+                }
+            )
+        )
+        result = wizard.action_add_to_picking()
+        self.assertEqual(result["res_model"], "stock.picking")
+
+        picking = self.env["stock.picking"].browse(result["res_id"])
+        self.assertEqual(picking.state, "done")
+        self.assertEqual(picking.move_ids.product_uom_qty, 5)
+        self.assertEqual(picking.move_ids.quantity_done, 5)
+        self.assertTrue(bill.invoice_line_ids.move_line_ids)
