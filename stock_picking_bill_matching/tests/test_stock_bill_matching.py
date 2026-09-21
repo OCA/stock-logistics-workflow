@@ -2,7 +2,7 @@
 # @author Raphaël Valyi <raphael.valyi@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.exceptions import UserError
 from odoo.tests import common, tagged
 
@@ -790,3 +790,100 @@ class TestStockBillMatching(common.TransactionCase):
         self.assertEqual(picking.move_ids.product_uom_qty, 5)
         self.assertEqual(picking.move_ids.quantity_done, 5)
         self.assertTrue(bill.invoice_line_ids.move_line_ids)
+
+    def test_26_aml_reference_with_invoice_origin(self):
+        """The bill line reference shows the invoice origin when present."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        bill.invoice_origin = "TEST-ORIGIN"
+        self.env.flush_all()
+
+        aml_lines = self.view_lines(self.partner_a, line_type="vendor_bill")
+        self.assertTrue(aml_lines)
+        self.assertTrue(
+            all("TEST-ORIGIN" in line.reference for line in aml_lines),
+            "The bill line reference should contain the invoice origin.",
+        )
+
+    def test_27_link_exhausting_moves_stops_matching(self):
+        """Matching stops linking after the remaining quantity is exhausted."""
+        pick1 = self.create_picking([(self.product_a, 3)])
+        pick2 = self.create_picking([(self.product_a, 3)])
+        bill = self.create_bill([(self.product_a, 3, 50.0)])
+        self.env.flush_all()
+
+        lines = self.view_lines(self.partner_a)
+        lines.action_match_lines()
+
+        linked = bill.invoice_line_ids.move_line_ids
+        self.assertEqual(
+            set(linked.ids),
+            {pick1.move_ids.id, pick2.move_ids.id},
+            "Both receipt moves should be linked to the bill line.",
+        )
+        self.assertEqual(pick1.state, "done")
+        self.assertEqual(pick2.state, "assigned")
+
+    def test_28_match_without_receipt_selected(self):
+        """Matching only the bill line leaves it unlinked when no receipt matches."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        self.env.flush_all()
+
+        aml_lines = self.view_lines(self.partner_a, line_type="vendor_bill")
+        aml_lines.action_match_lines()
+        self.assertFalse(
+            bill.invoice_line_ids.move_line_ids,
+            "No receipt was selected, so nothing should be linked.",
+        )
+
+    def test_29_add_to_picking_without_bill_line_raises(self):
+        """Adding only receipt lines to a picking raises a clear error."""
+        self.create_picking([(self.product_a, 5)])
+        self.env.flush_all()
+
+        sm_lines = self.view_lines(self.partner_a, line_type="stock_move")
+        with self.assertRaises(UserError):
+            sm_lines.action_add_to_picking()
+
+    def test_30_auto_match_without_bill_lines_returns_false(self):
+        """Perfect match detection gives up without bill lines."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        self.assertFalse(
+            bill._auto_match_perfect_pickings(
+                self.env["account.move.line"],
+                self.env["stock.picking"],
+            )
+        )
+
+    def test_31_matching_view_without_bill_lines(self):
+        """A bill without product lines opens the matching view instead."""
+        service_product = self.env["product.product"].create(
+            {"name": "Test Service", "type": "service"}
+        )
+        bill = self.env["account.move"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "move_type": "in_invoice",
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "name": service_product.name,
+                            "product_id": service_product.id,
+                            "quantity": 1,
+                            "price_unit": 100.0,
+                        }
+                    )
+                ],
+            }
+        )
+        action = bill.action_picking_matching()
+        self.assertEqual(action["res_model"], "picking.bill.line.match")
+
+    def test_32_demo_hook_yields_module_bill(self):
+        """The chart template demo hook yields the module demo bill."""
+        template = self.env["account.chart.template"]
+        if not hasattr(template, "_get_demo_data"):
+            self.skipTest("demo data is not loaded in this database")
+        demo_data = list(template._get_demo_data())
+        moves = [data for data in demo_data if data[0] == "account.move"]
+        self.assertTrue(moves, "The demo hook should yield the module demo bill.")
