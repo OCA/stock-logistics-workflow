@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_close_period_mrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-25 10:30+0000\n"
+"PO-Revision-Date: 2023-09-25 10:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_close_period_mrp
+#: model_terms:ir.ui.view,arch_db:stock_close_period_mrp.stock_close_period_form_inherit
+msgid "Compute Production"
+msgstr "Calcola produzione"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period__display_name
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period_line__display_name
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_move_line__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period_line__evaluation_method
+msgid "Evaluation Method"
+msgstr "Metodo di valutazione"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period__force_standard_price
+msgid "Force Standard Price"
+msgstr "Forza prezzo standard"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,help:stock_close_period_mrp.field_stock_close_period__force_standard_price
+msgid ""
+"Forces the use of the standard price instead of calculating the cost from "
+"the BOM."
+msgstr ""
+"Forza l'uso del prezzo standard invece che calcolare il prezzo derivato "
+"dalla distinta base."
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period__id
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period_line__id
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_close_period_mrp
+#: code:addons/stock_close_period_mrp/models/stock_close.py:0
+#, python-format
+msgid ""
+"Is not possible continue the execution. There are product with quantities < "
+"0."
+msgstr "Non è possibile continuare la valorizzazione. Ci sono prodotti con "
+"quantità < 0."
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period____last_update
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period_line____last_update
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_move_line____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,help:stock_close_period_mrp.field_stock_close_period__production_ok
+msgid "Marks if action 'Compute Production' is processed."
+msgstr "Indica se azione 'Calcola produzione' è stata eseguita."
+
+#. module: stock_close_period_mrp
+#: model:ir.model,name:stock_close_period_mrp.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti del prodotto (riga movimento magazzino)"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields.selection,name:stock_close_period_mrp.selection__stock_close_period_line__evaluation_method__production
+msgid "Production"
+msgstr "Produzione"
+
+#. module: stock_close_period_mrp
+#: model:ir.model.fields,field_description:stock_close_period_mrp.field_stock_close_period__production_ok
+msgid "Production Ok"
+msgstr "Produzione OK"
+
+#. module: stock_close_period_mrp
+#: model:ir.model,name:stock_close_period_mrp.model_stock_close_period
+msgid "Stock Close Period"
+msgstr "Chiusura di magazzino"
+
+#. module: stock_close_period_mrp
+#: model:ir.model,name:stock_close_period_mrp.model_stock_close_period_line
+msgid "Stock Close Period Line"
+msgstr "Riga chiusura di magazzino"
