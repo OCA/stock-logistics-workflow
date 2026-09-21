@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_inventory_adjustment_threshold_filter
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-10 14:25+0000\n"
+"PO-Revision-Date: 2026-09-10 14:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Adjustment Cost"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model_terms:ir.ui.view,arch_db:stock_inventory_adjustment_threshold_filter.res_config_settings_view_form
+msgid "Adjustment Cost Threshold"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Adjustment cost threshold mode"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "At Least"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "At Most"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model,name:stock_inventory_adjustment_threshold_filter.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model,name:stock_inventory_adjustment_threshold_filter.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,field_description:stock_inventory_adjustment_threshold_filter.field_res_config_settings__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,field_description:stock_inventory_adjustment_threshold_filter.field_res_company__threshold_filter_cost_min
+#: model:ir.model.fields,field_description:stock_inventory_adjustment_threshold_filter.field_res_config_settings__threshold_filter_cost_min
+msgid "Default Adjustment Cost Threshold"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,field_description:stock_inventory_adjustment_threshold_filter.field_res_company__threshold_filter_qty_diff_min
+#: model:ir.model.fields,field_description:stock_inventory_adjustment_threshold_filter.field_res_config_settings__threshold_filter_qty_diff_min
+msgid "Default Quantity Difference Threshold"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,help:stock_inventory_adjustment_threshold_filter.field_res_company__threshold_filter_cost_min
+#: model:ir.model.fields,help:stock_inventory_adjustment_threshold_filter.field_res_config_settings__threshold_filter_cost_min
+msgid ""
+"Default minimum adjustment cost threshold proposed on the inventory "
+"adjustment threshold filter search panel. Leave empty (0) to start from "
+"zero."
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,help:stock_inventory_adjustment_threshold_filter.field_res_company__threshold_filter_qty_diff_min
+#: model:ir.model.fields,help:stock_inventory_adjustment_threshold_filter.field_res_config_settings__threshold_filter_qty_diff_min
+msgid ""
+"Default minimum quantity difference threshold proposed on the inventory "
+"adjustment threshold filter search panel. Leave empty (0) to start from "
+"zero."
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model_terms:ir.ui.view,arch_db:stock_inventory_adjustment_threshold_filter.res_config_settings_view_form
+msgid ""
+"Default thresholds proposed on the inventory\n"
+"                            adjustment threshold filter search panel."
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model_terms:ir.ui.view,arch_db:stock_inventory_adjustment_threshold_filter.res_config_settings_view_form
+msgid "Inventory Adjustment Threshold Filter"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.actions.act_window,name:stock_inventory_adjustment_threshold_filter.stock_quant_threshold_filter_action
+#: model:ir.ui.menu,name:stock_inventory_adjustment_threshold_filter.menu_stock_quant_threshold_filter
+msgid "Inventory Adjustments (Threshold Filter)"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model_terms:ir.ui.view,arch_db:stock_inventory_adjustment_threshold_filter.stock_quant_threshold_filter_search_view
+msgid "Location"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model:ir.model.fields,help:stock_inventory_adjustment_threshold_filter.field_res_config_settings__currency_id
+msgid "Main currency of the company."
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Maximum"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Minimum"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Negative Adjustment"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Positive Adjustment"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Quantity Difference"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#: model_terms:ir.ui.view,arch_db:stock_inventory_adjustment_threshold_filter.res_config_settings_view_form
+msgid "Quantity Difference Threshold"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Quantity difference threshold mode"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Reset"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Threshold Filter"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "Zero Adjustment (no difference)"
+msgstr ""
+
+#. module: stock_inventory_adjustment_threshold_filter
+#. odoo-javascript
+#: code:addons/stock_inventory_adjustment_threshold_filter/static/src/search/stock_quant_threshold_filter_search_panel.xml:0
+#, python-format
+msgid "quant(s) - Total:"
+msgstr ""
