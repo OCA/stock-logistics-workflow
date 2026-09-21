@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="lead_time_profile_comp_rule" model="ir.rule">
+        <field name="name">Lead Time Profile multi-company</field>
+        <field name="model_id" ref="model_lead_time_profile" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
