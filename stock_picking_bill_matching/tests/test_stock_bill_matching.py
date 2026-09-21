@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import common, tagged
 
 
@@ -84,6 +85,35 @@ class TestStockBillMatching(common.TransactionCase):
                 ],
             }
         )
+
+    def create_po(self, products_info):
+        """Helper to create and confirm a purchase order."""
+        po = self.env["purchase.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product.id,
+                            "product_qty": qty,
+                            "price_unit": price,
+                        },
+                    )
+                    for product, qty, price in products_info
+                ],
+            }
+        )
+        po.button_confirm()
+        return po
+
+    def view_lines(self, partner, line_type=False):
+        """Helper to fetch the matching view lines of a partner."""
+        domain = [("partner_id", "=", partner.id)]
+        if line_type:
+            domain.append(("line_type", "=", line_type))
+        return self.env["picking.bill.line.match"].search(domain)
 
     def test_01_partial_match_and_backorder(self):
         """Test matching partial quantities automatically creates backorders."""
@@ -414,4 +444,258 @@ class TestStockBillMatching(common.TransactionCase):
             bill.is_picking_matched,
             "Bill should be matched when storable lines are matched "
             "even if a no-product line exists.",
+        )
+
+    def test_10_action_bill_matching_from_picking(self):
+        """The Picking smart button opens the matching view."""
+        picking = self.create_picking([(self.product_a, 5)])
+        self.create_bill([(self.product_a, 5, 50.0)])
+
+        action = picking.action_bill_matching()
+        self.assertEqual(action["res_model"], "picking.bill.line.match")
+        self.assertIn(
+            ("picking_id", "in", (picking.id, False)),
+            action["domain"],
+            "Default view should show this picking's lines + unmatched bill lines.",
+        )
+
+        matched_action = picking.with_context(
+            search_default_matched=True
+        ).action_bill_matching()
+        self.assertIn(
+            ("picking_id", "=", picking.id),
+            matched_action["domain"],
+            "Matched view should link the bill lines of this picking.",
+        )
+
+    def test_11_po_matching_flow(self):
+        """PO -> Picking -> Bill matching flow and the PO helpers."""
+        product_x = self.env["product.product"].create(
+            {
+                "name": "Test Product PO Flow",
+                "type": "product",
+                "standard_price": 25.0,
+            }
+        )
+        po = self.create_po([(product_x, 10, 25.0)])
+        picking = po.picking_ids
+        self.assertTrue(picking)
+        self.assertTrue(po.order_line[0].move_ids)
+
+        self.assertFalse(picking.is_picking_matched)
+        self.assertFalse(po.is_picking_matched)
+
+        bill = self.create_bill([(product_x, 10, 25.0)])
+        action = bill.action_picking_matching()
+        self.assertEqual(
+            action.get("res_model"),
+            "stock.picking",
+            "Perfect auto-match should jump straight to the picking.",
+        )
+        self.assertEqual(action.get("res_id"), picking.id)
+
+        self.assertTrue(picking.is_picking_matched)
+        self.assertTrue(po.is_picking_matched)
+
+        po_line = po.order_line[0]
+        invoice_lines = po_line._get_invoice_lines()
+        self.assertIn(bill.invoice_line_ids, invoice_lines)
+        po_line.invalidate_recordset(["qty_invoiced"])
+        self.assertIsInstance(po_line.qty_invoiced, float)
+
+        po_action = po.action_bill_matching()
+        self.assertEqual(po_action["res_model"], "picking.bill.line.match")
+        self.assertIn(
+            (
+                "picking_id",
+                "in",
+                po.order_line.move_ids.mapped("picking_id").ids + [False],
+            ),
+            po_action["domain"],
+        )
+
+    def test_12_reference_and_matched_reference(self):
+        """The computed `reference` and `matched_reference` view fields."""
+        picking = self.create_picking([(self.product_a, 5)])
+        picking.origin = "TEST-ORIGIN"
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        bill.invoice_origin = "INV-ORIGIN"
+        self.env.flush_all()
+
+        lines = self.view_lines(self.partner_a)
+        sm_line = lines.filtered(lambda l: l.line_type == "stock_move")
+        aml_line = lines.filtered(lambda l: l.line_type == "vendor_bill")
+        self.assertEqual(len(sm_line), 1)
+        self.assertEqual(len(aml_line), 1)
+        self.assertIn("TEST-ORIGIN", sm_line.reference)
+        self.assertIn("INV-ORIGIN", aml_line.reference)
+
+        lines.action_match_lines()
+        matched = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("is_matched", "=", True),
+            ]
+        )
+        sm_matched = matched.filtered(lambda l: l.line_type == "stock_move")
+        aml_matched = matched.filtered(lambda l: l.line_type == "vendor_bill")
+        self.assertIn(bill.name, sm_matched.matched_reference)
+        self.assertIn(picking.name, aml_matched.matched_reference)
+
+    def test_13_action_open_line(self):
+        """The view line opener returns the underlying record."""
+        self.create_picking([(self.product_a, 5)])
+        self.create_bill([(self.product_a, 5, 50.0)])
+        self.env.flush_all()
+
+        lines = self.view_lines(self.partner_a)
+        sm_line = lines.filtered(lambda l: l.line_type == "stock_move")
+        aml_line = lines.filtered(lambda l: l.line_type == "vendor_bill")
+
+        action = sm_line.action_open_line()
+        self.assertEqual(action["res_model"], "stock.picking")
+        self.assertEqual(action["res_id"], sm_line.picking_id.id)
+
+        action = aml_line.action_open_line()
+        self.assertEqual(action["res_model"], "account.move")
+        self.assertEqual(action["res_id"], aml_line.account_move_id.id)
+
+    def test_14_match_lines_errors(self):
+        """Invalid match/add-to-picking selections raise UserError."""
+        with self.assertRaises(UserError):
+            self.env["picking.bill.line.match"].action_match_lines()
+
+        self.create_bill([(self.product_a, 5, 50.0)])
+        self.create_bill([(self.product_b, 6, 100.0)])
+        self.env.flush_all()
+        lines = self.view_lines(self.partner_a, line_type="vendor_bill")
+        self.assertEqual(len(lines), 2)
+        with self.assertRaises(UserError):
+            lines.action_match_lines()
+
+        with self.assertRaises(UserError):
+            self.env["picking.bill.line.match"].action_add_to_picking()
+
+    def test_15_auto_create_skipped_with_open_po(self):
+        """Auto-create is skipped when an open PO exists for the partner."""
+        self.env.company.auto_create_picking_on_match = True
+        self.env["purchase.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_a.id,
+                            "product_qty": 10,
+                            "price_unit": 50.0,
+                        },
+                    )
+                ],
+            }
+        )
+        bill = self.create_bill([(self.product_a, 8, 50.0)])
+        action = bill.action_picking_matching()
+        self.assertEqual(
+            action["res_model"],
+            "picking.bill.line.match",
+            "Auto-creation must be refused while a PO is still open.",
+        )
+
+    def test_16_wizard_add_to_existing_picking(self):
+        """The wizard can add bill lines to an existing picking."""
+        picking = self.create_picking([(self.product_a, 5)])
+        bill = self.create_bill([(self.product_b, 3, 100.0)])
+        self.env.flush_all()
+
+        view_lines = self.view_lines(self.partner_a, line_type="vendor_bill")
+        wizard_action = view_lines.action_add_to_picking()
+        self.assertEqual(wizard_action["res_model"], "bill.to.picking.wizard")
+
+        wizard = (
+            self.env["bill.to.picking.wizard"]
+            .with_context(**wizard_action["context"])
+            .create(
+                {
+                    "partner_id": self.partner_a.id,
+                    "picking_id": picking.id,
+                    "auto_validate": False,
+                }
+            )
+        )
+        result = wizard.action_add_to_picking()
+        self.assertEqual(result["res_model"], "stock.picking")
+        self.assertEqual(result["res_id"], picking.id)
+
+        new_moves = picking.move_ids.filtered(lambda m: m.product_id == self.product_b)
+        self.assertTrue(new_moves)
+        self.assertEqual(len(picking.move_ids), 2)
+        self.assertEqual(picking.state, "assigned")
+        self.assertEqual(bill.invoice_line_ids.move_line_ids, new_moves)
+
+    def test_17_wizard_no_lines_raises(self):
+        """The wizard refuses to run without selected bill lines."""
+        wizard = self.env["bill.to.picking.wizard"].create(
+            {"partner_id": self.partner_a.id}
+        )
+        with self.assertRaises(UserError):
+            wizard.action_add_to_picking()
+
+    def test_18_matched_context_action(self):
+        """The 'Matched Items' context filters the view to linked lines."""
+        self.create_picking([(self.product_a, 5)])
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        self.env.flush_all()
+
+        lines = self.view_lines(self.partner_a)
+        lines.action_match_lines()
+
+        action = bill.with_context(
+            search_default_matched=True
+        ).action_picking_matching()
+        self.assertEqual(action["res_model"], "picking.bill.line.match")
+        self.assertTrue(action["context"].get("hide_match"))
+        self.assertIn(
+            ("sm_id", "in", bill.invoice_line_ids.mapped("move_line_ids").ids),
+            action["domain"],
+        )
+
+    def test_19_bill_without_matching_lines_falls_back_to_view(self):
+        """A bill with only service lines falls back to the matching view."""
+        service_product = self.env.ref("product.product_product_1")
+        bill = self.create_bill([(service_product, 1, 100.0)])
+        action = bill.action_picking_matching()
+        self.assertEqual(action["res_model"], "picking.bill.line.match")
+        self.assertTrue(action["context"].get("hide_unmatch"))
+
+    def test_20_reset_force_picking_matched(self):
+        """Force matched can be safely reset."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        self.assertFalse(bill.is_picking_matched)
+
+        bill.action_force_picking_matched()
+        self.assertTrue(bill.is_picking_matched)
+
+        bill.action_reset_force_picking_matched()
+        self.assertFalse(bill.force_picking_matched)
+        self.assertFalse(bill.is_picking_matched)
+
+    def test_21_quantity_mismatch_falls_back_to_view(self):
+        """A quantity mismatch refrains from auto-matching."""
+        product = self.env["product.product"].create(
+            {
+                "name": "Test Product Mismatch",
+                "type": "product",
+                "standard_price": 30.0,
+            }
+        )
+        self.create_picking([(product, 10)])
+        bill = self.create_bill([(product, 8, 30.0)])
+
+        action = bill.action_picking_matching()
+        self.assertEqual(
+            action["res_model"],
+            "picking.bill.line.match",
+            "Mismatched quantities should open the matching view instead.",
         )
