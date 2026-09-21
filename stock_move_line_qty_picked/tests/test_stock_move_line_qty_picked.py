@@ -13,7 +13,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
         group_production_lot = cls.env.ref("stock.group_production_lot")
         cls.env.user.write(
             {
-                "groups_id": [
+                "group_ids": [
                     (4, group_stock_multi_locations.id),
                     (4, group_production_lot.id),
                 ]
@@ -247,3 +247,29 @@ class TestStockMoveLineQtyPicked(TransactionCase):
             product, self.stock_location, lot_id=lot_map["LOT-004"]
         )
         self.assertEqual(lot_4_quant.quantity, 10)
+
+    def test_move_pick_qty_different_uom(self):
+        box_uom = self.env["uom.uom"].create(
+            {
+                "name": "Box of 10",
+                "relative_factor": 10.0,
+                "relative_uom_id": self.product.uom_id.id,
+            }
+        )
+        self.product.uom_ids = [(4, box_uom.id)]
+        move = self._create_move(
+            self.product, 20.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+        move_line.product_uom_id = box_uom
+        move_line.quantity = 1.0
+
+        move_line.qty_picked = 1.5
+
+        self.assertEqual(move_line.qty_picked, 1.5)
+        self.assertTrue(move_line.picked)
+        self.assertEqual(move.qty_picked, 15.0)
+        self.assertEqual(move_line.quantity, 1.0)
+
+        move.picking_id.with_context(skip_backorder=True).button_validate()
+        self.assertEqual(move.quantity, 15.0)
