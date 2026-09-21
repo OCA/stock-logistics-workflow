@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_form_inherit_stock_bill_matching" model="ir.ui.view">
+        <field name="name">account.move.inherit.stock.bill.matching</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <!-- Unmatched Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_picking_matching"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-bullseye"
+                    context="{'search_default_unmatched': 1, 'hide_unmatch': 1}"
+                    attrs="{'invisible':['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('is_picking_matched', '=', True)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Match Pickings</span>
+                    </div>
+                </button>
+                <!-- Force Matched Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_force_picking_matched"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-check"
+                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), '|', ('is_picking_matched', '=', True), ('force_picking_matched', '=', True)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Force Matched</span>
+                    </div>
+                </button>
+                <!-- Reset Force Matched Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_reset_force_picking_matched"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-undo"
+                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('force_picking_matched', '=', False)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Reset Force</span>
+                    </div>
+                </button>
+                <!-- Matched (Debug/Undo) Button -->
+                <button
+                    class="oe_stat_button"
+                    name="action_picking_matching"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-check-square-o"
+                    context="{'search_default_matched': 1}"
+                    attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'in_refund'))]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Matched Items</span>
+                    </div>
+                </button>
+                <field name="is_picking_matched" invisible="1" />
+                <field name="force_picking_matched" invisible="1" />
+            </div>
+        </field>
+    </record>
+
+    <record
+        id="view_account_invoice_filter_inherit_stock_bill_matching"
+        model="ir.ui.view"
+    >
+        <field name="name">account.invoice.filter.inherit.stock.bill.matching</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <filter name="draft" position="after">
+                <separator />
+                <filter
+                    string="Unmatched Picking"
+                    name="unmatched_picking"
+                    domain="[('is_picking_matched', '=', False), ('move_type', 'in', ('in_invoice', 'in_refund'))]"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">related.pickings.account.invoice.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree/field[@name='name']"
+                position="after"
+            >
+                <field name="move_line_ids" widget="many2many_tags" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
