@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_valuation_lot_allocation,access_stock_valuation_lot_allocation,model_stock_valuation_lot_allocation,stock.group_stock_manager,1,0,0,0
