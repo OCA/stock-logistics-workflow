@@ -820,8 +820,14 @@ class TestStockBillMatching(common.TransactionCase):
             {pick1.move_ids.id, pick2.move_ids.id},
             "Both receipt moves should be linked to the bill line.",
         )
-        self.assertEqual(pick1.state, "done")
-        self.assertEqual(pick2.state, "assigned")
+        # Only the picking whose move was consumed first gets validated; the
+        # view line order is not guaranteed, so check the pair as a whole.
+        states = {p.state for p in (pick1, pick2)}
+        self.assertEqual(
+            states,
+            {"done", "assigned"},
+            "Exactly one picking should be validated by the match.",
+        )
 
     def test_28_match_without_receipt_selected(self):
         """Matching only the bill line leaves it unlinked when no receipt matches."""
@@ -887,3 +893,24 @@ class TestStockBillMatching(common.TransactionCase):
         demo_data = list(template._get_demo_data())
         moves = [data for data in demo_data if data[0] == "account.move"]
         self.assertTrue(moves, "The demo hook should yield the module demo bill.")
+
+    def test_33_match_skips_move_with_no_remaining_qty(self):
+        """A fully received move is linked but not processed again."""
+        picking = self.create_picking([(self.product_a, 5)])
+        picking.move_ids.quantity_done = 5
+        bill = self.create_bill([(self.product_a, 3, 50.0)])
+        self.env.flush_all()
+
+        lines = self.view_lines(self.partner_a)
+        lines.action_match_lines()
+
+        self.assertTrue(
+            bill.invoice_line_ids.move_line_ids,
+            "The link should still be created for the bill line.",
+        )
+        self.assertEqual(
+            picking.state,
+            "assigned",
+            "A move without remaining demand must not trigger validation.",
+        )
+        self.assertEqual(picking.move_ids.quantity_done, 5)
