@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_form_view">
+        <field name="name">stock.picking.form (in stock_picking_is_completed)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="is_completed" invisible="1" />
+            </field>
+            <header position="after">
+                <div
+                    class="alert alert-success oe_button_box"
+                    options="{'always_reload': True}"
+                    role="alert"
+                    attrs="{'invisible': [('is_completed', '=', False)]}"
+                >
+                    <p class="mt-3">
+                        The picking seems to be completed and is about to be validated.
+                    </p>
+                </div>
+            </header>
+        </field>
+    </record>
+
+    <record id="stock_picking_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.tree (in stock_picking_is_completed)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field
+                    name="is_completed"
+                    optional="hide"
+                    decoration-muted="is_completed == False"
+                    decoration-success="is_completed == True"
+                />
+            </field>
+        </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="stock_picking_search_view">
+        <field name="name">stock.picking.search (in stock_picking_is_completed)</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//filter[@name='cancel']/following-sibling::separator"
+                position="after"
+            >
+                <filter
+                    name="is_completed"
+                    string="Is Completed"
+                    domain="[('is_completed', '=', True)]"
+                    help="Completed Picking"
+                />
+                <filter
+                    name="is_not_completed"
+                    string="Is Not Completed"
+                    domain="[('is_completed', '=', False)]"
+                    help="Not Completed Picking"
+                />
+                <separator />
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
