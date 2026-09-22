@@ -6,102 +6,106 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-09-22 19:28+0000\n"
+"Last-Translator: Akim Juillerat <akim.juillerat@camptocamp.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model,name:stock_picking_backorder_move_qty.model_stock_backorder_confirmation
 msgid "Backorder Confirmation"
-msgstr ""
+msgstr "Validierung Lieferrückstand"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model,name:stock_picking_backorder_move_qty.model_stock_backorder_confirmation_move_line
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation__backorder_confirmation_move_line_ids
 msgid "Backorder Confirmation Move Line"
-msgstr ""
+msgstr "Lagerbuchung Validierung Lieferrückstand"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_move__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation__id
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__id
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_move__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__backorder_confirmation_id
 msgid "Immediate Transfer"
-msgstr ""
+msgstr "Sofortiger Transfer"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt Aktualisiert von"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt Aktualisiert am"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__move_id
 msgid "Move"
-msgstr ""
+msgstr "Lagerbewegung"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__qty_to_backorder
 msgid "Qty To Backorder"
-msgstr ""
+msgstr "Lieferrückstandsmenge"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__qty_unprocessed
 msgid "Qty Unprocessed"
-msgstr ""
+msgstr "Unverarbeitete Menge"
 
 #. module: stock_picking_backorder_move_qty
 #. odoo-python
 #: code:addons/stock_picking_backorder_move_qty/wizard/stock_backorder_confirmation_move.py:0
 msgid "Quantity to backorder cannot be negative"
-msgstr ""
+msgstr "Die Lieferrückstandsmenge kann nicht negativ sein"
 
 #. module: stock_picking_backorder_move_qty
 #. odoo-python
 #: code:addons/stock_picking_backorder_move_qty/wizard/stock_backorder_confirmation_move.py:0
 msgid "Quantity to backorder cannot exceed the remaining unprocessed quantity"
 msgstr ""
+"Die Lieferrückstandsmenge kann nicht grösser sein als die unverarbeitete "
+"Menge"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model,name:stock_picking_backorder_move_qty.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Lagerbewegung"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__picking_id
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__qty_to_backorder_uom_id
 msgid "Unit"
-msgstr ""
+msgstr "Einheit"
