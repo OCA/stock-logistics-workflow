@@ -273,3 +273,46 @@ class TestStockMoveLineQtyPicked(TransactionCase):
 
         move.picking_id.with_context(skip_backorder=True).button_validate()
         self.assertEqual(move.quantity, 15.0)
+
+    def test_move_get_picked_quantity_without_qty_picked(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+
+        self.assertFalse(move.picked)
+        self.assertEqual(move.qty_picked, 0)
+        self.assertEqual(move._get_picked_quantity(), 5)
+
+    def test_picked_zero_quantity_line_is_kept(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+        move_form = Form(move, view="stock.view_stock_move_operations")
+        with move_form.move_line_ids.new():
+            pass
+        move_form.save()
+
+        zero_line = move.move_line_ids.filtered(lambda line: not line.quantity)
+        self.assertEqual(len(zero_line), 1)
+
+        zero_line.picked = True
+
+        self.assertTrue(zero_line.picked)
+        self.assertEqual(zero_line.qty_picked, 0)
+        self.assertEqual(zero_line.quantity, 0)
+
+    def test_picked_quantity_can_increase_reserved_quantity(self):
+        move = self._create_move(
+            self.product, 5.0, self.stock_location, self.stock_location_2
+        )
+        move_line = move.move_line_ids
+
+        move.quantity = 2
+        self.assertEqual(move_line.quantity, 2)
+
+        move_line.qty_picked = 3
+
+        self.assertEqual(move_line.qty_picked, 3)
+        self.assertTrue(move_line.picked)
+        self.assertEqual(move_line.quantity, 3)
+        self.assertEqual(move.quantity, 3)
