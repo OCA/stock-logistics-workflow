@@ -36,7 +36,7 @@ class TestStockMoveLineQtyPicked(TransactionCase):
             picking = cls._create_transfer(from_location, to_location)
         picking_form = Form(picking)
         picking_moves = picking.move_ids
-        with picking_form.move_ids_without_package.new() as move_form:
+        with picking_form.move_ids.new() as move_form:
             move_form.product_id = product
             move_form.product_uom_qty = quantity
         picking = picking_form.save()
