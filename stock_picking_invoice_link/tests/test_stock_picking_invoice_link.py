@@ -6,9 +6,13 @@
 # Copyright 2025 Tecnativa - Víctor Martínez
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+import logging
+
 from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
+
+_logger = logging.getLogger(__name__)
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -71,24 +75,31 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
         saved = {}
         try:
             from odoo.tools.translate import code_translations
+
             for lang in ("es_419", "es_AR", "es"):
                 key = ("account", lang)
                 saved[key] = code_translations.python_translations.get(key, _MISSING)
                 code_translations.python_translations[key] = {}
         except Exception:
-            pass
+            _logger.warning(
+                "Could not patch code_translations for setUpClass", exc_info=True
+            )
         try:
             super().setUpClass()
         finally:
             try:
                 from odoo.tools.translate import code_translations
+
                 for key, val in saved.items():
                     if val is _MISSING:
                         code_translations.python_translations.pop(key, None)
                     else:
                         code_translations.python_translations[key] = val
             except Exception:
-                pass
+                _logger.warning(
+                    "Could not restore code_translations after setUpClass",
+                    exc_info=True,
+                )
         cls.product_a.is_storable = True
         cls.product_b.is_storable = True
         cls.product_c = cls._create_product(
