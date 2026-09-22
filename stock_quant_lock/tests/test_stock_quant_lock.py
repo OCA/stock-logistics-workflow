@@ -402,3 +402,26 @@ class TestStockQuantLock(TransactionCase):
             confirmed_moves[0].quant_lock_quant_id.id,
             confirmed_moves[1].quant_lock_quant_id.id,
         )
+
+    def test_action_unlock_quant_with_empty_recordset(self):
+        quant = self._prepare_quant_with_partial_reservation()
+
+        wizard = (
+            self.env["stock.quant.lock.wizard"]
+            .with_context(
+                active_model="stock.quant",
+                active_ids=quant.ids,
+            )
+            .create(
+                {
+                    "picking_type_id": self.lock_picking_type.id,
+                }
+            )
+        )
+        wizard.action_lock()
+
+        self.assertTrue(quant.is_locked_by_picking)
+        empty_quants = self.env["stock.quant"].browse([])
+        # Should not raise an exception
+        empty_quants.action_unlock_quant()
+        self.assertTrue(quant.is_locked_by_picking)
