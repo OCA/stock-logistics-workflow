@@ -7,15 +7,12 @@ from odoo import api, fields, models
 class StockReturnPickingLine(models.TransientModel):
     _inherit = "stock.return.picking.line"
 
-    _sql_constraints = [
-        # Prevent multiple lines for the same move and lot, otherwise it would
-        # become very difficult to restrict the quantities per lot per move.
-        (
-            "lot_id_move_id_uniq",
-            "UNIQUE(wizard_id, lot_id, move_id)",
-            "The same lot cannot be used on multiple lines for the same move",
-        )
-    ]
+    # Prevent multiple lines for the same move and lot, otherwise it would
+    # become very difficult to restrict the quantities per lot per move.
+    _lot_id_move_id_uniq = models.Constraint(
+        "UNIQUE(wizard_id, lot_id, move_id)",
+        "The same lot cannot be used on multiple lines for the same move",
+    )
 
     lot_id = fields.Many2one(
         "stock.lot",
@@ -23,9 +20,9 @@ class StockReturnPickingLine(models.TransientModel):
         domain="[('product_id', '=', product_id)]",
     )
 
-    def _prepare_move_default_values(self, picking):
+    def _prepare_move_default_values(self, new_picking):
         # Set the wizard line lot as the move's restricted lot
-        vals = super()._prepare_move_default_values(picking)
+        vals = super()._prepare_move_default_values(new_picking)
         vals["restrict_lot_id"] = self.lot_id.id
         return vals
 
@@ -54,7 +51,7 @@ class StockReturnPickingLine(models.TransientModel):
             .mapped("quantity")
         )
 
-    @api.onchange("quantity", "lot_id")
-    def _onchange_quantity(self):
+    @api.constrains("lot_id")
+    def _check_lot_id(self):
         # The restricted quantity can now depend on the lot
-        return super()._onchange_quantity()
+        return self._check_quantity()

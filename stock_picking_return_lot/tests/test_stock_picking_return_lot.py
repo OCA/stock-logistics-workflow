@@ -3,10 +3,12 @@
 
 from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tools import mute_logger
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class StockPickingReturnLotTest(TransactionCase):
+class StockPickingReturnLotTest(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -29,8 +31,13 @@ class StockPickingReturnLotTest(TransactionCase):
         cls.lot_3 = cls.env["stock.lot"].create(
             {"name": "000003", "product_id": cls.product.id}
         )
-        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        warehouse = cls.env["stock.warehouse"].search(
+            [
+                ("company_id", "=", cls.env.company.id),
+            ]
+        )
+        cls.picking_type_out = warehouse.out_type_id
+        cls.stock_location = warehouse.lot_stock_id
         cls.customer_location = cls.env.ref("stock.stock_location_customers")
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 1, lot_id=cls.lot_1
@@ -47,7 +54,6 @@ class StockPickingReturnLotTest(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": 3,
                             "product_uom": cls.product.uom_id.id,
@@ -79,7 +85,6 @@ class StockPickingReturnLotTest(TransactionCase):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": product.name,
                             "product_id": product.id,
                             "product_uom_qty": 1,
                             "product_uom": product.uom_id.id,
@@ -93,8 +98,8 @@ class StockPickingReturnLotTest(TransactionCase):
         self.env["stock.move"].create(
             {
                 "picking_id": picking.id,
-                "name": product.name,
                 "product_id": product.id,
+                "description_picking": "extra-move",
                 "product_uom_qty": 1,
                 "product_uom": self.product.uom_id.id,
                 "location_id": self.stock_location.id,
@@ -116,14 +121,12 @@ class StockPickingReturnLotTest(TransactionCase):
         return_line = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot
         )
-        return_line.quantity = 2
         with self.assertRaisesRegex(
             UserError, "more quantities than delivered is not allowed"
         ):
-            with self.env.cr.savepoint():
-                wiz.action_create_returns()
-
+            return_line.quantity = 2
         self.picking.picking_type_id.restrict_return_qty = False
+        return_line.quantity = 2
         wiz.action_create_returns()
 
     def test_incorrect_lot(self):
@@ -132,13 +135,10 @@ class StockPickingReturnLotTest(TransactionCase):
         return_line = wiz.product_return_moves.filtered(
             lambda m, lot=self.lot_1: m.lot_id == lot
         )
-        return_line.lot_id = self.lot_3
         with self.assertRaisesRegex(
             UserError, "more quantities than delivered is not allowed"
         ):
-            with self.env.cr.savepoint():
-                wiz.action_create_returns()
-
+            return_line.lot_id = self.lot_3
         self.picking.picking_type_id.restrict_return_qty = False
         wiz.action_create_returns()
 
@@ -166,6 +166,7 @@ class StockPickingReturnLotTest(TransactionCase):
         self.assertEqual(move_2.move_line_ids.lot_id, self.lot_2)
         self.assertEqual(move_2.product_qty, 1)
 
+    @mute_logger("odoo.models.unlink")
     def test_full_return_after_partial_return(self):
         self.test_partial_return()
         wiz = self.create_return_wiz(self.picking)
@@ -191,6 +192,7 @@ class StockPickingReturnLotTest(TransactionCase):
         self.assertEqual(move_2.move_line_ids.lot_id, self.lot_2)
         self.assertEqual(move_2.product_qty, 1)
 
+    @mute_logger("odoo.models.unlink")
     def test_multiple_move_same_product_different_lot(self):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.stock_location, 1, lot_id=self.lot_1
@@ -221,11 +223,13 @@ class StockPickingReturnLotTest(TransactionCase):
         self.assertEqual(move_2.move_line_ids.lot_id, self.lot_2)
         self.assertEqual(move_2.product_qty, 1)
 
+    @mute_logger("odoo.models.unlink")
     def test_multiple_move_same_product_same_lot(self):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.stock_location, 2, lot_id=self.lot_1
         )
         picking = self._create_validate_picking()
+        self.assertEqual(len(picking.move_ids), 2)
         wiz = self.create_return_wiz(picking)
         self.assertEqual(len(wiz.product_return_moves), 2)
         return_lines = wiz.product_return_moves.filtered(
