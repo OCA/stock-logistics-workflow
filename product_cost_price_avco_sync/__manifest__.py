@@ -1,11 +1,11 @@
-# Copyright 2020,2024 Tecnativa - Carlos Dauden
+# Copyright 2020-2026 Tecnativa - Carlos Dauden
 # Copyright 2020,2024 Tecnativa - Sergio Teruel
 # Copyright 2024,2025 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Product cost price avco sync",
     "summary": "Set product cost price from updated moves",
-    "version": "18.0.1.0.1",
+    "version": "18.0.2.0.0",
     "development_status": "Production/Stable",
     "category": "Stock",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -14,4 +14,5 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["stock_account"],
+    "data": ["data/ir_actions_server.xml"],
 }
