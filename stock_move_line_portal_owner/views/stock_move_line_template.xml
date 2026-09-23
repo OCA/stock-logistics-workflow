@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_stock_move_line_owner"
+        name="Portal layout: Stock Operations menu entry"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="99"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'stock_move_line_owner'"
+                t-attf-class="breadcrumb-item #{'active ' if not stock_move_line_owner else ''}"
+            >
+                My Consigned Moves
+            </li>
+        </xpath>
+    </template>
+    <template
+        id="portal_my_home_stock_move_line_owner"
+        name="Show Move Line by Owner"
+        customize_show="True"
+        inherit_id="portal.portal_my_home"
+        priority="99"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <div id="portal_stock_category" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t
+                        t-set="icon"
+                        t-value="'/stock_move_line_portal_owner/static/src/img/movements.svg'"
+                    />
+                    <t t-set="title">My Consigned Moves</t>
+                    <t t-set="url" t-value="'/my/stock_move_line/owner'" />
+                    <t t-set="text">Follow, view your consigned moves</t>
+                    <t
+                        t-set="placeholder_count"
+                        t-value="'stock_move_line_owner_count'"
+                    />
+                </t>
+            </div>
+        </xpath>
+    </template>
+    <template id="portal_my_stock_move_line_owner" name="My Move Line by Owner">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Move Operations</t>
+            </t>
+            <div class="row">
+                <div class="col-12 my-3">
+                    <form
+                        method="get"
+                        t-attf-action="/my/stock_move_line/owner"
+                        class="form-inline"
+                    >
+                        <div class="row">
+                            <div class="col-auto pt-2">
+                                <span class="mr-sm-2">Move State:</span>
+                            </div>
+                            <div class="d-inline col-2 px-0">
+                                <select
+                                    name="move_state"
+                                    id="move_state"
+                                    class="form-control mr-sm-2"
+                                >
+                                    <option
+                                        value="all"
+                                        t-att-selected="move_state=='all'"
+                                    >All</option>
+                                    <t t-foreach="move_states" t-as="state">
+                                        <option
+                                            t-att-value="state"
+                                            t-att-selected="move_state and state == move_state"
+                                        >
+                                            <t t-esc="move_states[state]" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-auto pt-2">
+                                <span class="sr-only">Date: </span>
+                            </div>
+                            <div class="d-inline col-auto px-0">
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    name="date_from"
+                                    t-att-value="date_from"
+                                />
+                            </div>
+                            <div class="col-auto px-1 pt-2">
+                                <span class="sr-only">-</span>
+                            </div>
+                            <div class="d-inline col-auto px-0">
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    name="date_to"
+                                    t-att-value="date_to"
+                                />
+                            </div>
+                            <div class="d-inline col-auto">
+                                <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                >Apply</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="search" t-att-value="search" />
+                        <input type="hidden" name="search_in" t-att-value="search_in" />
+                        <input type="hidden" name="sortby" t-att-value="sortby" />
+                    </form>
+                </div>
+            </div>
+            <t t-if="move_operation_ids" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Document #</span>
+                        </th>
+                        <th class="text-center">Product</th>
+                        <th class="text-center">Movement date</th>
+                        <th class="text-center">Operation Type</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-center">State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="move_operation_ids" t-as="move_line">
+                    <tr>
+                        <td>
+                            <t t-out="move_line.reference" />
+                        </td>
+                        <td class="text-center">
+                            <t t-out="move_line.product_id.sudo().display_name" />
+                        </td>
+                        <td class="text-center">
+                            <span class='d-none d-md-inline' t-field="move_line.date" />
+                        </td>
+                        <td class="text-center">
+                            <span t-if="move_line.picking_code == 'incoming'">
+                                Receipt
+                            </span>
+                            <span t-elif="move_line.picking_code == 'outgoing'">
+                                Delivery
+                            </span>
+                            <span t-else="">
+                                <t t-out="move_line.picking_type_id.name" />
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="move_line.quantity" />
+                            <span t-field="move_line.product_uom_id" />
+                        </td>
+                        <td class="text-center">
+                            <span
+                                t-if="move_line.state == 'done'"
+                                class="small badge text-bg-success orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-truck" />
+                                <b t-esc="move_states[move_line.state]" />
+                            </span>
+                            <span
+                                t-elif="move_line.state == 'cancel'"
+                                class="small badge text-bg-danger orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-times" />
+                                <b t-esc="move_states[move_line.state]" />
+                            </span>
+                            <span
+                                t-elif="move_line.state in ['draft', 'waiting', 'confirmed', 'assigned']"
+                                class="small badge text-bg-info orders_label_text_align"
+                            >
+                                <i class="fa fa-fw fa-clock-o" />
+                                <b t-esc="move_states[move_line.state]" />
+                            </span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no move operations for your account.</p>
+        </t>
+    </template>
+
+</odoo>
