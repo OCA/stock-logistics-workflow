@@ -17,16 +17,18 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: product_cost_price_avco_sync
-#: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
-#, python-format
-msgid ""
-"More than one stock move line to assign the new stock valuation layer "
-"quantity"
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_lot
+msgid "Lot/Serial"
 msgstr ""
 
 #. module: product_cost_price_avco_sync
-#: model:ir.model,name:product_cost_price_avco_sync.model_product_product
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_template
 msgid "Product"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_cost_price_avco_sync_mixin
+msgid "Product Cost Price AVCO Sync Mixin"
 msgstr ""
 
 #. module: product_cost_price_avco_sync
@@ -35,14 +37,34 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.actions.server,name:product_cost_price_avco_sync.action_force_avco_sync
+msgid "Recompute average cost from here"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move
+msgid "Stock Move"
+msgstr "Movimentação de Estoque"
+
+#. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_valuation_layer
 msgid "Stock Valuation Layer"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#. odoo-python
+#: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
+msgid ""
+"The AVCO sync can't be completed, as there's some endless dependency in the "
+"data needed to process it."
 msgstr ""
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_picking
 msgid "Transfer"
 msgstr "Transferência"
-
-#~ msgid "Stock Move"
-#~ msgstr "Movimentação de Estoque"
