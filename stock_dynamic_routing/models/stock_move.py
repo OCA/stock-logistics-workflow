@@ -98,7 +98,8 @@ class StockMove(models.Model):
         to split the moves. This method assigns the moves in a savepoint to
         compute the routing rules according the move lines.
 
-        If no routing has to be applied, the savepoint is released.
+        If no routing has to be applied, the savepoint is released and, as in
+        the core, the putaway is applied on the moves that got a new reservation.
         If routing must be applied on at least one move, the savepoint is
         rollbacked and will be called after the routing rules have been applied.
 
@@ -115,6 +116,9 @@ class StockMove(models.Model):
             sql.SQL("SAVEPOINT {}").format(sql.Identifier(savepoint_name))
         )
         _logger.debug("Prepare pull re-routing")
+        reserved_before = {
+            move.id: (move.quantity, set(move.move_line_ids.ids)) for move in self
+        }
         super(
             StockMove,
             self.with_context(bypass_entire_pack=True, avoid_putaway_rules=True),
@@ -131,9 +135,16 @@ class StockMove(models.Model):
             self.env.cr.execute(
                 sql.SQL("RELEASE SAVEPOINT {}").format(sql.Identifier(savepoint_name))
             )
-            self.mapped("picking_id")._check_entire_pack()
+            if not self.env.context.get("bypass_entire_pack"):
+                self.picking_id._check_entire_pack()
             self.filtered(
-                lambda move: move.state in ("assigned", "partially_available")
+                lambda move: float_compare(
+                    move.quantity,
+                    reserved_before[move.id][0],
+                    precision_rounding=move.product_uom.rounding,
+                )
+                > 0
+                or set(move.move_line_ids.ids) != reserved_before[move.id][1]
             ).move_line_ids._apply_putaway_strategy()
             return {}
 

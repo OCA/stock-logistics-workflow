@@ -640,6 +640,117 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assert_src_highbay(routing_move)
         self.assert_dest_handover(routing_move)
 
+    def test_reassign_without_routing_keeps_existing_line_destination(self):
+        # A move reserved in a non-routed location (no routing applies) whose
+        # move line destination was refined afterwards (by an operator, a
+        # putaway split module, a location restriction...) must keep that
+        # destination when the picking is assigned again: as in the core, the
+        # putaway is only recomputed on moves that get a new reservation.
+        bin_a = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "Bin A"}
+        )
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(self.product1, 10)]
+        )
+        move_a = pick_picking.move_ids
+        self._update_product_qty_in_location(
+            self.location_shelf_1, move_a.product_id, 10
+        )
+        pick_picking.action_assign()
+        self.assertEqual(move_a.state, "assigned")
+        line = move_a.move_line_ids
+        self.assertEqual(len(line), 1)
+        self.assert_dest_output(line)
+
+        line.location_dest_id = bin_a
+        pick_picking.action_assign()
+
+        self.assertEqual(move_a.state, "assigned")
+        self.assertEqual(move_a.move_line_ids, line)
+        self.assertEqual(line.location_dest_id, bin_a)
+
+    def test_reassign_consumable_keeps_existing_line_destination(self):
+        # Same as above for a move bypassing the reservation (consumable): once
+        # assigned, the core does not assign it again, so the putaway must not
+        # be recomputed on its move lines either.
+        bin_a = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "Bin A"}
+        )
+        product = self.env["product.product"].create(
+            {"name": "Consumable", "type": "consu"}
+        )
+        pick_picking, customer_picking = self._create_pick_ship(
+            self.wh, [(product, 10)]
+        )
+        move_a = pick_picking.move_ids
+        pick_picking.action_assign()
+        self.assertEqual(move_a.state, "assigned")
+        line = move_a.move_line_ids
+        self.assertEqual(len(line), 1)
+        self.assert_dest_output(line)
+
+        line.location_dest_id = bin_a
+        pick_picking.action_assign()
+
+        self.assertEqual(move_a.state, "assigned")
+        self.assertEqual(move_a.move_line_ids, line)
+        self.assertEqual(line.location_dest_id, bin_a)
+
+    def test_reassign_receipt_keeps_existing_line_destination(self):
+        # A receipt from the vendor location bypasses the reservation: its
+        # first reservation gets the putaway, and a destination refined
+        # afterwards is kept when the picking is assigned again.
+        stock = self.wh.lot_stock_id
+        bin_a = self.env["stock.location"].create(
+            {"location_id": stock.id, "name": "Bin A"}
+        )
+        bin_b = self.env["stock.location"].create(
+            {"location_id": stock.id, "name": "Bin B"}
+        )
+        self.env["stock.putaway.rule"].create(
+            {
+                "product_id": self.product1.id,
+                "location_in_id": stock.id,
+                "location_out_id": bin_a.id,
+            }
+        )
+        supplier = self.env.ref("stock.stock_location_suppliers")
+        receipt = self.env["stock.picking"].create(
+            {
+                "location_id": supplier.id,
+                "location_dest_id": stock.id,
+                "picking_type_id": self.wh.in_type_id.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.product1.name,
+                            "product_id": self.product1.id,
+                            "product_uom_qty": 10,
+                            "product_uom": self.product1.uom_id.id,
+                            "location_id": supplier.id,
+                            "location_dest_id": stock.id,
+                        },
+                    )
+                ],
+            }
+        )
+        receipt.action_confirm()
+        move = receipt.move_ids
+        receipt.action_assign()
+        self.assertEqual(move.state, "assigned")
+        line = move.move_line_ids
+        self.assertEqual(len(line), 1)
+        self.assertEqual(line.location_dest_id, bin_a)
+
+        line.location_dest_id = bin_b
+        receipt.action_assign()
+
+        self.assertEqual(move.state, "assigned")
+        self.assertEqual(move.move_line_ids, line)
+        self.assertEqual(line.location_dest_id, bin_b)
+
     def test_change_dest_move_source(self):
         # Change the picking type destination so the move goes to a location
         # which is a parent destination of the routing destination (move will
