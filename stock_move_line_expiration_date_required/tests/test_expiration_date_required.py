@@ -1,6 +1,8 @@
 # Copyright 2024 Moduon Team S.L. <info@moduon.team>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
+from datetime import datetime, timedelta
+
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import Form, common
@@ -44,6 +46,28 @@ class TestExpirationDateRequired(common.TransactionCase):
             line_form.product_id = cls.product
             line_form.product_uom_qty = 10
         cls.picking = picking_form.save()
+
+    def _action_generate_lot_line_vals(
+        self, mode, first_lot=None, count=0, lot_text=""
+    ):
+        """Generate the move line values like the Generate/Import dialog does."""
+        move = self.picking.move_ids
+        return self.env["stock.move"].action_generate_lot_line_vals(
+            {
+                "default_company_id": self.env.company.id,
+                "default_picking_id": self.picking.id,
+                "default_picking_type_id": self.picking_type_in.id,
+                "default_location_id": move.location_id.id,
+                "default_location_dest_id": move.location_dest_id.id,
+                "default_product_id": self.product.id,
+                "default_tracking": self.product.tracking,
+                "default_quantity": move.product_uom_qty,
+            },
+            mode,
+            first_lot,
+            count,
+            lot_text,
+        )
 
     def test_expiration_date_required_and_not_auto_calculated(self):
         """Test that the expiration date is required for the stock move line
@@ -234,3 +258,46 @@ class TestExpirationDateRequired(common.TransactionCase):
             self.product.display_name,
         ):
             self.picking.with_context(skip_sanity_check=False)._sanity_check()
+
+    def test_generate_lots_expiration_date_not_auto_calculated(self):
+        """Test that generating lots doesn't auto-calculate the expiration date
+        if the product has no expiration time"""
+        # 10 units in lots of 5 -> 2 lines
+        vals_list = self._action_generate_lot_line_vals(
+            "generate", first_lot="TLE-G1", count=5
+        )
+        self.assertEqual(len(vals_list), 2)
+        for vals in vals_list:
+            self.assertFalse(vals.get("expiration_date"))
+
+    def test_generate_lots_expiration_date_auto_calculated(self):
+        """Test that generating lots keeps the auto-calculated expiration date
+        if the expiration time is set in the product"""
+        self.product.expiration_time = 10
+        expected_dtt = self.picking.scheduled_date + timedelta(days=10)
+        vals_list = self._action_generate_lot_line_vals(
+            "generate", first_lot="TLE-G2", count=5
+        )
+        self.assertEqual(len(vals_list), 2)
+        for vals in vals_list:
+            self.assertEqual(vals.get("expiration_date"), expected_dtt)
+
+    def test_import_lots_keeps_given_expiration_dates(self):
+        """Test that expiration dates imported along with the lot names are
+        kept, and the missing ones are not auto-calculated"""
+        given_dtt = datetime(2030, 12, 31)
+        vals_list = self._action_generate_lot_line_vals(
+            "import", lot_text=f"TLE-I1;6;{given_dtt.date()}\nTLE-I2;4"
+        )
+        self.assertEqual(len(vals_list), 2)
+        self.assertEqual(vals_list[0].get("expiration_date"), given_dtt)
+        self.assertFalse(vals_list[1].get("expiration_date"))
+
+    def test_import_lots_keeps_date_matching_the_default(self):
+        """Test that an imported date is kept even when it's the same date that
+        would have been defaulted"""
+        self.picking.scheduled_date = datetime(2030, 6, 1)
+        vals_list = self._action_generate_lot_line_vals(
+            "import", lot_text="TLE-I3;5;2030-06-01"
+        )
+        self.assertEqual(vals_list[0].get("expiration_date"), datetime(2030, 6, 1))
