@@ -14,11 +14,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_cost_price_avco_sync
-#. odoo-python
-#: code:addons/product_cost_price_avco_sync/models/stock_valuation_layer.py:0
-msgid ""
-"More than one stock move line to assign the new stock valuation layer "
-"quantity"
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_product_cost_price_avco_sync_mixin
+msgid "Product Cost Price AVCO Sync Mixin"
 msgstr ""
 
 #. module: product_cost_price_avco_sync
@@ -29,6 +36,16 @@ msgstr ""
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_product_product
 msgid "Product Variant"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.actions.server,name:product_cost_price_avco_sync.action_force_avco_sync
+msgid "Recompute average cost from here"
+msgstr ""
+
+#. module: product_cost_price_avco_sync
+#: model:ir.model,name:product_cost_price_avco_sync.model_stock_move
+msgid "Stock Move"
 msgstr ""
 
 #. module: product_cost_price_avco_sync
