@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_scrap_form_view" model="ir.ui.view">
+        <field name="name">stock.scrap.form.date.done</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view" />
+        <field name="arch" type="xml">
+            <field name="date_done" position="attributes">
+                <attribute name="invisible">0</attribute>
+                <attribute name="readonly">not is_date_done_editable</attribute>
+            </field>
+            <field name="date_done" position="before">
+                <field name="is_date_done_editable" invisible="1" />
+                <field name="date_done_edited" invisible="1" />
+            </field>
+            <field name="date_done" position="after">
+                <field name="origin_date_done" invisible="not date_done_edited" />
+            </field>
+        </field>
+    </record>
+    <record id="stock_scrap_form_view2" model="ir.ui.view">
+        <field name="name">stock.scrap.form2.date.done</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view2" />
+        <field name="arch" type="xml">
+            <field name="location_id" position="before">
+                <field name="is_date_done_editable" invisible="1" />
+                <field name="date_done" readonly="not is_date_done_editable" />
+            </field>
+        </field>
+    </record>
+    <record id="stock_scrap_tree_view" model="ir.ui.view">
+        <field name="name">stock.scrap.list.date.done</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view" />
+        <field name="arch" type="xml">
+            <field name="date_done" position="attributes">
+                <attribute name="readonly">not is_date_done_editable</attribute>
+            </field>
+            <field name="date_done" position="before">
+                <field name="is_date_done_editable" column_invisible="1" />
+            </field>
+            <field name="date_done" position="after">
+                <field name="origin_date_done" optional="hide" />
+            </field>
+        </field>
+    </record>
+</odoo>
