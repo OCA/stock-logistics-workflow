@@ -1,1 +1,2 @@
 odoo_test_helper
+odoo-addon-stock_picking_portal @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2429/head#subdirectory=stock_picking_portal
