@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ForgeFlow S.L.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_stock_move_line_split_form" model="ir.ui.view">
+        <field name="name">stock.move.line.split.form</field>
+        <field name="model">stock.move.line.split</field>
+        <field name="arch" type="xml">
+            <form string="Split Move Lines">
+                <field name="move_line_ids" invisible="1" />
+                <group>
+                    <field name="strategy" />
+                    <field
+                        name="fixed_qty"
+                        invisible="strategy != 'fixed'"
+                        required="strategy == 'fixed'"
+                    />
+                    <field
+                        name="weight_source"
+                        invisible="strategy != 'weight'"
+                        required="strategy == 'weight'"
+                        widget="radio"
+                    />
+                    <label
+                        for="max_weight"
+                        invisible="strategy != 'weight' or weight_source != 'custom'"
+                    />
+                    <div
+                        class="o_row"
+                        invisible="strategy != 'weight' or weight_source != 'custom'"
+                    >
+                        <field
+                            name="max_weight"
+                            required="strategy == 'weight' and weight_source == 'custom'"
+                            nolabel="1"
+                        />
+                        <field name="weight_uom_name" nolabel="1" />
+                    </div>
+                    <field
+                        name="package_type_id"
+                        invisible="strategy != 'weight' or weight_source != 'package_type'"
+                        required="strategy == 'weight' and weight_source == 'package_type'"
+                        options="{'no_create': True}"
+                    />
+                    <label
+                        for="package_type_available_weight"
+                        invisible="strategy != 'weight' or weight_source != 'package_type'"
+                    />
+                    <div
+                        class="o_row"
+                        invisible="strategy != 'weight' or weight_source != 'package_type'"
+                    >
+                        <field
+                            name="package_type_available_weight"
+                            readonly="1"
+                            nolabel="1"
+                        />
+                        <field name="weight_uom_name" nolabel="1" />
+                    </div>
+                </group>
+                <footer>
+                    <button
+                        string="Split"
+                        name="action_apply"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
