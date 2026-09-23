@@ -30,10 +30,10 @@
                 <group
                     name="invoice_line"
                     string="Invoice Lines"
-                    invisible="invoice_line_ids == []"
+                    invisible="oca_invoice_line_ids == []"
                 >
                     <field
-                        name="invoice_line_ids"
+                        name="oca_invoice_line_ids"
                         nolabel="1"
                         colspan="2"
                         groups="account.group_account_invoice"
