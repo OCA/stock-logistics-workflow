@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="product_portal_demo" model="product.product">
+        <field name="default_code">PORTAL_DEMO</field>
+        <field name="name">Portal Demo Product</field>
+        <field name="is_storable" eval="True" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="lst_price">10.0</field>
+        <field name="standard_price">5.0</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="sale_ok">1</field>
+        <field name="purchase_ok">1</field>
+    </record>
+
+    <record id="outgoing_shipment_stock_picking_portal" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="origin">stock_picking_portal outgoing shipment</field>
+        <field name="user_id" />
+        <field name="partner_id" ref="base.partner_admin" />
+        <field name="scheduled_date" eval="DateTime.today()" />
+        <field name="location_id" ref="stock.stock_location_stock" />
+        <field name="location_dest_id" ref="stock.stock_location_customers" />
+        <field
+            name="move_ids"
+            eval="[(0, 0, {
+            'name': 'Portal Demo Product',
+            'product_id': ref('stock_picking_portal.product_portal_demo'),
+            'product_uom': ref('uom.product_uom_unit'),
+            'product_uom_qty': 15.0,
+            'picking_type_id': ref('stock.picking_type_out'),
+            'location_id': ref('stock.stock_location_stock'),
+            'location_dest_id': ref('stock.stock_location_customers'),
+        })]"
+        />
+    </record>
+
+    <record id="incoming_stock_picking_portal" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="origin">stock_picking_portal incoming shipment</field>
+        <field name="user_id" />
+        <field name="scheduled_date" eval="DateTime.today()" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field name="partner_id" ref="base.partner_admin" />
+        <field name="company_id" ref="base.main_company" />
+        <field
+            name="move_ids"
+            eval="[(0, 0, {
+            'name': 'Portal Demo Product',
+            'product_id': ref('stock_picking_portal.product_portal_demo'),
+            'product_uom': ref('uom.product_uom_unit'),
+            'product_uom_qty': 25.0,
+            'picking_type_id': ref('stock.picking_type_in'),
+            'location_id': ref('stock.stock_location_suppliers'),
+            'location_dest_id': ref('stock.stock_location_stock'),
+            'company_id': ref('base.main_company'),
+        })]"
+        />
+    </record>
+</odoo>
