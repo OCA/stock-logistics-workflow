@@ -3,6 +3,8 @@
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from unittest.mock import patch
+
 from odoo.tests import common
 
 
@@ -174,3 +176,28 @@ class TestStockMove(common.TransactionCase):
             )
         )
         self.assertEqual(moves.mapped("sequence"), [7, 9999])
+
+    def test_create_follows_sequence_order(self):
+        picking = self._create_picking()
+        # a loaded cache must not decide the order of the renumbering
+        picking.move_ids.mapped("sequence")
+        move = self.env["stock.move"].create(
+            self._move_vals(picking, "move 0", sequence=0)
+        )
+        self.assertEqual(move.sequence, 1)
+        self.assertEqual(
+            picking.move_ids.sorted("sequence").mapped("name"),
+            ["move 0", "move 1", "move 2", "move 3"],
+        )
+        self.assertEqual(
+            picking.move_ids.sorted("sequence").mapped("sequence"), [1, 2, 3, 4]
+        )
+
+    def test_reset_sequence_writes_nothing_unchanged(self):
+        picking = self._create_picking()
+        StockMove = self.env.registry["stock.move"]
+        with patch.object(
+            StockMove, "write", autospec=True, side_effect=StockMove.write
+        ) as write:
+            picking._reset_sequence()
+        write.assert_not_called()
