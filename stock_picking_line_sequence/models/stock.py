@@ -21,14 +21,14 @@ class StockMove(models.Model):
         store=True,
     )
 
-    @api.model
-    def create(self, values):
-        move = super(StockMove, self).create(values)
+    @api.model_create_multi
+    def create(self, vals_list):
+        moves = super().create(vals_list)
         # We do not reset the sequence if we are copying a complete picking
         # or creating a backorder
         if not self.env.context.get("keep_line_sequence", False):
-            move.picking_id._reset_sequence()
-        return move
+            moves.picking_id._reset_sequence()
+        return moves
 
 
 class StockMoveLine(models.Model):
@@ -73,7 +73,8 @@ class StockPicking(models.Model):
             for line in rec.move_ids_without_package:
                 # Check if the record ID is an integer (real ID) or a string (virtual ID)
                 if isinstance(line.id, int):
-                    line.sequence = current_sequence
+                    if line.sequence != current_sequence:
+                        line.sequence = current_sequence
                     current_sequence += 1
 
     def copy(self, default=None):

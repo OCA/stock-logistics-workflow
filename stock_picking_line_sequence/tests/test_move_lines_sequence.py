@@ -127,3 +127,50 @@ class TestStockMove(common.TransactionCase):
                 agg_mls[key]["sequence2"],
                 "The Sequence is not copied properly in " "the aggregated move lines",
             )
+
+    def _move_vals(self, picking, name, **kwargs):
+        return dict(
+            {
+                "name": name,
+                "picking_id": picking.id,
+                "product_id": self.product_id_1.id,
+                "product_uom_qty": 1.0,
+                "product_uom": self.product_id_1.uom_id.id,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.customer_location.id,
+            },
+            **kwargs
+        )
+
+    def test_create_multi_several_pickings(self):
+        picking = self._create_picking()
+        picking2 = self._create_picking()
+        moves = self.env["stock.move"].create(
+            [
+                self._move_vals(picking, "move 4"),
+                self._move_vals(picking2, "move 4"),
+                self._move_vals(picking, "move 5"),
+            ]
+        )
+        self.assertEqual(moves.mapped("sequence"), [4, 4, 5])
+        self.assertEqual(moves.mapped("sequence2"), [4, 4, 5])
+        self.assertEqual(picking.move_ids.mapped("sequence"), [1, 2, 3, 4, 5])
+        self.assertEqual(
+            picking.move_ids.mapped("name"),
+            ["move 1", "move 2", "move 3", "move 4", "move 5"],
+        )
+        self.assertEqual(picking2.move_ids.mapped("sequence"), [1, 2, 3, 4])
+
+    def test_create_multi_keep_line_sequence(self):
+        picking = self._create_picking()
+        moves = (
+            self.env["stock.move"]
+            .with_context(keep_line_sequence=True)
+            .create(
+                [
+                    self._move_vals(picking, "move 4", sequence=7),
+                    self._move_vals(picking, "move 5"),
+                ]
+            )
+        )
+        self.assertEqual(moves.mapped("sequence"), [7, 9999])
