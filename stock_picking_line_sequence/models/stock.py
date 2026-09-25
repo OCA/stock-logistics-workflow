@@ -68,14 +68,17 @@ class StockPicking(models.Model):
     )
 
     def _reset_sequence(self):
+        """Number the moves 1, 2, 3... in their (sequence, id) order and only
+        write the numbers that change."""
         for rec in self:
-            current_sequence = 1
-            for line in rec.move_ids_without_package:
-                # Check if the record ID is an integer (real ID) or a string (virtual ID)
-                if isinstance(line.id, int):
-                    if line.sequence != current_sequence:
-                        line.sequence = current_sequence
-                    current_sequence += 1
+            # Skip virtual records, they have no id to sort by yet
+            moves = rec.move_ids_without_package.filtered(
+                lambda m: isinstance(m.id, int)
+            )
+            sorted_moves = moves.sorted(lambda m: (m.sequence, m.id))
+            for sequence, move in enumerate(sorted_moves, start=1):
+                if move.sequence != sequence:
+                    move.sequence = sequence
 
     def copy(self, default=None):
         return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(

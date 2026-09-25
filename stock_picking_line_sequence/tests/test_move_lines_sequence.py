@@ -174,3 +174,19 @@ class TestStockMove(common.TransactionCase):
             )
         )
         self.assertEqual(moves.mapped("sequence"), [7, 9999])
+
+    def test_create_follows_sequence_order(self):
+        picking = self._create_picking()
+        # a loaded cache must not decide the order of the renumbering
+        picking.move_ids.mapped("sequence")
+        move = self.env["stock.move"].create(
+            self._move_vals(picking, "move 0", sequence=0)
+        )
+        self.assertEqual(move.sequence, 1)
+        self.assertEqual(
+            picking.move_ids.sorted("sequence").mapped("name"),
+            ["move 0", "move 1", "move 2", "move 3"],
+        )
+        self.assertEqual(
+            picking.move_ids.sorted("sequence").mapped("sequence"), [1, 2, 3, 4]
+        )
