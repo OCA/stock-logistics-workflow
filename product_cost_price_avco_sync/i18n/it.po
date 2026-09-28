@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-05 17:34+0000\n"
+"PO-Revision-Date: 2026-09-28 07:22+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lotto/seriale"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_product_template
@@ -29,7 +29,7 @@ msgstr "Prodotto"
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_product_cost_price_avco_sync_mixin
 msgid "Product Cost Price AVCO Sync Mixin"
-msgstr ""
+msgstr "Mixin sincro AVCO prezzo costo prodotto"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_move_line
@@ -39,17 +39,17 @@ msgstr "Movimenti prodotto (riga movimento di magazzino)"
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante prodotto"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.actions.server,name:product_cost_price_avco_sync.action_force_avco_sync
 msgid "Recompute average cost from here"
-msgstr ""
+msgstr "Ricalcola costo medio da qui"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimento di magazzino"
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_valuation_layer
@@ -63,6 +63,8 @@ msgid ""
 "The AVCO sync can't be completed, as there's some endless dependency in the "
 "data needed to process it."
 msgstr ""
+"La sincronizzazione AVCO non può essere completata a causa di una dipendenza "
+"circolare infinita nei dati necessari per l'elaborazione."
 
 #. module: product_cost_price_avco_sync
 #: model:ir.model,name:product_cost_price_avco_sync.model_stock_picking
