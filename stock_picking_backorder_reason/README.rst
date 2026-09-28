@@ -86,6 +86,7 @@ Authors
 ~~~~~~~
 
 * ACSONE SA/NV
+* BCIM
 
 Contributors
 ~~~~~~~~~~~~
@@ -106,6 +107,20 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-jbaudoux| image:: https://github.com/jbaudoux.png?size=40px
+    :target: https://github.com/jbaudoux
+    :alt: jbaudoux
+.. |maintainer-lmignon| image:: https://github.com/lmignon.png?size=40px
+    :target: https://github.com/lmignon
+    :alt: lmignon
+.. |maintainer-rousseldenis| image:: https://github.com/rousseldenis.png?size=40px
+    :target: https://github.com/rousseldenis
+    :alt: rousseldenis
+
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-jbaudoux| |maintainer-lmignon| |maintainer-rousseldenis| 
 
 This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_backorder_reason>`_ project on GitHub.
 

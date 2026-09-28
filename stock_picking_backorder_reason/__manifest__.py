@@ -8,7 +8,7 @@
         a reason. That reason will contain the strategy to apply.""",
     "version": "16.0.1.0.0",
     "license": "LGPL-3",
-    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV,BCIM,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": [
         "stock",
@@ -24,4 +24,5 @@
     "demo": [
         "demo/stock_backorder_reason.xml",
     ],
+    "maintainers": ["jbaudoux", "lmignon", "rousseldenis"],
 }
