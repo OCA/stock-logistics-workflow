@@ -95,7 +95,9 @@ class StockMoveLine(models.Model):
         already_processed = self.browse()
         to_reassign_moves = self.env["stock.move"]
         moves_by_previous_lot = defaultdict(self.env["stock.move"].browse)
-        lot = self.env["stock.lot"].browse(vals["lot_id"])
+        lot = self.env["stock.lot"].browse(
+            self._fields["lot_id"].convert_to_write(vals["lot_id"], self)
+        )
         for move_line in self:
             if move_line.move_id._should_bypass_reservation(move_line.location_id):
                 continue
