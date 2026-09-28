@@ -7,13 +7,18 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
-                <field name="invoice_ids" invisible="1" />
+                <field
+                    name="invoice_ids"
+                    invisible="1"
+                    groups="account.group_account_invoice"
+                />
                 <button
                     type="object"
                     name="action_view_invoice"
                     class="oe_stat_button"
                     icon="fa-pencil-square-o"
                     invisible="invoice_count == 0"
+                    groups="account.group_account_invoice"
                 >
                     <field name="invoice_count" widget="statinfo" string="Invoice" />
                 </button>
@@ -31,12 +36,12 @@
                     name="invoice_line"
                     string="Invoice Lines"
                     invisible="invoice_line_ids == []"
+                    groups="account.group_account_invoice"
                 >
                     <field
                         name="invoice_line_ids"
                         nolabel="1"
                         colspan="2"
-                        groups="account.group_account_invoice"
                         widget="one2many_list"
                     />
                 </group>
