@@ -196,3 +196,34 @@ class TestSaleLineReturnedQtyMrp(BaseCommon):
         self._return_picking(picking, 5.0, to_refund=True)
         so_line.move_ids.write({"state": "done"})
         self.assertEqual(so_line.qty_returned, 5.0)
+
+    def test_03_returned_qty_dropship_kit_bom_find(self):
+        """Exercise the ``not boms and dropship`` fallback of the compute.
+
+        When none of the moves of the line carries a ``bom_line_id`` and the
+        line is dropshipped, the BoM of the kit can only be reached through
+        ``_bom_find``. The move is built by hand (vendor -> customer) so the
+        branch is hit deterministically, without depending on procurement.
+        """
+        so_line = self.dropship_order.order_line[0]
+        self.assertEqual(so_line.qty_delivered_method, "stock_move")
+        move = self.env["stock.move"].create(
+            {
+                "name": self.dropship_product_main.display_name,
+                "product_id": self.dropship_product_main.id,
+                "product_uom": self.dropship_product_main.uom_id.id,
+                "product_uom_qty": so_line.product_uom_qty,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": self.env.ref("stock.stock_location_customers").id,
+                "sale_line_id": so_line.id,
+            }
+        )
+        # The BoM is not reachable from the moves, only from ``_bom_find``.
+        self.assertFalse(move.bom_line_id)
+        self.assertNotEqual(move.state, "cancel")
+        self.assertTrue(move._is_dropshipped())
+        self.assertFalse(so_line.move_ids.mapped("bom_line_id.bom_id"))
+        so_line._compute_qty_returned()
+        # Nothing came back to the vendor: the goods drop shipped straight to
+        # the customer, so nothing counts as returned.
+        self.assertEqual(so_line.qty_returned, 0.0)
