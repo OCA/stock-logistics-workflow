@@ -35,7 +35,7 @@ addon | version | maintainers | summary
 [product_customerinfo_picking](product_customerinfo_picking/) | 18.0.1.0.1 |  | This module makes the product customer code visible in the stock moves of a picking.
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 18.0.2.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 18.0.1.0.0 |  | Track returned quantity of sale order lines.
-[sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 18.0.1.0.0 |  | Track returned quantity of sale order lines for BoM products.
+[sale_line_returned_qty_mrp](sale_line_returned_qty_mrp/) | 18.0.1.0.1 |  | Track returned quantity of sale order lines for BoM products.
 [sale_order_global_stock_route](sale_order_global_stock_route/) | 18.0.1.0.0 |  | Add the possibility to choose one warehouse path for an order
 [sale_stock_picking_invoice_link](sale_stock_picking_invoice_link/) | 18.0.1.0.0 |  | Adds link between pickings and invoices
 [sale_stock_restocking_fee_invoicing](sale_stock_restocking_fee_invoicing/) | 18.0.1.0.0 |  | On demand charge restocking fee for accepting returned goods .
