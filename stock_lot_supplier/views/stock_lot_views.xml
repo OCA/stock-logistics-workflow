@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Form view: add supplier_id to Information group -->
+    <record id="stock_lot_supplier_form_view" model="ir.ui.view">
+        <field name="name">stock.lot.supplier.form</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="supplier_id" />
+            </field>
+        </field>
+    </record>
+
+    <!-- List view: add supplier_id column -->
+    <record id="stock_lot_supplier_list_view" model="ir.ui.view">
+        <field name="name">stock.lot.supplier.list</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="supplier_id" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Search view: add filter and group by supplier -->
+    <record id="stock_lot_supplier_search_view" model="ir.ui.view">
+        <field name="name">stock.lot.supplier.search</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="supplier_id" string="Supplier" />
+            </field>
+            <filter name="group_by_lot_properties" position="after">
+                <filter
+                    name="group_by_supplier"
+                    string="Supplier"
+                    domain="[]"
+                    context="{'group_by': 'supplier_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
