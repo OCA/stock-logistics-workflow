@@ -24,11 +24,11 @@ class SaleOrderLine(models.Model):
                 ).mapped("bom_line_id.bom_id")
                 dropship = any([m._is_dropshipped() for m in order_line.move_ids])
                 if not boms and dropship:
-                    boms = boms._bom_find(
-                        product=order_line.product_id,
+                    boms = self.env["mrp.bom"]._bom_find(
+                        order_line.product_id,
                         company_id=order_line.company_id.id,
                         bom_type="phantom",
-                    )
+                    )[order_line.product_id]
                 relevant_bom = boms.filtered(
                     lambda b, order_line=order_line: b.type == "phantom"
                     and (
