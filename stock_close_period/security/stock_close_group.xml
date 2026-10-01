@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+
+    <record id="module_category_stock_close_period" model="ir.module.category">
+        <field name="name">Stock Close Period</field>
+    </record>
+
+    <record id="group_stock_close_period_user_readonly" model="res.groups">
+        <field name="name">User (Read Only)</field>
+        <field
+            name="category_id"
+            ref="stock_close_period.module_category_stock_close_period"
+        />
+    </record>
+
+    <record id="group_stock_close_period_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field
+            name="category_id"
+            ref="stock_close_period.module_category_stock_close_period"
+        />
+        <field
+            name="implied_ids"
+            eval="[(4, ref('stock_close_period.group_stock_close_period_user_readonly'))]"
+        />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+
+    <record id="stock_close_period_comp_rule" model="ir.rule">
+        <field name="name">Stock Close Period Company Rule</field>
+        <field name="model_id" ref="stock_close_period.model_stock_close_period" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="stock_close_period_line_comp_rule" model="ir.rule">
+        <field name="name">Stock Close Period Line Company Rule</field>
+        <field name="model_id" ref="stock_close_period.model_stock_close_period_line" />
+        <field name="global" eval="True" />
+        <field
+            name="domain_force"
+        >['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>
