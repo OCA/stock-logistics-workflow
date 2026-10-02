@@ -117,6 +117,8 @@ class StockQuant(models.Model):
         return action
 
     def action_unlock_quant(self):
+        if not self:
+            return
         done_moves = self.env["stock.move"].search(
             self._get_lock_move_domain(active_only=False) + [("state", "=", "done")],
             limit=1,
