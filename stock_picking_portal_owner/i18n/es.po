@@ -1,0 +1,117 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_portal_owner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-22 09:02+0000\n"
+"PO-Revision-Date: 2026-09-22 09:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
+msgid "<span class=\"mr-sm-2\">Move State:</span>"
+msgstr "<span class=\"mr-sm-2\">Estado:</span>"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
+msgid "<span class=\"sr-only\">-</span>"
+msgstr "<span class=\"sr-only\">-</span>"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
+msgid "<span class=\"sr-only\">Date: </span>"
+msgstr "<span class=\"sr-only\">Fecha: </span>"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
+msgid "All"
+msgstr "Todos"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Available"
+msgstr "Disponible"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Done"
+msgstr "Hecho"
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
+msgid "Follow your consigned pickings"
+msgstr ""
+"Sigue tus Albaranes de entrega en consignación, visualiza su estado y "
+"gestiona las operaciones relacionadas y asigandas a tu usuario."
+
+#. module: stock_picking_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_menu_owner_stock_operations
+#: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
+msgid "My Consigned Pickings"
+msgstr "Mis Albaranes de entrega en consignación"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Partially Available"
+msgstr "Parcialmente Disponible"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Stock Operation viewed by customer %s"
+msgstr "Operación de stock vista por el cliente %s"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Waiting Another Move"
+msgstr "Esperando Otro Movimiento"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Waiting Availability"
+msgstr "Esperando Disponibilidad"
+
+#. module: stock_picking_portal_owner
+#. odoo-python
+#: code:addons/stock_picking_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "You don't have the access rights to Stock Operations."
+msgstr "No tienes los derechos de acceso a las Operaciones de Stock."
