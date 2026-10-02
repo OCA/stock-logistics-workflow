@@ -4,7 +4,7 @@
 {
     "name": "Location Validate Inventory",
     "summary": """Validate the inventory of a location""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "BCIM, ACSONE SA/NV, Odoo Community Association (OCA)",
     "maintainers": ["jbaudoux"],
