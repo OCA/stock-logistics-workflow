@@ -69,3 +69,4 @@ class TestStockLocationInventory(BaseCommon):
         # Here odoo doesn't update the last_count_date when there is no difference
         self.assertEqual(quant.last_count_date, False)
         self.assertEqual(quant.inventory_date, self.next_inventory_date)
+        self.assertFalse(quant.inventory_quantity_set)
