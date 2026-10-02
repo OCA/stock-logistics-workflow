@@ -22,11 +22,16 @@ class StockLocation(models.Model):
             raise UserError(_("You are not allowed to validate the location inventory"))
         if not self.env.user.has_group("stock.group_stock_manager"):
             self = self.with_user(SUPERUSER_ID)
-        if self.quant_ids:
+        if quants := self.quant_ids:
             # Reset any counted quantities
-            self.quant_ids.action_set_inventory_quantity_to_zero()
+            quants.action_set_inventory_quantity_to_zero()
             # Apply inventory to update the quant last and next inventory date
-            # as well as location last inventory date
-            self.quant_ids._apply_inventory()
+            # as well as location last inventory date.
+            # As the method resets the inventory_quantity to 0, prevent the
+            # recomputation of inventory_quantity_set to True.
+            with self.env.protecting(
+                [quants._fields["inventory_quantity_set"]], quants
+            ):
+                quants._apply_inventory()
         else:
             self.last_inventory_date = fields.Date.today()
