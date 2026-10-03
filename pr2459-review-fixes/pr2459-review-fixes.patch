@@ -1,0 +1,81 @@
+--- a/stock_move_line_qty_picked/models/stock_move_line.py
++++ b/stock_move_line_qty_picked/models/stock_move_line.py
+@@ -53,9 +53,15 @@
+         qty_in_move_uom = self.product_uom_id._compute_quantity(
+             qty, move.product_uom, round=False
+         )
++        line_qty_in_move_uom = self.product_uom_id._compute_quantity(
++            self.quantity, move.product_uom, round=False
++        )
+         if (
+             self.product_uom_id.compare(qty, self.quantity) > 0
+-            and move.product_uom.compare(total_reserved + qty_in_move_uom, total_demand)
++            and move.product_uom.compare(
++                total_reserved - line_qty_in_move_uom + qty_in_move_uom,
++                total_demand,
++            )
+             <= 0
+         ):
+             values["quantity"] = qty
+--- a/stock_move_line_qty_picked/tests/test_stock_move_line_qty_picked.py
++++ b/stock_move_line_qty_picked/tests/test_stock_move_line_qty_picked.py
+@@ -1,5 +1,6 @@
+ # Copyright 2025 Camptocamp SA
+ # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
++from odoo import Command
+ from odoo.tests import Form
+ from odoo.tests.common import TransactionCase
+
+@@ -14,8 +15,8 @@
+         cls.env.user.write(
+             {
+                 "group_ids": [
+-                    (4, group_stock_multi_locations.id),
+-                    (4, group_production_lot.id),
++                    Command.link(group_stock_multi_locations.id),
++                    Command.link(group_production_lot.id),
+                 ]
+             }
+         )
+@@ -256,7 +257,7 @@
+                 "relative_uom_id": self.product.uom_id.id,
+             }
+         )
+-        self.product.uom_ids = [(4, box_uom.id)]
++        self.product.uom_ids = [Command.link(box_uom.id)]
+         move = self._create_move(
+             self.product, 20.0, self.stock_location, self.stock_location_2
+         )
+@@ -269,7 +270,7 @@
+         self.assertEqual(move_line.qty_picked, 1.5)
+         self.assertTrue(move_line.picked)
+         self.assertEqual(move.qty_picked, 15.0)
+-        self.assertEqual(move_line.quantity, 1.0)
++        self.assertEqual(move_line.quantity, 1.5)
+
+         move.picking_id.with_context(skip_backorder=True).button_validate()
+         self.assertEqual(move.quantity, 15.0)
+@@ -303,16 +304,16 @@
+
+     def test_picked_quantity_can_increase_reserved_quantity(self):
+         move = self._create_move(
+-            self.product, 5.0, self.stock_location, self.stock_location_2
++            self.product, 2.0, self.stock_location, self.stock_location_2
+         )
+         move_line = move.move_line_ids
+
+-        move.quantity = 2
+-        self.assertEqual(move_line.quantity, 2)
++        move.quantity = 1
++        self.assertEqual(move_line.quantity, 1)
+
+-        move_line.qty_picked = 3
++        move_line.qty_picked = 1.5
+
+-        self.assertEqual(move_line.qty_picked, 3)
++        self.assertEqual(move_line.qty_picked, 1.5)
+         self.assertTrue(move_line.picked)
+-        self.assertEqual(move_line.quantity, 3)
+-        self.assertEqual(move.quantity, 3)
++        self.assertEqual(move_line.quantity, 1.5)
++        self.assertEqual(move.quantity, 1.5)
