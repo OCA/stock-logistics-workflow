@@ -47,7 +47,8 @@ class TestSaleLineReturnedQty(common.TransactionCase):
     def _validate_picking(self, picking):
         """Helper method to confirm the pickings"""
         for line in picking.move_ids:
-            line.quantity_done = line.product_uom_qty
+            line.quantity = line.product_uom_qty
+            line.picked = True
         picking._action_done()
 
     def test_returned_qty(self):
@@ -57,8 +58,8 @@ class TestSaleLineReturnedQty(common.TransactionCase):
         # Partial delivery one
         picking = self.order.picking_ids
         picking.action_assign()
-        picking.move_ids.quantity_done = 10.0
-        picking._action_done()
+        self._validate_picking(picking)
+        self.assertEqual(picking.state, "done")
         self.assertEqual(so_line.qty_returned, 0.0)
         # Make a return for 5 units
         self._return_picking(picking, 5.0, to_refund=True)
