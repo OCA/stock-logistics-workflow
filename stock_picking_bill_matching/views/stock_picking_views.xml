@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_inherit_stock_bill_matching" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.stock.bill.matching</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    class="oe_stat_button"
+                    name="action_bill_matching"
+                    type="object"
+                    groups="account.group_account_invoice"
+                    icon="fa-bullseye"
+                    attrs="{'invisible': ['|', ('picking_type_code', '!=', 'incoming'), ('is_picking_matched', '=', True)]}"
+                >
+                     <div class="o_field_statinfo">
+                         <span class="o_stat_text">Bill Matching</span>
+                     </div>
+                </button>
+                <field name="is_picking_matched" invisible="1" />
+            </div>
+        </field>
+    </record>
+</odoo>
