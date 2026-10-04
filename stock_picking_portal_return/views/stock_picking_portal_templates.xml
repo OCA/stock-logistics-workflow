@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 arielbarreiros96 (https://github.com/arielbarreiros96) License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="portal_my_stock_operations"
+        inherit_id="stock_picking_portal.portal_my_stock_operations"
+    >
+        <xpath expr="//thead/tr" position="inside">
+            <th class="text-center">Return</th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='stock_operation_ids']/tr" position="inside">
+            <td class="text-center">
+                <a
+                    t-if="operation._portal_is_returnable()"
+                    t-att-href="operation.get_portal_url(suffix='/return')"
+                    target="_blank"
+                    class="btn btn-sm btn-light border"
+                    title="Get the return slip of this delivery"
+                >
+                    <i class="fa fa-fw fa-reply" /> Return
+                </a>
+            </td>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_operation_portal_template"
+        inherit_id="stock_picking_portal.stock_operation_portal_template"
+    >
+        <xpath expr="//div[hasclass('o_download_pdf')]" position="before">
+            <a
+                t-if="object._portal_is_returnable()"
+                t-att-href="object.get_portal_url(suffix='/return')"
+                target="_blank"
+                role="button"
+                class="btn btn-secondary mb8"
+                title="Get the return slip of this delivery"
+            >
+                <i class="fa fa-reply" /> Return
+            </a>
+        </xpath>
+    </template>
+
+    <template
+        id="stock_operation_document"
+        inherit_id="stock_picking_portal.stock_operation_document"
+    >
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div t-if="o.return_id" class="col-auto" name="div_return_of">
+                <strong>Return of:</strong>
+                <p>
+                    <a
+                        t-if="o.return_id.picking_type_id.portal_visible"
+                        t-att-href="o.return_id.get_portal_url()"
+                        t-out="o.return_id.name"
+                    />
+                    <span t-else="" t-out="o.return_id.name" />
+                </p>
+            </div>
+        </xpath>
+        <xpath expr="//div[@name='signature']" position="before">
+            <div t-if="o.return_ids" class="mt-4" name="div_returns">
+                <h4 class="mb-1">Returns</h4>
+                <hr class="mt-1 mb-2" />
+                <div
+                    t-foreach="o.return_ids"
+                    t-as="operation_return"
+                    class="d-flex justify-content-between align-items-center mb-2"
+                >
+                    <div>
+                        <a
+                            t-if="operation_return.picking_type_id.portal_visible"
+                            t-att-href="operation_return.get_portal_url()"
+                            class="d-block"
+                            t-out="operation_return.name"
+                        />
+                        <span t-else="" class="d-block" t-out="operation_return.name" />
+                        <span
+                            t-if="operation_return.state == 'done'"
+                            class="small text-muted"
+                            t-field="operation_return.date_done"
+                            t-options="{'date_only': True}"
+                        />
+                        <span
+                            t-else=""
+                            class="small text-muted"
+                            t-field="operation_return.scheduled_date"
+                            t-options="{'date_only': True}"
+                        />
+                    </div>
+                    <span
+                        t-if="operation_return.state == 'done'"
+                        class="small badge rounded-pill text-bg-success"
+                    >
+                        <i class="fa fa-fw fa-truck" /> Received
+                    </span>
+                    <span
+                        t-elif="operation_return.state == 'cancel'"
+                        class="small badge rounded-pill text-bg-danger"
+                    >
+                        <i class="fa fa-fw fa-times" /> Cancelled
+                    </span>
+                    <span t-else="" class="small badge rounded-pill text-bg-info">
+                        <i class="fa fa-fw fa-clock-o" /> Awaiting arrival
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
