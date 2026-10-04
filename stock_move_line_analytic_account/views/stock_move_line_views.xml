@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_line_tree_inherit_analytic_account" model="ir.ui.view">
+        <field name="name">stock.move.line.tree.inherit.analytic.account</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="analytic_account_id" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_line_search_inherit_analytic_account" model="ir.ui.view">
+        <field name="name">stock.move.line.search.inherit.analytic.account</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.stock_move_line_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="analytic_account_id" />
+                <filter
+                    string="With Analytic Account"
+                    name="with_analytic_account"
+                    domain="[('analytic_account_id', '!=', False)]"
+                />
+            </xpath>
+
+            <xpath expr="//group[@name='groupby']" position="inside">
+                <filter
+                    string="Analytic Account"
+                    name="groupby_analytic_account"
+                    domain="[]"
+                    context="{'group_by': 'analytic_account_id'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
