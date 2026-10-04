@@ -143,6 +143,80 @@ class TestStockMove(common.TransactionCase):
             move_form.product_id = self.product_large_desk
             self.assertEqual(move_form.sequence, self.picking.max_line_sequence)
 
+    def test_move_lines_sequence_on_sale_order(self):
+        customer = self.env["res.partner"].create({"name": "Test Customer"})
+        order = self.env["sale.order"].create(
+            {
+                "partner_id": customer.id,
+                "warehouse_id": self.warehouse0.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_large_desk.id,
+                            "product_uom_qty": 5.0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_conference_chair.id,
+                            "product_uom_qty": 5.0,
+                        },
+                    ),
+                ],
+            }
+        )
+
+        order.action_confirm()
+
+        self.assertEqual(len(order.picking_ids), 1)
+        moves = order.picking_ids.move_ids
+        self.assertEqual(len(moves), 2)
+        self.assertEqual(moves.mapped("sequence"), [1, 2])
+
+    def test_move_lines_sequence_on_picking_confirmation(self):
+        picking = self._create_picking()
+        picking.move_ids._action_confirm()
+        for sequence, move in zip((5, 10, 15), picking.move_ids, strict=False):
+            move.sequence = sequence
+
+        picking.action_confirm()
+
+        self.assertEqual(picking.move_ids.mapped("sequence"), [1, 2, 3])
+
+    def test_picking_confirmation_keeps_sequence_from_context(self):
+        picking = self._create_picking()
+        picking.move_ids._action_confirm()
+        for sequence, move in zip((5, 10, 15), picking.move_ids, strict=False):
+            move.sequence = sequence
+
+        picking.with_context(keep_line_sequence=True).action_confirm()
+
+        self.assertEqual(picking.move_ids.mapped("sequence"), [5, 10, 15])
+
+    def test_move_confirmation_does_not_reset_unrelated_picking(self):
+        picking = self._create_picking()
+        for sequence, move in zip((42, 43, 44), picking.move_ids, strict=False):
+            move.sequence = sequence
+        move = self.env["stock.move"].create(
+            {
+                "product_id": self.product_large_desk.id,
+                "product_uom_qty": 5.0,
+                "product_uom": self.product_large_desk.uom_id.id,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.customer_location.id,
+                "picking_type_id": self.picking_type_in.id,
+            }
+        )
+
+        move._action_confirm()
+
+        self.assertEqual(picking.move_ids.mapped("sequence"), [42, 43, 44])
+        self.assertEqual(move.sequence, 1)
+
     def test_backorder(self):
         picking = self._create_picking()
         picking._compute_max_line_sequence()
