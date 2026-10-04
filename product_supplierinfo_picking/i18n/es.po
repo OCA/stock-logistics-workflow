@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_supplierinfo_picking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-11-24 19:35+0000\n"
+"Last-Translator: Gil Arasa Verge <gilarasaverge@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: product_supplierinfo_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_picking.field_stock_move__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: product_supplierinfo_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_picking.field_stock_move__id
+msgid "ID"
+msgstr ""
+
+#. module: product_supplierinfo_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_picking.field_stock_move____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_supplierinfo_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_picking.field_stock_move__product_supplier_code
+msgid "Product Supplier Code"
+msgstr "Código de proveedor de producto"
+
+#. module: product_supplierinfo_picking
+#: model:ir.model.fields,field_description:product_supplierinfo_picking.field_stock_move__product_supplier_name
+msgid "Product Supplier Name"
+msgstr "Nombre del proveedor del producto"
+
+#. module: product_supplierinfo_picking
+#: model_terms:ir.ui.view,arch_db:product_supplierinfo_picking.view_move_search
+msgid "Product Vendor Reference"
+msgstr "Referencia del proveedor del producto"
+
+#. module: product_supplierinfo_picking
+#: model:ir.model,name:product_supplierinfo_picking.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
