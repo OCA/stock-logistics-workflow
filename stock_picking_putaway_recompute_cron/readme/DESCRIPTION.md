@@ -1,0 +1,1 @@
+This module extends the functionality of stock_picking_putaway_recompute to automate the process of recomputing putaways.
