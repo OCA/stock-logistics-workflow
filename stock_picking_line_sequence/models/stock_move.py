@@ -33,6 +33,17 @@ class StockMove(models.Model):
             moves.picking_id._reset_sequence()
         return moves
 
+    def _action_confirm(self, merge=True, merge_into=False, create_proc=True):
+        moves_to_assign = self.filtered(
+            lambda move: move.state == "draft" and move._should_be_assigned()
+        )
+        moves = super()._action_confirm(
+            merge=merge, merge_into=merge_into, create_proc=create_proc
+        )
+        if moves_to_assign and not self.env.context.get("keep_line_sequence"):
+            moves_to_assign.exists().picking_id._reset_sequence()
+        return moves
+
     def _create_backorder(self):
         return super(
             StockMove, self.with_context(keep_line_sequence=True)
