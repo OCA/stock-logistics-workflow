@@ -9,9 +9,8 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         super().setUpClass()
         cls.warehouse = cls.env.ref("stock.warehouse0")
         route_manufacture = cls.warehouse.manufacture_pull_id.route_id
-        route_mto = cls.warehouse.mto_pull_id.route_id
-        route_buy = cls.warehouse.buy_pull_id.route_id
-        dropshipping_route = cls.env["stock.location.route"].create(
+        route_mto = cls.env.ref("stock.route_warehouse0_mto")
+        dropshipping_route = cls.env["stock.route"].create(
             {
                 "name": "Dropship",
                 "sale_selectable": True,
@@ -26,13 +25,13 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         vendor1 = cls.env["res.partner"].create({"name": "vendor1"})
         seller1 = cls.env["product.supplierinfo"].create(
             {
-                "name": vendor1.id,
+                "partner_id": vendor1.id,
                 "price": 8,
             }
         )
         seller2 = cls.env["product.supplierinfo"].create(
             {
-                "name": vendor1.id,
+                "partner_id": vendor1.id,
                 "price": 8,
             }
         )
@@ -56,7 +55,7 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
                 "name": "test component 3",
                 "type": "product",
                 "route_ids": [
-                    (6, 0, [dropshipping_route.id, route_mto.id, route_buy.id])
+                    (6, 0, [dropshipping_route.id, route_mto.id])
                 ],
                 "seller_ids": [(6, 0, [seller1.id])],
             }
@@ -66,7 +65,7 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
                 "name": "test component 4",
                 "type": "product",
                 "route_ids": [
-                    (6, 0, [dropshipping_route.id, route_mto.id, route_buy.id])
+                    (6, 0, [dropshipping_route.id, route_mto.id])
                 ],
                 "seller_ids": [(6, 0, [seller2.id])],
             }
@@ -157,8 +156,9 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
 
     def _validate_picking(self, picking):
         """Helper method to confirm the pickings"""
-        for line in picking.move_lines:
-            line.quantity_done = line.product_uom_qty
+        for line in picking.move_ids:
+            line.quantity = line.product_uom_qty
+            line.picked = True
         picking._action_done()
 
     def test_01_returned_qty(self):
@@ -167,7 +167,7 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
         self.assertEqual(so_line.qty_returned, 0.0)
         # Deliver the order
         picking = self.order.picking_ids
-        self.assertEqual(len(picking.move_lines), 2)
+        self.assertEqual(len(picking.move_line_ids), 2)
         picking.action_assign()
         self._validate_picking(picking)
         self.assertEqual(so_line.qty_returned, 0.0)
@@ -177,17 +177,13 @@ class TestSaleLineReturnedQtyMrp(common.TransactionCase):
 
     def test_02_returned_qty(self):
         self.dropship_order.action_confirm()
-        po = self.env["purchase.order"].search(
-            [("group_id", "=", self.dropship_order.procurement_group_id.id)]
-        )
-        po.button_confirm()
         so_line = self.dropship_order.order_line[0]
         self.assertEqual(so_line.qty_returned, 0.0)
         # Deliver the order
         picking = self.dropship_order.picking_ids
-        self.assertEqual(len(picking.move_lines), 2)
         picking.action_assign()
         self._validate_picking(picking)
+        self.assertEqual(picking.state, "done")
         self.assertEqual(so_line.qty_returned, 0.0)
         self._return_picking(picking, 5.0, to_refund=True)
         self.assertEqual(so_line.qty_returned, 5.0)
