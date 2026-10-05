@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo noupdate="1">
+
+    <record model="stock.backorder.reason" id="stock_backorder_reason_missing">
+        <field name="name">Missing products</field>
+        <field name="backorder_action_to_do">use_partner_option</field>
+    </record>
+    <record model="stock.backorder.reason" id="stock_backorder_reason_urgent">
+        <field name="name">Urgent</field>
+        <field name="backorder_action_to_do">create</field>
+    </record>
+    <record model="stock.backorder.reason" id="stock_backorder_reason_never">
+        <field name="name">Won't be delivered</field>
+        <field name="backorder_action_to_do">cancel</field>
+    </record>
+
+</odoo>
