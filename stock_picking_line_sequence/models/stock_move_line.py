@@ -15,5 +15,6 @@ class StockMoveLine(models.Model):
             sequence2 = move_line.move_id.sequence2
             if line_key in aggregated_move_lines:
                 aggregated_move_lines[line_key]["sequence2"] = sequence2
-
-        return aggregated_move_lines
+        return dict(
+            sorted(aggregated_move_lines.items(), key=lambda item: item[1]["sequence2"])
+        )
