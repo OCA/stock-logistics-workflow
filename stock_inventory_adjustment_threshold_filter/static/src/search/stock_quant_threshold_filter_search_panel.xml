@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="stock_inventory_adjustment_threshold_filter.StockQuantThresholdFilterSearchPanel.Regular"
+        t-inherit="web.SearchPanel.Regular"
+        owl="1"
+    >
+        <xpath expr="//div/section[1]" position="before">
+            <section class="o_search_panel_section o_search_panel_threshold_filter">
+                <header
+                    class="o_search_panel_section_header pt-4 pb-2 text-uppercase o_cursor_default"
+                >
+                    <i
+                        class="fa fa-filter o_search_panel_section_icon text-warning me-2"
+                    />
+                    <b>Threshold Filter</b>
+                </header>
+                <div class="o_search_panel_field px-2 o_threshold_filter_field">
+                    <div class="mb-3">
+                        <label class="text-muted mb-1 d-flex justify-content-between">
+                            <span>
+                                <t t-if="filters.costMode === 'max'">Maximum</t>
+                                <t t-else="">Minimum</t>
+                                Adjustment Cost
+                            </span>
+                            <span>
+                                <t t-esc="filters.costThreshold" />
+                            </span>
+                        </label>
+                        <div
+                            class="btn-group btn-group-sm mb-1"
+                            role="group"
+                            aria-label="Adjustment cost threshold mode"
+                        >
+                            <button
+                                type="button"
+                                t-att-class="{'btn': true, 'btn-primary': filters.costMode !== 'max', 'btn-outline-primary': filters.costMode === 'max'}"
+                                t-on-click="() => this.onChangeMode('cost', 'min')"
+                            >At Least</button>
+                            <button
+                                type="button"
+                                t-att-class="{'btn': true, 'btn-primary': filters.costMode === 'max', 'btn-outline-primary': filters.costMode !== 'max'}"
+                                t-on-click="() => this.onChangeMode('cost', 'max')"
+                            >At Most</button>
+                        </div>
+                        <div class="o_threshold_filter_dual_slider">
+                            <span
+                                class="o_threshold_filter_slider_value"
+                                t-att-style="this._sliderStyle(filters.costThreshold, 0, filters.costBoundMax)"
+                            >
+                                <t t-esc="filters.costThreshold" />
+                            </span>
+                            <input
+                                type="range"
+                                min="0"
+                                t-att-max="filters.costBoundMax"
+                                step="any"
+                                t-att-value="filters.costThreshold"
+                                t-on-input="ev => this.onInputThreshold('costThreshold', ev)"
+                                t-on-change="ev => this.onChangeThreshold('costThreshold', ev)"
+                            />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted mb-1 d-flex justify-content-between">
+                            <span>
+                                <t t-if="filters.qtyDiffMode === 'max'">Maximum</t>
+                                <t t-else="">Minimum</t>
+                                Quantity Difference
+                            </span>
+                            <span>
+                                <t t-esc="filters.qtyDiffThreshold" />
+                            </span>
+                        </label>
+                        <div
+                            class="btn-group btn-group-sm mb-1"
+                            role="group"
+                            aria-label="Quantity difference threshold mode"
+                        >
+                            <button
+                                type="button"
+                                t-att-class="{'btn': true, 'btn-primary': filters.qtyDiffMode !== 'max', 'btn-outline-primary': filters.qtyDiffMode === 'max'}"
+                                t-on-click="() => this.onChangeMode('qtyDiff', 'min')"
+                            >At Least</button>
+                            <button
+                                type="button"
+                                t-att-class="{'btn': true, 'btn-primary': filters.qtyDiffMode === 'max', 'btn-outline-primary': filters.qtyDiffMode !== 'max'}"
+                                t-on-click="() => this.onChangeMode('qtyDiff', 'max')"
+                            >At Most</button>
+                        </div>
+                        <div class="o_threshold_filter_dual_slider">
+                            <span
+                                class="o_threshold_filter_slider_value"
+                                t-att-style="this._sliderStyle(filters.qtyDiffThreshold, 0, filters.qtyDiffBoundMax)"
+                            >
+                                <t t-esc="filters.qtyDiffThreshold" />
+                            </span>
+                            <input
+                                type="range"
+                                min="0"
+                                t-att-max="filters.qtyDiffBoundMax"
+                                step="any"
+                                t-att-value="filters.qtyDiffThreshold"
+                                t-on-input="ev => this.onInputThreshold('qtyDiffThreshold', ev)"
+                                t-on-change="ev => this.onChangeThreshold('qtyDiffThreshold', ev)"
+                            />
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="threshold_filter_positive_adjustment"
+                                t-att-checked="filters.positiveAdjustment"
+                                t-on-change="ev => this.onChangeFlag('positiveAdjustment', ev)"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="threshold_filter_positive_adjustment"
+                            >Positive Adjustment</label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="threshold_filter_negative_adjustment"
+                                t-att-checked="filters.negativeAdjustment"
+                                t-on-change="ev => this.onChangeFlag('negativeAdjustment', ev)"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="threshold_filter_negative_adjustment"
+                            >Negative Adjustment</label>
+                        </div>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="threshold_filter_zero_adjustment"
+                                t-att-checked="filters.zeroAdjustment"
+                                t-on-change="ev => this.onChangeFlag('zeroAdjustment', ev)"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="threshold_filter_zero_adjustment"
+                            >Zero Adjustment (no difference)</label>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-1 mb-2">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-link"
+                            t-on-click="resetThresholdFilterFilters"
+                        >Reset</button>
+                    </div>
+                    <div class="text-muted small">
+                        <span t-esc="filters.totalCount" /> quant(s) - Total:
+                        <span t-esc="filters.totalAmount" />
+                    </div>
+                </div>
+            </section>
+        </xpath>
+    </t>
+
+    <t
+        t-name="stock_inventory_adjustment_threshold_filter.StockQuantThresholdFilterSearchPanel"
+        t-inherit="web.SearchPanel"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//t[@t-call='web.SearchPanel.Regular']" position="replace">
+            <t
+                t-call="stock_inventory_adjustment_threshold_filter.StockQuantThresholdFilterSearchPanel.Regular"
+            />
+        </xpath>
+    </t>
+</templates>
