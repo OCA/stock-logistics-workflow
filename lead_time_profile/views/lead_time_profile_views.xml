@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_lead_time_profile_search" model="ir.ui.view">
+        <field name="name">lead.time.profile.search</field>
+        <field name="model">lead.time.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="country_id" string="Country" />
+                <field name="state_id" string="State" />
+                <field name="partner_id" string="Partner" />
+                <field name="warehouse_id" string="Warehouse" />
+                <field name="model_id" string="Model" />
+                <field name="lead_time" string="Lead Time" />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Warehouse"
+                        name="warehouse"
+                        context="{'group_by':'warehouse_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_lead_time_profile_tree" model="ir.ui.view">
+        <field name="name">lead.time.profile.tree</field>
+        <field name="model">lead.time.profile</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="country_id" optional="show" />
+                <field name="state_id" optional="show" />
+                <field name="partner_id" optional="show" />
+                <field name="warehouse_id" optional="show" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
+                <field name="model_id" />
+                <field name="lead_time" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_lead_time_profile" model="ir.actions.act_window">
+        <field name="name">Lead Time Profiles</field>
+        <field name="res_model">lead.time.profile</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="menu_lead_time_profile"
+        name="Lead Time Profiles"
+        parent="stock.menu_stock_config_settings"
+        action="action_lead_time_profile"
+        sequence="5"
+    />
+</odoo>

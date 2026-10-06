@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res_config_settings_view_form - sale_lead_time</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//h2[@id='schedule_info']" position="before">
+                <h2>Delivery Lead Time Settings</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane" />
+                        <div class="o_setting_right_pane">
+                            <span
+                                class="o_form_label"
+                            >Factors of Lead Time Profile Elements</span>
+                            <span
+                                class="fa fa-lg fa-building-o"
+                                title="Values set here are company-specific."
+                                role="img"
+                                aria-label="Values set here are company-specific."
+                                groups="base.group_multi_company"
+                            />
+                            <div class="text-muted">
+                                Factors considered in calculating the score of profiles to identify the best matching one.
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label
+                                        string="Country"
+                                        for="lead_time_profile_country_factor"
+                                        class="col-lg-6 o_light_label"
+                                    />
+                                    <field name="lead_time_profile_country_factor" />
+                                </div>
+                                <div class="row">
+                                    <label
+                                        string="State"
+                                        for="lead_time_profile_state_factor"
+                                        class="col-lg-6 o_light_label"
+                                    />
+                                    <field name="lead_time_profile_state_factor" />
+                                </div>
+                                <div class="row">
+                                    <label
+                                        string="Partner"
+                                        for="lead_time_profile_partner_factor"
+                                        class="col-lg-6 o_light_label"
+                                    />
+                                    <field name="lead_time_profile_partner_factor" />
+                                </div>
+                                <div class="row">
+                                    <label
+                                        string="Warehouse"
+                                        for="lead_time_profile_warehouse_factor"
+                                        class="col-lg-6 o_light_label"
+                                    />
+                                    <field name="lead_time_profile_warehouse_factor" />
+                                </div>
+                                <div class="mt8">
+                                    <button
+                                        name="open_lead_time_profile_list"
+                                        icon="fa-arrow-right"
+                                        type="object"
+                                        string="Configure lead time profiles"
+                                        class="btn-link"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
