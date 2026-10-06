@@ -102,6 +102,23 @@ class TestStockMoveActualDate(TransactionCase):
         self.assertEqual(scrap.move_ids.actual_date, date(2024, 8, 11))
         self.assertEqual(scrap.move_ids.account_move_ids.date, date(2024, 8, 11))
 
+    def test_move_added_to_picking_inherits_actual_date(self):
+        receipt, move = self.create_picking(date(2026, 7, 1))
+        self.assertEqual(move.actual_date, date(2026, 7, 1))
+        # A move added to the existing picking (e.g. from a new PO line) should
+        # inherit the picking's actual_date.
+        new_move = self.env["stock.move"].create(
+            {
+                "name": "5 in",
+                "picking_id": receipt.id,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.stock_location.id,
+                "product_id": self.product_2.id,
+                "product_uom_qty": 5.0,
+            }
+        )
+        self.assertEqual(new_move.actual_date, date(2026, 7, 1))
+
     def test_inventory_adjustment_actual_date(self):
         quant = self.env["stock.quant"].create(
             {
