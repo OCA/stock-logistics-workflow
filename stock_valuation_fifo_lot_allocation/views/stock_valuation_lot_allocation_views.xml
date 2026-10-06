@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_valuation_lot_allocation_view_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.lot.allocation.tree</field>
+        <field name="model">stock.valuation.lot.allocation</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <field name="actual_date" />
+                <field name="product_id" />
+                <field name="lot_id" />
+                <field name="description" />
+                <field name="valuation_layer_id" />
+                <field name="allocated_amount" sum="Allocated Amount" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="currency_id" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_valuation_lot_allocation_view_pivot" model="ir.ui.view">
+        <field name="name">stock.valuation.lot.allocation.pivot</field>
+        <field name="model">stock.valuation.lot.allocation</field>
+        <field name="arch" type="xml">
+            <pivot string="Lot Valuation Allocation">
+                <field name="lot_id" type="row" />
+                <field name="actual_date" interval="month" type="col" />
+                <field name="allocated_amount" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="stock_valuation_lot_allocation_view_search" model="ir.ui.view">
+        <field name="name">stock.valuation.lot.allocation.search</field>
+        <field name="model">stock.valuation.lot.allocation</field>
+        <field name="arch" type="xml">
+            <search string="Lot Valuation Allocation">
+                <field name="lot_id" />
+                <field name="product_id" />
+                <field name="valuation_layer_id" />
+                <field name="description" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="groupby_lot"
+                        string="Lot/Serial Number"
+                        context="{'group_by': 'lot_id'}"
+                    />
+                    <filter
+                        name="groupby_product"
+                        string="Product"
+                        context="{'group_by': 'product_id'}"
+                    />
+                    <filter
+                        name="groupby_actual_date"
+                        string="Actual Date"
+                        context="{'group_by': 'actual_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_valuation_lot_allocation_action" model="ir.actions.act_window">
+        <field name="name">Lot Valuation Allocation</field>
+        <field name="res_model">stock.valuation.lot.allocation</field>
+        <field name="view_mode">tree,pivot</field>
+        <field name="context">{'search_default_groupby_lot': 1}</field>
+        <field name="help" type="html">
+            <p
+                class="o_view_nocontent_smiling_face"
+            >No lot valuation allocation found</p>
+            <p>
+                Allocations are recorded when a stock valuation layer is created for a
+                FIFO product tracked by lot/serial number.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_stock_valuation_lot_allocation"
+        name="Lot Valuation Allocation"
+        parent="stock.menu_warehouse_report"
+        action="stock_valuation_lot_allocation_action"
+        sequence="255"
+        groups="stock.group_stock_manager"
+    />
+
+</odoo>
