@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_owner_stock_operations"
+        name="Portal layout: Consigned Pickings menu entry"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="100"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li
+                t-if="page_name == 'owner_stock_operations' or owner_stock_operations"
+                t-attf-class="breadcrumb-item #{'active ' if not owner_stock_operations else ''}"
+            >
+                <a
+                    t-if="owner_stock_operations"
+                    t-attf-href="/my/stock_operations/owner?{{ keep_query() }}"
+                >My Consigned Pickings</a>
+                <t t-else="">My Consigned Pickings</t>
+            </li>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_owner_stock_operations"
+        name="Show Consigned Pickings"
+        customize_show="True"
+        inherit_id="stock_picking_portal.portal_my_home_stock_operations"
+        priority="100"
+    >
+        <div id="portal_stock_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t
+                    t-set="icon"
+                    t-value="'/stock_picking_portal_owner/static/src/img/consigned.svg'"
+                />
+                <t t-set="title">My Consigned Pickings</t>
+                <t t-set="url" t-value="'/my/stock_operations/owner'" />
+                <t t-set="text">Follow your consigned pickings</t>
+                <t t-set="placeholder_count" t-value="'owner_stock_operations_count'" />
+            </t>
+        </div>
+    </template>
+
+    <template
+        id="portal_my_stock_operations_owner_template"
+        name="Portal: My Consigned Pickings"
+        inherit_id="stock_picking_portal.portal_my_stock_operations"
+        priority="100"
+    >
+        <t t-if="stock_operation_ids" position="before">
+            <div t-if="page_name == 'owner_stock_operations'" class="row">
+                <div class="col-12 my-3">
+                    <form
+                        method="get"
+                        t-attf-action="/my/stock_operations/owner"
+                        class="form-inline"
+                    >
+                        <div class="row">
+                            <div class="col-auto pt-2">
+                                <span class="mr-sm-2">Move State:</span>
+                            </div>
+                            <div class="d-inline col-2 px-0">
+                                <select
+                                    name="move_state"
+                                    id="move_state"
+                                    class="form-control mr-sm-2"
+                                >
+                                    <option
+                                        value="all"
+                                        t-att-selected="move_state=='all'"
+                                    >All</option>
+                                    <t t-foreach="move_states" t-as="state">
+                                        <option
+                                            t-att-value="state"
+                                            t-att-selected="move_state and state == move_state"
+                                        >
+                                            <t t-esc="move_states[state]" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-auto pt-2">
+                                <span class="sr-only">Date: </span>
+                            </div>
+                            <div class="d-inline col-auto px-0">
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    name="date_from"
+                                    t-att-value="date_from"
+                                />
+                            </div>
+                            <div class="col-auto px-1 pt-2">
+                                <span class="sr-only">-</span>
+                            </div>
+                            <div class="d-inline col-auto px-0">
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    name="date_to"
+                                    t-att-value="date_to"
+                                />
+                            </div>
+                            <div class="d-inline col-auto">
+                                <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                >Apply</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="search" t-att-value="search" />
+                        <input type="hidden" name="search_in" t-att-value="search_in" />
+                        <input type="hidden" name="sortby" t-att-value="sortby" />
+                    </form>
+                </div>
+            </div>
+        </t>
+        <t t-set="operation_url" position="replace">
+            <t
+                t-set="operation_url"
+                t-value="'/my/%s/%s?access_token=%s' % ('stock_operations/owner' if page_name == 'owner_stock_operations' else 'stock_operations', operation.id, operation.access_token)"
+            />
+        </t>
+    </template>
+</odoo>
