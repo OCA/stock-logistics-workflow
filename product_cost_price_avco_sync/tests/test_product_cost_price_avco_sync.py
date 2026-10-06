@@ -451,6 +451,30 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         self.assertAlmostEqual(svl_in_high_cost.value, 200.0, 2)
         self.assertAlmostEqual(self.product.standard_price, 100.0, 2)
 
+    def test_manual_cost_change_survives_a_correction_with_earlier_stock(self):
+        """A correction replays the chain from the corrected layer on, so the
+        manual cost changes after it have to keep counting the stock that was
+        already on hand before that layer.
+        """
+        self.create_picking("IN", qty=10.0, price_unit=10.0)
+        _picking_in_02, move_in_02 = self.create_picking(
+            "IN", qty=10.0, price_unit=10.0
+        )
+        self.product.standard_price = 12.0
+        svl_manual = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)], order="id DESC", limit=1
+        )
+        self.assertAlmostEqual(svl_manual.value, 40.0, 2)
+        # The second receipt turns out to be 8 units instead of 10
+        move_in_02.move_line_ids.quantity = 8.0
+        self.assertAlmostEqual(self.product.standard_price, 12.0, 2)
+        self.assertAlmostEqual(svl_manual.value, 36.0, 2)
+        layers = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)]
+        )
+        self.assertAlmostEqual(sum(layers.mapped("quantity")), 18.0, 2)
+        self.assertAlmostEqual(sum(layers.mapped("value")), 216.0, 2)
+
     def test_change_quantiy_price_with_inventory_adjustment(self):
         """Write quantity and price to zero in a stock valuation layer"""
         picking_in_01, move_in_01 = self.create_picking("IN", 10)
