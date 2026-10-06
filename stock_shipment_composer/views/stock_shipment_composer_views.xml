@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_shipment_composer_form" model="ir.ui.view">
+        <field name="name">stock.shipment.composer.form</field>
+        <field name="model">stock.shipment.composer</field>
+        <field name="arch" type="xml">
+            <form string="Stock Shipment Composer">
+                <field name="company_id" invisible="1" />
+                <field name="show_check_availability" invisible="1" />
+                <field name="show_validate" invisible="1" />
+                <field name="move_ids" invisible="1" />
+                <header>
+                    <button
+                        name="action_confirm"
+                        states="draft"
+                        string="Confirm"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_done"
+                        string="Validate"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|',('state','!=','in_progress'),('show_validate','=',False)]}"
+                    />
+                    <button
+                        name="action_assign"
+                        string="Check Availability"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|','|',('state','!=','in_progress'),('show_check_availability','=',False),('show_validate','=',True)]}"
+                    />
+                    <button
+                        name="action_assign"
+                        string="Check Availability"
+                        type="object"
+                        attrs="{'invisible':['|','|',('state','!=','in_progress'),('show_check_availability','=',False),('show_validate','=',False)]}"
+                    />
+                    <button
+                        name="action_cancel"
+                        string="Cancel"
+                        type="object"
+                        states="in_progress"
+                    />
+                    <button
+                        name="action_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        states="cancel"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,in_progress,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_operations"
+                            class="oe_stat_button"
+                            icon="fa-arrows-v"
+                            type="object"
+                            attrs="{'invisible':[('move_ids','=',[])]}"
+                        >
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_text">Operations</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" class="oe_inline" /></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field
+                                name="partner_id"
+                                attrs="{'readonly':[('line_ids','!=',[])]}"
+                                force_save="1"
+                            />
+                            <field
+                                name="picking_type_id"
+                                attrs="{'readonly':[('line_ids','!=',[])]}"
+                                force_save="1"
+                            />
+                            <field name="user_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                                attrs="{'readonly': [('line_ids', '!=', [])]}"
+                                force_save="1"
+                            />
+                        </group>
+                        <group>
+                            <field name="scheduled_date" />
+                            <field
+                                name="date_done"
+                                string="Effective Date"
+                                states="done"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Composer Lines">
+                            <field
+                                name="line_ids"
+                                attrs="{'readonly':[('state','in',('done','cancel'))]}"
+                                context="{'is_shipment_composer':True}"
+                            >
+                                <tree
+                                    editable="bottom"
+                                    context="{'default_composer_id': composer_id}"
+                                >
+                                    <field name="composer_id" invisible="1" />
+                                    <field name="reserved_enough" invisible="1" />
+                                    <field name="state" invisible="1" />
+                                    <field
+                                        name="move_id"
+                                        domain="[('partner_id','=',parent.partner_id),('picking_type_id','=',parent.picking_type_id),('state','not in',['done','cancel']),('id','not in',parent.move_ids)]"
+                                        context="{'is_shipment_composer': True}"
+                                        help="The number in brackets represents the unallocated quantity to composers in 'In Progress' or 'Done' states."
+                                    />
+                                    <field name="picking_id" optional="show" />
+                                    <field
+                                        name="location_id"
+                                        string="From"
+                                        optional="hide"
+                                    />
+                                    <field
+                                        name="location_dest_id"
+                                        string="To"
+                                        optional="hide"
+                                    />
+                                    <field name="quantity" />
+                                    <button
+                                        name="action_show_details"
+                                        type="object"
+                                        icon="fa-list"
+                                        width="0.1"
+                                        title="Details"
+                                    />
+                                    <field
+                                        name="product_uom_qty"
+                                        string="Demand"
+                                        optional="hide"
+                                    />
+                                    <field
+                                        name="reserved_availability"
+                                        string="Reserved"
+                                        attrs="{'column_invisible':[('parent.state','in',['done','cancel'])]}"
+                                        optional="show"
+                                    />
+                                    <button
+                                        type="object"
+                                        name="action_product_forecast_report"
+                                        title="Forecast Report"
+                                        icon="fa-area-chart"
+                                        attrs="{'invisible':['|',('parent.state','in',['done','cancel']),('reserved_enough','=',False)]}"
+                                    />
+                                    <button
+                                        type="object"
+                                        name="action_product_forecast_report"
+                                        title="Forecast Report"
+                                        icon="fa-area-chart text-danger"
+                                        attrs="{'invisible':['|',('parent.state','in',['done','cancel']),('reserved_enough','=',True)]}"
+                                    />
+                                    <field
+                                        name="quantity_done"
+                                        string="Done"
+                                        optional="show"
+                                    />
+                                    <field name="uom_id" optional="show" />
+                                    <field name="remarks" optional="show" />
+                                    <field
+                                        name="move_state"
+                                        widget="badge"
+                                        optional="show"
+                                        decoration-danger="move_state=='cancel'"
+                                        decoration-info="move_state=='assigned'"
+                                        decoration-muted="move_state=='draft'"
+                                        decoration-success="move_state=='done'"
+                                        decoration-warning="move_state not in ('draft','cancel','done','assigned')"
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="stock_shipment_composer_tree" model="ir.ui.view">
+        <field name="name">stock.shipment.composer.tree</field>
+        <field name="model">stock.shipment.composer</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="company_id" invisible="1" />
+                <field name="name" decoration-bf="1" />
+                <field name="create_date" optional="show" />
+                <field name="partner_id" />
+                <field name="user_id" widget="many2one_avatar_user" optional="show" />
+                <field name="picking_type_id" optional="hide" />
+                <field name="scheduled_date" optional="show" />
+                <field name="date_done" string="Effective Date" optional="hide" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'done'"
+                    decoration-info="state in ('draft', 'in_progress')"
+                />
+                <field
+                    name="activity_exception_decoration"
+                    widget="activity_exception"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="stock_shipment_composer_filter" model="ir.ui.view">
+        <field name="name">stock.shipment.composer.filter</field>
+        <field name="model">stock.shipment.composer</field>
+        <field name="arch" type="xml">
+            <search string="Search Stock Composers">
+                <field
+                    name="name"
+                    string="Shipment Composer"
+                    filter_domain="['|',('name','ilike',self),('partner_id','child_of',self)]"
+                />
+                <field name="partner_id" />
+                <field name="user_id" />
+                <filter
+                    name="to_do_composers"
+                    string="To Do"
+                    domain="['&amp;',('user_id','in',[uid, False]),('state','not in',['done','cancel'])]"
+                />
+                <filter
+                    name="my_composers"
+                    string="My Composers"
+                    domain="[('user_id','=',uid)]"
+                />
+                <separator />
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]" />
+                <filter
+                    name="in_progress"
+                    string="In Progress"
+                    domain="[('state','=','in_progress')]"
+                    help="Shipment Composers not finished"
+                />
+                <filter name="done" string="Done" domain="[('state','=','done')]" />
+                <separator />
+                <filter
+                    name="create_date"
+                    date="create_date"
+                    default_period="this_month"
+                />
+                <filter
+                    name="scheduled_date"
+                    date="scheduled_date"
+                    default_period="this_month"
+                />
+                <filter name="date_done" date="date_done" default_period="this_month" />
+                <separator />
+                <filter
+                    invisible="1"
+                    string="Late Activities"
+                    name="activities_overdue"
+                    domain="[('my_activity_date_deadline','&lt;',context_today().strftime('%Y-%m-%d'))]"
+                    help="Show all records which has next action date is before today"
+                />
+                <filter
+                    invisible="1"
+                    string="Today Activities"
+                    name="activities_today"
+                    domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"
+                />
+                <filter
+                    invisible="1"
+                    string="Future Activities"
+                    name="activities_upcoming_all"
+                    domain="[('my_activity_date_deadline','&gt;',context_today().strftime('%Y-%m-%d'))]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Partner"
+                        name="partner"
+                        domain="[]"
+                        context="{'group_by':'partner_id'}"
+                    />
+                    <filter
+                        string="Responsible"
+                        name="user"
+                        domain="[]"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter
+                        string="State"
+                        name="state"
+                        domain="[]"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter
+                        string="Create Date"
+                        name="by_create_date"
+                        domain="[]"
+                        context="{'group_by':'create_date'}"
+                    />
+                    <filter
+                        string="Scheduled Date"
+                        name="by_scheduled_date"
+                        domain="[]"
+                        context="{'group_by':'scheduled_date'}"
+                    />
+                    <filter
+                        string="Effective Date"
+                        name="by_date_done"
+                        domain="[]"
+                        context="{'group_by':'date_done'}"
+                    />
+                </group>
+           </search>
+        </field>
+    </record>
+    <record id="stock_shipment_composer_action" model="ir.actions.act_window">
+        <field name="name">Shipment Composers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.shipment.composer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="stock_shipment_composer_filter" />
+    </record>
+    <menuitem
+        action="stock_shipment_composer_action"
+        id="stock_shipment_composer_menu"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="22"
+    />
+</odoo>
