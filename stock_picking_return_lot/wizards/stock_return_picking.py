@@ -4,7 +4,7 @@
 
 from collections import defaultdict
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 CONTEXT_KEY_FORCE_RECOMPUTE = "stock_picking_return_lot.force_recompute"
 
@@ -35,21 +35,44 @@ class ReturnPicking(models.TransientModel):
         return qties
 
     def _compute_moves_locations(self):
-        # Split up moves by tracked quantities
         res = super()._compute_moves_locations()
         for wizard in self:
+            product_return_moves = [Command.clear()]
+            processed_moves = self.env["stock.move"]
             for line in wizard.product_return_moves:
+                if line.move_id in processed_moves:
+                    continue
+                processed_moves |= line.move_id
+
+                line_values = line.copy_data()[0]
+                line_values.pop("wizard_id", None)
                 qties = self._get_qty_by_lot(line.move_id)
+                if not qties:
+                    product_return_moves.append(Command.create(line_values))
+                    continue
+
                 first = True
                 for lot, qty in qties.items():
-                    if qty < 0:
-                        qty = 0
+                    qty = max(qty, 0)
                     if first:
-                        line.lot_id = lot
+                        line_values.update(
+                            {
+                                "lot_id": lot.id,
+                                "quantity": qty,
+                            }
+                        )
+                        product_return_moves.append(Command.create(line_values))
                         first = False
                     elif qty:
-                        line = line.copy({"lot_id": lot.id})
-                    line.quantity = qty
+                        lot_line_values = dict(line_values)
+                        lot_line_values.update(
+                            {
+                                "lot_id": lot.id,
+                                "quantity": qty,
+                            }
+                        )
+                        product_return_moves.append(Command.create(lot_line_values))
+            wizard.product_return_moves = product_return_moves
 
         return res
 
