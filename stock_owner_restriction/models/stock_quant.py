@@ -36,7 +36,10 @@ class StockQuant(models.Model):
             qty=qty,
         )
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
-        if owner_id is None or restricted_owner_id is None:
+        if restricted_owner_id is None:
+            # Don't gate on `owner_id`: some core callers (e.g.
+            # _set_quantity_done) reach here with a plain None without ever
+            # going through _action_assign.
             return records
         return records.filtered(
             lambda q: q.owner_id == (restricted_owner_id or self.env["res.partner"])
