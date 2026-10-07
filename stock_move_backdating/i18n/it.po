@@ -1,0 +1,136 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_backdating
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-24 11:45+0000\n"
+"PO-Revision-Date: 2024-01-15 11:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_stock_inventory__date_backdating
+msgid "Actual Inventory Date"
+msgstr "Data effettiva dell'inventario"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__date_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_stock_move_line__date_backdating
+msgid "Actual Movement Date"
+msgstr "Data effettiva del movimento"
+
+#. module: stock_move_backdating
+#: model_terms:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_move_backdating
+#: model:ir.actions.act_window,name:stock_move_backdating.action_view_fill_backdating
+#: model_terms:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
+#: model_terms:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "Fill Actual Movement Date"
+msgstr "Riempi la data effettiva del movimento"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_fill_date_backdating
+#: model_terms:ir.ui.view,arch_db:stock_move_backdating.stock_picking_view_form_inherit_backdating
+msgid "Fill Actual Movement Date of all operations"
+msgstr "Riempi la data effettiva del movimento su tutte le operazioni"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_stock_picking__date_backdating
+msgid "Forced Effective Date"
+msgstr "Data effettiva forzata"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_inventory
+msgid "Inventory"
+msgstr "Magazzino"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_inventory_line
+msgid "Inventory Line"
+msgstr "Riga d'inventario"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,field_description:stock_move_backdating.field_fill_date_backdating__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_quant
+msgid "Quants"
+msgstr "Quanti"
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_move_backdating
+#: model:ir.model.fields,help:stock_move_backdating.field_stock_picking__date_backdating
+msgid ""
+"The Actual Movement Date of the Operations only if they have all the same "
+"value."
+msgstr ""
+"La data effettiva delle operazioni solo se comune a tutte le operazioni."
+
+#. module: stock_move_backdating
+#: model:ir.model,name:stock_move_backdating.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_move_backdating
+#: code:addons/stock_move_backdating/models/stock_move_line.py:13
+#, python-format
+msgid "You can not process an actual movement date in the future."
+msgstr "Non è possibile processare un movimento futuro."
+
+#. module: stock_move_backdating
+#: model_terms:ir.ui.view,arch_db:stock_move_backdating.view_fill_backdating
+msgid "_Apply"
+msgstr "_Applica"
