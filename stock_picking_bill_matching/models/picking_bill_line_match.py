@@ -226,9 +226,18 @@ class PickingBillLineMatch(models.Model):
     @api.model
     def _get_matching_pairs(self, aml_lines, sm_lines):
         """
-        Uses the visual `matching_reference` field.
+        Groups by (Product + matching_reference).
         If an extension (like l10n_br) is installed, this will magically group by
         (Product + xPed/nItemPed). Otherwise, it seamlessly groups just by Product!
+
+        An empty/NULL reference means "unspecified" and acts as a WILDCARD:
+        it matches any receipt line of the same product. This keeps the
+        product-only matching working when one side carries no reference —
+        e.g. bills imported before the reference existed, or installations
+        where the localization fills the bill side but the stock side hook
+        is not installed. Exact reference matches are returned first so the
+        quantity distribution in action_match_lines consumes them before the
+        wildcard candidates.
         """
         matches = []
         aml_by_key = defaultdict(lambda: self.env["account.move.line"])
@@ -241,10 +250,19 @@ class PickingBillLineMatch(models.Model):
             key = (line.product_id, line.matching_reference)
             sm_by_key[key] |= line
 
-        for key, amls in aml_by_key.items():
-            stock_moves_to_link = sm_by_key.get(key)
+        for (product, ref), amls in aml_by_key.items():
+            if ref:
+                # exact reference first, then receipts with no reference
+                stock_moves_to_link = sm_by_key.get(
+                    (product, ref), self.env["stock.move"]
+                ) | sm_by_key.get((product, False), self.env["stock.move"])
+            else:
+                # no reference on the bill line: any receipt of the product
+                stock_moves_to_link = self.env["stock.move"]
+                for (sm_product, _sm_ref), sm_group in sm_by_key.items():
+                    if sm_product == product:
+                        stock_moves_to_link |= sm_group
             if stock_moves_to_link:
-                # Default Fallback: Match by product_id
                 for aml in amls:
                     matches.append((aml, stock_moves_to_link))
         return matches
