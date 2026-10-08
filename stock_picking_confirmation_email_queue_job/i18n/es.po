@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_confirmation_email_queue_job
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-01 20:54+0000\n"
+"PO-Revision-Date: 2026-10-01 20:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_confirmation_email_queue_job
+#. odoo-python
+#: code:addons/stock_picking_confirmation_email_queue_job/models/stock_picking.py:0
+msgid "Send confirmation email of %s"
+msgstr "Enviar correo de confirmación de %s"
+
+#. module: stock_picking_confirmation_email_queue_job
+#: model:ir.model,name:stock_picking_confirmation_email_queue_job.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
