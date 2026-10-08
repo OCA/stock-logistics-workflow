@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.quick</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='move_ids_without_package']/list"
+                position="inside"
+            >
+                <control>
+                    <button
+                        name="action_add_from_catalog_picking"
+                        string="Catalog"
+                        type="object"
+                        class="px-4 btn-link"
+                        invisible="parent.state in ['done', 'cancel']"
+                        context="{'picking_id': parent.id}"
+                    />
+                </control>
+            </xpath>
+        </field>
+    </record>
+</odoo>
