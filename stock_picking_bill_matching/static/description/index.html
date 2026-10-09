@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>Stock Picking Bill Matching</title>
 <style type="text/css">
 
 /*
@@ -388,10 +388,9 @@ but elevates it by matching against <tt class="docutils literal">stock.move</tt>
 <ul class="simple">
 <li><strong>Unified Matching Interface:</strong> A single screen (SQL View) showing
 unmatched Vendor Bill lines and Incoming Receipt lines side-by-side.</li>
-<li><strong>Many-to-Many Linking:</strong> Leverages the
-<tt class="docutils literal">stock_picking_invoice_link</tt> OCA module to allow complex
-many-to-many relationships (e.g., partial billing, consolidated
-billing).</li>
+<li><strong>Many-to-Many Linking:</strong> Leverages the <tt class="docutils literal">stock_picking_invoice_link</tt>
+OCA module to allow complex many-to-many relationships (e.g., partial
+billing, consolidated billing).</li>
 <li><strong>Smart Auto-Reception:</strong> Matching bill lines with pending receipts
 automatically validates the receipt and handles backorders safely
 using native Odoo logic.</li>
@@ -442,9 +441,9 @@ above Receipts.</em></li>
 <li>Click <strong>Match Selected</strong>.<ul>
 <li>The lines will vanish from the Unmatched view.</li>
 <li>If the Receipt had a higher quantity than the Bill, Odoo will
-automatically create a Backorder for the remaining quantity. If
-you later cancel the backorder and decide not to keep the extra
-stock, click <strong>Force Matched</strong> on the bill to settle it.</li>
+automatically create a Backorder for the remaining quantity. If you
+later cancel the backorder and decide not to keep the extra stock,
+click <strong>Force Matched</strong> on the bill to settle it.</li>
 <li>If the Bill had a higher quantity, the remaining billed quantity
 will stay in the view awaiting a future receipt, or you can create
 a new picking for it using the <strong>Create / Add to Picking</strong> button.

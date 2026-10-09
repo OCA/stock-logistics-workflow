@@ -20,6 +20,18 @@
                         <span class="o_stat_text">Match Pickings</span>
                     </div>
                 </button>
+                <button
+                    class="oe_stat_button"
+                    name="action_match_all_proposed"
+                    type="object"
+                    groups="stock.group_stock_user"
+                    icon="fa-magic"
+                    attrs="{'invisible':['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('is_picking_matched', '=', True)]}"
+                >
+                    <div class="o_field_statinfo">
+                        <span class="o_stat_text">Auto Match<br />Proposed</span>
+                    </div>
+                </button>
                 <!-- Force Matched Button -->
                 <button
                     class="oe_stat_button"

@@ -166,6 +166,35 @@ class AccountMove(models.Model):
         )
         return wizard.action_add_to_picking()
 
+    def action_match_all_proposed(self):
+        """One-click pre-match straight from the bill form, without opening
+        the matching screen or selecting any row: runs the pairing engine
+        over all the bill's unmatched lines plus the supplier's pending
+        receipt lines. Returns the matching screen so the operator sees the
+        result (and can fix per line) instead of a bare nothing."""
+        self.ensure_one()
+        bill_lines = self._get_bill_lines_to_match()
+        lines = self.env["picking.bill.line.match"]
+        if bill_lines:
+            lines = self.env["picking.bill.line.match"].search(
+                [
+                    ("aml_id", "in", bill_lines.ids),
+                    ("unmatched_qty", ">", 0.001),
+                ]
+            )
+            pickings = self._get_partner_pickings()
+            if pickings:
+                receipt_lines = self.env["picking.bill.line.match"].search(
+                    [
+                        ("sm_id", "in", pickings.move_ids.ids),
+                        ("unmatched_qty", ">", 0.001),
+                    ]
+                )
+                lines |= receipt_lines
+        if lines:
+            lines.action_match_lines()
+        return self.action_picking_matching()
+
     def action_picking_matching(self):
         self.ensure_one()
         context = dict(self.env.context, default_account_move_id=self.id)

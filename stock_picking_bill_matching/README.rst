@@ -46,25 +46,24 @@ but elevates it by matching against ``stock.move`` lines instead of
 Key Features
 ------------
 
--  **Unified Matching Interface:** A single screen (SQL View) showing
-   unmatched Vendor Bill lines and Incoming Receipt lines side-by-side.
--  **Many-to-Many Linking:** Leverages the
-   ``stock_picking_invoice_link`` OCA module to allow complex
-   many-to-many relationships (e.g., partial billing, consolidated
-   billing).
--  **Smart Auto-Reception:** Matching bill lines with pending receipts
-   automatically validates the receipt and handles backorders safely
-   using native Odoo logic.
--  **Small Shop Replenishment:** Easily generate brand-new Incoming
-   Receipts straight from a drafted Vendor Bill with a single click.
--  **Extensibility:** Built with an extensible matching hook
-   (``_get_matching_pairs``) to allow localization modules (like the
-   Brazilian NFe ``xPed``/``nItemPed``) to override the default
-   product-based matching behavior.
--  **Compatibility:** If the ``stock_picking_invoicing`` module is
-   installed, matching or unmatching lines automatically updates the
-   invoice state (``invoiced`` / ``2binvoiced``) on stock moves and
-   pickings.
+- **Unified Matching Interface:** A single screen (SQL View) showing
+  unmatched Vendor Bill lines and Incoming Receipt lines side-by-side.
+- **Many-to-Many Linking:** Leverages the ``stock_picking_invoice_link``
+  OCA module to allow complex many-to-many relationships (e.g., partial
+  billing, consolidated billing).
+- **Smart Auto-Reception:** Matching bill lines with pending receipts
+  automatically validates the receipt and handles backorders safely
+  using native Odoo logic.
+- **Small Shop Replenishment:** Easily generate brand-new Incoming
+  Receipts straight from a drafted Vendor Bill with a single click.
+- **Extensibility:** Built with an extensible matching hook
+  (``_get_matching_pairs``) to allow localization modules (like the
+  Brazilian NFe ``xPed``/``nItemPed``) to override the default
+  product-based matching behavior.
+- **Compatibility:** If the ``stock_picking_invoicing`` module is
+  installed, matching or unmatching lines automatically updates the
+  invoice state (``invoiced`` / ``2binvoiced``) on stock moves and
+  pickings.
 
 **Table of contents**
 
@@ -100,21 +99,21 @@ processed the receipt:
 3. You will be taken to the matching view.
 4. Select the Vendor Bill line(s) and the corresponding Receipt line(s).
 
-   -  *Note: They are grouped by product, with Vendor Bills appearing
-      above Receipts.*
+   - *Note: They are grouped by product, with Vendor Bills appearing
+     above Receipts.*
 
 5. Click **Match Selected**.
 
-   -  The lines will vanish from the Unmatched view.
-   -  If the Receipt had a higher quantity than the Bill, Odoo will
-      automatically create a Backorder for the remaining quantity. If
-      you later cancel the backorder and decide not to keep the extra
-      stock, click **Force Matched** on the bill to settle it.
-   -  If the Bill had a higher quantity, the remaining billed quantity
-      will stay in the view awaiting a future receipt, or you can create
-      a new picking for it using the **Create / Add to Picking** button.
-      If you decide the remaining quantity will never be delivered, you
-      can click **Force Matched** to settle the bill anyway.
+   - The lines will vanish from the Unmatched view.
+   - If the Receipt had a higher quantity than the Bill, Odoo will
+     automatically create a Backorder for the remaining quantity. If you
+     later cancel the backorder and decide not to keep the extra stock,
+     click **Force Matched** on the bill to settle it.
+   - If the Bill had a higher quantity, the remaining billed quantity
+     will stay in the view awaiting a future receipt, or you can create
+     a new picking for it using the **Create / Add to Picking** button.
+     If you decide the remaining quantity will never be delivered, you
+     can click **Force Matched** to settle the bill anyway.
 
 *Typical workflow:* Go to **Accounting -> Vendors -> Bills**, open the
 list view and apply the **Unmatched Picking** filter. This shows only
@@ -180,9 +179,9 @@ Credits
 Contributors
 ------------
 
--  `Akretion <https://www.akretion.com/pt-BR>`__:
+- `Akretion <https://www.akretion.com/pt-BR>`__:
 
-   -  Raphaël Valyi <raphael.valyi@akretion.com.br>
+  - Raphaël Valyi <raphael.valyi@akretion.com.br>
 
 Maintainers
 -----------

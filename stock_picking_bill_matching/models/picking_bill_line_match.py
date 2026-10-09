@@ -283,21 +283,17 @@ class PickingBillLineMatch(models.Model):
         domain = [("unmatched_qty", ">", MATCHING_PRECISION)]
         move_id = self.env.context.get("default_account_move_id")
         if move_id:
+            move = self.env["account.move"].browse(move_id)
+            partners = move.partner_id | move.partner_id.commercial_partner_id
             domain += [
                 "|",
                 ("account_move_id", "=", move_id),
                 "&",
                 ("account_move_id", "=", False),
-                ("partner_id", "in", self._get_demo_partner_ids(move_id)),
+                ("partner_id", "in", partners.ids),
             ]
         candidates = self.search(domain)
         return candidates.action_match_lines()
-
-    def _get_demo_partner_ids(self, move_id):
-        """Partners of the pending receipt rows listed alongside the bill."""
-        move = self.env["account.move"].browse(move_id)
-        partners = move.partner_id | move.partner_id.commercial_partner_id
-        return partners.ids
 
     def action_match_lines(self):
         if not self.sm_id and not self.aml_id:
@@ -315,9 +311,11 @@ class PickingBillLineMatch(models.Model):
         moves_to_receive = self.env["stock.move"]
         all_matched_moves = self.env["stock.move"]
         qty_to_set = {}
+        moves_per_aml = {}
 
         for aml, stock_moves_to_link in pairs:
             remaining_to_match = aml.unmatched_qty
+            moves_for_this_aml = self.env["stock.move"]
             for move in stock_moves_to_link.filtered(
                 lambda m: m.state in ("draft", "confirmed", "assigned")
             ):
@@ -330,9 +328,16 @@ class PickingBillLineMatch(models.Model):
                     qty_to_set[move] = qty_to_do
                     remaining_to_match -= qty_to_do
                     moves_to_receive |= move
+                    moves_for_this_aml |= move
 
-            # 1. Establish the M2M links
-            aml.move_line_ids = [Command.link(sm.id) for sm in stock_moves_to_link]
+            # 1. Establish the M2M links. Only link the moves this bill line
+            # actually consumes (plus those it was already linked to):
+            # linking the whole candidate group would make unmatched_qty go
+            # negative (quantity minus the SUM of every linked move's qty)
+            # and pollute later rounds.
+            moves_for_this_aml |= aml.move_line_ids & stock_moves_to_link
+            aml.move_line_ids = [Command.link(sm.id) for sm in moves_for_this_aml]
+            moves_per_aml[aml] = moves_for_this_aml
 
             all_matched_moves |= stock_moves_to_link
 
