@@ -140,7 +140,7 @@ class StockQuant(models.Model):
             active_moves._action_cancel()
         return True
 
-    def _check_is_lock_with_picking_type_allowed(self, picking_type, raise_error=True):
+    def _check_is_lock_with_route_allowed(self, route, raise_error=True):
         self.ensure_one()
         if self.is_locked_by_picking:
             if raise_error:
@@ -151,32 +151,85 @@ class StockQuant(models.Model):
                     )
                 )
             return False
-        if not picking_type.allow_quant_lock:
+        if not route.allow_quant_lock:
             if raise_error:
                 raise UserError(
                     _(
-                        "Operation type '%(op)s' cannot be used for quant lock.",
-                        op=picking_type.display_name,
+                        "Route '%(route)s' cannot be used for quant lock.",
+                        route=route.display_name,
                     )
                 )
             return False
+        if not self._get_lock_rule(route):
+            if raise_error:
+                raise UserError(
+                    _(
+                        "Route '%(route)s' has no pull rule from a location "
+                        "containing '%(location)s' to lock quant '%(quant)s'.",
+                        route=route.display_name,
+                        location=self.location_id.display_name,
+                        quant=self.display_name,
+                    )
+                )
+            return False
+        return True
 
-    def _lock_with_picking_type(self, picking_type):
-        """Lock the quant using the specified picking type.
+    def _get_lock_rule_domain(self, route):
+        self.ensure_one()
+        return [
+            ("route_id", "in", route.ids),
+            ("action", "in", ("pull", "pull_push")),
+            ("procure_method", "=", "make_to_stock"),
+            ("location_src_id", "parent_of", self.location_id.id),
+            ("company_id", "in", (False, self.company_id.id)),
+        ]
 
-        This will create a stock move of the specified picking type
-        and reserve the remaining available quantity for the quant.
+    def _get_lock_rule(self, route):
+        """Return the rule of the route used to lock the quant.
+
+        It is the pull rule whose source location is the closest parent of the
+        quant location.
         """
-        self._check_is_lock_with_picking_type_allowed(picking_type, raise_error=True)
-        lock_move_vals = self._prepare_lock_move_vals(picking_type)
-        qty_to_lock = lock_move_vals["product_uom_qty"]
+        self.ensure_one()
+        rules = self.env["stock.rule"].search(
+            self._get_lock_rule_domain(route), order="route_sequence, sequence"
+        )
+        if not rules:
+            return rules
+        # we use the rule whose source location is the closest parent of the quant location
+        # if there are multiple rules with the same source location,
+        # we preserve the order of the rules as defined in the route (route_sequence, sequence)
+        return max(
+            rules,
+            key=lambda rule: (
+                len(rule.location_src_id.parent_path),
+                -rules.ids.index(rule.id),
+            ),
+        )
+
+    def _lock_with_route(self, route):
+        """Lock the quant using the specified route.
+
+        This will run a procurement on the lock rule of the route to create
+        a stock move reserving the remaining available quantity of the quant.
+        """
+        self._check_is_lock_with_route_allowed(route, raise_error=True)
         # Drop default_* keys from the context (e.g. default_picking_id) so the
-        # lock move is assigned to a picking of the requested operation type.
+        # lock move is assigned to a picking of the operation type of the rule.
         # The context must be replaced, not updated, to remove these keys.
         ctx = clean_context(self.env.context)
-        move_model = self.env["stock.move"].with_context(ctx)  # pylint: disable=W8121
-        move = move_model.create(lock_move_vals)
-        move._action_confirm()
+        quant = self.with_context(ctx)  # pylint: disable=W8121
+        procurement = quant._prepare_lock_procurement(route)
+        qty_to_lock = procurement.product_qty
+        quant.env["procurement.group"].run([procurement])
+        move = self.env["stock.move"].search(
+            [
+                ("quant_lock_quant_id", "=", self.id),
+                ("state", "not in", ("done", "cancel")),
+            ],
+            order="id desc",
+            limit=1,
+        )
         picking = move.picking_id
         if not picking:
             raise UserError(
@@ -208,34 +261,30 @@ class StockQuant(models.Model):
 
         return picking
 
-    def _prepare_lock_move_vals(self, picking_type):
+    def _prepare_lock_procurement_values(self, route, rule):
+        self.ensure_one()
+        return {
+            "route_ids": route,
+            "warehouse_id": rule.warehouse_id or self.warehouse_id,
+            "company_id": self.company_id,
+            "quant_lock_quant_id": self,
+        }
+
+    def _prepare_lock_procurement(self, route):
         self.ensure_one()
         qty_to_lock = self.available_quantity
         if float_is_zero(qty_to_lock, precision_rounding=self.product_uom_id.rounding):
             raise UserError(
                 _("No available quantity to lock for quant '%s'.") % self.display_name
             )
-        location_dest = (
-            picking_type.default_location_dest_id
-            or picking_type.default_location_src_id
+        rule = self._get_lock_rule(route)
+        return self.env["procurement.group"].Procurement(
+            self.product_id,
+            qty_to_lock,
+            self.product_uom_id,
+            rule.location_dest_id,
+            _("Quant lock for %s") % self.product_id.display_name,
+            _("Quant lock: %s") % self.display_name,
+            self.company_id,
+            self._prepare_lock_procurement_values(route, rule),
         )
-        if not location_dest:
-            raise UserError(
-                _(
-                    "Operation type '%(op)s' must define at least one default "
-                    "location.",
-                    op=picking_type.display_name,
-                )
-            )
-        return {
-            "name": _("Quant lock for %s") % self.product_id.display_name,
-            "product_id": self.product_id.id,
-            "product_uom": self.product_uom_id.id,
-            "product_uom_qty": qty_to_lock,
-            "location_id": self.location_id.id,
-            "location_dest_id": location_dest.id,
-            "picking_type_id": picking_type.id,
-            "quant_lock_quant_id": self.id,
-            "company_id": self.company_id.id,
-            "origin": _("Quant lock: %s") % self.display_name,
-        }

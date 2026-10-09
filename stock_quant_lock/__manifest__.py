@@ -5,7 +5,7 @@
     "name": "Stock Quant Lock",
     "summary": "Lock selected quants to prevent new reservations "
     "and keep stock move traceability",
-    "version": "16.0.1.0.0",
+    "version": "16.0.2.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -14,11 +14,13 @@
     ],
     "data": [
         "security/ir.model.access.csv",
-        "views/stock_picking_type_views.xml",
+        "views/stock_route_views.xml",
+        "views/stock_warehouse_views.xml",
         "views/stock_quant_views.xml",
         "wizards/stock_quant_lock_wizard_views.xml",
     ],
     "maintainers": ["lmignon", "jbaudoux"],
     "installable": True,
     "pre_init_hook": "pre_init_hook",
+    "post_init_hook": "post_init_hook",
 }
