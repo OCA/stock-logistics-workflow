@@ -3,7 +3,7 @@ To use this module, you need to:
 - Go to *Inventory > Reporting > Locations* (or any inventory quant view).
 - Open the quant to lock.
 - Click *Lock Quant*.
-- In the wizard, select an operation type configured for quant locking.
+- In the wizard, select a route configured for quant locking.
 - Confirm.
 
 For batch operations from list views:

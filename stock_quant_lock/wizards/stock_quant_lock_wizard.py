@@ -8,9 +8,9 @@ class StockQuantLockWizard(models.TransientModel):
     _name = "stock.quant.lock.wizard"
     _description = "Stock Quant Lock Wizard"
 
-    picking_type_id = fields.Many2one(
-        comodel_name="stock.picking.type",
-        string="Operation Type",
+    route_id = fields.Many2one(
+        comodel_name="stock.route",
+        string="Route",
         required=True,
         domain="[('allow_quant_lock', '=', True)]",
     )
@@ -29,5 +29,5 @@ class StockQuantLockWizard(models.TransientModel):
     def action_lock(self):
         self.ensure_one()
         for quant in self.quant_ids:
-            quant._lock_with_picking_type(self.picking_type_id)
+            quant._lock_with_route(self.route_id)
         return {"type": "ir.actions.act_window_close"}
