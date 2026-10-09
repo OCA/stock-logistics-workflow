@@ -142,15 +142,6 @@ class StockQuant(models.Model):
 
     def _check_is_lock_with_route_allowed(self, route, raise_error=True):
         self.ensure_one()
-        if self.is_locked_by_picking:
-            if raise_error:
-                raise UserError(
-                    _(
-                        "Quant '%(quant)s' is already locked.",
-                        quant=self.display_name,
-                    )
-                )
-            return False
         if not route.allow_quant_lock:
             if raise_error:
                 raise UserError(
@@ -169,6 +160,22 @@ class StockQuant(models.Model):
                         route=route.display_name,
                         location=self.location_id.display_name,
                         quant=self.display_name,
+                    )
+                )
+            return False
+        # A quant already locked can only be locked again for the same
+        # purpose: the new lock move reserves the quantity released since then.
+        picking_type = self._get_lock_rule(route).picking_type_id
+        other_lock_moves = self.lock_move_ids.filtered(
+            lambda m: m.state == "assigned" and m.picking_type_id != picking_type
+        )
+        if other_lock_moves:
+            if raise_error:
+                raise UserError(
+                    _(
+                        "Quant '%(quant)s' is already locked by '%(op)s'.",
+                        quant=self.display_name,
+                        op=other_lock_moves[0].picking_type_id.display_name,
                     )
                 )
             return False
@@ -221,17 +228,19 @@ class StockQuant(models.Model):
         quant = self.with_context(ctx)  # pylint: disable=W8121
         procurement = quant._prepare_lock_procurement(route)
         qty_to_lock = procurement.product_qty
+        # The quant may already be locked: only consider the lock move created
+        # by this procurement.
+        existing_moves = self.lock_move_ids
         quant.env["procurement.group"].run([procurement])
         move = self.env["stock.move"].search(
             [
                 ("quant_lock_quant_id", "=", self.id),
+                ("id", "not in", existing_moves.ids),
                 ("state", "not in", ("done", "cancel")),
-            ],
-            order="id desc",
-            limit=1,
+            ]
         )
         picking = move.picking_id
-        if not picking:
+        if len(move) != 1 or not picking:
             raise UserError(
                 _("Unable to create lock picking for quant '%s'.") % self.display_name
             )
