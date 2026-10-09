@@ -1,6 +1,8 @@
 # Copyright 2026 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from unittest import mock
+
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 from odoo.tools.float_utils import float_compare
@@ -425,3 +427,61 @@ class TestStockQuantLock(TransactionCase):
         # Should not raise an exception
         empty_quants.action_unlock_quant()
         self.assertTrue(quant.is_locked_by_picking)
+
+    def test_lock_ignores_default_picking_id_in_context(self):
+        quant = self._prepare_quant_with_partial_reservation()
+        out_picking = self.env["stock.picking"].search(
+            [
+                ("picking_type_id", "=", self.out_picking_type.id),
+                ("product_id", "=", self.product.id),
+            ]
+        )
+        self.assertEqual(len(out_picking), 1)
+
+        picking = quant.with_context(
+            default_picking_id=out_picking.id
+        )._lock_with_picking_type(self.lock_picking_type)
+
+        self.assertNotEqual(picking, out_picking)
+        self.assertEqual(picking.picking_type_id, self.lock_picking_type)
+        self.assertEqual(len(out_picking.move_ids), 1)
+
+    def test_lock_failure_keeps_other_locks_of_shared_picking(self):
+        lot2 = self.env["stock.lot"].create(
+            {
+                "name": "LOCK-LOT-FAIL-002",
+                "product_id": self.product.id,
+                "company_id": self.env.company.id,
+            }
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 2.0, lot_id=self.lot
+        )
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 3.0, lot_id=lot2
+        )
+        quant_1 = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
+        quant_2 = self._get_exact_quant(self.product, self.stock_location, lot=lot2)
+        picking = quant_1._lock_with_picking_type(self.lock_picking_type)
+
+        # Simulate a reservation failure for the second lock. The exception is
+        # caught without savepoint, as a caller locking quants in batch would.
+        with mock.patch.object(
+            type(self.env["stock.move"]), "_action_assign", autospec=True
+        ):
+            error = None
+            try:
+                quant_2._lock_with_picking_type(self.lock_picking_type)
+            except UserError as e:
+                error = e
+            self.assertIsInstance(error, UserError)
+
+        lock_move_2 = self.env["stock.move"].search(
+            [("quant_lock_quant_id", "=", quant_2.id)]
+        )
+        # Both lock moves share the same picking
+        self.assertEqual(lock_move_2.picking_id, picking)
+        self.assertEqual(lock_move_2.state, "cancel")
+        self.assertFalse(quant_2.is_locked_by_picking)
+        self.assertTrue(quant_1.is_locked_by_picking)
+        self.assertEqual(picking.state, "assigned")
