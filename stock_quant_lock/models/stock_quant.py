@@ -3,6 +3,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import clean_context
 from odoo.tools.float_utils import float_compare, float_is_zero
 
 
@@ -169,7 +170,12 @@ class StockQuant(models.Model):
         self._check_is_lock_with_picking_type_allowed(picking_type, raise_error=True)
         lock_move_vals = self._prepare_lock_move_vals(picking_type)
         qty_to_lock = lock_move_vals["product_uom_qty"]
-        move = self.env["stock.move"].create(lock_move_vals)
+        # Drop default_* keys from the context (e.g. default_picking_id) so the
+        # lock move is assigned to a picking of the requested operation type.
+        # The context must be replaced, not updated, to remove these keys.
+        ctx = clean_context(self.env.context)
+        move_model = self.env["stock.move"].with_context(ctx)  # pylint: disable=W8121
+        move = move_model.create(lock_move_vals)
         move._action_confirm()
         picking = move.picking_id
         if not picking:
@@ -186,11 +192,14 @@ class StockQuant(models.Model):
             )
             < 0
         ):
-            picking.action_cancel()
+            # Only cancel the lock move: the picking may be shared with the
+            # lock moves of other quants.
+            move._action_cancel()
             raise UserError(
                 _(
                     "Unable to reserve full available quantity for quant '%(quant)s'. "
                     "Expected %(expected)s %(uom)s, reserved %(reserved)s %(uom)s.",
+                    quant=self.display_name,
                     expected=qty_to_lock,
                     reserved=move.reserved_availability,
                     uom=self.product_uom_id.display_name,
