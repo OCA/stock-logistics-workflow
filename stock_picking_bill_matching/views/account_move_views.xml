@@ -13,7 +13,7 @@
                     type="object"
                     groups="stock.group_stock_user"
                     icon="fa-bullseye"
-                    context="{'search_default_unmatched': 1, 'hide_unmatch': 1}"
+                    context="{'search_default_unmatched': 1, 'search_default_group_product': 1, 'hide_unmatch': 1}"
                     attrs="{'invisible':['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('is_picking_matched', '=', True)]}"
                 >
                     <div class="o_field_statinfo">

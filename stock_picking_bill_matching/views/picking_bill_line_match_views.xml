@@ -70,6 +70,17 @@
                         invisible="context.get('hide_match')"
                     />
                     <button
+                        name="action_match_all_proposed"
+                        type="object"
+                        string="Match All Proposed"
+                        class="btn btn-info"
+                        invisible="context.get('hide_match')"
+                        help="Match every unmatched line of this list: pairs bill
+                        lines with receipts by (Product, Match Ref.), falling
+                        back to product-only pairing. Undo per line with
+                        Unmatch Selected."
+                    />
+                    <button
                         name="action_unmatch_lines"
                         type="object"
                         string="Unmatch Selected"
