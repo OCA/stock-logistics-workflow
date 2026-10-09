@@ -206,7 +206,12 @@ class AccountMove(models.Model):
                     self.invoice_line_ids.mapped("product_id").ids,
                 ),
             ]
-            context.update({"hide_unmatch": True})
+            context.update(
+                {
+                    "hide_unmatch": True,
+                    "search_default_group_product": 1,
+                }
+            )
 
         return {
             "type": "ir.actions.act_window",

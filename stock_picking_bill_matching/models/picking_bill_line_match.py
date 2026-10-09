@@ -267,6 +267,38 @@ class PickingBillLineMatch(models.Model):
                     matches.append((aml, stock_moves_to_link))
         return matches
 
+    def action_match_all_proposed(self):
+        """One-click pre-match: match ALL unmatched lines currently listed.
+
+        The pairing core (_get_matching_pairs) already groups lines by
+        (Product, Match Ref.): bill lines whose synthesized reference equals
+        a receipt's canonical reference are paired automatically, and lines
+        without any reference fall back to product-only pairing. This button
+        simply feeds it every unmatched row of the current list (typically
+        one vendor bill's lines plus the supplier's pending receipts), so
+        the operator no longer has to select rows by hand when the proposal
+        is good — wrong pairings can still be undone line by line with
+        Unmatch Selected.
+        """
+        domain = [("unmatched_qty", ">", MATCHING_PRECISION)]
+        move_id = self.env.context.get("default_account_move_id")
+        if move_id:
+            domain += [
+                "|",
+                ("account_move_id", "=", move_id),
+                "&",
+                ("account_move_id", "=", False),
+                ("partner_id", "in", self._get_demo_partner_ids(move_id)),
+            ]
+        candidates = self.search(domain)
+        return candidates.action_match_lines()
+
+    def _get_demo_partner_ids(self, move_id):
+        """Partners of the pending receipt rows listed alongside the bill."""
+        move = self.env["account.move"].browse(move_id)
+        partners = move.partner_id | move.partner_id.commercial_partner_id
+        return partners.ids
+
     def action_match_lines(self):
         if not self.sm_id and not self.aml_id:
             raise UserError(
