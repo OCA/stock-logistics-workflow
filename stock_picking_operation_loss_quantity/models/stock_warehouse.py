@@ -21,7 +21,8 @@ class StockWarehouse(models.Model):
     )
     loss_route_id = fields.Many2one(
         comodel_name="stock.route",
-        help="This is a dummy field in order to create other values correctly",
+        string="Loss Route",
+        help="The route used to lock the quants for which a loss is declared",
     )
 
     def write(self, vals):
@@ -85,7 +86,6 @@ class StockWarehouse(models.Model):
                     "show_reserved": True,
                     "show_operations": True,
                     "sequence_code": "LOSS",
-                    "allow_quant_lock": True,
                     "company_id": self.company_id.id,
                 }
             }
@@ -98,7 +98,15 @@ class StockWarehouse(models.Model):
         """
         rules = super().get_rules_dict()
         for warehouse in self:
-            rules[warehouse.id]["loss"] = []
+            # A loss can be declared on any location of the warehouse
+            rules[warehouse.id]["loss"] = [
+                self.Routing(
+                    warehouse.view_location_id,
+                    warehouse.loss_location_id,
+                    warehouse.loss_type_id,
+                    "pull",
+                )
+            ]
         return rules
 
     def _get_routes_values(self):
@@ -114,10 +122,12 @@ class StockWarehouse(models.Model):
                         "product_selectable": False,
                         "company_id": self.company_id.id,
                         "sequence": 10,
-                        "name": self._format_routename(name=_("Loss Route (Dummy)")),
+                        "name": self._format_routename(name=_("Loss Route")),
+                        "allow_quant_lock": True,
                     },
                     "route_update_values": {
                         "active": self.use_loss_picking,
+                        "allow_quant_lock": True,
                     },
                     "rules_values": {
                         "active": self.use_loss_picking,

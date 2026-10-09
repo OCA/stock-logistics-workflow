@@ -71,7 +71,7 @@ class StockMoveLine(models.Model):
            If nothing was ever done on the line, it is left empty for now
            (see step 4).
         3. Lock the quants for the remaining available quantity using the
-           warehouse's loss picking type.
+           warehouse's loss route.
         4. Re-reserve the move for the remaining quantity. Thanks to
            `_reservation_is_updatable`, this never updates a move line
            already processed by the operator: it creates a new move line
@@ -99,9 +99,7 @@ class StockMoveLine(models.Model):
             quants._lock_quants_for_loss()
             unprocessed_by_move[line.move_id] += line._unreserve_unprocessed_qty()
             for quant in quants:
-                quant._lock_with_picking_type(
-                    line.location_id.warehouse_id.loss_type_id
-                )
+                quant._lock_with_route(line.location_id.warehouse_id.loss_route_id)
             if float_is_zero(
                 line.reserved_uom_qty, precision_rounding=line.product_uom_id.rounding
             ):
