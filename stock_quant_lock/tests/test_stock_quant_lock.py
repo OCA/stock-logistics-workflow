@@ -671,3 +671,58 @@ class TestStockQuantLock(TransactionCase):
     def test_existing_warehouse_has_quality_check_lock(self):
         warehouse = self.env.ref("stock.warehouse0")
         self.assertTrue(warehouse.quality_check_route_id.allow_quant_lock)
+
+    def test_lock_again_reserves_released_quantity(self):
+        quant = self._prepare_quant_with_partial_reservation()
+        out_picking = self.env["stock.picking"].search(
+            [
+                ("picking_type_id", "=", self.out_picking_type.id),
+                ("product_id", "=", self.product.id),
+            ]
+        )
+        picking = quant._lock_with_route(self.lock_route)
+        first_move = quant.lock_move_ids
+        out_picking.do_unreserve()
+        self.assertEqual(quant.available_quantity, 4.0)
+
+        self.assertTrue(
+            quant._check_is_lock_with_route_allowed(self.lock_route, raise_error=False)
+        )
+        self.assertEqual(quant._lock_with_route(self.lock_route), picking)
+
+        # A new lock move is added to the lock picking, not merged
+        self.assertEqual(len(quant.lock_move_ids), 2)
+        self.assertEqual(picking.move_ids, quant.lock_move_ids)
+        self.assertEqual(first_move.product_uom_qty, 6.0)
+        self.assertEqual(first_move.state, "assigned")
+        self.assertEqual(quant.reserved_quantity, 10.0)
+        self.assertEqual(quant.available_quantity, 0.0)
+
+        quant.action_unlock_quant()
+        self.assertEqual(set(quant.lock_move_ids.mapped("state")), {"cancel"})
+        self.assertEqual(quant.available_quantity, 10.0)
+
+    def test_lock_again_without_released_quantity_raises(self):
+        quant = self._prepare_quant_with_partial_reservation()
+        quant._lock_with_route(self.lock_route)
+
+        with self.assertRaisesRegex(UserError, "No available quantity"):
+            quant._lock_with_route(self.lock_route)
+        self.assertEqual(len(quant.lock_move_ids), 1)
+
+    def test_lock_with_another_operation_type_raises(self):
+        quant = self._prepare_quant_with_partial_reservation()
+        quant._lock_with_route(self.lock_route)
+        other_type = self.lock_picking_type.copy({"name": "Other lock"})
+        other_route = self.lock_route.copy(
+            {"name": "Other lock route", "rule_ids": False}
+        )
+        self.lock_rule.copy(
+            {"route_id": other_route.id, "picking_type_id": other_type.id}
+        )
+
+        self.assertFalse(
+            quant._check_is_lock_with_route_allowed(other_route, raise_error=False)
+        )
+        with self.assertRaisesRegex(UserError, "already locked"):
+            quant._lock_with_route(other_route)

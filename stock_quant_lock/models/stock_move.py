@@ -21,6 +21,20 @@ class StockMove(models.Model):
         fields.append("quant_lock_quant_id")
         return fields
 
+    def _merge_moves(self, merge_into=False):
+        # Never merge a lock move into an existing one
+        # This is done to keep traceability of the lock
+        # operations.
+        lock_moves = self.filtered("quant_lock_quant_id")
+        if not lock_moves:
+            return super()._merge_moves(merge_into=merge_into)
+        other_moves = self - lock_moves
+        if other_moves:
+            other_moves = super(StockMove, other_moves)._merge_moves(
+                merge_into=merge_into
+            )
+        return other_moves | lock_moves
+
     def _update_reserved_quantity(
         self,
         need,
