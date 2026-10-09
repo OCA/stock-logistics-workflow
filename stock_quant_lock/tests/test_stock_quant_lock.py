@@ -33,12 +33,33 @@ class TestStockQuantLock(TransactionCase):
         cls.lock_picking_type = cls.env.ref("stock.picking_type_internal")
         cls.lock_picking_type.write(
             {
-                "allow_quant_lock": True,
                 "reservation_method": "manual",
                 "default_location_src_id": cls.stock_location.id,
                 "default_location_dest_id": cls.output_location.id,
             }
         )
+        cls.lock_route = cls.env["stock.route"].create(
+            {
+                "name": "Quant lock",
+                "allow_quant_lock": True,
+                "product_selectable": False,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Stock -> Output (lock)",
+                            "action": "pull",
+                            "procure_method": "make_to_stock",
+                            "location_src_id": cls.stock_location.id,
+                            "location_dest_id": cls.output_location.id,
+                            "picking_type_id": cls.lock_picking_type.id,
+                        },
+                    )
+                ],
+            }
+        )
+        cls.lock_rule = cls.lock_route.rule_ids
 
         cls.out_picking_type = cls.env.ref("stock.picking_type_out")
         cls.out_picking_type.reservation_method = "manual"
@@ -132,7 +153,7 @@ class TestStockQuantLock(TransactionCase):
             )
             .create(
                 {
-                    "picking_type_id": self.lock_picking_type.id,
+                    "route_id": self.lock_route.id,
                 }
             )
         )
@@ -177,7 +198,7 @@ class TestStockQuantLock(TransactionCase):
         self.assertEqual(len(target_quant), 1)
         self.assertEqual(len(other_quant), 1)
 
-        target_quant._lock_with_picking_type(self.lock_picking_type)
+        target_quant._lock_with_route(self.lock_route)
 
         self.assertTrue(target_quant.is_locked_by_picking)
         self.assertFalse(other_quant.is_locked_by_picking)
@@ -200,7 +221,7 @@ class TestStockQuantLock(TransactionCase):
 
     def test_unlock_cancels_lock_move_and_releases_reservation(self):
         quant = self._prepare_quant_with_partial_reservation()
-        quant._lock_with_picking_type(self.lock_picking_type)
+        quant._lock_with_route(self.lock_route)
 
         lock_move = self.env["stock.move"].search(
             [("quant_lock_quant_id", "=", quant.id)], limit=1
@@ -230,7 +251,7 @@ class TestStockQuantLock(TransactionCase):
 
     def test_unlock_done_lock_move_raises(self):
         quant = self._prepare_quant_with_partial_reservation()
-        quant._lock_with_picking_type(self.lock_picking_type)
+        quant._lock_with_route(self.lock_route)
         lock_move = self.env["stock.move"].search(
             [("quant_lock_quant_id", "=", quant.id)], limit=1
         )
@@ -267,7 +288,7 @@ class TestStockQuantLock(TransactionCase):
                 )
                 .create(
                     {
-                        "picking_type_id": self.lock_picking_type.id,
+                        "route_id": self.lock_route.id,
                     }
                 )
             )
@@ -318,7 +339,7 @@ class TestStockQuantLock(TransactionCase):
             )
             .create(
                 {
-                    "picking_type_id": self.lock_picking_type.id,
+                    "route_id": self.lock_route.id,
                 }
             )
         )
@@ -416,7 +437,7 @@ class TestStockQuantLock(TransactionCase):
             )
             .create(
                 {
-                    "picking_type_id": self.lock_picking_type.id,
+                    "route_id": self.lock_route.id,
                 }
             )
         )
@@ -440,7 +461,7 @@ class TestStockQuantLock(TransactionCase):
 
         picking = quant.with_context(
             default_picking_id=out_picking.id
-        )._lock_with_picking_type(self.lock_picking_type)
+        )._lock_with_route(self.lock_route)
 
         self.assertNotEqual(picking, out_picking)
         self.assertEqual(picking.picking_type_id, self.lock_picking_type)
@@ -462,7 +483,7 @@ class TestStockQuantLock(TransactionCase):
         )
         quant_1 = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
         quant_2 = self._get_exact_quant(self.product, self.stock_location, lot=lot2)
-        picking = quant_1._lock_with_picking_type(self.lock_picking_type)
+        picking = quant_1._lock_with_route(self.lock_route)
 
         # Simulate a reservation failure for the second lock. The exception is
         # caught without savepoint, as a caller locking quants in batch would.
@@ -471,7 +492,7 @@ class TestStockQuantLock(TransactionCase):
         ):
             error = None
             try:
-                quant_2._lock_with_picking_type(self.lock_picking_type)
+                quant_2._lock_with_route(self.lock_route)
             except UserError as e:
                 error = e
             self.assertIsInstance(error, UserError)
@@ -485,3 +506,168 @@ class TestStockQuantLock(TransactionCase):
         self.assertFalse(quant_2.is_locked_by_picking)
         self.assertTrue(quant_1.is_locked_by_picking)
         self.assertEqual(picking.state, "assigned")
+
+    def _create_internal_location(self, name, parent=None):
+        return self.env["stock.location"].create(
+            {
+                "name": name,
+                "usage": "internal",
+                "location_id": parent.id if parent else False,
+            }
+        )
+
+    def test_lock_quant_in_sublocation(self):
+        shelf = self._create_internal_location("Shelf", self.stock_location)
+        self.env["stock.quant"]._update_available_quantity(self.product, shelf, 5.0)
+        quant = self._get_exact_quant(self.product, shelf)
+
+        picking = quant._lock_with_route(self.lock_route)
+
+        move = quant.lock_move_ids
+        self.assertEqual(move.rule_id, self.lock_rule)
+        self.assertEqual(move.location_id, shelf)
+        self.assertEqual(move.location_dest_id, self.output_location)
+        self.assertEqual(picking.picking_type_id, self.lock_picking_type)
+        self.assertTrue(quant.is_locked_by_picking)
+
+    def test_lock_uses_most_specific_rule(self):
+        shelf = self._create_internal_location("Shelf", self.stock_location)
+        quarantine = self._create_internal_location(
+            "Quarantine", self.stock_location.location_id
+        )
+        shelf_rule = self.env["stock.rule"].create(
+            {
+                "name": "Shelf -> Quarantine (lock)",
+                "route_id": self.lock_route.id,
+                # Higher sequence: the general rule comes first in rule order
+                "sequence": 100,
+                "action": "pull",
+                "procure_method": "make_to_stock",
+                "location_src_id": shelf.id,
+                "location_dest_id": quarantine.id,
+                "picking_type_id": self.lock_picking_type.id,
+            }
+        )
+        self.env["stock.quant"]._update_available_quantity(self.product, shelf, 5.0)
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 5.0
+        )
+        shelf_quant = self._get_exact_quant(self.product, shelf)
+        stock_quant = self._get_exact_quant(self.product, self.stock_location)
+
+        shelf_quant._lock_with_route(self.lock_route)
+        stock_quant._lock_with_route(self.lock_route)
+
+        self.assertEqual(shelf_quant.lock_move_ids.rule_id, shelf_rule)
+        self.assertEqual(shelf_quant.lock_move_ids.location_dest_id, quarantine)
+        self.assertEqual(stock_quant.lock_move_ids.rule_id, self.lock_rule)
+        self.assertEqual(
+            stock_quant.lock_move_ids.location_dest_id, self.output_location
+        )
+
+    def test_lock_route_not_allowed_raises(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 5.0
+        )
+        quant = self._get_exact_quant(self.product, self.stock_location)
+        self.lock_route.allow_quant_lock = False
+
+        self.assertFalse(
+            quant._check_is_lock_with_route_allowed(self.lock_route, raise_error=False)
+        )
+        with self.assertRaisesRegex(UserError, "cannot be used for quant lock"):
+            quant._lock_with_route(self.lock_route)
+
+    def test_lock_without_matching_rule_raises(self):
+        outside = self._create_internal_location("Outside")
+        self.env["stock.quant"]._update_available_quantity(self.product, outside, 5.0)
+        quant = self._get_exact_quant(self.product, outside)
+
+        self.assertFalse(quant._get_lock_rule(self.lock_route))
+        with self.assertRaisesRegex(UserError, "has no pull rule"):
+            quant._lock_with_route(self.lock_route)
+        self.assertFalse(quant.lock_move_ids)
+
+    def test_lock_ignores_make_to_order_rule(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 5.0
+        )
+        quant = self._get_exact_quant(self.product, self.stock_location)
+        self.lock_rule.procure_method = "make_to_order"
+
+        self.assertFalse(quant._get_lock_rule(self.lock_route))
+
+    def test_lock_procurement_group_defined_by_rule(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 2.0, lot_id=self.lot
+        )
+        quant = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
+        group = self.env["procurement.group"].create({"name": "Lock group"})
+        self.lock_rule.write(
+            {"group_propagation_option": "fixed", "group_id": group.id}
+        )
+
+        picking = quant._lock_with_route(self.lock_route)
+
+        self.assertEqual(picking.group_id, group)
+        self.assertEqual(quant.lock_move_ids.group_id, group)
+
+    def test_warehouse_quality_check_lock(self):
+        warehouse = self.env["stock.warehouse"].create(
+            {"name": "Quality Check WH", "code": "QCWH"}
+        )
+        route = warehouse.quality_check_route_id
+        location = route.rule_ids.location_dest_id
+        picking_type = route.rule_ids.picking_type_id
+        self.assertEqual(location.location_id, warehouse.view_location_id)
+        self.assertEqual(location.warehouse_id, warehouse)
+        self.assertEqual(picking_type.default_location_dest_id, location)
+        self.assertEqual(picking_type.warehouse_id, warehouse)
+        self.assertTrue(route.allow_quant_lock)
+        self.assertRecordValues(
+            route.rule_ids,
+            [
+                {
+                    "action": "pull",
+                    "procure_method": "make_to_stock",
+                    "location_src_id": warehouse.view_location_id.id,
+                    "location_dest_id": location.id,
+                    "picking_type_id": picking_type.id,
+                }
+            ],
+        )
+
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, warehouse.lot_stock_id, 5.0
+        )
+        quant = self._get_exact_quant(self.product, warehouse.lot_stock_id)
+        picking = quant._lock_with_route(route)
+        self.assertEqual(picking.picking_type_id, picking_type)
+        self.assertEqual(picking.location_dest_id, location)
+        self.assertTrue(quant.is_locked_by_picking)
+
+    def test_warehouse_quality_check_lock_created_once(self):
+        warehouse = self.env["stock.warehouse"].create(
+            {"name": "Quality Check WH", "code": "QCWH"}
+        )
+        route = warehouse.quality_check_route_id
+        # A customized rule is kept
+        route.rule_ids.location_dest_id = warehouse.lot_stock_id
+
+        warehouse._create_quality_check_lock()
+
+        self.assertEqual(warehouse.quality_check_route_id, route)
+        self.assertEqual(route.rule_ids.location_dest_id, warehouse.lot_stock_id)
+        self.assertEqual(
+            self.env["stock.location"].search_count(
+                [
+                    ("location_id", "=", warehouse.view_location_id.id),
+                    ("name", "=", "Quality Check"),
+                ]
+            ),
+            1,
+        )
+
+    def test_existing_warehouse_has_quality_check_lock(self):
+        warehouse = self.env.ref("stock.warehouse0")
+        self.assertTrue(warehouse.quality_check_route_id.allow_quant_lock)
