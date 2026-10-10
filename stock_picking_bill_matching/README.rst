@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 Stock Picking Bill Matching
 ===========================
@@ -17,98 +13,508 @@ Stock Picking Bill Matching
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_bill_matching
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_bill_matching
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-16-0/stock-logistics-workflow-16-0-stock_picking_bill_matching
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_picking_bill_matching
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Stock Picking Bill Matching
-===========================
+Description
+===========
 
 This module bridges the gap between Accounting and Warehouse operations
-in Odoo by allowing users to match Vendor Bills directly against
-Incoming Stock Pickings, bypassing the need for a Purchase Order.
+in Odoo by allowing users to match Vendor Bills against Incoming Stock
+Pickings and their Stock Moves, whether or not a Purchase Order exists.
 
 It brings a paradigm native to Odoo 18.0 (Bill Matching) into Odoo 16
 but elevates it by matching against ``stock.move`` lines instead of
 ``purchase.order.line``.
 
+Expected use cases
+------------------
+
+The module is built around four concrete situations. Recognizing yours
+tells you which settings to enable (see *Configuration*) and which part
+of the *Usage* documentation to read.
+
+**1. The bill arrives after the goods** (the most common case, and the
+usual one with an imported electronic invoice — in Brazil that is the
+*NFe*, the electronic invoice the tax authority validates, whose XML
+carries the invoice lines in a standardized form; elsewhere it is a
+supplier portal document, an EDI, a PDF extraction…). The receipt is
+already validated: the matching *links* the bill lines to the receipt
+lines. Nothing is moved, nothing is restocked. The operator opens the
+bill, clicks *Match Pickings*, pairs the lines (or lets the references
+do it), and the bill leaves the "to match" list. Use it even when a
+purchase order exists — the receipt, not the order, is what is
+reconciled.
+
+**2. The bill arrives while the goods are still on their way.** The
+receipt is draft/confirmed/assigned: matching additionally *drives the
+reception* — the matched quantity is set as done and the receipt is
+validated, a backorder being created for whatever the receipt had in
+excess. This is the "Smart Auto-Reception" behaviour, and it is the
+reason the matching works on stock moves and not only on a link.
+Optionally, the receipt is validated automatically
+(``Auto-Validate Generated Pickings``).
+
+**3. There is no purchase order and no receipt at all** — a small shop,
+or an imported invoice for goods that were never encoded in the system.
+Two ways:
+
+- *Manual:* the *Match Pickings* button opens the matching screen, where
+  *Create / Add to Picking* turns the unmatched bill lines into a
+  receipt (and validates it if the setting is on);
+- *Automatic:* with ``Auto-Create the Receipt when Posting the Bill``,
+  posting the bill generates that receipt by itself, so an imported
+  document results in stock and a reconciled bill with no operator click
+  at all. Nothing is created when a purchase order or a receipt
+  candidate exists — matching an existing document is a decision, not a
+  formality.
+
+**4. The document carries a line reference.** Electronic invoices
+commonly identify the buyer's order line they correspond to — in Brazil
+the NFe carries ``xPed`` (the purchase order number) and ``nItemPed``
+(the line number within that order); an EDI or a supplier portal has its
+own variant; and an import wizard may synthesize one by matching the
+invoice line to a purchase order line or a receipt. With
+``Auto-Match Referenced Lines``, the bill lines whose reference a
+receipt line shares are matched automatically — from the *Match
+Pickings* button, and/or at posting. Only unambiguous cases are
+consumed; every automatic action is traced in the bill chatter.
+
+A single bill may mix all four: some lines already received, some
+pending, some without any counterpart. Each line is handled by whichever
+applies.
+
+What it actually does
+---------------------
+
+Worth being explicit about the two directions it covers, because they do
+not behave the same way:
+
+- **The goods are already received** (the receipt is validated): the
+  matching *links* the bill lines to the receipt lines. Nothing is
+  moved, nothing is validated again — this is plain reconciliation, and
+  it is the most common case when the vendor bill (or its imported
+  electronic version) arrives days after the goods.
+- **The goods are still pending** (the receipt is
+  draft/confirmed/assigned): matching additionally *drives the
+  reception*: the matched quantity is set as done on the receipt lines
+  and they are validated, a backorder being created for whatever the
+  receipt had in excess. This is the "Smart Auto-Reception" behaviour,
+  and it is also why matching is a stock move and not just a link.
+
 Key Features
 ------------
 
 - **Unified Matching Interface:** A single screen (SQL View) showing
-  unmatched Vendor Bill lines and Incoming Receipt lines side-by-side.
+  unmatched Vendor Bill lines and Receipt lines side-by-side, grouped by
+  product.
+- **Ready-to-play demo data:** installing the module with demo data
+  builds a small scenario (a received shipment, a pending one of the
+  same order line, the bill matching them, and a bill with nothing to
+  match against) so the features can be tried without preparing anything
+  — see the usage documentation for the three scenarios to play.
 - **Many-to-Many Linking:** Leverages the ``stock_picking_invoice_link``
-  OCA module to allow complex many-to-many relationships (e.g., partial
-  billing, consolidated billing).
+  OCA module to allow complex many-to-many relationships (partial
+  billing, consolidated billing, one order line received over several
+  receipts).
 - **Smart Auto-Reception:** Matching bill lines with pending receipts
   automatically validates the receipt and handles backorders safely
   using native Odoo logic.
+- **Already received goods:** matching a validated receipt only links
+  it, which is the everyday case (and was the module's blind spot
+  before: a bill could not be matched against a receipt that was already
+  validated).
+- **Automatic matching of referenced lines:** bills lines carrying a
+  reference that a receipt line shares — the line reference of the
+  imported document (in Brazil, the NFe ``xPed``/``nItemPed``), or the
+  canonical reference the fiscal document import wizard synthesized —
+  can be matched automatically, either on the *Match Pickings* button or
+  when the bill is posted — see the *Automatic Matching* section of the
+  usage documentation. Only unambiguous cases are matched, and every
+  automatic action is traced in the bill chatter.
+- **Smart button counters:** the bill form shows how many lines still
+  have to be matched and how many receipt lines are already linked.
 - **Small Shop Replenishment:** Easily generate brand-new Incoming
-  Receipts straight from a drafted Vendor Bill with a single click.
-- **Extensibility:** Built with an extensible matching hook
-  (``_get_matching_pairs``) to allow localization modules (like the
-  Brazilian NFe ``xPed``/``nItemPed``) to override the default
-  product-based matching behavior.
+  Receipts straight from a Vendor Bill — with a single click on the
+  matching screen, or automatically when the bill is posted. The
+  generated receipt carries the bill as origin and a chatter message
+  linking back to it; a warehouse failure never blocks the accounting
+  validation of the bill.
 - **Compatibility:** If the ``stock_picking_invoicing`` module is
   installed, matching or unmatching lines automatically updates the
   invoice state (``invoiced`` / ``2binvoiced``) on stock moves and
   pickings.
+
+Integration / extension points (for other modules)
+--------------------------------------------------
+
+The matching behaviour can be extended by a localization or a document
+importer, with no hard dependency in either direction (everything below
+is duck-typed: the feature simply stays inactive when the module is
+absent).
+
+``matching_reference``
+~~~~~~~~~~~~~~~~~~~~~~
+
+A ``Char`` field on both ``stock.move`` and ``account.move.line``,
+exposed as **Match Ref.** in the matching screen. It is the key the
+pairing uses on top of the product:
+
+- the same non-empty value on both sides means "these two lines belong
+  to the same commercial line" (typically a purchase order line, e.g.
+  ``P00129-2`` for the 2nd line of purchase order ``P00129`` — in Brazil
+  the NFe ``xPed`` (purchase order) and ``nItemPed`` (line number)
+  fields are exactly that, and a localization canonicalizes them into
+  such a key);
+- it identifies the **order line, not the shipment**: a line received in
+  several deliveries legitimately carries the same reference on each of
+  them, and the matching consumes them in order (already received
+  shipments first, before validating a pending one). Do NOT try to make
+  the reference unique per receipt — the bill side could not follow (an
+  invoice does not say which shipment it corresponds to), and
+  reconciling one invoice against several deliveries would become
+  impossible;
+- an **empty** reference means *unspecified* and acts as a **wildcard**:
+  such a line pairs with any line of the same product. This keeps
+  product-only matching working when only one side carries a reference;
+- exact references are consumed first, wildcards only afterwards.
+
+Both sides must therefore produce the *same canonical string*. A
+localization that fills only one side still matches (wildcard), but the
+precise pairing requires both.
+
+Filling the reference: ``_get_bill_matching_reference_sql(alias)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The matching screen is a SQL view, so the reference must be computed by
+the database. A module that knows where the reference comes from
+implements, on ``stock.move`` and/or ``account.move.line``:
+
+.. code:: python
+
+   @api.model
+   def _get_bill_matching_reference_sql(self, alias):
+       """Return a SQL expression (varchar) for the given table alias."""
+
+``alias`` is the SQL alias of the table in the view query (``sm`` for
+``stock.move``, ``aml`` for ``account.move.line``). The derivation takes
+precedence; when it yields nothing (empty or NULL), the stored
+``matching_reference`` field of the line is used as the fallback — so an
+importer writing that field directly still gets pairing, with or without
+a localization.
+
+Practical notes:
+
+- normalize both sides identically (padding, case, zero-padding…):
+  ``P00015-1`` and ``P00015-001`` must end up as the same string or they
+  will not pair;
+- the reference should identify a *line*, not a document, whenever the
+  document can be received and invoiced line by line (a PO name alone is
+  not enough);
+- keep the columns it reads indexed if the view is large.
+
+Overriding the pairing policy: ``_get_matching_pairs(aml_lines, sm_lines)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``picking.bill.line.match._get_matching_pairs`` is the pairing core: it
+receives the selected bill lines and receipt lines and returns a list of
+``(bill line, recordset of receipt lines it may consume)`` pairs.
+Override it to change the policy itself (e.g. match on an attribute
+other than the product, or implement a completely different algorithm);
+the caller (``action_match_lines``) then distributes the quantities,
+links the lines, validates the pending receipts and computes the
+backorders.
+
+Quantities, precision
+~~~~~~~~~~~~~~~~~~~~~
+
+``MATCHING_PRECISION`` (ORM side) and ``MATCHING_EPSILON_SQL`` (SQL view
+side) are the two thresholds used to decide that a quantity has been
+consumed; they are intentionally small (0.001) because quantities are
+matched, not rounded: a one-unit shortage must NOT be reported as
+matched.
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Usage
-=====
+Configuration
+=============
+
+Configuration
+=============
+
+Settings are per company, under **Inventory -> Configuration -> Settings
+-> Bill Matching** (they also apply to the bills of that company only).
+
++-----------------------------+---------+-----------------------------+
+| Setting                     | Default | What it does                |
++=============================+=========+=============================+
+| **Auto-Create Picking on    | off     | If a bill has no open       |
+| Match**                     |         | receipt to match against    |
+|                             |         | (and no open purchase order |
+|                             |         | for that vendor), clicking  |
+|                             |         | **Match Pickings** creates  |
+|                             |         | the missing receipt from    |
+|                             |         | the bill lines instead of   |
+|                             |         | opening the matching        |
+|                             |         | screen.                     |
++-----------------------------+---------+-----------------------------+
+| **Auto-Validate Generated   | off     | The receipts that matching  |
+| Pickings**                  |         | has to validate (a pending  |
+|                             |         | receipt being reconciled    |
+|                             |         | with a bill) are validated  |
+|                             |         | straight away instead of    |
+|                             |         | being left to be validated  |
+|                             |         | by hand.                    |
++-----------------------------+---------+-----------------------------+
+| **Auto-Match Referenced     | off     | The bill lines carrying a   |
+| Lines**                     |         | matching reference are      |
+|                             |         | matched automatically       |
+|                             |         | against the receipt lines   |
+|                             |         | carrying the **same**       |
+|                             |         | reference. See the          |
+|                             |         | *Automatic Matching* usage  |
+|                             |         | section.                    |
++-----------------------------+---------+-----------------------------+
+| **Auto-Match when Posting   | off     | Also run the automatic      |
+| the Bill**                  |         | matching when a vendor bill |
+|                             |         | is posted, so an imported   |
+|                             |         | bill (a Brazilian NFe, or   |
+|                             |         | any document whose import   |
+|                             |         | wizard synthesizes the      |
+|                             |         | reference) is reconciled    |
+|                             |         | without any click. Requires |
+|                             |         | the setting above.          |
++-----------------------------+---------+-----------------------------+
+| **Auto-Create the Receipt   | off     | Small shop flow: when a     |
+| when Posting the Bill**     |         | posted bill has lines with  |
+|                             |         | nothing to match against    |
+|                             |         | (no purchase order, no      |
+|                             |         | receipt at all for the      |
+|                             |         | vendor), the receipt is     |
+|                             |         | created from those lines.   |
+|                             |         | Combined with               |
+|                             |         | **Auto-Validate Generated   |
+|                             |         | Pickings**, the bill        |
+|                             |         | results in stock and a      |
+|                             |         | reconciled document with no |
+|                             |         | manual step. Nothing is     |
+|                             |         | created when a purchase     |
+|                             |         | order or a receipt          |
+|                             |         | candidate exists.           |
++-----------------------------+---------+-----------------------------+
+
+Recommended presets
+-------------------
+
+**Warehouse-driven** (a purchase order and receipts exist; an operator
+reconciles): keep everything off, except **Auto-Validate Generated
+Pickings** if the reception must be validated by the matching.
+
+**Imported documents with references** (the Brazilian NFe, whose
+``xPed``/ ``nItemPed`` fields name the purchase order and its line, or
+any document whose import wizard synthesizes references): **Auto-Match
+Referenced Lines** + **Auto-Match when Posting the Bill**. The operator
+only handles the lines the references could not resolve.
+
+**Small shop, imported documents, nothing encoded in Odoo**: the two
+settings above **plus Auto-Create the Receipt when Posting the Bill**
+and **Auto-Validate Generated Pickings**. Posting an imported bill then
+creates and validates the missing receipt, and links it to the bill.
+
+What the automatic matching will and will not do
+------------------------------------------------
+
+It only consumes the deterministic cases:
+
+- the bill line has a **non-empty** reference, **and**
+- at least one receipt line of the same product, for the same vendor,
+  carries **exactly that reference**.
+
+Everything else stays for the operator: lines without a reference (the
+matching would then fall back to a product-only guess), lines whose
+reference no receipt carries, and quantities that do not add up — a
+wrong automatic match would reconcile the bill against the wrong
+receipt, which is worse than a click.
+
+Being a matching operation, it has the same effect as a manual match: a
+pending receipt is validated (and a backorder created for its excess
+quantity), an already validated receipt is only linked. Every automatic
+matching is traced in the bill chatter, and it can always be undone with
+**Matched Items → Unmatch Selected**.
+
+The posting never fails because of the warehouse
+------------------------------------------------
+
+The warehouse automation triggered at posting (the automatic matching
+and the automatic receipt creation) runs inside a savepoint and under
+``try/except UserError, ValidationError``:
+
+- a warehouse problem (locked stock, a receipt that cannot be validated,
+  a misconfigured location…) posts the bill anyway — accounting must not
+  be blocked by the warehouse — and writes in the bill chatter what
+  failed and what to do (match the receipts by hand);
+- whatever the automation had half-written is rolled back: no orphan
+  receipt is left behind.
 
 Usage
 =====
 
-Testing with Demo Data
-----------------------
+Usage
+=====
 
-This module includes demo data to easily test the matching workflows.
+Which scenario are you in?
+--------------------------
 
-1. Ensure your database is loaded with demo data.
-2. Go to **Accounting -> Vendors -> Bills**.
-3. Look for the Draft bill assigned to **Deco Addict** (Reference:
-   ``Demo Bill``).
-4. Go to **Inventory -> Receipts**. You will see two incoming receipts
-   for Deco Addict generated by the demo data.
++----------------------------------+----------------------------------+
+| Your situation                   | What to read                     |
++==================================+==================================+
+| The receipt is already validated | 1                                |
+| (bill after the goods: an        |                                  |
+| imported electronic invoice such |                                  |
+| as the Brazilian NFe, a portal   |                                  |
+| invoice…)                        |                                  |
++----------------------------------+----------------------------------+
+| The receipt exists but is still  | 1                                |
+| pending (goods on their way)     |                                  |
++----------------------------------+----------------------------------+
+| No purchase order, no receipt at | 2                                |
+| all (small shop, imported bills, |                                  |
+| nothing encoded)                 |                                  |
++----------------------------------+----------------------------------+
+| The document carries a line      | 5                                |
+| reference (in Brazil the NFe     |                                  |
+| ``xPed``/``nItemPed``, or one    |                                  |
+| synthesized by the import        |                                  |
+| wizard)                          |                                  |
++----------------------------------+----------------------------------+
+| You want it to happen without    | 2 and 5 (the *Auto-…* company    |
+| any click                        | settings)                        |
++----------------------------------+----------------------------------+
+
+A single bill may need several of them: each line follows whichever
+applies.
+
+Demo data: play the scenarios
+-----------------------------
+
+The module ships a small scenario (supplier **DEMO Supplier (bill
+matching)**, created for it) that is built when the module is installed
+in a database **with demo data** — the standard "create a new Odoo demo
+database" flow. It contains two receipts and two bills:
+
++----------------------------------+----------------------------------+
+| Record                           | What it is                       |
++==================================+==================================+
+| receipt *DEMO-PO-1 (1st          | **Done**: 4 Acoustic Bloc        |
+| shipment)*                       | Screens, already received        |
++----------------------------------+----------------------------------+
+| receipt *DEMO-PO-1 (2nd          | **Ready** (not received yet): 8  |
+| shipment)*                       | Acoustic Bloc Screens of the     |
+|                                  | same order line                  |
++----------------------------------+----------------------------------+
+| draft bill *DEMO - order         | 4 + 6 Acoustic Bloc Screens,     |
+| DEMO-PO-1 (received + on its     | both carrying the reference      |
+| way)*                            | ``DEMO-PO-1``, plus a            |
+|                                  | **section** line and a           |
+|                                  | **service** line                 |
++----------------------------------+----------------------------------+
+| draft bill *DEMO - nothing       | 12 Office Chairs, **no receipt   |
+| received yet (small shop flow)*  | and no purchase order**          |
++----------------------------------+----------------------------------+
+
+Both receipts and the two storable bill lines carry the matching
+reference ``DEMO-PO-1`` (visible in the *Match Ref.* column of the
+matching screen). The demo sets the ``matching_reference`` field
+directly; in a real database a localization computes it instead (in
+Brazil, from the ``xPed``/``nItemPed`` fields of the NFe, i.e. the
+purchase order and its line number).
+
+Scenario 1 — the bill arrives after the goods, one order line in two shipments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Open the *DEMO - order DEMO-PO-1* bill, click **Match Pickings**, then
+**Match Selected** on the two storable lines (or select everything: the
+section and the service line are ignored).
+
+- the 4 units of the first shipment are **only linked**: the receipt is
+  done, it is not touched, nothing is restocked (the everyday case);
+- the 6 units still on their way are **received** by the matching, and
+  the 2 units the receipt had in excess become a **backorder**;
+- the *Match Pickings* counter falls to 0, *Matched Items* shows 2, and
+  the section/service lines were never counted as unmatched.
+
+The two shipments share the same reference on purpose: a reference
+identifies the **order line**, not the shipment (see the ordering note
+below).
+
+Scenario 2 — the same bill, matched automatically
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enable **Auto-Match Referenced Lines** (Inventory → Configuration →
+Settings → Bill Matching), reopen the bill and click **Match Pickings**
+once: the references do the pairing, with no selection at all. With
+**Auto-Match when Posting the Bill** also enabled, this happens by
+itself when the bill is posted.
+
+Scenario 3 — the small shop bill (nothing to match against)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Open the *DEMO - nothing received yet* bill: its lines have no receipt
+(and no purchase order) to match with, so the matching screen is empty.
+
+- **Create / Add to Picking** builds the receipt from those lines;
+- or enable **Auto-Create the Receipt when Posting the Bill** (with
+  **Auto-Validate Generated Pickings**) and simply **post** the bill:
+  the receipt is created, linked to the bill and validated, with the
+  bill as its origin and a chatter message linking back to it.
+
+*Note: those transfers are prepared at installation time (the demo data
+is built by the module's data files), so the scenario is complete in a
+fresh demo database. In a database where the module was already
+installed before the demo data was added, the demo records appear but
+their transfers stay in draft — validate them by hand if you want to
+replay the scenario there.*
 
 1. Matching Existing Pickings and Bills
 ---------------------------------------
 
-If you receive an electronic invoice and the warehouse has already
-processed the receipt:
+Whether the warehouse already processed the receipt or not:
 
 1. Open the Vendor Bill.
-2. Click the **Match Pickings** smart button at the top right.
+2. Click the **Match Pickings** smart button at the top right. The
+   button shows how many lines of the bill still have to be matched.
 3. You will be taken to the matching view.
 4. Select the Vendor Bill line(s) and the corresponding Receipt line(s).
 
    - *Note: They are grouped by product, with Vendor Bills appearing
-     above Receipts.*
+     above Receipts. Already validated receipts are listed too (their
+     quantity is simply linked, nothing is re-validated).*
 
 5. Click **Match Selected**.
 
    - The lines will vanish from the Unmatched view.
-   - If the Receipt had a higher quantity than the Bill, Odoo will
-     automatically create a Backorder for the remaining quantity. If you
-     later cancel the backorder and decide not to keep the extra stock,
-     click **Force Matched** on the bill to settle it.
+   - If the Receipt is *pending* and had a higher quantity, Odoo
+     validates the matched quantity and creates a Backorder for the
+     remaining quantity. If you later cancel the backorder and decide
+     not to keep the extra stock, click **Force Matched** on the bill to
+     settle it.
+   - If the Receipt is *already validated*, it is only linked: the stock
+     is untouched.
    - If the Bill had a higher quantity, the remaining billed quantity
      will stay in the view awaiting a future receipt, or you can create
      a new picking for it using the **Create / Add to Picking** button.
@@ -143,6 +549,53 @@ Bills, you can generate your warehouse receipts in one click:
 enabled, clicking* **Match Pickings** *on a bill with no open receipts
 will skip the matching view and generate the picking automatically.*
 
+Fully automatic: the receipt created when the bill is posted
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With the **Auto-Create the Receipt when Posting the Bill** company
+setting (see *Configuration*, and combine it with **Auto-Validate
+Generated Pickings** for the stock to enter immediately), there is
+nothing left to click: importing an electronic bill and validating it
+creates the receipt, links it and — if the setting asks for it —
+validates it.
+
+It is deliberately limited to the bills that have **nothing to match
+against**: no purchase order for that vendor and no receipt candidate
+for the products still to match. As soon as a document exists, matching
+it is the operator's decision, and the automatic creation steps aside.
+
+Two safety properties, because this happens while accounting validates a
+document:
+
+- **the posting is never blocked by the warehouse.** The automation runs
+  in a savepoint: if the receipt cannot be created or validated (locked
+  stock, a misconfigured location…), the bill is posted anyway and the
+  bill chatter explains what failed and to match the receipts by hand;
+- **nothing is left half-done:** the failed warehouse writes are rolled
+  back, so no orphan receipt is left behind.
+
+A receipt generated this way (manually or automatically) is never
+anonymous:
+
+- its **Origin** is set to the vendor bill it comes from, marked as
+  ``(bill matching)`` — e.g. ``BILL/2026/0012 (bill matching)``, or the
+  bill's display name when the bill is still a nameless draft;
+- the receipt's **chatter** gets a message naming the bill with a
+  clickable link back to it, how many bill lines were added, and — for a
+  generated receipt — whether it was validated immediately or is waiting
+  to be received. When the module generated the receipt on its own (no
+  receipt and no open purchase order existed), the message says so.
+
+Feeding an **existing** receipt the same way (step 4 above with an
+"Existing Picking" selected) is traced too: the receipt's origin is left
+untouched, but the chatter records the bill lines that were added to it
+and from which bill.
+
+The bill is traced as well: when its posting generated the receipt, the
+bill chatter says so with a link to that receipt — so an accountant
+auditing the bill sees where the stock came from without leaving the
+document.
+
 3. Undo / Unmatching
 --------------------
 
@@ -163,13 +616,115 @@ the related stock moves and pickings. Matched lines are marked as
 ``2binvoiced``, keeping the picking's billing status consistent without
 manual intervention.
 
+5. Automatic Matching of Referenced Lines
+-----------------------------------------
+
+When both sides of a line carry a reference — in Brazil, the NFe (the
+electronic invoice the tax authority validates) carries ``xPed``, the
+buyer's purchase order number, and ``nItemPed``, the line number within
+that order; the fiscal document import wizard turns that pair into a
+canonical reference — the pairing is not a decision anymore: it is
+arithmetic. The same holds for any imported document whose line
+reference identifies a purchase order line. Two company settings (see
+*Configuration*) let the system take that decision on its own:
+
+- **Auto-Match Referenced Lines**: the **Match Pickings** button first
+  matches every bill line whose reference is shared by a receipt line,
+  then opens the matching screen with what is left;
+- **Auto-Match when Posting the Bill**: the same happens automatically
+  when the bill is posted, so an imported bill is reconciled without any
+  click.
+
+Only the deterministic cases are matched: a line without a reference, or
+whose reference no receipt carries, is left for the operator. A wrong
+automatic link would be worse than a click, because it reconciles the
+bill against the wrong receipt — and matching a *pending* receipt
+validates it, like a manual match does. Every automatic matching writes
+a note in the bill chatter naming the receipts and the references used,
+and can be reverted with **Matched Items -> Unmatch Selected**.
+
+6. Smart Button Counters
+------------------------
+
+The bill form tells where you stand without opening anything:
+
++--------------------+-------------------------------------------------+
+| Button             | Counter                                         |
++====================+=================================================+
+| **Match Pickings** | number of bill lines still to be matched (a     |
+|                    | partially matched line counts as one)           |
++--------------------+-------------------------------------------------+
+| **Matched Items**  | number of linked receipt lines; the button is   |
+|                    | hidden while nothing is matched                 |
++--------------------+-------------------------------------------------+
+
+Only the real product lines are counted: the sections, notes, tax and
+payment-term lines, the lines without a product and the service lines
+(which never go through stock) neither appear in the matching screen nor
+in the counters, and they never keep a bill unmatched. A bill made only
+of services and notes is simply considered matched.
+
+**Force Matched** / **Reset Force** are actions, so they carry no
+counter.
+
+**Reading the quantities.** The *Unmatched Qty* of a **bill line** is
+the billed quantity still to be covered, and it never goes below zero: a
+fully matched line reads ``0``, even when the receipt line covering it
+is larger (one receipt line can cover several bill lines, and several
+bill lines can feed from one receipt line — the link records the
+pairing, not a quantity per link). On the **receipt** side the value
+keeps its sign: a negative *Unmatched Qty* means the vendor billed more
+than what was received, which is precisely the anomaly to look at.
+
+When the matching button finds nothing left to match (because the
+automatic matching, or the perfect-quantity shortcut, already matched
+everything), the button says so with a notification and reloads the bill
+instead of opening an empty matching screen. When something *is* left,
+the matching screen opens on exactly those remaining lines.
+
+7. How the Matching Screen is Ordered
+-------------------------------------
+
+Inside a product group, the lines are ordered by their **pairing
+reference** (the *Match Ref.* column) so that a vendor bill line is
+immediately followed by the receipt line(s) carrying the same reference:
+
+::
+
+   EUR-D10B-BK-2L          (product group)
+     Vendor Bill line      Match Ref. P00235-1     <- bill line
+     Forno/IN/00008        Match Ref. P00235-1     <- its receipt, right below
+     Vendor Bill line      Match Ref. P00235-3
+     Forno/IN/00008        Match Ref. P00235-3
+     Forno/IN/00001        Match Ref. -(no ref)    <- not paired: at the bottom
+     WH/IN/00493           Match Ref. -(no ref)
+
+- the vendor bill lines still come first (of the whole screen, and of
+  their pairing group);
+- the lines that could not be paired — a bill line without reference, or
+  a receipt whose reference no bill line carries — are grouped at the
+  **end** of the product group, bills before receipts;
+- several bill lines and/or several receipts sharing one reference stay
+  together (a supplier splitting one order line over two invoice lines,
+  or one order line received in two shipments), the bills first — the
+  reference identifies the order line, so a split delivery shows the
+  same reference on each shipment, and the *Is Done* column tells them
+  apart;
+- matched lines are listed after the unmatched ones (the *Unmatched*
+  filter is on by default when opening the screen from a bill).
+
+The reference used for that ordering is the very one displayed in the
+*Match Ref.* column: a localization computes it in SQL
+(``_get_bill_matching_reference_sql``), otherwise the stored
+``matching_reference`` field is used.
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_bill_matching%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_picking_bill_matching%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -196,6 +751,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/16.0/stock_picking_bill_matching>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_picking_bill_matching>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
