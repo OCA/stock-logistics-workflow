@@ -17,13 +17,14 @@ class PurchaseOrder(models.Model):
     )
     def _compute_is_picking_matched(self):
         for po in self:
-            if all(
-                picking.is_picking_matched
-                for picking in po.order_line.move_ids.mapped("picking_id")
-            ):
-                po.is_picking_matched = True
-            else:
-                po.is_picking_matched = False
+            # a purchase order with no receipt at all is NOT matched: all([])
+            # would be vacuously true and hide the order from the todo lists
+            pickings = po.order_line.move_ids.mapped("picking_id").filtered(
+                lambda picking: picking.state != "cancel"
+            )
+            po.is_picking_matched = bool(pickings) and all(
+                picking.is_picking_matched for picking in pickings
+            )
 
     def action_bill_matching(self):
         self.ensure_one()

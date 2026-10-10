@@ -20,18 +20,23 @@ class StockPicking(models.Model):
         "move_ids.product_uom_qty",
     )
     def _compute_is_picking_matched(self):
-        precision_digits = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
         for picking in self:
             picking.is_picking_matched = True
             for line in picking.move_ids:
                 qty_matched = sum(aml.quantity for aml in line.invoice_line_ids)
+                # compare with the UoM rounding: the digits count used as a
+                # rounding would swallow every shortage below that magnitude
+                rounding = (
+                    line.product_uom.rounding
+                    if line.product_uom
+                    else 10
+                    ** -self.env["decimal.precision"].precision_get(
+                        "Product Unit of Measure"
+                    )
+                )
                 if (
                     float_compare(
-                        qty_matched,
-                        line.product_uom_qty,
-                        precision_rounding=precision_digits,
+                        qty_matched, line.product_uom_qty, precision_rounding=rounding
                     )
                     < 0
                 ):

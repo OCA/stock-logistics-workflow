@@ -16,3 +16,15 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.auto_create_picking_on_match",
         readonly=False,
     )
+    auto_match_referenced_lines = fields.Boolean(
+        related="company_id.auto_match_referenced_lines",
+        readonly=False,
+    )
+    auto_match_referenced_on_post = fields.Boolean(
+        related="company_id.auto_match_referenced_on_post",
+        readonly=False,
+    )
+    auto_create_picking_on_post = fields.Boolean(
+        related="company_id.auto_create_picking_on_post",
+        readonly=False,
+    )
