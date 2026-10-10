@@ -13,6 +13,7 @@
                     </div>
                     <group>
                         <field name="partner_id" invisible="1" />
+                        <field name="company_id" readonly="1" />
                         <field
                             name="picking_id"
                             placeholder="Leave empty to create a new receipt..."

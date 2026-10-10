@@ -1226,3 +1226,116 @@ class TestStockBillMatching(common.TransactionCase):
         )
         self.assertEqual(receipt.state, "assigned", "and it is not touched either")
         self.assertFalse(bill.is_picking_matched, "matching stays manual")
+
+    # ------------------------------------------------------------------
+    # Multi-company: a receipt belongs to the company of the bill it is
+    # matched with, and only that company's receipts are proposed.
+    # ------------------------------------------------------------------
+
+    def _create_picking_in_company(self, company, products_info):
+        """Incoming picking of another company.
+
+        Stock only: a company created by the test has its operation types but
+        no default locations (and no accounting), so they are given here.
+        """
+        picking_type = self.env["stock.picking.type"].search(
+            [("code", "=", "incoming"), ("company_id", "=", company.id)], limit=1
+        )
+        warehouse = self.env["stock.warehouse"].search(
+            [("company_id", "=", company.id)], limit=1
+        )
+        # the shared Vendors location belongs to the main company: a company
+        # of its own needs its own supplier location
+        supplier_location = self.env["stock.location"].create(
+            {
+                "name": "Vendors",
+                "usage": "supplier",
+                "company_id": company.id,
+            }
+        )
+        # the records must be created in the company of the picking, not in the
+        # user's current one (the company of a move defaults to the env's)
+        env_other = self.env["stock.picking"].with_company(company)
+        picking = env_other.create(
+            {
+                "partner_id": self.partner_a.id,
+                "picking_type_id": picking_type.id,
+                "location_id": supplier_location.id,
+                "location_dest_id": warehouse.lot_stock_id.id,
+            }
+        )
+        for product, qty in products_info:
+            self.env["stock.move"].with_company(company).create(
+                {
+                    "name": product.name,
+                    "product_id": product.id,
+                    "product_uom_qty": qty,
+                    "product_uom": product.uom_id.id,
+                    "picking_id": picking.id,
+                    "location_id": picking.location_id.id,
+                    "location_dest_id": picking.location_dest_id.id,
+                }
+            )
+        picking.action_confirm()
+        picking.action_assign()
+        return picking
+
+    def test_36_the_matching_ignores_the_receipts_of_other_companies(self):
+        """A bill only matches the receipts of its own company: the goods of
+        another company are not this bill's business, and matching them would
+        move the stock of another company."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        other_receipt = self._create_picking_in_company(
+            other_company, [(self.product_a, 5)]
+        )
+
+        self.assertNotIn(other_receipt, bill._get_partner_pickings())
+        self.assertFalse(bill._get_partner_pickings())
+
+        own_receipt = self.create_picking([(self.product_a, 5)])
+        self.assertEqual(bill._get_partner_pickings(), own_receipt)
+
+    def test_37_a_receipt_of_another_company_cannot_be_fed(self):
+        """The wizard refuses to feed a receipt of another company than the
+        bill's one instead of writing in the wrong books."""
+        bill = self.create_bill([(self.product_a, 5, 50.0)])
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        other_receipt = self._create_picking_in_company(
+            other_company, [(self.product_a, 5)]
+        )
+        lines = self.env["picking.bill.line.match"].search(
+            [("account_move_id", "=", bill.id)]
+        )
+        self.assertTrue(lines)
+        wizard = (
+            self.env["bill.to.picking.wizard"]
+            .with_context(
+                active_model="picking.bill.line.match",
+                active_ids=lines.ids,
+            )
+            .create(
+                {
+                    "partner_id": self.partner_a.id,
+                    "picking_id": other_receipt.id,
+                }
+            )
+        )
+        self.assertEqual(wizard.company_id, bill.company_id)
+        with self.assertRaises(UserError):
+            wizard.action_add_to_picking()
+
+    def test_38_the_generated_receipt_is_in_the_bill_company(self):
+        """The receipt the matching generates carries the company of the bill
+        it comes from, in the automatic flow as well."""
+        self.env.company.auto_create_picking_on_match = True
+        self.env.company.auto_validate_matched_picking = True
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        bill = self.create_bill([(self.product_b, 4, 100.0)])
+
+        action = bill.action_picking_matching()
+
+        picking = self.env["stock.picking"].browse(action["res_id"])
+        self.assertEqual(picking.company_id, bill.company_id)
+        self.assertEqual(picking.move_ids.company_id, bill.company_id)
+        self.assertNotEqual(picking.company_id, other_company)
