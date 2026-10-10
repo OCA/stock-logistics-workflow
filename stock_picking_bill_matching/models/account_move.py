@@ -130,7 +130,10 @@ class AccountMove(models.Model):
         purpose: goods received before the bill arrives is the most common
         case (the bill is often imported days later), and the matching then
         only links them — an already validated receipt is never validated
-        again, see ``picking.bill.line.match.action_match_lines``.
+        again, see ``picking.bill.line.match.action_match_lines``. The
+        receipts are restricted to the company of the bill: the goods of
+        another company are not this bill's business (and matching them would
+        move the stock of another company).
         """
         return self.env["stock.picking"].search(
             [
@@ -140,6 +143,7 @@ class AccountMove(models.Model):
                     (self.partner_id | self.partner_id.commercial_partner_id).ids,
                 ),
                 ("picking_type_code", "=", "incoming"),
+                ("company_id", "=", self.company_id.id),
                 ("state", "!=", "cancel"),
             ]
         )

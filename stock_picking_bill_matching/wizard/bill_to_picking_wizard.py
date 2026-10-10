@@ -14,15 +14,23 @@ class BillToPickingWizard(models.TransientModel):
         "stock.picking",
         string="Existing Picking",
         domain=(
-            "[('partner_id', '=', partner_id), ('state', 'not in', ['done', 'cancel']),"
+            "[('partner_id', '=', partner_id), ('company_id', '=', company_id),"
+            " ('state', 'not in', ['done', 'cancel']),"
             " ('picking_type_code', '=', 'incoming')]"
         ),
     )
     partner_id = fields.Many2one("res.partner", string="Vendor", required=True)
 
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        default=lambda self: self._default_company(),
+        help="Company of the bill lines: the receipt is created in it.",
+    )
+
     auto_validate = fields.Boolean(
         string="Auto-Validate Receipt",
-        default=lambda self: self.env.company.auto_validate_matched_picking,
+        default=lambda self: self._default_company().auto_validate_matched_picking,
     )
 
     def _get_active_lines(self):
@@ -32,6 +40,35 @@ class BillToPickingWizard(models.TransientModel):
     def _get_bills(self):
         """Vendor bill(s) whose lines this wizard is fed with."""
         return self._get_active_lines().aml_id.move_id
+
+    def _default_company(self):
+        """Company the receipt belongs to: the one of the bill lines.
+
+        A receipt created by the matching must live in the same company as the
+        bill it comes from (a receipt has no company of its own: it is derived
+        from its operation type), otherwise the stock of a bill of another
+        company lands in the wrong books.
+        """
+        companies = self._get_bills().company_id[:1]
+        return companies or self.env.company
+
+    def _get_company(self):
+        """Company to work in, refusing the lines of several companies.
+
+        A single receipt cannot cover bills of several companies: the operator
+        is told to receive them company by company instead of silently picking
+        one of them.
+        """
+        companies = self._get_bills().company_id
+        if len(companies) > 1:
+            raise UserError(
+                _(
+                    "The selected bill lines belong to several companies "
+                    "(%(companies)s): receive them company by company.",
+                    companies=", ".join(companies.mapped("display_name")),
+                )
+            )
+        return companies[:1] or self.company_id or self.env.company
 
     def _get_bill_label(self, bill):
         """Label of a bill, tolerating a still nameless draft.
@@ -112,8 +149,14 @@ class BillToPickingWizard(models.TransientModel):
         # as the origin is used for what it is meant to be (the source
         # document).
         generated = not self.picking_id
+        company = self._get_company()
+        # The whole wizard works in the company of the bill: the operation
+        # type, its locations, its sequence, and the checks the receipts run
+        # (a receipt of another company would be refused by ``_check_company``
+        # as soon as the user's current company differs).
+        self = self.with_company(company)
+
         if generated:
-            company = aml_ids[0].company_id
             picking_type = self.env["stock.picking.type"].search(
                 [
                     ("code", "=", "incoming"),
@@ -121,6 +164,16 @@ class BillToPickingWizard(models.TransientModel):
                 ],
                 limit=1,
             )
+            if not picking_type:
+                raise UserError(
+                    _(
+                        "No incoming operation type is configured for the "
+                        "company %(company)s: the receipt of %(partner)s cannot "
+                        "be created.",
+                        company=company.display_name,
+                        partner=self.partner_id.display_name,
+                    )
+                )
 
             self.picking_id = self.env["stock.picking"].create(
                 {
@@ -133,6 +186,17 @@ class BillToPickingWizard(models.TransientModel):
                     "location_dest_id": picking_type.default_location_dest_id.id,
                     "move_type": "direct",  # avoid conflict with ctx default_move_type
                 }
+            )
+        elif self.picking_id.company_id != company:
+            raise UserError(
+                _(
+                    "The receipt %(picking)s belongs to the company "
+                    "%(picking_company)s while the bill belongs to "
+                    "%(bill_company)s: they cannot be matched together.",
+                    picking=self.picking_id.display_name,
+                    picking_company=self.picking_id.company_id.display_name,
+                    bill_company=company.display_name,
+                )
             )
 
         for aml in aml_ids:
@@ -152,16 +216,17 @@ class BillToPickingWizard(models.TransientModel):
 
             self.env["stock.move"].create(move_vals)
 
-        if self.picking_id.state == "draft":
-            self.picking_id.action_confirm()
+        picking = self.picking_id.with_company(self.picking_id.company_id)
+        if picking.state == "draft":
+            picking.action_confirm()
 
         # Auto Validate the receipt this wizard just generated, or simply
         # assign an existing one (which is never validated behind the user's
         # back)
         if self.auto_validate and generated:
-            self.picking_id.button_validate()
+            picking.button_validate()
         else:
-            self.picking_id.action_assign()
+            picking.action_assign()
 
         self._post_bill_matching_message(generated, aml_ids)
 
