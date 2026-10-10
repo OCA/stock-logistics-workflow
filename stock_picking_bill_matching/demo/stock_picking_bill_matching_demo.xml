@@ -1,33 +1,167 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-    <!-- Demo Incoming Pickings -->
-    <!-- Picking 1: Delivery 01 -->
-    <record id="demo_picking_matching_1" model="stock.picking">
-        <field name="partner_id" ref="base.res_partner_1" />
-        <field name="picking_type_id" ref="stock.picking_type_in" />
-        <field name="location_id" ref="stock.stock_location_suppliers" />
-        <field name="location_dest_id" ref="stock.stock_location_stock" />
-        <field
-            name="move_ids"
-            eval="[
-            (5, 0, 0),
-            (0, 0, {'name': 'Delivery 01', 'product_id': ref('product.product_delivery_01'), 'product_uom_qty': 10, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_suppliers'), 'location_dest_id': ref('stock.stock_location_stock')}),
-        ]"
-        />
+    <!--
+        Demo scenario of the bill matching: a dedicated supplier, two receipts
+        and two vendor bills covering the module's main use cases. A dedicated
+        supplier keeps the scenario self-contained: no other demo receipt or
+        purchase order of the database interferes with it.
+
+        A. The goods are already received — and arrived in two shipments
+           demo_receipt_done     (done)     : 4 Acoustic Bloc Screens, the 1st
+                                              shipment of the order line
+                                              DEMO-PO-1
+           demo_receipt_pending  (assigned) : 8 Acoustic Bloc Screens, the 2nd
+                                              shipment of the same order line
+                                              DEMO-PO-1 (still on its way)
+           demo_bill_received    (draft)    : 4 + 6 Acoustic Bloc Screens, both
+                                              carrying DEMO-PO-1, plus a section
+                                              line and a service line
+           -> matching the two storable lines links the received shipment as it
+              is (nothing is re-validated), receives 6 units of the pending one
+              (the 2 remaining units become a backorder), and ignores the
+              section and the service line.
+           -> with the Auto-Match Referenced Lines setting enabled, a single
+              click on Match Pickings does all of it without any selection.
+
+        B. Nothing to match against (small shop, imported bill)
+           demo_bill_no_receipt  (draft)    : 12 Office Chairs, no receipt and
+                                              no purchase order
+           -> the matching screen is empty: Create / Add to Picking builds the
+              receipt by hand; the Auto-Create Picking on Match setting does it
+              from the bill, and Auto-Create the Receipt when Posting the Bill
+              does it when the bill is posted.
+
+        The Match Ref. column of the matching screen shows the value of the
+        matching_reference field set below. In a real database a localization
+        computes it (the Brazilian localization derives it from the xPed and
+        nItemPed fields of the NFe, i.e. the purchase order and its line
+        number); here it is set explicitly so the pairing works out of the box.
+    -->
+    <record id="demo_partner" model="res.partner">
+        <field name="name">DEMO Supplier (bill matching)</field>
+        <field name="company_type">company</field>
     </record>
 
-    <!-- Picking 2: Product 25 -->
-    <record id="demo_picking_matching_2" model="stock.picking">
-        <field name="partner_id" ref="base.res_partner_1" />
+    <!-- A. the first shipment: received and validated -->
+    <record id="demo_receipt_done" model="stock.picking">
+        <field name="partner_id" ref="demo_partner" />
         <field name="picking_type_id" ref="stock.picking_type_in" />
         <field name="location_id" ref="stock.stock_location_suppliers" />
         <field name="location_dest_id" ref="stock.stock_location_stock" />
-        <field
-            name="move_ids"
-            eval="[
-            (5, 0, 0),
-            (0, 0, {'name': 'Product 25', 'product_id': ref('product.product_product_25'), 'product_uom_qty': 5, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_suppliers'), 'location_dest_id': ref('stock.stock_location_stock')})
-        ]"
-        />
+        <field name="origin">DEMO-PO-1 (1st shipment)</field>
+    </record>
+    <record id="demo_move_done" model="stock.move">
+        <field name="name">Acoustic Bloc Screens - 1st shipment</field>
+        <field name="picking_id" ref="demo_receipt_done" />
+        <field name="product_id" ref="product.product_product_25" />
+        <field name="product_uom_qty">4</field>
+        <field name="product_uom" ref="uom.product_uom_unit" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field name="matching_reference">DEMO-PO-1</field>
+    </record>
+    <function
+        model="stock.picking"
+        name="action_confirm"
+        eval="[ref('demo_receipt_done')]"
+    />
+    <function
+        model="stock.picking"
+        name="action_assign"
+        eval="[ref('demo_receipt_done')]"
+    />
+    <function model="stock.move" name="write">
+        <value eval="[ref('demo_move_done')]" />
+        <value eval="{'quantity_done': 4}" />
+    </function>
+    <function
+        model="stock.picking"
+        name="button_validate"
+        eval="[ref('demo_receipt_done')]"
+    />
+
+    <!-- A. the second shipment of the same order line: still on its way -->
+    <record id="demo_receipt_pending" model="stock.picking">
+        <field name="partner_id" ref="demo_partner" />
+        <field name="picking_type_id" ref="stock.picking_type_in" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field name="origin">DEMO-PO-1 (2nd shipment)</field>
+    </record>
+    <record id="demo_move_pending" model="stock.move">
+        <field name="name">Acoustic Bloc Screens - 2nd shipment</field>
+        <field name="picking_id" ref="demo_receipt_pending" />
+        <field name="product_id" ref="product.product_product_25" />
+        <field name="product_uom_qty">8</field>
+        <field name="product_uom" ref="uom.product_uom_unit" />
+        <field name="location_id" ref="stock.stock_location_suppliers" />
+        <field name="location_dest_id" ref="stock.stock_location_stock" />
+        <field name="matching_reference">DEMO-PO-1</field>
+    </record>
+    <function
+        model="stock.picking"
+        name="action_confirm"
+        eval="[ref('demo_receipt_pending')]"
+    />
+    <function
+        model="stock.picking"
+        name="action_assign"
+        eval="[ref('demo_receipt_pending')]"
+    />
+
+    <!-- A. the bill of that order line, split by the vendor the same way -->
+    <record id="demo_bill_received" model="account.move">
+        <field name="move_type">in_invoice</field>
+        <field name="partner_id" ref="demo_partner" />
+        <field name="invoice_date" eval="datetime.now().date()" />
+        <field name="ref">DEMO - order DEMO-PO-1 (received + on its way)</field>
+    </record>
+    <record id="demo_bill_received_section" model="account.move.line">
+        <field name="move_id" ref="demo_bill_received" />
+        <field name="display_type">line_section</field>
+        <field name="name">Order DEMO-PO-1</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="demo_bill_received_line_1" model="account.move.line">
+        <field name="move_id" ref="demo_bill_received" />
+        <field name="product_id" ref="product.product_product_25" />
+        <field name="name">Acoustic Bloc Screens - 1st shipment (received)</field>
+        <field name="quantity">4</field>
+        <field name="price_unit">100.0</field>
+        <field name="sequence">2</field>
+        <field name="matching_reference">DEMO-PO-1</field>
+    </record>
+    <record id="demo_bill_received_line_2" model="account.move.line">
+        <field name="move_id" ref="demo_bill_received" />
+        <field name="product_id" ref="product.product_product_25" />
+        <field name="name">Acoustic Bloc Screens - 2nd shipment (on its way)</field>
+        <field name="quantity">6</field>
+        <field name="price_unit">100.0</field>
+        <field name="sequence">3</field>
+        <field name="matching_reference">DEMO-PO-1</field>
+    </record>
+    <record id="demo_bill_received_line_3" model="account.move.line">
+        <field name="move_id" ref="demo_bill_received" />
+        <field name="product_id" ref="product.product_product_1" />
+        <field name="name">Virtual Interior Design - setup of the order</field>
+        <field name="quantity">2</field>
+        <field name="price_unit">50.0</field>
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- B. nothing to match against: a bill of goods never received -->
+    <record id="demo_bill_no_receipt" model="account.move">
+        <field name="move_type">in_invoice</field>
+        <field name="partner_id" ref="demo_partner" />
+        <field name="invoice_date" eval="datetime.now().date()" />
+        <field name="ref">DEMO - nothing received yet (small shop flow)</field>
+    </record>
+    <record id="demo_bill_no_receipt_line_1" model="account.move.line">
+        <field name="move_id" ref="demo_bill_no_receipt" />
+        <field name="product_id" ref="product.product_delivery_01" />
+        <field name="name">Office Chair</field>
+        <field name="quantity">12</field>
+        <field name="price_unit">80.0</field>
+        <field name="sequence">1</field>
     </record>
 </odoo>
