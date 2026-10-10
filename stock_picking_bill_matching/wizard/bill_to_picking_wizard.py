@@ -180,7 +180,8 @@ class BillToPickingWizard(models.TransientModel):
         self.ensure_one()
         lines = self._get_active_lines()
         aml_ids = lines.aml_id.filtered(
-            lambda l: l.product_id and l.product_id.type in ("product", "consu")
+            lambda line: line.product_id
+            and line.product_id.type in ("product", "consu")
         )
 
         if not aml_ids:
@@ -253,10 +254,10 @@ class BillToPickingWizard(models.TransientModel):
                 "invoice_line_ids": [Command.link(aml.id)],
                 "product_uom": aml.product_uom_id.id,
             }
-            # Set quantity_done if auto-validating
+            # Set quantity if auto-validating
             if self.auto_validate and generated:
-                move_vals["quantity_done"] = aml.unmatched_qty
-
+                move_vals["quantity"] = aml.unmatched_qty
+                move_vals["picked"] = True
             self.env["stock.move"].create(move_vals)
 
         picking = self.picking_id.with_company(self.picking_id.company_id)

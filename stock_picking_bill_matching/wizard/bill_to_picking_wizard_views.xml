@@ -18,10 +18,7 @@
                             name="picking_id"
                             placeholder="Leave empty to create a new receipt..."
                         />
-                        <field
-                            name="auto_validate"
-                            attrs="{'invisible': [('picking_id', '!=', False)]}"
-                        />
+                        <field name="auto_validate" invisible="picking_id" />
                     </group>
                     <footer>
                         <button

@@ -72,7 +72,7 @@
     />
     <function model="stock.move" name="write">
         <value eval="[ref('demo_move_done')]" />
-        <value eval="{'quantity_done': 4}" />
+        <value eval="{'quantity': 4, 'picked': True}" />
     </function>
     <function
         model="stock.picking"

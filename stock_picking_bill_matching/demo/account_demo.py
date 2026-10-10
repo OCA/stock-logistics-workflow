@@ -7,7 +7,7 @@ import time
 from odoo import Command, api, models
 
 
-class AccountChartTemplate(models.Model):
+class AccountChartTemplate(models.AbstractModel):
     _inherit = "account.chart.template"
 
     @api.model

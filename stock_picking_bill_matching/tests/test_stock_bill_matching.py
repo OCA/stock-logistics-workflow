@@ -116,7 +116,7 @@ class TestStockBillMatching(common.TransactionCase):
 
         # 4. Check that the original picking is Done with 4 units
         self.assertEqual(picking.state, "done")
-        self.assertEqual(picking.move_ids.quantity_done, 4)
+        self.assertEqual(picking.move_ids.quantity, 4)
 
         # 5. Check that a Backorder was created for the remaining 6 units
         backorder = self.env["stock.picking"].search(
@@ -168,7 +168,8 @@ class TestStockBillMatching(common.TransactionCase):
         # 4. Assert the M2M link was properly created
         self.assertEqual(bill.invoice_line_ids.move_line_ids, picking.move_ids)
 
-        # 5. Assert Duck Typing update (if `stock_picking_invoicing` is installed in this env)
+        # 5. Assert Duck Typing update (if `stock_picking_invoicing` is
+        # installed in this env)
         if hasattr(self.env["stock.move"], "invoice_state"):
             self.assertEqual(picking.invoice_state, "invoiced")
 
@@ -233,7 +234,7 @@ class TestStockBillMatching(common.TransactionCase):
         match_lines.action_match_lines()
         self.assertEqual(
             bill.invoice_line_ids.filtered(
-                lambda l: l.product_id == self.product_a
+                lambda line: line.product_id == self.product_a
             ).move_line_ids,
             picking.move_ids,
         )
@@ -346,7 +347,9 @@ class TestStockBillMatching(common.TransactionCase):
         )
 
         # Match only the storable line
-        storable_lines = match_lines.filtered(lambda l: l.product_id == self.product_a)
+        storable_lines = match_lines.filtered(
+            lambda line: line.product_id == self.product_a
+        )
         self.assertEqual(len(storable_lines), 2)
         storable_lines.action_match_lines()
 
@@ -426,7 +429,8 @@ class TestStockBillMatching(common.TransactionCase):
 
     def _validate_picking(self, picking):
         for move in picking.move_ids:
-            move.quantity_done = move.product_uom_qty
+            move.quantity = move.product_uom_qty
+            move.picked = True
         picking._action_done()
         self.assertEqual(picking.state, "done")
 
@@ -440,7 +444,7 @@ class TestStockBillMatching(common.TransactionCase):
 
         Regression: the engine only considered draft/confirmed/assigned moves
         and computed the linkage quantity as ``product_uom_qty -
-        quantity_done`` (always 0 once done), so the screen listed the pair
+        quantity`` (always 0 once done), so the screen listed the pair
         and clicking Match Selected silently did nothing.
         """
         picking = self.create_picking([(self.product_a, 10)])
@@ -468,7 +472,7 @@ class TestStockBillMatching(common.TransactionCase):
         self.assertTrue(bill.is_picking_matched)
         # the receipt is NOT validated again, and no backorder is created
         self.assertEqual(picking.state, "done")
-        self.assertEqual(picking.move_ids.quantity_done, 10)
+        self.assertEqual(picking.move_ids.quantity, 10)
         self.assertFalse(
             self.env["stock.picking"].search([("backorder_id", "=", picking.id)])
         )
@@ -1408,7 +1412,7 @@ class TestStockBillMatching(common.TransactionCase):
         picking = self.env["stock.picking"].browse(action.get("res_id", False))
         self.assertEqual(picking.partner_id, self.partner_a)
         self.assertEqual(picking.move_ids.product_id, self.product_a)
-        self.assertEqual(picking.move_ids.quantity_done, 2)
+        self.assertEqual(picking.move_ids.quantity, 2)
 
     # ------------------------------------------------------------------
     # Review follow-up: a bill in boxes and a reception in units
@@ -1452,7 +1456,7 @@ class TestStockBillMatching(common.TransactionCase):
         match_lines.action_match_lines()
 
         self.assertEqual(picking.state, "done")
-        self.assertEqual(picking.move_ids.quantity_done, 12)
+        self.assertEqual(picking.move_ids.quantity, 12)
         self.assertEqual(bill.invoice_line_ids.unmatched_qty, 0)
         self.assertEqual(picking.move_ids.unmatched_qty, 0)
 
@@ -1485,7 +1489,7 @@ class TestStockBillMatching(common.TransactionCase):
         match_lines.action_match_lines()
 
         self.assertEqual(picking.state, "done")
-        self.assertEqual(picking.move_ids.quantity_done, 4)
+        self.assertEqual(picking.move_ids.quantity, 4)
         self.assertEqual(round(picking.move_ids.unmatched_qty, 2), -2)
         self.assertEqual(
             round(sum(bill.invoice_line_ids.mapped("unmatched_qty")), 2), 0
@@ -1581,4 +1585,4 @@ class TestStockBillMatching(common.TransactionCase):
 
         picking = self.env["stock.picking"].browse(action.get("res_id", False))
         self.assertEqual(picking.move_ids.product_id, self.product_a)
-        self.assertEqual(picking.move_ids.quantity_done, 2)
+        self.assertEqual(picking.move_ids.quantity, 2)

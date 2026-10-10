@@ -304,7 +304,7 @@ class PickingBillLineMatch(models.Model):
 
     @property
     def _table_query(self):
-        return "(%s) UNION ALL (%s)" % (self._select_sm_line(), self._select_am_line())
+        return f"({self._select_sm_line()}) UNION ALL ({self._select_am_line()})"
 
     def action_open_line(self):
         self.ensure_one()
@@ -441,7 +441,11 @@ class PickingBillLineMatch(models.Model):
                 available_qty = move.unmatched_qty - already_consumed
                 drive_reception = False
             elif move.state in ("draft", "confirmed", "assigned"):
-                # pending receipt: the quantity left to receive
+                # pending receipt: the quantity left to receive. Since
+                # Odoo 17 a move planned by action_assign() already carries
+                # its full planned quantity with picked=False, so only the
+                # picked part counts as received so far.
+                done_qty = move.quantity if move.picked else 0.0
                 available_qty = move.product_uom_qty - done_qty - already_consumed
                 drive_reception = True
             else:
@@ -512,9 +516,17 @@ class PickingBillLineMatch(models.Model):
                 if picking.state not in ("assigned", "done"):
                     picking.action_assign()
 
-            # Safely set the quantity done for what we are currently matching
+            # Safely set the quantity done for what we are currently matching.
+            # Since Odoo 17 the planned quantity is pre-filled by
+            # action_assign(): we SET the matched quantity (picked) instead
+            # of adding to the planned one, otherwise the move would be
+            # validated above its demand. The quantity is written BEFORE
+            # picked: the picked flag propagates to the move lines and
+            # add-ons such as stock_move_line_qty_picked capture the move
+            # line quantity at that moment as the picked quantity.
             for move, qty in qty_to_set.items():
-                move.quantity_done += qty
+                move.quantity = qty
+                move.picked = True
 
             # _action_done safely finalizes the moves and automatically creates
             # a backorder for anything not matched!

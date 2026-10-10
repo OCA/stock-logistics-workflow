@@ -14,7 +14,7 @@
                     groups="stock.group_stock_user"
                     icon="fa-bullseye"
                     context="{'search_default_unmatched': 1, 'search_default_group_product': 1, 'hide_unmatch': 1}"
-                    attrs="{'invisible':['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('is_picking_matched', '=', True)]}"
+                    invisible="move_type not in ('in_invoice', 'in_refund') or is_picking_matched"
                 >
                     <div class="o_stat_info">
                         <span class="o_stat_value">
@@ -30,7 +30,7 @@
                     type="object"
                     groups="stock.group_stock_user"
                     icon="fa-check"
-                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), '|', ('is_picking_matched', '=', True), ('force_picking_matched', '=', True)]}"
+                    invisible="move_type not in ('in_invoice', 'in_refund') or is_picking_matched or force_picking_matched"
                 >
                     <div class="o_field_statinfo">
                         <span class="o_stat_text">Force Matched</span>
@@ -43,7 +43,7 @@
                     type="object"
                     groups="stock.group_stock_user"
                     icon="fa-undo"
-                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('force_picking_matched', '=', False)]}"
+                    invisible="move_type not in ('in_invoice', 'in_refund') or not force_picking_matched"
                 >
                     <div class="o_field_statinfo">
                         <span class="o_stat_text">Reset Force</span>
@@ -57,7 +57,7 @@
                     groups="stock.group_stock_user"
                     icon="fa-check-square-o"
                     context="{'search_default_matched': 1}"
-                    attrs="{'invisible': ['|', ('move_type', 'not in', ('in_invoice', 'in_refund')), ('matched_picking_line_count', '=', 0)]}"
+                    invisible="move_type not in ('in_invoice', 'in_refund') or matched_picking_line_count == 0"
                 >
                     <div class="o_stat_info">
                         <span class="o_stat_value">

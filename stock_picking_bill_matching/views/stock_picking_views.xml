@@ -12,12 +12,13 @@
                     type="object"
                     groups="account.group_account_invoice"
                     icon="fa-bullseye"
-                    attrs="{'invisible': ['|', ('picking_type_code', '!=', 'incoming'), ('is_picking_matched', '=', True)]}"
+                    invisible="picking_type_code != 'incoming' or is_picking_matched"
                 >
                      <div class="o_field_statinfo">
                          <span class="o_stat_text">Bill Matching</span>
                      </div>
                 </button>
+                <field name="picking_type_code" invisible="1" />
                 <field name="is_picking_matched" invisible="1" />
             </div>
         </field>

@@ -11,7 +11,7 @@
                     type="object"
                     groups="account.group_account_invoice"
                     icon="fa-bullseye"
-                    attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('is_picking_matched', '=', True)]}"
+                    invisible="state not in ('purchase', 'done') or is_picking_matched"
                 >
                     <div class="o_field_statinfo">
                         <span class="o_stat_text">Picking Matching</span>

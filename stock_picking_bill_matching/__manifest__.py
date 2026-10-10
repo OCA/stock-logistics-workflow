@@ -4,7 +4,7 @@
 
 {
     "name": "Stock Picking Bill Matching",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Warehouse",
     "summary": "Match Vendor Bills with Incoming Pickings and their Stock Moves.",
     "author": "Odoo Community Association (OCA)",
