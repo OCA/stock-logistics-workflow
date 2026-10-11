@@ -133,6 +133,49 @@ class BillToPickingWizard(models.TransientModel):
             )
         self.picking_id.message_post(body=body)
 
+    def _check_picking_to_feed(self, picking, company):
+        """Reasons the selected receipt cannot host these bill lines.
+
+        The form field only *proposes* the receipts of the vendor, of the
+        company of the bill and not already done; a domain is a hint for the
+        operator, not a guarantee for the data, and this wizard can be called
+        over RPC with any id. Feeding a receipt of another vendor, of another
+        company, already done, or a delivery instead of a reception would link
+        bill lines to stock that has nothing to do with them, so the checks are
+        repeated here, all reasons at once so the operator fixes them in one
+        go.
+        """
+        reasons = []
+        if picking.company_id != company:
+            reasons.append(
+                _(
+                    "it belongs to the company %(picking_company)s while the "
+                    "bill belongs to %(bill_company)s",
+                    picking_company=picking.company_id.display_name,
+                    bill_company=company.display_name,
+                )
+            )
+        vendor_partners = self.partner_id | self.partner_id.commercial_partner_id
+        if not (picking.partner_id & vendor_partners):
+            reasons.append(
+                _(
+                    "it is addressed to %(picking_partner)s instead of the "
+                    "vendor of the bill (%(vendor)s)",
+                    picking_partner=picking.partner_id.display_name,
+                    vendor=self.partner_id.display_name,
+                )
+            )
+        if picking.state in ("done", "cancel"):
+            reasons.append(
+                _(
+                    "it is already %(state)s",
+                    state=dict(picking._fields["state"].selection)[picking.state],
+                )
+            )
+        if picking.picking_type_code != "incoming":
+            reasons.append(_("it is not an incoming receipt"))
+        return reasons
+
     def action_add_to_picking(self):
         self.ensure_one()
         lines = self._get_active_lines()
@@ -187,17 +230,17 @@ class BillToPickingWizard(models.TransientModel):
                     "move_type": "direct",  # avoid conflict with ctx default_move_type
                 }
             )
-        elif self.picking_id.company_id != company:
-            raise UserError(
-                _(
-                    "The receipt %(picking)s belongs to the company "
-                    "%(picking_company)s while the bill belongs to "
-                    "%(bill_company)s: they cannot be matched together.",
-                    picking=self.picking_id.display_name,
-                    picking_company=self.picking_id.company_id.display_name,
-                    bill_company=company.display_name,
+        else:
+            reasons = self._check_picking_to_feed(self.picking_id, company)
+            if reasons:
+                raise UserError(
+                    _(
+                        "The receipt %(picking)s cannot receive these bill "
+                        "lines: %(reasons)s.",
+                        picking=self.picking_id.display_name,
+                        reasons="; ".join(reasons),
+                    )
                 )
-            )
 
         for aml in aml_ids:
             move_vals = {

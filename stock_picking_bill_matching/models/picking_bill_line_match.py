@@ -15,6 +15,27 @@ INVOICE_STATE_INVOICED = "invoiced"
 INVOICE_STATE_2B_INVOICED = "2binvoiced"
 
 
+def qty_in_uom(env, qty, from_uom, to_uom):
+    """Quantity expressed in another UoM.
+
+    A bill line and a receipt line of the same product may be expressed in
+    different UoMs (a purchase in boxes, a reception in units): comparing the
+    raw numbers would report a mismatch that does not exist (1 box of 12
+    against 12 units), and applying a quantity to the receipt in the UoM of
+    the bill line would receive the wrong amount.
+
+    The quantity is converted through the UoM factors. The conversion is
+    skipped (the raw quantity is returned) when a UoM is missing or belongs to
+    another category: in that case there is nothing to convert, and the
+    comparison keeps working as before instead of raising on a data problem.
+    """
+    if not qty or not from_uom or not to_uom or from_uom == to_uom:
+        return qty
+    if from_uom.category_id != to_uom.category_id:
+        return qty
+    return from_uom._compute_quantity(qty, to_uom, round=False)
+
+
 class PickingBillLineMatch(models.Model):
     _name = "picking.bill.line.match"
     _description = "Stock Move and Vendor Bill line matching view"
@@ -235,7 +256,7 @@ class PickingBillLineMatch(models.Model):
             JOIN
                 product_template prod_tmpl ON pp.product_tmpl_id = prod_tmpl.id
             WHERE
-                pt.code in ('incoming', 'outgoing')
+                pt.code = 'incoming'
                 AND sm.state != 'cancel'
                 AND prod_tmpl.type in ('product', 'consu')
         """
@@ -380,20 +401,30 @@ class PickingBillLineMatch(models.Model):
                     matches.append((aml, stock_moves_to_link))
         return matches
 
-    def _match_one_aml(self, aml, stock_moves_to_link):
+    def _match_one_aml(self, aml, stock_moves_to_link, consumed_qty=None):
         """Consume receipt lines for a single bill line.
 
-        Returns ``(consumed, to_receive, quantities)``:
+        Returns ``(consumed, to_receive, quantities, consumed_qty)``:
 
         * ``consumed``: the receipt lines the bill line actually consumes
           (plus the ones another line already consumed, added by the caller);
         * ``to_receive``: the pending receipt lines whose reception must be
           driven by this matching;
         * ``quantities``: the quantity to set as done per pending receipt
-          line — accumulated, since several bill lines may consume the same
-          receipt line and the receipt must not be validated short of what is
-          being billed.
+          line, in the UoM of that receipt line — accumulated, since several
+          bill lines may consume the same receipt line and the receipt must
+          not be validated short of what is being billed;
+        * ``consumed_qty``: what the bill lines of this matching run consumed
+          on each receipt line (keyed by id, in the UoM of the receipt line),
+          this bill line included.
+
+        Both quantities are compared in the UoM of the bill line, and the
+        quantity to receive is converted back to the UoM of the receipt line:
+        a purchase in boxes and a reception in units must reconcile, not
+        mismatch.
         """
+        consumed_qty = {} if consumed_qty is None else consumed_qty
+        aml_uom = aml.product_uom_id
         remaining_to_match = aml.unmatched_qty
         consumed = self.env["stock.move"]
         to_receive = self.env["stock.move"]
@@ -401,25 +432,34 @@ class PickingBillLineMatch(models.Model):
         for move in stock_moves_to_link:
             if remaining_to_match <= MATCHING_PRECISION:
                 break
+            # what the previous bill lines of this run already took from this
+            # receipt line: without it two bill lines are each told the whole
+            # availability and the reception ends up larger than the receipt
+            already_consumed = consumed_qty.get(move.id, 0.0)
             if move.state == "done":
                 # already received: only its billing capacity is left
-                available_qty = move.unmatched_qty
+                available_qty = move.unmatched_qty - already_consumed
                 drive_reception = False
             elif move.state in ("draft", "confirmed", "assigned"):
                 # pending receipt: the quantity left to receive
-                available_qty = move.product_uom_qty - move.quantity_done
+                available_qty = move.product_uom_qty - done_qty - already_consumed
                 drive_reception = True
             else:
                 continue
-            qty_to_do = min(remaining_to_match, available_qty)
+            available_in_aml_uom = qty_in_uom(
+                self.env, available_qty, move.product_uom, aml_uom
+            )
+            qty_to_do = min(remaining_to_match, available_in_aml_uom)
             if qty_to_do <= MATCHING_PRECISION:
                 continue
             remaining_to_match -= qty_to_do
+            qty_in_move_uom = qty_in_uom(self.env, qty_to_do, aml_uom, move.product_uom)
             consumed |= move
+            consumed_qty[move.id] = already_consumed + qty_in_move_uom
             if drive_reception:
                 to_receive |= move
-                quantities[move] = quantities.get(move, 0.0) + qty_to_do
-        return consumed, to_receive, quantities
+                quantities[move] = quantities.get(move, 0.0) + qty_in_move_uom
+        return consumed, to_receive, quantities, consumed_qty
 
     def action_match_lines(self):
         if not self.sm_id and not self.aml_id:
@@ -437,10 +477,15 @@ class PickingBillLineMatch(models.Model):
         moves_to_receive = self.env["stock.move"]
         all_matched_moves = self.env["stock.move"]
         qty_to_set = {}
+        # What this matching run already consumed on each receipt line: two
+        # bill lines of the same run must not each be told the whole
+        # availability of one receipt line, or the reception would be larger
+        # than the receipt itself.
+        consumed_by_move = {}
 
         for aml, stock_moves_to_link in pairs:
-            consumed, to_receive, quantities = self._match_one_aml(
-                aml, stock_moves_to_link
+            consumed, to_receive, quantities, consumed_by_move = self._match_one_aml(
+                aml, stock_moves_to_link, consumed_by_move
             )
 
             # 1. Establish the M2M links. Only link the moves this bill line

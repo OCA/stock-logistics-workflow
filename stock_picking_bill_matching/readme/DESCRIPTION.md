@@ -77,6 +77,9 @@ behave the same way:
 
 * **Unified Matching Interface:** A single screen (SQL View) showing unmatched
   Vendor Bill lines and Receipt lines side-by-side, grouped by product.
+* **Incoming receipts only:** a vendor bill is reconciled with what the vendor
+  delivered, so only incoming receipts are proposed and matchable — a delivery
+  to a customer (or a return) is never a candidate for a vendor bill line.
 * **Ready-to-play demo data:** installing the module with demo data builds a
   small scenario (a received shipment, a pending one of the same order line,
   the bill matching them, and a bill with nothing to match against) so the
@@ -184,3 +187,16 @@ validates the pending receipts and computes the backorders.
 the two thresholds used to decide that a quantity has been consumed; they are
 intentionally small (0.001) because quantities are matched, not rounded: a
 one-unit shortage must NOT be reported as matched.
+
+A bill line and a receipt line of the same product may be expressed in
+different UoMs (a purchase in boxes, a reception in units): the quantities are
+converted before being compared, and the quantity to receive is converted back
+to the UoM of the receipt line, so the reception is right and a fully billed
+line is not left unmatched for a conversion reason.
+
+Consuming one receipt line from several bill lines never receives more than the
+receipt says: each bill line is only given what the previous ones of the same
+matching left (a pending receipt of 4 facing two bill lines of 3 is received
+for 4, never for 6). The excess billed then stays visible as the negative
+unmatched quantity of the receipt — the bill side deliberately keeps no
+per-link quantity, a linked bill line being considered covered.

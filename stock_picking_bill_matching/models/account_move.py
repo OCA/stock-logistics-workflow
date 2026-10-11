@@ -9,7 +9,7 @@ from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare, float_is_zero
 
-from .picking_bill_line_match import MATCHING_PRECISION
+from .picking_bill_line_match import MATCHING_PRECISION, qty_in_uom
 
 _logger = logging.getLogger(__name__)
 
@@ -309,7 +309,10 @@ class AccountMove(models.Model):
         used, and the lines stay unmatchable from the Matched Items screen.
         """
         self.ensure_one()
-        references = sorted({ref for ref in lines.mapped("sm_id.matching_reference")})
+        # the reference the matching actually paired on: the rows expose the
+        # one the engine used, which a localization may derive in SQL while the
+        # stored field on the receipt stays empty (l10n-brazil does)
+        references = sorted({ref for ref in lines.mapped("matching_reference") if ref})
         pickings = lines.mapped("sm_id.picking_id")
         self.message_post(
             body=_(
@@ -436,6 +439,9 @@ class AccountMove(models.Model):
                     (self.partner_id | self.partner_id.commercial_partner_id).ids,
                 ),
                 ("state", "in", ("draft", "sent", "purchase")),
+                # only this company's orders: another company's order does not
+                # mean the goods will arrive here
+                ("company_id", "=", self.company_id.id),
             ]
         )
         if open_pos != 0:
@@ -503,12 +509,19 @@ class AccountMove(models.Model):
             # 2. whatever is left still goes through the heuristics below
             bill_lines = self._get_bill_lines_to_match()
             if bill_lines:
-                pickings = self._get_partner_pickings()
-                if pickings:
-                    action = self._auto_match_perfect_pickings(bill_lines, pickings)
+                if self._has_receipt_candidate():
+                    # a receipt of the vendor can still absorb one of these
+                    # lines: the decision belongs to the operator, only the
+                    # deterministic pairings are applied automatically
+                    action = self._auto_match_perfect_pickings(
+                        bill_lines, self._get_partner_pickings()
+                    )
                     if action:
                         return action
                 elif self.company_id.auto_create_picking_on_match:
+                    # nothing of the vendor concerns these lines (the receipts
+                    # it has do not cover these products, or are fully billed):
+                    # the small shop automation creates the missing receipt
                     action = self._auto_create_picking()
                     if action:
                         return action
@@ -567,7 +580,13 @@ class AccountMoveLine(models.Model):
         readonly=False,
     )
 
-    @api.depends("move_line_ids", "quantity", "move_line_ids.product_uom_qty")
+    @api.depends(
+        "move_line_ids",
+        "quantity",
+        "product_uom_id",
+        "move_line_ids.product_uom_qty",
+        "move_line_ids.product_uom",
+    )
     def _compute_unmatched_qty(self):
         """Billed quantity not covered yet, never negative.
 
@@ -583,10 +602,19 @@ class AccountMoveLine(models.Model):
         The receipt side (``stock.move.unmatched_qty``) deliberately keeps its
         sign: a negative there means the receipt was billed beyond what was
         received, which is exactly the anomaly the operator wants to see.
+
+        The receipt quantities are converted into the UoM of the bill line: a
+        bill in boxes and a receipt in units describe the same goods, and
+        comparing the raw numbers would leave a fully billed line unmatched.
         """
         for aml in self:
-            aml.unmatched_qty = max(
-                0.0,
-                aml.quantity
-                - sum(stock_move.product_uom_qty for stock_move in aml.move_line_ids),
+            covered = sum(
+                qty_in_uom(
+                    self.env,
+                    stock_move.product_uom_qty,
+                    stock_move.product_uom,
+                    aml.product_uom_id,
+                )
+                for stock_move in aml.move_line_ids
             )
+            aml.unmatched_qty = max(0.0, aml.quantity - covered)
