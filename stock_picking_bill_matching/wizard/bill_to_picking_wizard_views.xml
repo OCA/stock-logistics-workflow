@@ -8,7 +8,7 @@
                 <sheet>
                     <div class="alert alert-info" role="alert">
                         <strong
-                        >Tip:</strong> Leave the picking field empty to automatically generate a brand new Incoming Receipt for these items.
+                    >Tip:</strong> Leave the picking field empty to automatically generate a brand new Incoming Receipt for these items.
                         <br />
                     </div>
                     <group>
