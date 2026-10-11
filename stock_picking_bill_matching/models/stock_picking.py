@@ -5,6 +5,8 @@
 from odoo import _, api, fields, models
 from odoo.tools import float_compare
 
+from .picking_bill_line_match import qty_in_uom
+
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
@@ -84,9 +86,25 @@ class StockMove(models.Model):
     unmatched_qty = fields.Float(compute="_compute_unmatched_qty", store=True)
     matching_reference = fields.Char("Match Ref.", readonly=True)
 
-    @api.depends("invoice_line_ids", "product_uom_qty", "invoice_line_ids.quantity")
+    @api.depends(
+        "invoice_line_ids",
+        "product_uom_qty",
+        "product_uom",
+        "invoice_line_ids.quantity",
+        "invoice_line_ids.product_uom_id",
+    )
     def _compute_unmatched_qty(self):
+        """Received quantity not billed yet (negative = billed beyond).
+
+        The sign is kept here: a negative value means the vendor billed more
+        than was received, the anomaly the operator is looking for.
+
+        The billed quantities are converted into the UoM of the receipt line:
+        an invoice in boxes against a reception in units must reconcile.
+        """
         for move in self:
-            move.unmatched_qty = move.product_uom_qty - sum(
-                aml.quantity for aml in move.invoice_line_ids
+            billed = sum(
+                qty_in_uom(self.env, aml.quantity, aml.product_uom_id, move.product_uom)
+                for aml in move.invoice_line_ids
             )
+            move.unmatched_qty = move.product_uom_qty - billed

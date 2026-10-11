@@ -1339,3 +1339,246 @@ class TestStockBillMatching(common.TransactionCase):
         self.assertEqual(picking.company_id, bill.company_id)
         self.assertEqual(picking.move_ids.company_id, bill.company_id)
         self.assertNotEqual(picking.company_id, other_company)
+
+    # ------------------------------------------------------------------
+    # Review follow-up: a vendor bill matches incoming receipts only
+    # ------------------------------------------------------------------
+
+    def _create_delivery(self, products_info):
+        """Outgoing picking for a customer (a delivery, not a receipt)."""
+        picking_type_out = self.env["stock.picking.type"].search(
+            [("code", "=", "outgoing"), ("company_id", "=", self.env.company.id)],
+            limit=1,
+        )
+        delivery = self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "picking_type_id": picking_type_out.id,
+                "location_id": picking_type_out.default_location_src_id.id,
+                "location_dest_id": self.env.ref("stock.stock_location_customers").id,
+            }
+        )
+        for product, qty in products_info:
+            self.env["stock.move"].create(
+                {
+                    "name": product.name,
+                    "product_id": product.id,
+                    "product_uom_qty": qty,
+                    "product_uom": product.uom_id.id,
+                    "picking_id": delivery.id,
+                    "location_id": delivery.location_id.id,
+                    "location_dest_id": delivery.location_dest_id.id,
+                }
+            )
+        delivery.action_confirm()
+        return delivery
+
+    def test_39_outgoing_moves_are_never_proposed(self):
+        """The matching reconciles vendor bills with incoming receipts: a
+        delivery must never be proposed (nor matchable) as the source of a
+        vendor bill line."""
+        delivery = self._create_delivery([(self.product_a, 3)])
+        self.env.flush_all()
+
+        self.assertFalse(
+            self.env["picking.bill.line.match"].search(
+                [("sm_id", "in", delivery.move_ids.ids)]
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Review follow-up: another company's purchase order is not this
+    # company's business
+    # ------------------------------------------------------------------
+
+    def test_40_another_companys_purchase_order_does_not_block_the_automation(self):
+        """The small shop automation creates the missing receipt when nothing
+        of this company's vendor can absorb the bill: an open order of the same
+        vendor in ANOTHER company must not stop it."""
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        self.env["purchase.order"].with_company(other_company).create(
+            {"partner_id": self.partner_a.id, "company_id": other_company.id}
+        )
+        self.env.company.auto_create_picking_on_match = True
+        self.env.company.auto_validate_matched_picking = True
+        bill = self.create_bill([(self.product_a, 2, 50.0)])
+
+        action = bill.action_picking_matching()
+
+        picking = self.env["stock.picking"].browse(action.get("res_id", False))
+        self.assertEqual(picking.partner_id, self.partner_a)
+        self.assertEqual(picking.move_ids.product_id, self.product_a)
+        self.assertEqual(picking.move_ids.quantity_done, 2)
+
+    # ------------------------------------------------------------------
+    # Review follow-up: a bill in boxes and a reception in units
+    # ------------------------------------------------------------------
+
+    def test_41_the_bill_quantities_are_converted_to_the_receipt_uom(self):
+        """A product bought by dozens and received in units is the same goods:
+        the matching must convert the quantities instead of comparing the raw
+        numbers, and receive the receipt in its own UoM."""
+        dozen = self.env.ref("uom.product_uom_dozen")
+        picking = self.create_picking([(self.product_a, 12)])  # units
+        bill = self.env["account.move"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "move_type": "in_invoice",
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_a.id,
+                            "quantity": 1,
+                            "price_unit": 600.0,
+                            "product_uom_id": dozen.id,
+                        },
+                    )
+                ],
+            }
+        )
+        self.env.flush_all()
+
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "=", self.product_a.id),
+                ("is_matched", "=", False),
+            ]
+        )
+        self.assertEqual(len(match_lines), 2)
+        match_lines.action_match_lines()
+
+        self.assertEqual(picking.state, "done")
+        self.assertEqual(picking.move_ids.quantity_done, 12)
+        self.assertEqual(bill.invoice_line_ids.unmatched_qty, 0)
+        self.assertEqual(picking.move_ids.unmatched_qty, 0)
+
+    # ------------------------------------------------------------------
+    # Review follow-up: several bill lines never receive more than the
+    # receipt says
+    # ------------------------------------------------------------------
+
+    def test_42_two_bill_lines_do_not_over_receive_one_receipt(self):
+        """Two bill lines of 3 against a pending receipt of 4: the receipt is
+        received for 4, never for the 6 being billed — receiving more than the
+        receipt says would move stock nobody ordered.
+
+        The 2 units the vendor billed beyond the reception stay visible as the
+        negative unmatched quantity of the receipt: the bill side has no
+        quantity per link (a linked bill line is considered covered), the
+        receipt side keeps the sign precisely for this over-billing case."""
+        picking = self.create_picking([(self.product_a, 4)])
+        bill = self.create_bill([(self.product_a, 3, 50.0), (self.product_a, 3, 50.0)])
+        self.env.flush_all()
+
+        match_lines = self.env["picking.bill.line.match"].search(
+            [
+                ("partner_id", "=", self.partner_a.id),
+                ("product_id", "=", self.product_a.id),
+                ("is_matched", "=", False),
+            ]
+        )
+        self.assertEqual(len(match_lines), 3)
+        match_lines.action_match_lines()
+
+        self.assertEqual(picking.state, "done")
+        self.assertEqual(picking.move_ids.quantity_done, 4)
+        self.assertEqual(round(picking.move_ids.unmatched_qty, 2), -2)
+        self.assertEqual(
+            round(sum(bill.invoice_line_ids.mapped("unmatched_qty")), 2), 0
+        )
+
+    # ------------------------------------------------------------------
+    # Review follow-up: the chatter names the reference the matching used
+    # ------------------------------------------------------------------
+
+    def test_43_the_chatter_names_the_reference_used_by_the_matching(self):
+        """The trace of an automatic matching names the reference that paired
+        the lines. A localization may derive that reference in SQL (l10n-brazil
+        does), in which case the stored field of the receipt stays empty: the
+        message reads the reference of the matching rows, the one the engine
+        actually worked with."""
+        self.env.company.auto_match_referenced_lines = True
+        picking = self.create_picking([(self.product_a, 3)])
+        bill = self.create_bill([(self.product_a, 3, 50.0)])
+        self._set_reference(picking.move_ids, "PO-X-1")
+        self._set_reference(bill.invoice_line_ids, "PO-X-1")
+        self.env.flush_all()
+
+        bill.action_picking_matching()
+
+        bodies = " ".join(bill.message_ids.mapped("body"))
+        self.assertIn("automatically matched", bodies)
+        self.assertIn(
+            "PO-X-1",
+            bodies,
+            "the trace must name the reference the matching paired on",
+        )
+
+    # ------------------------------------------------------------------
+    # Review follow-up: what the form proposes, the server enforces
+    # ------------------------------------------------------------------
+
+    def test_44_the_wizard_refuses_a_receipt_it_cannot_feed(self):
+        """The domain of the wizard field is a hint for the operator, not a
+        guarantee for the data: a receipt of another vendor, an already done
+        receipt and a delivery are refused server-side (the wizard can be
+        called over RPC with any id)."""
+        bill = self.create_bill([(self.product_a, 2, 50.0)])
+        lines = self.env["picking.bill.line.match"].search(
+            [("account_move_id", "=", bill.id)]
+        )
+        self.assertTrue(lines)
+        wizard = (
+            self.env["bill.to.picking.wizard"]
+            .with_context(active_model="picking.bill.line.match", active_ids=lines.ids)
+            .create({"partner_id": self.partner_a.id})
+        )
+
+        # 1. a receipt addressed to another vendor
+        other_vendor = self.env["res.partner"].create({"name": "Other Vendor"})
+        other_vendor_receipt = self.create_picking([(self.product_a, 2)])
+        other_vendor_receipt.partner_id = other_vendor
+        wizard.picking_id = other_vendor_receipt
+        with self.assertRaises(UserError) as error:
+            wizard.action_add_to_picking()
+        self.assertIn("cannot receive these bill lines", str(error.exception))
+
+        # 2. a receipt already received (done)
+        done_receipt = self.create_picking([(self.product_a, 2)])
+        self._validate_picking(done_receipt)
+        wizard.picking_id = done_receipt
+        with self.assertRaises(UserError) as error:
+            wizard.action_add_to_picking()
+        self.assertIn("cannot receive these bill lines", str(error.exception))
+
+        # 3. a delivery
+        delivery = self._create_delivery([(self.product_a, 2)])
+        wizard.picking_id = delivery
+        with self.assertRaises(UserError) as error:
+            wizard.action_add_to_picking()
+        self.assertIn("cannot receive these bill lines", str(error.exception))
+
+    # ------------------------------------------------------------------
+    # Review follow-up: the automation follows what can be matched, not
+    # what exists
+    # ------------------------------------------------------------------
+
+    def test_45_an_unrelated_receipt_does_not_block_the_automation(self):
+        """A receipt that has nothing to do with the bill's products must not
+        stop the small shop automation: the decision is based on what can
+        absorb the bill lines, not on the mere existence of a receipt."""
+        self.env.company.auto_create_picking_on_match = True
+        self.env.company.auto_validate_matched_picking = True
+        unrelated = self.create_picking([(self.product_b, 5)])
+        self._validate_picking(unrelated)
+        bill = self.create_bill([(self.product_a, 2, 50.0)])
+
+        action = bill.action_picking_matching()
+
+        picking = self.env["stock.picking"].browse(action.get("res_id", False))
+        self.assertEqual(picking.move_ids.product_id, self.product_a)
+        self.assertEqual(picking.move_ids.quantity_done, 2)
