@@ -51,7 +51,7 @@ class PurchaseOrder(models.Model):
                     self.order_line.mapped("move_ids").mapped("product_id").ids,
                 ),
             ],
-            "view_mode": "tree",
+            "view_mode": "list",
             "context": self.env.context,
         }
 

@@ -51,7 +51,7 @@
         <field name="name">picking.bill.line.match.tree</field>
         <field name="model">picking.bill.line.match</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-info="line_type == 'vendor_bill'"
                 decoration-warning="line_type == 'stock_move' and not is_done"
                 decoration-success="is_done == True or is_matched == True"
@@ -59,7 +59,6 @@
                 create="0"
                 delete="0"
             >
-
                 <header>
                     <!-- Buttons are always visible now -->
                     <button
@@ -122,7 +121,7 @@
 
                 <field name="currency_id" invisible="1" />
                 <field name="partner_id" string="Partner" optional="hide" />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

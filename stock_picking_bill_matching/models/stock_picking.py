@@ -73,7 +73,7 @@ class StockPicking(models.Model):
             "name": _("Bill Matching"),
             "res_model": "picking.bill.line.match",
             "domain": domain,
-            "view_mode": "tree",
+            "view_mode": "list",
             "context": dict(
                 self.env.context, search_default_unmatched=1, hide_unmatch=1
             ),

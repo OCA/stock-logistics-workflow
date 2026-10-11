@@ -75,12 +75,15 @@ class BillToPickingWizard(models.TransientModel):
 
         The bill of an imported document is usually matched before being
         posted, and a draft ``account.move`` is named ``"/"``: using that as
-        the origin would be worse than nothing. The display name (which
-        identifies the draft) is used in that case.
+        the origin would be worse than nothing. The display name identifies the
+        draft, completed with the record id: since Odoo 18 the display name of
+        a nameless draft is a plain "Draft Bill" — the id is no longer part of
+        it — so two drafts of the same vendor would produce the very same
+        receipt origin.
         """
         if bill.name and bill.name != "/":
             return bill.name
-        return bill.display_name
+        return _("%(bill)s (#%(bill_id)s)", bill=bill.display_name, bill_id=bill.id)
 
     def _get_origin(self):
         """Origin of the picking this wizard generates.
@@ -180,8 +183,7 @@ class BillToPickingWizard(models.TransientModel):
         self.ensure_one()
         lines = self._get_active_lines()
         aml_ids = lines.aml_id.filtered(
-            lambda line: line.product_id
-            and line.product_id.type in ("product", "consu")
+            lambda line: line.product_id and line.product_id.type == "consu"
         )
 
         if not aml_ids:

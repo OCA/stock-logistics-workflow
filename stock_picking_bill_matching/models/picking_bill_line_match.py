@@ -258,7 +258,7 @@ class PickingBillLineMatch(models.Model):
             WHERE
                 pt.code = 'incoming'
                 AND sm.state != 'cancel'
-                AND prod_tmpl.type in ('product', 'consu')
+                AND prod_tmpl.type = 'consu'
         """
 
     @api.model
@@ -299,7 +299,7 @@ class PickingBillLineMatch(models.Model):
                 aml.display_type = 'product'
                 AND am.move_type in ('in_invoice', 'in_refund')
                 AND am.state in ('draft', 'posted')
-                AND prod_tmpl.type in ('product', 'consu')
+                AND prod_tmpl.type = 'consu'
         """
 
     @property

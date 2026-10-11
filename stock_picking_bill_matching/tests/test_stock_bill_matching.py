@@ -19,14 +19,16 @@ class TestStockBillMatching(common.TransactionCase):
         cls.product_a = cls.env["product.product"].create(
             {
                 "name": "Test Product A",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "standard_price": 50.0,
             }
         )
         cls.product_b = cls.env["product.product"].create(
             {
                 "name": "Test Product B",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "standard_price": 100.0,
             }
         )
@@ -657,10 +659,10 @@ class TestStockBillMatching(common.TransactionCase):
         )
         match_model = self.env["picking.bill.line.match"]
         # must not raise
-        match_model.with_user(stock_user).check_access_rights("read")
+        match_model.with_user(stock_user).check_access("read")
         self.assertTrue(match_model.with_user(stock_user).search([]) is not None)
         with self.assertRaises(AccessError):
-            match_model.with_user(plain_user).check_access_rights("read")
+            match_model.with_user(plain_user).check_access("read")
 
     def test_19_wizard_adds_bill_lines_to_an_existing_picking(self):
         """The Create / Add to Picking wizard can feed an existing receipt."""
@@ -962,14 +964,17 @@ class TestStockBillMatching(common.TransactionCase):
         self.assertIn(str(bill.id), body)
 
         # a bill still named '/' (what the fiscal import produces here) must
-        # not leak a '/' origin: its display name identifies it instead
+        # not leak a '/' origin: it is identified by its display name,
+        # completed with its id (the display name of a nameless draft no
+        # longer carries the id since Odoo 18)
         nameless = self.create_bill([(self.product_a, 1, 50.0)])
         nameless.name = "/"
         wizard = self.env["bill.to.picking.wizard"].create(
             {"partner_id": self.partner_a.id}
         )
-        self.assertEqual(wizard._get_bill_label(nameless), nameless.display_name)
-        self.assertIn(str(nameless.id), wizard._get_bill_label(nameless))
+        label = wizard._get_bill_label(nameless)
+        self.assertIn(nameless.display_name, label)
+        self.assertIn(str(nameless.id), label)
 
     def test_25_wizard_generated_receipt_is_traceable(self):
         """The same traceability when the operator generates the receipt from
@@ -998,7 +1003,9 @@ class TestStockBillMatching(common.TransactionCase):
         wizard.action_add_to_picking()
 
         picking = wizard.picking_id
-        self.assertEqual(picking.origin, "%s (bill matching)" % bill.name)
+        self.assertEqual(
+            picking.origin, _("%(bills)s (bill matching)", bills=bill.name)
+        )
         self.assertNotEqual(
             picking.state,
             "done",

@@ -115,7 +115,7 @@ class AccountMove(models.Model):
         return self.invoice_line_ids.filtered(
             lambda line: line.display_type == "product"
             and line.product_id
-            and line.product_id.type in ("product", "consu")
+            and line.product_id.type == "consu"
         )
 
     def _get_bill_lines_to_match(self):
@@ -433,7 +433,7 @@ class AccountMove(models.Model):
             "type": "ir.actions.act_window",
             "name": _("Matched Pickings"),
             "res_model": "stock.picking",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "domain": [("id", "in", linked_pickings.ids)],
         }
 
@@ -572,7 +572,7 @@ class AccountMove(models.Model):
             "name": _("Picking Matching"),
             "res_model": "picking.bill.line.match",
             "domain": domain,
-            "view_mode": "tree",
+            "view_mode": "list",
             "context": context,
         }
 
