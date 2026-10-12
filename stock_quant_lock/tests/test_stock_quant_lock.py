@@ -49,8 +49,7 @@ class TestStockQuantLock(TransactionCase):
                         0,
                         {
                             "name": "Stock -> Output (lock)",
-                            "action": "pull",
-                            "procure_method": "make_to_stock",
+                            "action": "push",
                             "location_src_id": cls.stock_location.id,
                             "location_dest_id": cls.output_location.id,
                             "picking_type_id": cls.lock_picking_type.id,
@@ -467,45 +466,16 @@ class TestStockQuantLock(TransactionCase):
         self.assertEqual(picking.picking_type_id, self.lock_picking_type)
         self.assertEqual(len(out_picking.move_ids), 1)
 
-    def test_lock_failure_keeps_other_locks_of_shared_picking(self):
-        lot2 = self.env["stock.lot"].create(
-            {
-                "name": "LOCK-LOT-FAIL-002",
-                "product_id": self.product.id,
-                "company_id": self.env.company.id,
-            }
-        )
+    def test_lock_reservation_failure_raises(self):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.stock_location, 2.0, lot_id=self.lot
         )
-        self.env["stock.quant"]._update_available_quantity(
-            self.product, self.stock_location, 3.0, lot_id=lot2
-        )
-        quant_1 = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
-        quant_2 = self._get_exact_quant(self.product, self.stock_location, lot=lot2)
-        picking = quant_1._lock_with_route(self.lock_route)
+        quant = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
 
-        # Simulate a reservation failure for the second lock. The exception is
-        # caught without savepoint, as a caller locking quants in batch would.
         with mock.patch.object(
             type(self.env["stock.move"]), "_action_assign", autospec=True
-        ):
-            error = None
-            try:
-                quant_2._lock_with_route(self.lock_route)
-            except UserError as e:
-                error = e
-            self.assertIsInstance(error, UserError)
-
-        lock_move_2 = self.env["stock.move"].search(
-            [("quant_lock_quant_id", "=", quant_2.id)]
-        )
-        # Both lock moves share the same picking
-        self.assertEqual(lock_move_2.picking_id, picking)
-        self.assertEqual(lock_move_2.state, "cancel")
-        self.assertFalse(quant_2.is_locked_by_picking)
-        self.assertTrue(quant_1.is_locked_by_picking)
-        self.assertEqual(picking.state, "assigned")
+        ), self.assertRaisesRegex(UserError, "Unable to reserve full available"):
+            quant._lock_with_route(self.lock_route)
 
     def _create_internal_location(self, name, parent=None):
         return self.env["stock.location"].create(
@@ -541,8 +511,7 @@ class TestStockQuantLock(TransactionCase):
                 "route_id": self.lock_route.id,
                 # Higher sequence: the general rule comes first in rule order
                 "sequence": 100,
-                "action": "pull",
-                "procure_method": "make_to_stock",
+                "action": "push",
                 "location_src_id": shelf.id,
                 "location_dest_id": quarantine.id,
                 "picking_type_id": self.lock_picking_type.id,
@@ -584,18 +553,9 @@ class TestStockQuantLock(TransactionCase):
         quant = self._get_exact_quant(self.product, outside)
 
         self.assertFalse(quant._get_lock_rule(self.lock_route))
-        with self.assertRaisesRegex(UserError, "has no pull rule"):
+        with self.assertRaisesRegex(UserError, "has no push rule"):
             quant._lock_with_route(self.lock_route)
         self.assertFalse(quant.lock_move_ids)
-
-    def test_lock_ignores_make_to_order_rule(self):
-        self.env["stock.quant"]._update_available_quantity(
-            self.product, self.stock_location, 5.0
-        )
-        quant = self._get_exact_quant(self.product, self.stock_location)
-        self.lock_rule.procure_method = "make_to_order"
-
-        self.assertFalse(quant._get_lock_rule(self.lock_route))
 
     def test_lock_procurement_group_defined_by_rule(self):
         self.env["stock.quant"]._update_available_quantity(
@@ -628,8 +588,7 @@ class TestStockQuantLock(TransactionCase):
             route.rule_ids,
             [
                 {
-                    "action": "pull",
-                    "procure_method": "make_to_stock",
+                    "action": "push",
                     "location_src_id": warehouse.view_location_id.id,
                     "location_dest_id": location.id,
                     "picking_type_id": picking_type.id,
@@ -681,7 +640,7 @@ class TestStockQuantLock(TransactionCase):
             ]
         )
         picking = quant._lock_with_route(self.lock_route)
-        first_move = quant.lock_move_ids
+        lock_move = quant.lock_move_ids
         out_picking.do_unreserve()
         self.assertEqual(quant.available_quantity, 4.0)
 
@@ -690,11 +649,11 @@ class TestStockQuantLock(TransactionCase):
         )
         self.assertEqual(quant._lock_with_route(self.lock_route), picking)
 
-        # A new lock move is added to the lock picking, not merged
-        self.assertEqual(len(quant.lock_move_ids), 2)
-        self.assertEqual(picking.move_ids, quant.lock_move_ids)
-        self.assertEqual(first_move.product_uom_qty, 6.0)
-        self.assertEqual(first_move.state, "assigned")
+        # The released quantity is added to the existing lock move
+        self.assertEqual(quant.lock_move_ids, lock_move)
+        self.assertEqual(picking.move_ids, lock_move)
+        self.assertEqual(lock_move.product_uom_qty, 10.0)
+        self.assertEqual(lock_move.state, "assigned")
         self.assertEqual(quant.reserved_quantity, 10.0)
         self.assertEqual(quant.available_quantity, 0.0)
 
@@ -709,6 +668,18 @@ class TestStockQuantLock(TransactionCase):
         with self.assertRaisesRegex(UserError, "No available quantity"):
             quant._lock_with_route(self.lock_route)
         self.assertEqual(len(quant.lock_move_ids), 1)
+
+    def test_lock_over_reserved_quant_raises(self):
+        quant = self._prepare_quant_with_partial_reservation()
+        # The quant quantity is now lower than its reserved quantity
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, -8.0, lot_id=self.lot
+        )
+        self.assertEqual(quant.available_quantity, -2.0)
+
+        with self.assertRaisesRegex(UserError, "No available quantity"):
+            quant._lock_with_route(self.lock_route)
+        self.assertFalse(quant.lock_move_ids)
 
     def test_lock_with_another_operation_type_raises(self):
         quant = self._prepare_quant_with_partial_reservation()

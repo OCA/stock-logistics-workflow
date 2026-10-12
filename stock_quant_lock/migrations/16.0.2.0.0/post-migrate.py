@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 def _create_lock_route(env, picking_type):
     # Before 16.0.2.0.0, any quant could be locked with the picking type,
-    # Migrate to a dedicated route with a pull rule to lock the quant
+    # Migrate to a dedicated route with a push rule to lock the quant
     # from its exact location.
     location_src = (
         picking_type.warehouse_id.view_location_id
@@ -40,8 +40,7 @@ def _create_lock_route(env, picking_type):
                     0,
                     {
                         "name": name,
-                        "action": "pull",
-                        "procure_method": "make_to_stock",
+                        "action": "push",
                         "location_src_id": location_src.id,
                         "location_dest_id": location_dest.id,
                         "picking_type_id": picking_type.id,

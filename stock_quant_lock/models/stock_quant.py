@@ -4,7 +4,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import clean_context
-from odoo.tools.float_utils import float_compare, float_is_zero
+from odoo.tools.float_utils import float_compare
 
 
 class StockQuant(models.Model):
@@ -155,7 +155,7 @@ class StockQuant(models.Model):
             if raise_error:
                 raise UserError(
                     _(
-                        "Route '%(route)s' has no pull rule from a location "
+                        "Route '%(route)s' has no push rule from a location "
                         "containing '%(location)s' to lock quant '%(quant)s'.",
                         route=route.display_name,
                         location=self.location_id.display_name,
@@ -185,8 +185,7 @@ class StockQuant(models.Model):
         self.ensure_one()
         return [
             ("route_id", "in", route.ids),
-            ("action", "in", ("pull", "pull_push")),
-            ("procure_method", "=", "make_to_stock"),
+            ("action", "=", "push"),
             ("location_src_id", "parent_of", self.location_id.id),
             ("company_id", "in", (False, self.company_id.id)),
         ]
@@ -194,7 +193,7 @@ class StockQuant(models.Model):
     def _get_lock_rule(self, route):
         """Return the rule of the route used to lock the quant.
 
-        It is the pull rule whose source location is the closest parent of the
+        It is the push rule whose source location is the closest parent of the
         quant location.
         """
         self.ensure_one()
@@ -217,8 +216,8 @@ class StockQuant(models.Model):
     def _lock_with_route(self, route):
         """Lock the quant using the specified route.
 
-        This will run a procurement on the lock rule of the route to create
-        a stock move reserving the remaining available quantity of the quant.
+        This will create a stock move from the lock rule of the route to
+        reserve the remaining available quantity of the quant.
         """
         self._check_is_lock_with_route_allowed(route, raise_error=True)
         # Drop default_* keys from the context (e.g. default_picking_id) so the
@@ -226,68 +225,56 @@ class StockQuant(models.Model):
         # The context must be replaced, not updated, to remove these keys.
         ctx = clean_context(self.env.context)
         quant = self.with_context(ctx)  # pylint: disable=W8121
-        procurement = quant._prepare_lock_procurement(route)
-        qty_to_lock = procurement.product_qty
-        # The quant may already be locked: only consider the lock move created
-        # by this procurement.
-        existing_moves = self.lock_move_ids
-        quant.env["procurement.group"].run([procurement])
-        move = self.env["stock.move"].search(
-            [
-                ("quant_lock_quant_id", "=", self.id),
-                ("id", "not in", existing_moves.ids),
-                ("state", "not in", ("done", "cancel")),
-            ]
-        )
-        picking = move.picking_id
-        if len(move) != 1 or not picking:
-            raise UserError(
-                _("Unable to create lock picking for quant '%s'.") % self.display_name
-            )
+        move = quant.env["stock.move"].create(quant._prepare_lock_move_values(route))
+        # If the quant is already locked, the move is merged into the existing
+        # lock move: keep the merged one.
+        move = move._action_confirm()
         move._action_assign()
-
         if (
             float_compare(
                 move.reserved_availability,
-                qty_to_lock,
-                precision_rounding=self.product_uom_id.rounding,
+                move.product_uom_qty,
+                precision_rounding=move.product_uom.rounding,
             )
             < 0
         ):
-            # Only cancel the lock move: the picking may be shared with the
-            # lock moves of other quants.
-            move._action_cancel()
             raise UserError(
                 _(
                     "Unable to reserve full available quantity for quant '%(quant)s'. "
                     "Expected %(expected)s %(uom)s, reserved %(reserved)s %(uom)s.",
                     quant=self.display_name,
-                    expected=qty_to_lock,
+                    expected=move.product_uom_qty,
                     reserved=move.reserved_availability,
-                    uom=self.product_uom_id.display_name,
+                    uom=move.product_uom.display_name,
                 )
             )
 
-        return picking
+        return move.picking_id
 
-    def _prepare_lock_procurement_values(self, route, rule):
+    def _prepare_lock_move_additional_values(self, route, rule):
+        """Values passed to the rule to compute the lock move values."""
         self.ensure_one()
         return {
-            "route_ids": route,
-            "warehouse_id": rule.warehouse_id or self.warehouse_id,
-            "company_id": self.company_id,
-            "quant_lock_quant_id": self,
+            "date_planned": fields.Datetime.now(),
         }
 
-    def _prepare_lock_procurement(self, route):
+    def _prepare_lock_move_values(self, route):
         self.ensure_one()
         qty_to_lock = self.available_quantity
-        if float_is_zero(qty_to_lock, precision_rounding=self.product_uom_id.rounding):
+        # The available quantity is negative when the quant is over-reserved
+        if (
+            float_compare(
+                qty_to_lock, 0, precision_rounding=self.product_uom_id.rounding
+            )
+            <= 0
+        ):
             raise UserError(
                 _("No available quantity to lock for quant '%s'.") % self.display_name
             )
         rule = self._get_lock_rule(route)
-        return self.env["procurement.group"].Procurement(
+        # we can't use kwargs to pass parameters since the signature of
+        # _get_stock_move_values is different in different modules
+        move_values = rule._get_stock_move_values(
             self.product_id,
             qty_to_lock,
             self.product_uom_id,
@@ -295,5 +282,14 @@ class StockQuant(models.Model):
             _("Quant lock for %s") % self.product_id.display_name,
             _("Quant lock: %s") % self.display_name,
             self.company_id,
-            self._prepare_lock_procurement_values(route, rule),
+            self._prepare_lock_move_additional_values(route, rule),
         )
+        # The rule source location may be a parent of the quant location:
+        # the lock move must start from the exact quant location to reserve it.
+        move_values.update(
+            {
+                "location_id": self.location_id.id,
+                "quant_lock_quant_id": self.id,
+            }
+        )
+        return move_values

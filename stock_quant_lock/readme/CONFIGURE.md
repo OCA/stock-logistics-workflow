@@ -8,9 +8,9 @@ To configure other lock routes, you need to:
 - Go to *Inventory > Configuration > Routes*.
 - Create or open the route that will be used for quant locking.
 - Enable *Allow quant lock*.
-- Add a *Pull From* rule with the *Take From Stock* supply method. Its source
-  location must contain the locations of the quants to lock, its destination
-  location and operation type define the lock transfer.
+- Add a *Push To* rule. Its source location must contain the locations of the
+  quants to lock, its destination location and operation type define the lock
+  transfer.
 
 When several rules of the route match the location of a quant, the rule with
 the most specific source location is used, then the rule sequence. As for any

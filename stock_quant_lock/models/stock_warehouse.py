@@ -91,8 +91,7 @@ class StockWarehouse(models.Model):
         self.ensure_one()
         return {
             "name": self._format_rulename(self.view_location_id, location, ""),
-            "action": "pull",
-            "procure_method": "make_to_stock",
+            "action": "push",
             "location_src_id": self.view_location_id.id,
             "location_dest_id": location.id,
             "picking_type_id": picking_type.id,

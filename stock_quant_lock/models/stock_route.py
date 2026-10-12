@@ -10,6 +10,6 @@ class StockRoute(models.Model):
     allow_quant_lock = fields.Boolean(
         string="Allow quant lock",
         help="If checked, this route can be used to lock stock quants. "
-        "The lock transfer is created by the pull rule of this route whose "
+        "The lock transfer is created by the push rule of this route whose "
         "source location contains the location of the quant to lock.",
     )
