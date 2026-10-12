@@ -6,7 +6,7 @@ from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_is_zero
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class StockMoveLine(models.Model):
@@ -108,7 +108,17 @@ class StockMoveLine(models.Model):
             quants._lock_quants_for_loss()
             unprocessed_by_move[line.move_id] += line._unreserve_unprocessed_qty()
             for quant in quants:
-                quant._lock_with_route(line.location_id.warehouse_id.loss_route_id)
+                # Nothing to lock if the quant is fully reserved by other
+                # operations (or over-reserved): their reservations are kept.
+                if (
+                    float_compare(
+                        quant.available_quantity,
+                        0,
+                        precision_rounding=quant.product_uom_id.rounding,
+                    )
+                    > 0
+                ):
+                    quant._lock_with_route(line.location_id.warehouse_id.loss_route_id)
 
         for move, unprocessed_qty in unprocessed_by_move.items():
             if float_is_zero(

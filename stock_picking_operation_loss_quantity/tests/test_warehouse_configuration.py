@@ -26,8 +26,7 @@ class TestWarehouseConfiguration(OperationLossQuantityCommon):
             route.rule_ids,
             [
                 {
-                    "action": "pull",
-                    "procure_method": "make_to_stock",
+                    "action": "push",
                     "location_src_id": self.warehouse.view_location_id.id,
                     "location_dest_id": self.warehouse.loss_location_id.id,
                     "picking_type_id": self.warehouse.loss_type_id.id,
