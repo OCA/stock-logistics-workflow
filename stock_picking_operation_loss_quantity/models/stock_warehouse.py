@@ -104,7 +104,7 @@ class StockWarehouse(models.Model):
                     warehouse.view_location_id,
                     warehouse.loss_location_id,
                     warehouse.loss_type_id,
-                    "pull",
+                    "push",
                 )
             ]
         return rules
