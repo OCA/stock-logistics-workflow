@@ -65,6 +65,7 @@ addon | version | maintainers | summary
 [stock_picking_origin_state](stock_picking_origin_state/) | 17.0.1.0.0 |  | Expose the aggregated state of the origin pickings on a transfer
 [stock_picking_partner_note](stock_picking_partner_note/) | 17.0.1.0.0 |  | Add partner notes on picking
 [stock_picking_portal](stock_picking_portal/) | 17.0.1.0.1 |  | Show customer delivery orders in portal
+[stock_picking_portal_owner](stock_picking_portal_owner/) | 17.0.1.0.0 |  | Show consignment owner stock operations in portal
 [stock_picking_purchase_order_link](stock_picking_purchase_order_link/) | 17.0.1.0.0 |  | Link between picking and purchase order
 [stock_picking_return_lot](stock_picking_return_lot/) | 17.0.1.0.0 |  | Propagate SN/lots from origin picking to return picking.
 [stock_picking_return_restricted_qty](stock_picking_return_restricted_qty/) | 17.0.1.0.0 |  | Restrict the return to delivered quantity
