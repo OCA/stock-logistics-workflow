@@ -311,8 +311,18 @@ class StockValuationLayer(models.Model):
         return float(match.group(1).replace(",", ".")) if match else None
 
     @api.model
-    def _process_avco_svl_manual_adjustements(self, svls_dic):
-        accumulated_qty = accumulated_value = 0.0
+    def _process_avco_svl_manual_adjustements(
+        self, svls_dic, accumulated_qty=0.0, accumulated_value=0.0
+    ):
+        """Value each manual cost change as the difference between its target
+        cost and what the stock on hand was worth right before it.
+
+        `svls_dic` only holds the layers replayed in this run, so the stock on
+        hand before the first of them comes in through `accumulated_qty` and
+        `accumulated_value`. Starting from zero instead would value a manual
+        change against the replayed layers alone whenever the replay starts in
+        the middle of the chain, as a correction does.
+        """
         for svl, svl_dic in svls_dic.items():
             if not svl_dic["quantity"] and not svl_dic["unit_cost"]:
                 standard_price = svl._get_manual_adjustment_price()
@@ -389,18 +399,30 @@ class StockValuationLayer(models.Model):
             vals["unit_cost"] - self.unit_cost
         )
 
+    def _get_previous_svls_domain(self):
+        """Domain selecting the layers of the chain that come before this one."""
+        self.ensure_one()
+        return self._get_avco_chain_domain() + [
+            "|",
+            "&",
+            ("create_date", "=", self.create_date),
+            ("id", "<", self.id),
+            ("create_date", "<", self.create_date),
+        ]
+
+    def _get_previous_svl_totals(self):
+        """Quantity and value of the stock on hand right before this layer."""
+        self.ensure_one()
+        [(quantity, value)] = self.env["stock.valuation.layer"]._read_group(
+            self._get_previous_svls_domain(),
+            aggregates=["quantity:sum", "value:sum"],
+        )
+        return quantity or 0.0, value or 0.0
+
     def _get_previous_svl_info(self):
         self.ensure_one()
         previous_svls = self.env["stock.valuation.layer"].search(
-            self._get_avco_chain_domain()
-            + [
-                "|",
-                "&",
-                ("create_date", "=", self.create_date),
-                ("id", "<", self.id),
-                ("create_date", "<", self.create_date),
-            ],
-            order="create_date, id",
+            self._get_previous_svls_domain(), order="create_date, id"
         )
         key = self._get_avco_sync_key()
         svls_dic = OrderedDict()
@@ -430,6 +452,7 @@ class StockValuationLayer(models.Model):
             "previous_unit_cost": prev_vals[0],
             "previous_qty": prev_vals[1],
             "unit_cost_processed": prev_vals[2],
+            "previous_totals": self._get_previous_svl_totals(),
         }
 
     def _initialize_avco_sync_svl_dic(self):
@@ -508,7 +531,9 @@ class StockValuationLayer(models.Model):
         lot_valuated = defaultdict(lambda: self.env["product.product"])
         for key, svl_dic in svls_dic.items():
             # Reprocess svls to set manual adjust values take into account all vacuums
-            self._process_avco_svl_manual_adjustements(svl_dic["svls"])
+            self._process_avco_svl_manual_adjustements(
+                svl_dic["svls"], *svl_dic["previous_totals"]
+            )
             # Write changes in db before deriving anything out of them
             self._flush_all_avco_sync(svl_dic["svls"])
             self._set_avco_chain_standard_price(key, svl_dic["previous_unit_cost"])
