@@ -86,6 +86,8 @@ class StockWarehouse(models.Model):
                     "show_reserved": True,
                     "show_operations": True,
                     "sequence_code": "LOSS",
+                    # Required by stock_quant_lock to lock the lost quants
+                    "reservation_method": "at_confirm",
                     "company_id": self.company_id.id,
                 }
             }
