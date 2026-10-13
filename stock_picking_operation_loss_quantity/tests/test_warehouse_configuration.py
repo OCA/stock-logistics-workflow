@@ -17,6 +17,7 @@ class TestWarehouseConfiguration(OperationLossQuantityCommon):
             self.warehouse.loss_type_id.default_location_dest_id,
             self.warehouse.loss_location_id,
         )
+        self.assertEqual(self.warehouse.loss_type_id.reservation_method, "at_confirm")
 
         # Check loss route
         route = self.warehouse.loss_route_id
