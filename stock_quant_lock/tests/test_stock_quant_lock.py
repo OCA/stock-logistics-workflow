@@ -33,7 +33,7 @@ class TestStockQuantLock(TransactionCase):
         cls.lock_picking_type = cls.env.ref("stock.picking_type_internal")
         cls.lock_picking_type.write(
             {
-                "reservation_method": "manual",
+                "reservation_method": "at_confirm",
                 "default_location_src_id": cls.stock_location.id,
                 "default_location_dest_id": cls.output_location.id,
             }
@@ -261,48 +261,26 @@ class TestStockQuantLock(TransactionCase):
         with self.assertRaises(UserError):
             quant.action_unlock_quant()
 
-    def test_lock_action_reserves_for_all_reservation_modes(self):
-        for mode in ("manual", "at_confirm", "by_date"):
+    def test_lock_requires_reservation_at_confirm(self):
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.stock_location, 3.0, lot_id=self.lot
+        )
+        quant = self._get_exact_quant(self.product, self.stock_location, lot=self.lot)
+        for mode in ("manual", "by_date"):
             self.lock_picking_type.reservation_method = mode
-            lot = self.env["stock.lot"].create(
-                {
-                    "name": "LOCK-MODE-%s" % mode,
-                    "product_id": self.product.id,
-                    "company_id": self.env.company.id,
-                }
-            )
-            self.env["stock.quant"]._update_available_quantity(
-                self.product,
-                self.stock_location,
-                3.0,
-                lot_id=lot,
-            )
-            quant = self._get_exact_quant(self.product, self.stock_location, lot=lot)
-
-            wizard = (
-                self.env["stock.quant.lock.wizard"]
-                .with_context(
-                    active_model="stock.quant",
-                    active_ids=quant.ids,
-                )
-                .create(
-                    {
-                        "route_id": self.lock_route.id,
-                    }
+            self.assertFalse(
+                quant._check_is_lock_with_route_allowed(
+                    self.lock_route, raise_error=False
                 )
             )
-            wizard.action_lock()
+            with self.assertRaisesRegex(UserError, "reserve products at confirmation"):
+                quant._lock_with_route(self.lock_route)
+            self.assertFalse(quant.lock_move_ids)
 
-            self.assertTrue(quant.is_locked_by_picking)
-            self.assertEqual(
-                float_compare(
-                    quant.available_quantity,
-                    0.0,
-                    precision_rounding=self.product.uom_id.rounding,
-                ),
-                0,
-            )
-            quant.action_unlock_quant()
+        self.lock_picking_type.reservation_method = "at_confirm"
+        quant._lock_with_route(self.lock_route)
+        self.assertTrue(quant.is_locked_by_picking)
+        self.assertEqual(quant.available_quantity, 0.0)
 
     def test_batch_lock_and_unlock_for_selected_quants(self):
         lot2 = self.env["stock.lot"].create(
@@ -547,6 +525,28 @@ class TestStockQuantLock(TransactionCase):
         with self.assertRaisesRegex(UserError, "cannot be used for quant lock"):
             quant._lock_with_route(self.lock_route)
 
+    def test_lock_quant_in_location_bypassing_reservation_raises(self):
+        scrap = self.env["stock.location"].create(
+            {
+                "name": "Scrap",
+                "usage": "inventory",
+                "scrap_location": True,
+                "location_id": self.stock_location.id,
+            }
+        )
+        self.assertTrue(scrap.should_bypass_reservation())
+        self.env["stock.quant"]._update_available_quantity(self.product, scrap, 5.0)
+        quant = self._get_exact_quant(self.product, scrap)
+        # The lock rule matches the quant location
+        self.assertEqual(quant._get_lock_rule(self.lock_route), self.lock_rule)
+
+        self.assertFalse(
+            quant._check_is_lock_with_route_allowed(self.lock_route, raise_error=False)
+        )
+        with self.assertRaisesRegex(UserError, "bypasses reservation"):
+            quant._lock_with_route(self.lock_route)
+        self.assertFalse(quant.lock_move_ids)
+
     def test_lock_without_matching_rule_raises(self):
         outside = self._create_internal_location("Outside")
         self.env["stock.quant"]._update_available_quantity(self.product, outside, 5.0)
@@ -582,6 +582,7 @@ class TestStockQuantLock(TransactionCase):
         self.assertEqual(location.location_id, warehouse.view_location_id)
         self.assertEqual(location.warehouse_id, warehouse)
         self.assertEqual(picking_type.default_location_dest_id, location)
+        self.assertEqual(picking_type.reservation_method, "at_confirm")
         self.assertEqual(picking_type.warehouse_id, warehouse)
         self.assertTrue(route.allow_quant_lock)
         self.assertRecordValues(

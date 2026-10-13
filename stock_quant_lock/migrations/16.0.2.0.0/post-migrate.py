@@ -64,8 +64,27 @@ def _migrate_lock_picking_types(env):
         _create_lock_route(env, picking_type)
 
 
+def _set_lock_picking_types_reservation_method(env):
+    """Lock moves are reserved at confirmation"""
+    rules = (
+        env["stock.rule"]
+        .with_context(active_test=False)
+        .search([("route_id.allow_quant_lock", "=", True), ("action", "=", "push")])
+    )
+    picking_types = rules.picking_type_id.filtered(
+        lambda pt: pt.reservation_method != "at_confirm"
+    )
+    picking_types.write({"reservation_method": "at_confirm"})
+    for picking_type in picking_types:
+        _logger.info(
+            "Reservation method of %s set to 'at_confirm' for quant lock",
+            picking_type.display_name,
+        )
+
+
 def migrate(cr, version):
     env = api.Environment(cr, SUPERUSER_ID, {})
     _migrate_lock_picking_types(env)
+    _set_lock_picking_types_reservation_method(env)
     # Only create the missing records: nothing existing is modified
     env["stock.warehouse"].search([])._create_quality_check_lock()

@@ -63,6 +63,7 @@ class StockWarehouse(models.Model):
             "name": _("Quality Check"),
             "code": "internal",
             "sequence_code": "QC",
+            "reservation_method": "at_confirm",
             "sequence_id": sequence.id,
             "use_create_lots": False,
             "use_existing_lots": True,

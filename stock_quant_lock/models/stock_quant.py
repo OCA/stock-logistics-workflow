@@ -151,6 +151,16 @@ class StockQuant(models.Model):
                     )
                 )
             return False
+        if self.location_id.should_bypass_reservation():
+            if raise_error:
+                raise UserError(
+                    _(
+                        "Quant '%(quant)s' is in a location that bypasses reservation. "
+                        "Only quants in reservable locations can be locked.",
+                        quant=self.display_name,
+                    )
+                )
+            return False
         if not self._get_lock_rule(route):
             if raise_error:
                 raise UserError(
@@ -163,9 +173,20 @@ class StockQuant(models.Model):
                     )
                 )
             return False
+        picking_type = self._get_lock_rule(route).picking_type_id
+        if picking_type.reservation_method != "at_confirm":
+            if raise_error:
+                raise UserError(
+                    _(
+                        "Operation type '%(op)s' used by route '%(route)s' must "
+                        "reserve products at confirmation to lock quants.",
+                        op=picking_type.display_name,
+                        route=route.display_name,
+                    )
+                )
+            return False
         # A quant already locked can only be locked again for the same
         # purpose: the new lock move reserves the quantity released since then.
-        picking_type = self._get_lock_rule(route).picking_type_id
         other_lock_moves = self.lock_move_ids.filtered(
             lambda m: m.state == "assigned" and m.picking_type_id != picking_type
         )
@@ -226,10 +247,10 @@ class StockQuant(models.Model):
         ctx = clean_context(self.env.context)
         quant = self.with_context(ctx)  # pylint: disable=W8121
         move = quant.env["stock.move"].create(quant._prepare_lock_move_values(route))
-        # If the quant is already locked, the move is merged into the existing
-        # lock move: keep the merged one.
+        # The move is reserved at confirmation (see the reservation method
+        # checked on the operation type). If the quant is already locked, the
+        # move is merged into the existing lock move: keep the merged one.
         move = move._action_confirm()
-        move._action_assign()
         if (
             float_compare(
                 move.reserved_availability,
