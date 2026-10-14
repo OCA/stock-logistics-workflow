@@ -475,3 +475,118 @@ class TestPurchaseSTockPickingInvoiceLink(common.TransactionCase):
         self.assertEqual(
             inv_line.move_line_ids, picking_1.move_ids | picking_2.move_ids
         )
+
+    def test_write_links_return_to_refund_not_invoice(self):
+        """A return move (``to_refund``) validated through ``write()`` must be
+        linked to a pending credit note line, never to a vendor bill line of
+        the same purchase line, even when that bill line still has pending
+        quantity and is older. The return wizard copies ``purchase_line_id``
+        from the original move, so both lines are reachable from the move.
+        """
+        self.product.purchase_method = "purchase"
+        self.po.order_line.product_qty = 4.0
+        self.po.button_confirm()
+        po_line = self.po.order_line
+        # Bill the full ordered qty before receiving anything
+        bill = self.env["account.move"].browse(
+            self.po.action_create_invoice()["res_id"]
+        )
+        bill.invoice_date = fields.Date.today()
+        bill.action_post()
+        bill_line = bill.invoice_line_ids.filtered(
+            lambda line: line.purchase_line_id == po_line
+        )
+        # Receive 2 of 4: the bill line keeps 2 units pending
+        picking = self.po.picking_ids[0]
+        picking.move_line_ids.qty_done = 2.0
+        picking._action_done()
+        self.env["stock.backorder.confirmation"].create(
+            {"pick_ids": [(4, picking.id)]}
+        ).process()
+        self.assertEqual(bill_line.move_line_ids, picking.move_ids)
+        # Credit note for the unit that is going to be returned
+        refund = self.env["account.move"].create(
+            {
+                "move_type": "in_refund",
+                "partner_id": self.supplier.id,
+                "journal_id": bill.journal_id.id,
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product.id,
+                            "quantity": 1.0,
+                            "price_unit": 15.0,
+                            "purchase_line_id": po_line.id,
+                        },
+                    )
+                ],
+            }
+        )
+        refund.action_post()
+        refund_line = refund.invoice_line_ids.filtered(
+            lambda line: line.purchase_line_id == po_line
+        )
+        # Return 1 unit to the vendor
+        return_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_id=picking.id, active_model="stock.picking"
+            )
+        )
+        with return_form.product_return_moves.edit(0) as return_line:
+            return_line.quantity = 1.0
+        return_wiz = return_form.save()
+        # to_refund is only shown in the view to some groups
+        return_wiz.product_return_moves.to_refund = True
+        return_picking = self.env["stock.picking"].browse(
+            return_wiz.create_returns()["res_id"]
+        )
+        return_move = return_picking.move_ids
+        self.assertEqual(return_move.purchase_line_id, po_line)
+        return_picking.move_line_ids.qty_done = 1.0
+        return_picking._action_done()
+        self.assertEqual(refund_line.move_line_ids, return_move)
+        self.assertNotIn(return_move, bill_line.move_line_ids)
+
+    def test_write_same_po_line_moves_in_one_validation(self):
+        """Two moves of the same purchase line validated in the same
+        ``write()`` must not claim the same pending quantity: the second move
+        has to see the link made for the first one and go to the next bill.
+        """
+        self.product.purchase_method = "purchase"
+        self.po.order_line.product_qty = 4.0
+        self.po.button_confirm()
+        po_line = self.po.order_line
+        # Two bills of 2 units each, posted before receiving anything
+        bill_lines = self.env["account.move.line"]
+        for _i in range(2):
+            bill = self.env["account.move"].browse(
+                self.po.action_create_invoice()["res_id"]
+            )
+            bill_form = Form(bill)
+            bill_form.invoice_date = fields.Date.today()
+            with bill_form.invoice_line_ids.edit(0) as line_form:
+                line_form.quantity = 2
+            bill = bill_form.save()
+            bill.action_post()
+            bill_lines |= bill.invoice_line_ids.filtered(
+                lambda line: line.purchase_line_id == po_line
+            )
+        # Split the receipt move of the PO line in two moves of 2 units
+        picking = self.po.picking_ids[0]
+        move_1 = picking.move_ids
+        move_2 = self.env["stock.move"].create(move_1._split(2.0))
+        move_2._action_confirm(merge=False)
+        picking.action_assign()
+        moves = move_1 | move_2
+        self.assertEqual(moves.purchase_line_id, po_line)
+        for move in moves:
+            move.move_line_ids.qty_done = 2.0
+        picking._action_done()
+        self.assertEqual(set(moves.mapped("state")), {"done"})
+        # Each bill line gets exactly one move, and both moves are linked
+        for bill_line in bill_lines:
+            self.assertEqual(len(bill_line.move_line_ids), 1)
+        self.assertEqual(bill_lines.move_line_ids, moves)
