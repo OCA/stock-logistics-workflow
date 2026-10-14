@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
-#, python-format
 msgid ""
 "%(product)s has already been processed and cannot be removed. Instead, "
 "create a return in your inventory."
@@ -55,7 +54,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
-#, python-format
 msgid "Both warehouses must belong to the same company."
 msgstr ""
 
@@ -72,14 +70,12 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
-#, python-format
 msgid "Cannot confirm a transfer without lines."
 msgstr ""
 
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_move.py:0
-#, python-format
 msgid ""
 "Cannot create an internal move between locations of different warehouses "
 "(%(wh_from)s → %(wh_to)s). Use an Inter-Warehouse Transfer instead."
@@ -115,6 +111,9 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__display_name
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__display_name
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_warehouse__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -161,6 +160,9 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__id
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__id
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_warehouse__id
 msgid "ID"
 msgstr ""
 
@@ -280,7 +282,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
-#, python-format
 msgid "No internal transit location configured for company %(company)s."
 msgstr ""
 
@@ -305,11 +306,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: stock_interwarehouse_transfer
-#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__procurement_group_id
-msgid "Procurement Group"
-msgstr ""
-
-#. module: stock_interwarehouse_transfer
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__product_id
 msgid "Product"
 msgstr ""
@@ -331,6 +327,11 @@ msgid "Received"
 msgstr ""
 
 #. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__reference_id
+msgid "Reference"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_user_id
 msgid "Responsible User"
 msgstr ""
@@ -348,7 +349,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
-#, python-format
 msgid "Source and destination warehouse must be different."
 msgstr ""
 
@@ -380,7 +380,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
-#, python-format
 msgid ""
 "The quantity of %(product)s cannot be decreased below the quantity already "
 "processed. Instead, create a return in your inventory."
@@ -405,7 +404,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
-#, python-format
 msgid ""
 "Transfer %(transfer)s is done or cancelled, its products can no longer be "
 "modified."
@@ -419,7 +417,6 @@ msgstr ""
 #. module: stock_interwarehouse_transfer
 #. odoo-python
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
-#, python-format
 msgid "Transfer confirmed. OUT: %(out)s, IN: %(in_picking)s"
 msgstr ""
 
@@ -428,7 +425,6 @@ msgstr ""
 #: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
 #: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__picking_ids
 #: model_terms:ir.ui.view,arch_db:stock_interwarehouse_transfer.view_stock_interwarehouse_transfer_form
-#, python-format
 msgid "Transfers"
 msgstr ""
 
