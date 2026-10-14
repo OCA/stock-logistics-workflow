@@ -1,0 +1,458 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_interwarehouse_transfer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
+#, python-format
+msgid ""
+"%(product)s has already been processed and cannot be removed. Instead, "
+"create a return in your inventory."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#, python-format
+msgid "Both warehouses must belong to the same company."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model_terms:ir.ui.view,arch_db:stock_interwarehouse_transfer.view_stock_interwarehouse_transfer_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields.selection,name:stock_interwarehouse_transfer.selection__stock_interwarehouse_transfer__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#, python-format
+msgid "Cannot confirm a transfer without lines."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_move.py:0
+#, python-format
+msgid ""
+"Cannot create an internal move between locations of different warehouses "
+"(%(wh_from)s → %(wh_to)s). Use an Inter-Warehouse Transfer instead."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__company_id
+msgid "Company"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model_terms:ir.ui.view,arch_db:stock_interwarehouse_transfer.view_stock_interwarehouse_transfer_form
+msgid "Confirm"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields.selection,name:stock_interwarehouse_transfer.selection__stock_interwarehouse_transfer__state__confirmed
+msgid "Confirmed"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__create_uid
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__create_date
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__display_name
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields.selection,name:stock_interwarehouse_transfer.selection__stock_interwarehouse_transfer__state__done
+msgid "Done"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields.selection,name:stock_interwarehouse_transfer.selection__stock_interwarehouse_transfer__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__location_id
+msgid "From Location"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__warehouse_from_id
+msgid "From Warehouse"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__id
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields.selection,name:stock_interwarehouse_transfer.selection__stock_interwarehouse_transfer__state__in_transit
+msgid "In Transit"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_warehouse__in_inter_wh_type_id
+msgid "Inter-WH In Type"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_warehouse__out_inter_wh_type_id
+msgid "Inter-WH Out Type"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_picking__interwarehouse_transfer_id
+msgid "Inter-WH Transfer"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_move__interwh_transfer_line_id
+msgid "Inter-WH Transfer Line"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model,name:stock_interwarehouse_transfer.model_stock_interwarehouse_transfer
+msgid "Inter-Warehouse Transfer"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model,name:stock_interwarehouse_transfer.model_stock_interwarehouse_transfer_line
+msgid "Inter-Warehouse Transfer Line"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.actions.act_window,name:stock_interwarehouse_transfer.action_stock_interwarehouse_transfer
+#: model:ir.ui.menu,name:stock_interwarehouse_transfer.menu_stock_interwarehouse_transfer
+msgid "Inter-Warehouse Transfers"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__write_uid
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__write_date
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#, python-format
+msgid "No internal transit location configured for company %(company)s."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__procurement_group_id
+msgid "Procurement Group"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__line_ids
+#: model_terms:ir.ui.view,arch_db:stock_interwarehouse_transfer.view_stock_interwarehouse_transfer_form
+msgid "Products"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__product_uom_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__qty_received
+msgid "Received"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__scheduled_date
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__qty_shipped
+msgid "Shipped"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#, python-format
+msgid "Source and destination warehouse must be different."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__state
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__state
+msgid "State"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model,name:stock_interwarehouse_transfer.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__move_ids
+msgid "Stock Moves"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
+#, python-format
+msgid ""
+"The quantity of %(product)s cannot be decreased below the quantity already "
+"processed. Instead, create a return in your inventory."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__location_dest_id
+msgid "To Location"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__warehouse_to_id
+msgid "To Warehouse"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model,name:stock_interwarehouse_transfer.model_stock_picking
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__transfer_id
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer_line.py:0
+#, python-format
+msgid ""
+"Transfer %(transfer)s is done or cancelled, its products can no longer be "
+"modified."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__picking_count
+msgid "Transfer Count"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#, python-format
+msgid "Transfer confirmed. OUT: %(out)s, IN: %(in_picking)s"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#. odoo-python
+#: code:addons/stock_interwarehouse_transfer/models/stock_interwarehouse_transfer.py:0
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__picking_ids
+#: model_terms:ir.ui.view,arch_db:stock_interwarehouse_transfer.view_stock_interwarehouse_transfer_form
+#, python-format
+msgid "Transfers"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer_line__product_uom
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model,name:stock_interwarehouse_transfer.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,field_description:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_interwarehouse_transfer
+#: model:ir.model.fields,help:stock_interwarehouse_transfer.field_stock_interwarehouse_transfer__website_message_ids
+msgid "Website communication history"
+msgstr ""
