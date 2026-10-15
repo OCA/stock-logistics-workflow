@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.stock</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="30" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@name='operations_setting_container']"
+                position="inside"
+            >
+                <setting
+                    id="picking_deletion_allow"
+                    title="Mark to allow transfer deletion for every Inventory user"
+                    help="Mark to allow transfer deletion for every Inventory user"
+                >
+                    <field name="group_allow_stock_picking_deletion" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
