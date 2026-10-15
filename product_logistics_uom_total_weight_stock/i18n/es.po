@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_logistics_uom_total_weight_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-25 06:30+0000\n"
+"PO-Revision-Date: 2025-08-25 06:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_logistics_uom_total_weight_stock
+#: model:ir.model,name:product_logistics_uom_total_weight_stock.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (línea de movimiento de stock)"
+
+#. module: product_logistics_uom_total_weight_stock
+#: model:ir.model,name:product_logistics_uom_total_weight_stock.model_stock_quant
+msgid "Quants"
+msgstr "Cuantos"
+
+#. module: product_logistics_uom_total_weight_stock
+#: model:ir.model,name:product_logistics_uom_total_weight_stock.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de stock"
+
+#. module: product_logistics_uom_total_weight_stock
+#: model:ir.model.fields,field_description:product_logistics_uom_total_weight_stock.field_stock_move__total_weight
+#: model:ir.model.fields,field_description:product_logistics_uom_total_weight_stock.field_stock_move_line__total_weight
+#: model:ir.model.fields,field_description:product_logistics_uom_total_weight_stock.field_stock_quant__inventory_weight
+#: model_terms:ir.ui.view,arch_db:product_logistics_uom_total_weight_stock.view_move_pivot_inherit
+#: model_terms:ir.ui.view,arch_db:product_logistics_uom_total_weight_stock.view_stock_quant_tree_editable_inherit
+msgid "Total Weight"
+msgstr "Peso total"
