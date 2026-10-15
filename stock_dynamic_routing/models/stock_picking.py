@@ -8,6 +8,7 @@ class StockPicking(models.Model):
 
     canceled_by_routing = fields.Boolean(
         default=False,
+        index=True,
         help="Technical field. Indicates the transfer is"
         " canceled because it was left empty after a dynamic routing.",
     )
