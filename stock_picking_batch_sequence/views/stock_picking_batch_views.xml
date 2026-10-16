@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--  Restore core list view (with batch_sequence handle) replaced by
+          stock_picking_batch_extended  -->
+    <record id="stock_picking_batch_form" model="ir.ui.view">
+        <field name="model">stock.picking.batch</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch_extended.stock_picking_batch_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_ids']" position="attributes">
+                <attribute
+                    name="context"
+                >{'form_view_ref': 'stock_picking_batch.view_picking_form_inherited', 'list_view_ref': 'stock_picking_batch.stock_picking_view_batch_tree_ref'}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_move_tree_inherited" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_move_tree_inherited"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="sequence" column_invisible="1" />
+                <field name="picking_batch_sequence" column_invisible="1" />
+            </xpath>
+            <xpath expr="//list" position="attributes">
+                <attribute
+                    name="default_order"
+                >picking_batch_sequence,picking_id,sequence,id</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_move_line_tree">
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="picking_batch_sequence" column_invisible="1" />
+            </xpath>
+            <xpath expr="//list" position="attributes">
+                <attribute
+                    name="default_order"
+                >picking_batch_sequence, result_package_id desc, location_id asc, location_dest_id asc, picking_id asc, id</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
