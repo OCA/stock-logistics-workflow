@@ -36,7 +36,7 @@ class TestStockNoNegative(TransactionCase):
         )
         return product_ctg
 
-    def _create_product(self, name):
+    def _create_product(self, name="test product"):
         product = self.product_model.create(
             {
                 "name": name,
@@ -211,3 +211,83 @@ class TestStockNoNegative(TransactionCase):
             ]
         )
         self.assertEqual(quant.quantity, -100)
+
+    def test_constrain_allow_negative_quant_if_gathered_qty_positive(self):
+        """in case of concurrent access, it is legal to create a negative quant
+        if the overall quantity remains positive"""
+        product = self._create_product()
+        Quant = self.env["stock.quant"].with_context(test_stock_no_negative=True)
+        Quant.create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": 5,
+                }
+            ]
+        )
+        # this is legal
+        Quant.create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": -3,
+                }
+            ]
+        )
+        quants = Quant._gather(product, self.location_id)
+        self.assertEqual(sum(quants.mapped("quantity")), 2)
+
+    def test_constrain_forbids_negative_quant_if_gathered_qty_negative(self):
+        """in case of concurrent access, it is forbidden to create a negative quant
+        if the overall quantity gets negative"""
+        product = self._create_product()
+        Quant = self.env["stock.quant"].with_context(test_stock_no_negative=True)
+        Quant.create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": 5,
+                }
+            ]
+        )
+        # this will trigger the constrain because the overall quantity becomes -1
+        with self.assertRaises(UserError):
+            Quant.create(
+                [
+                    {
+                        "product_id": product.id,
+                        "location_id": self.location_id.id,
+                        "quantity": -6,
+                    }
+                ]
+            )
+
+    def test_constrain_forbids_changing_quantity_if_gathered_qty_negative(self):
+        """it is forbidden to change the quantity of a quant
+        if the overall quantity gets negative"""
+        product = self._create_product()
+        Quant = self.env["stock.quant"].with_context(test_stock_no_negative=True)
+        quant1 = Quant.create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": 5,
+                }
+            ]
+        )
+        Quant.create(
+            [
+                {
+                    "product_id": product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": -3,
+                }
+            ]
+        )
+        # this will trigger the constrain because the overall quantity becomes -1
+        with self.assertRaises(UserError):
+            quant1.quantity = 2
