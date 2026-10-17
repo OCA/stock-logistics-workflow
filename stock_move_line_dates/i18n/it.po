@@ -1,0 +1,56 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_line_dates
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-04-15 14:58+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: stock_move_line_dates
+#: model:ir.model.fields,help:stock_move_line_dates.field_stock_move_line__date_deadline
+msgid "Date Promise to the customer on the top level document (SO/PO)"
+msgstr "Dapa promessa al cliente nel documento principale (OV/OP)"
+
+#. module: stock_move_line_dates
+#: model:ir.model.fields,field_description:stock_move_line_dates.field_stock_move_line__date_schedule
+#: model_terms:ir.ui.view,arch_db:stock_move_line_dates.stock_move_line_view_search
+msgid "Date Scheduled"
+msgstr "Data schedulata"
+
+#. module: stock_move_line_dates
+#: model:ir.model.fields,field_description:stock_move_line_dates.field_stock_move_line__date_deadline
+#: model_terms:ir.ui.view,arch_db:stock_move_line_dates.stock_move_line_view_search
+msgid "Deadline"
+msgstr "Scadenza"
+
+#. module: stock_move_line_dates
+#: model:ir.model,name:stock_move_line_dates.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_move_line_dates
+#: model:ir.model.fields,help:stock_move_line_dates.field_stock_move_line__date_schedule
+msgid "Scheduled date until move is done, then date of actual move processing"
+msgstr ""
+"Data schedulata fino a esecuzione movimento, quindi data elaborazione "
+"movimento attuale"
+
+#. module: stock_move_line_dates
+#: model_terms:ir.ui.view,arch_db:stock_move_line_dates.stock_move_line_view_search
+msgid "Today"
+msgstr "Oggi"
+
+#. module: stock_move_line_dates
+#: model_terms:ir.ui.view,arch_db:stock_move_line_dates.stock_move_line_view_search
+msgid "Tomorrow"
+msgstr "Domani"
