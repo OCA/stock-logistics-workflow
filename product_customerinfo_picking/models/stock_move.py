@@ -1,4 +1,5 @@
 # Copyright 2013 - 2021 Agile Business Group sagl (<https://www.agilebg.com>)
+# Copyright 2025 bosd
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, fields, models
 
@@ -13,16 +14,39 @@ class StockMove(models.Model):
         compute="_compute_product_customer_code",
     )
 
-    @api.depends("product_id", "picking_id.partner_id")
+    @api.depends(
+        "product_id",
+        "picking_id.partner_id",
+        "location_id.warehouse_id.partner_id",
+        "location_dest_id.warehouse_id.partner_id",
+    )
     def _compute_product_customer_code(self):
         for move in self:
-            customerinfo = self.env["product.customerinfo"].browse()
-            if move.product_id and move.picking_id.partner_id:
-                customerinfo = move.product_id._select_customerinfo(
-                    partner=move.picking_id.partner_id
-                )
+            customerinfo = move._get_product_customerinfo()
             move.product_customer_code = customerinfo.product_code or ""
             move.product_customer_name = customerinfo.product_name or ""
+
+    def _get_product_customerinfo(self):
+        self.ensure_one()
+        customerinfo = self.env["product.customerinfo"].browse()
+        if not self.product_id:
+            return customerinfo
+        if self.picking_id.partner_id:
+            customerinfo = self.product_id._select_customerinfo(
+                partner=self.picking_id.partner_id
+            )
+        if not customerinfo:
+            # Consignment fallback: look up the warehouse owner when the
+            # picking partner yields no match (e.g. vendor receipt into a
+            # consignment warehouse owned by a different partner).
+            warehouse = (
+                self.location_dest_id.warehouse_id or self.location_id.warehouse_id
+            )
+            if warehouse.partner_id:
+                customerinfo = self.product_id._select_customerinfo(
+                    partner=warehouse.partner_id
+                )
+        return customerinfo
 
     def _get_report_product_display_name(self):
         self.ensure_one()
