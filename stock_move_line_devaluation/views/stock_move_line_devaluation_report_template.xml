@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_report_devaluation" model="ir.actions.report">
+        <field name="name">Withdrawal Valuation</field>
+        <field name="model">stock.move.line.devaluation.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >stock_move_line_devaluation.report_devaluation_document</field>
+        <field
+            name="report_file"
+        >stock_move_line_devaluation.report_devaluation_document</field>
+        <field name="binding_model_id" ref="model_stock_move_line_devaluation_report" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_devaluation_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <t t-set="currency" t-value="res_company.currency_id" />
+
+                    <h2 class="text-center mt-4 mb-2">
+                        Stock Withdrawal Valuation
+                    </h2>
+
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <t t-if="docs and docs[0].partner_id">
+                                <strong>Customer:</strong>
+                                <t t-esc="docs[0].partner_id.name" />
+                            </t>
+                        </div>
+                        <div class="col-6 text-end">
+                            <t t-if="docs and docs[0].pricelist_id">
+                                <strong>Pricelist:</strong>
+                                <t t-esc="docs[0].pricelist_id.display_name" />
+                            </t>
+                        </div>
+                    </div>
+
+                    <t t-set="grand_total" t-value="0" />
+                    <t t-set="accounts" t-value="docs.mapped('analytic_account_id')" />
+                    <t
+                        t-set="has_no_account"
+                        t-value="docs.filtered(lambda l: not l.analytic_account_id)"
+                    />
+
+                    <!-- Lines without analytic account -->
+                    <t t-if="has_no_account">
+                        <t t-set="section_lines" t-value="has_no_account" />
+                        <t
+                            t-set="section_total"
+                            t-value="sum(section_lines.mapped('total_value'))"
+                        />
+                        <t
+                            t-set="section_qty"
+                            t-value="sum(section_lines.mapped('net_qty'))"
+                        />
+                        <t t-set="grand_total" t-value="grand_total + section_total" />
+
+                        <div class="row mt-4 mb-1 border-bottom border-2">
+                            <div class="col-8">
+                                <h4>No Analytic Account</h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h4>
+                                    <t
+                                        t-esc="section_total"
+                                        t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                    />
+                                </h4>
+                            </div>
+                        </div>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%">Date</th>
+                                    <th style="width:14%">Transfer</th>
+                                    <th style="width:14%">Responsible</th>
+                                    <th style="width:28%">Product</th>
+                                    <th class="text-end" style="width:8%">Net Qty</th>
+                                    <th style="width:8%">UoM</th>
+                                    <th
+                                        class="text-end"
+                                        style="width:9%"
+                                    >Unit Price</th>
+                                    <th
+                                        class="text-end"
+                                        style="width:9%"
+                                    >Total Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="section_lines" t-as="line">
+                                    <tr>
+                                        <td><t
+                                                t-esc="line.date"
+                                                t-options="{'widget': 'date'}"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.picking_id.name or ''"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.responsible_id.name or ''"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.product_id.display_name or ''"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.net_qty"
+                                                t-options="{'widget': 'float', 'precision': 2}"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.product_uom_id.name or ''"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.unit_price"
+                                                t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.total_value"
+                                                t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                            /></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr class="fw-bold">
+                                    <td colspan="4">Subtotal</td>
+                                    <td class="text-end"><t
+                                            t-esc="section_qty"
+                                            t-options="{'widget': 'float', 'precision': 2}"
+                                        /></td>
+                                    <td />
+                                    <td />
+                                    <td class="text-end"><t
+                                            t-esc="section_total"
+                                            t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                        /></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </t>
+
+                    <!-- Lines grouped by analytic account -->
+                    <t t-foreach="accounts" t-as="account">
+                        <t
+                            t-set="section_lines"
+                            t-value="docs.filtered(lambda l: l.analytic_account_id == account)"
+                        />
+                        <t
+                            t-set="section_total"
+                            t-value="sum(section_lines.mapped('total_value'))"
+                        />
+                        <t
+                            t-set="section_qty"
+                            t-value="sum(section_lines.mapped('net_qty'))"
+                        />
+                        <t t-set="grand_total" t-value="grand_total + section_total" />
+
+                        <div class="row mt-4 mb-1 border-bottom border-2">
+                            <div class="col-8">
+                                <h4><t t-esc="account.display_name" /></h4>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h4>
+                                    <t
+                                        t-esc="section_total"
+                                        t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                    />
+                                </h4>
+                            </div>
+                        </div>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%">Date</th>
+                                    <th style="width:14%">Transfer</th>
+                                    <th style="width:14%">Responsible</th>
+                                    <th style="width:28%">Product</th>
+                                    <th class="text-end" style="width:8%">Net Qty</th>
+                                    <th style="width:8%">UoM</th>
+                                    <th
+                                        class="text-end"
+                                        style="width:9%"
+                                    >Unit Price</th>
+                                    <th
+                                        class="text-end"
+                                        style="width:9%"
+                                    >Total Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="section_lines" t-as="line">
+                                    <tr>
+                                        <td><t
+                                                t-esc="line.date"
+                                                t-options="{'widget': 'date'}"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.picking_id.name or ''"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.responsible_id.name or ''"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.product_id.display_name or ''"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.net_qty"
+                                                t-options="{'widget': 'float', 'precision': 2}"
+                                            /></td>
+                                        <td><t
+                                                t-esc="line.product_uom_id.name or ''"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.unit_price"
+                                                t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                            /></td>
+                                        <td class="text-end"><t
+                                                t-esc="line.total_value"
+                                                t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                            /></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr class="fw-bold">
+                                    <td colspan="4">Subtotal</td>
+                                    <td class="text-end"><t
+                                            t-esc="section_qty"
+                                            t-options="{'widget': 'float', 'precision': 2}"
+                                        /></td>
+                                    <td />
+                                    <td />
+                                    <td class="text-end"><t
+                                            t-esc="section_total"
+                                            t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                        /></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </t>
+
+                    <!-- Grand Total -->
+                    <div class="row mt-4 pt-3 border-top border-3">
+                        <div class="col-12 text-center">
+                            <h3>
+                                Grand Total:
+                                <t
+                                    t-esc="grand_total"
+                                    t-options="{'widget': 'monetary', 'display_currency': currency}"
+                                />
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
