@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2020 Tecnativa - Carlos Roca -->
 <odoo>
     <record id="view_order_form" model="ir.ui.view">
