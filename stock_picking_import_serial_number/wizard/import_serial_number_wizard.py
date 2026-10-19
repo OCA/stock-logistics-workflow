@@ -73,7 +73,7 @@ class StockPickingImportSerialNumber(models.TransientModel):
 
     def _search_or_create_package(self, picking, name):
         """Return the package (if it exists) or create a new one."""
-        package_model = self.env["stock.quant.package"]
+        package_model = self.env["stock.package"]
         domain = [
             "&",
             ("name", "=", name),

@@ -3,7 +3,7 @@
 # Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
-from odoo.tests import Form
+from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
@@ -11,6 +11,8 @@ from odoo.addons.base.tests.common import BaseCommon
 from .common import CommonStockPickingImportSerial
 
 
+@tagged("post_install", "-at_install")
+@tagged("post_install", "-at_install")
 class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
     @classmethod
     def setUpClass(cls):
@@ -208,3 +210,25 @@ class TestStockPickingImportSN(CommonStockPickingImportSerial, BaseCommon):
         self.assertIn("LOT-5", lot_names)
         self.assertIn("LOT-6", lot_names)
         self.assertFalse(smls[0].result_package_id)
+
+    def test_default_get_active_pickings(self):
+        pickings = self.picking_in_01 | self.picking_in_02
+        wizard = self.env["stock.picking.import.serial.number.wiz"].with_context(
+            active_model="stock.picking",
+            active_ids=pickings.ids,
+        )
+        defaults = wizard.default_get(["picking_ids"])
+        record = wizard.new(defaults)
+        self.assertEqual(record.picking_ids._origin, pickings)
+
+    def test_default_get_deleted_picking(self):
+        picking = self._create_picking()
+        picking_id = picking.id
+        picking.unlink()
+        wizard = self.env["stock.picking.import.serial.number.wiz"].with_context(
+            active_model="stock.picking",
+            active_ids=[picking_id],
+        )
+        defaults = wizard.default_get(["picking_ids"])
+        record = wizard.new(defaults)
+        self.assertFalse(record.picking_ids)
