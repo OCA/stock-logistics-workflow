@@ -10,13 +10,14 @@ msgstr ""
 "PO-Revision-Date: 2026-09-10 15:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: stock_quant_lock
-#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_picking_type__allow_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_route__allow_quant_lock
 msgid "Allow quant lock"
 msgstr "Autoriser le verrouillage de quants"
 
@@ -36,6 +37,12 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: stock_quant_lock
+#: model:ir.model.fields,help:stock_quant_lock.field_stock_warehouse__quality_check_route_id
+msgid ""
+"Default route used to lock the quants of the warehouse for a quality check."
+msgstr ""
+
+#. module: stock_quant_lock
 #: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__display_name
 msgid "Display Name"
 msgstr "Nom affiché"
@@ -46,11 +53,17 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_quant_lock
-#: model:ir.model.fields,help:stock_quant_lock.field_stock_picking_type__allow_quant_lock
-msgid "If checked, this operation type can be used to lock stock quants."
+#: model:ir.model.fields,help:stock_quant_lock.field_stock_route__allow_quant_lock
+msgid ""
+"If checked, this route can be used to lock stock quants. The lock transfer "
+"is created by the push rule of this route whose source location contains the "
+"location of the quant to lock."
 msgstr ""
-"Si cette case est cochée, ce type d'opération peut être utilisé pour "
-"verrouiller des quants de stock."
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_route
+msgid "Inventory Routes"
+msgstr ""
 
 #. module: stock_quant_lock
 #: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard____last_update
@@ -84,8 +97,11 @@ msgid "Lock Moves"
 msgstr "Mouvements de verrouillage"
 
 #. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
 #: model:ir.actions.act_window,name:stock_quant_lock.action_stock_quant_lock_wizard
 #: model_terms:ir.ui.view,arch_db:stock_quant_lock.view_stock_quant_lock_wizard_form
+#, python-format
 msgid "Lock Quants"
 msgstr "Verrouiller les quants"
 
@@ -101,20 +117,96 @@ msgid "Locked quant"
 msgstr "Quant verrouillé"
 
 #. module: stock_quant_lock
-#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__picking_type_id
-msgid "Operation Type"
-msgstr "Type d'opération"
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "No available quantity to lock for quant '%s'."
+msgstr ""
 
 #. module: stock_quant_lock
-#: model:ir.model,name:stock_quant_lock.model_stock_picking_type
-msgid "Picking Type"
-msgstr "Type de transfert"
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Operation type '%(op)s' used by route '%(route)s' must reserve products at "
+"confirmation to lock quants."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_warehouse.py:0
+#, python-format
+msgid "Quality Check"
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_warehouse__quality_check_route_id
+msgid "Quality Check Route"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_warehouse.py:0
+#, python-format
+msgid "Quality Check Sequence"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant '%(quant)s' is already locked by '%(op)s'."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Quant '%(quant)s' is in a location that bypasses reservation. Only quants in "
+"reservable locations can be locked."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant lock for %s"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Quant lock: %s"
+msgstr ""
 
 #. module: stock_quant_lock
 #: model:ir.model,name:stock_quant_lock.model_stock_quant
 #: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__quant_ids
 msgid "Quants"
 msgstr "Quants"
+
+#. module: stock_quant_lock
+#: model:ir.model.fields,field_description:stock_quant_lock.field_stock_quant_lock_wizard__route_id
+msgid "Route"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid "Route '%(route)s' cannot be used for quant lock."
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Route '%(route)s' has no push rule from a location containing '%(location)s' "
+"to lock quant '%(quant)s'."
+msgstr ""
 
 #. module: stock_quant_lock
 #: model:ir.model,name:stock_quant_lock.model_stock_move
@@ -125,3 +217,36 @@ msgstr "Mouvement de stock"
 #: model:ir.model,name:stock_quant_lock.model_stock_quant_lock_wizard
 msgid "Stock Quant Lock Wizard"
 msgstr "Assistant de verrouillage de quants"
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Unable to reserve full available quantity for quant '%(quant)s'. Expected "
+"%(expected)s %(uom)s, reserved %(reserved)s %(uom)s."
+msgstr ""
+
+#. module: stock_quant_lock
+#: model:ir.model,name:stock_quant_lock.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_quant_lock
+#. odoo-python
+#: code:addons/stock_quant_lock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"You cannot unlock quant '%(quant)s' because lock move '%(move)s' is done."
+msgstr ""
+
+#~ msgid "If checked, this operation type can be used to lock stock quants."
+#~ msgstr ""
+#~ "Si cette case est cochée, ce type d'opération peut être utilisé pour "
+#~ "verrouiller des quants de stock."
+
+#~ msgid "Operation Type"
+#~ msgstr "Type d'opération"
+
+#~ msgid "Picking Type"
+#~ msgstr "Type de transfert"
