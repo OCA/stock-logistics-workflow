@@ -8,7 +8,7 @@ class CommonStockPickingAutoCreateLot:
         elements = []
         for element in element_list:
             if element in elements:
-                raise Exception(f"Element {element} is not unique in list")
+                raise AssertionError(f"Element {element} is not unique in list")
             elements.append(element)
 
     @classmethod
