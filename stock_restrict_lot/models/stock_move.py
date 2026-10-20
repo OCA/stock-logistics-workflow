@@ -24,7 +24,18 @@ class StockMove(models.Model):
         distinct_fields.append("restrict_lot_id")
         return distinct_fields
 
+    def _set_quantity_done_prepare_vals(self, qty):
+        # Since 20.0, when the source location bypasses reservation (e.g.
+        # customers) the core also looks for quants of any lot. Ignore them
+        # here: the move line takes the restricted lot, as it did in 19.0.
+        if self.restrict_lot_id and self.location_id.should_bypass_reservation():
+            move = self.with_context(restrict_lot_ignore_quants=True)
+            return super(StockMove, move)._set_quantity_done_prepare_vals(qty)
+        return super()._set_quantity_done_prepare_vals(qty)
+
     def _prepare_move_line_vals(self, quantity=None, reserved_quant=None):
+        if self.env.context.get("restrict_lot_ignore_quants"):
+            reserved_quant = None
         vals = super()._prepare_move_line_vals(
             quantity=quantity, reserved_quant=reserved_quant
         )

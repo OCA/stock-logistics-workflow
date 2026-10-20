@@ -139,6 +139,34 @@ class TestRestrictLot(BaseCommon):
         )
         quant.action_apply_inventory()
 
+    def test_set_quantity_with_quants_of_other_lots(self):
+        """Setting the quantity of a move from a location that bypasses
+        reservation must not fail because of quants of other lots."""
+        lot2 = self.env["stock.lot"].create(
+            {
+                "name": "lot2",
+                "product_id": self.product.id,
+                "company_id": self.warehouse.company_id.id,
+            }
+        )
+        self._update_product_stock(1, self.lot.id, location=self.customer_loc)
+        self._update_product_stock(1, lot2.id, location=self.customer_loc)
+        move = self.env["stock.move"].create(
+            {
+                "product_id": self.product.id,
+                "location_id": self.customer_loc.id,
+                "location_dest_id": self.stock_loc.id,
+                "product_uom_qty": 1,
+                "uom_id": self.product.uom_id.id,
+                "restrict_lot_id": lot2.id,
+            }
+        )
+        move._action_confirm()
+        move.quantity = 0
+        move.quantity = 1
+        self.assertEqual(move.move_line_ids.lot_id, lot2)
+        self.assertEqual(move.quantity, 1)
+
     def test_02_move_restrict_lot_reservation(self):
         lot2 = self.env["stock.lot"].create(
             {
