@@ -8,7 +8,7 @@
     <record id="view_template_property_form" model="ir.ui.view">
         <field name="name">stock_no_negative.product.template.form</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="stock.view_template_property_form" />
+        <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <field name="categ_id" position="after">
                 <field name="allow_negative_stock" invisible="not is_storable" />

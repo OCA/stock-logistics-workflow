@@ -11,14 +11,27 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockNoNegative(BaseCommon):
+    # BaseCommon runs the tests as an independent user with these groups.
+    _test_user_groups = (
+        "base.group_user",
+        "stock.group_stock_manager",
+        "product.group_product_manager",
+    )
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, test_stock_no_negative=True))
         cls.product_model = cls.env["product.product"]
         cls.product_ctg_model = cls.env["product.category"]
         cls.lot_model = cls.env["stock.lot"]
-        cls.picking_type_id = cls.env.ref("stock.picking_type_out")
-        cls.location_id = cls.env.ref("stock.stock_location_stock")
+        # Not from demo data: the outgoing type and stock location are
+        # demo records in 20.0.
+        warehouse = cls.env["stock.warehouse"].search(
+            [("company_id", "=", cls.env.company.id)], limit=1
+        )
+        cls.picking_type_id = warehouse.out_type_id
+        cls.location_id = warehouse.lot_stock_id
         cls.location_dest_id = cls.env.ref("stock.stock_location_customers")
         # Create product category
         cls.product_ctg = cls._create_product_category(cls)
@@ -90,7 +103,7 @@ class TestStockNoNegative(BaseCommon):
             {
                 "product_id": self.product.id,
                 "product_uom_qty": 100.0,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "picking_id": self.stock_picking.id,
                 "state": "draft",
                 "location_id": self.location_id.id,
@@ -117,7 +130,7 @@ class TestStockNoNegative(BaseCommon):
             {
                 "product_id": self.product_with_lot.id,
                 "product_uom_qty": 100.0,
-                "product_uom": self.product_with_lot.uom_id.id,
+                "uom_id": self.product_with_lot.uom_id.id,
                 "picking_id": self.stock_picking_with_lot.id,
                 "state": "draft",
                 "location_id": self.location_id.id,
