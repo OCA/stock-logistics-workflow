@@ -25,7 +25,7 @@ class TestPickingBackToDraft(TransactionCase):
                 "picking_id": picking.id,
                 "product_id": product.id,
                 "product_uom_qty": quantity,
-                "product_uom": product.uom_id.id,
+                "uom_id": product.uom_id.id,
                 "location_id": src_location.id,
                 "location_dest_id": dest_location.id,
             }
