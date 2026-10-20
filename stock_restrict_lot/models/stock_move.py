@@ -11,9 +11,7 @@ class StockMove(models.Model):
     # seems better to not copy this field except when a move is split, because a move
     # can be copied in multiple different occasions and could even be copied with a
     # different product...
-    restrict_lot_id = fields.Many2one(
-        "stock.lot", string="Restrict Lot", copy=False, index=True
-    )
+    restrict_lot_id = fields.Many2one("stock.lot", copy=False, index=True)
 
     def _prepare_procurement_values(self):
         vals = super()._prepare_procurement_values()
@@ -161,10 +159,8 @@ class StockMove(models.Model):
             )
             chained_moves = self.env["stock.move"].browse(chained_move_ids)
             if any(
-                [
-                    sm.state == "done" and sm.lot_ids and sm.lot_ids != restrict_lot
-                    for sm in chained_moves
-                ]
+                sm.state == "done" and sm.lot_ids and sm.lot_ids != restrict_lot
+                for sm in chained_moves
             ):
                 raise ValidationError(
                     self.env._(

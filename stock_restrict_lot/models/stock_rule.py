@@ -11,7 +11,7 @@ class StockRule(models.Model):
         fields += ["restrict_lot_id"]
         return fields
 
-    def _push_prepare_move_copy_values(self, move_to_copy, new_date):
-        values = super()._push_prepare_move_copy_values(move_to_copy, new_date)
+    def _push_prepare_move_copy_values(self, move_to_copy):
+        values = super()._push_prepare_move_copy_values(move_to_copy)
         values["restrict_lot_id"] = move_to_copy.restrict_lot_id.id
         return values
