@@ -18,6 +18,7 @@
         "data/stock_grn.xml",
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
+        "reports/stock_grn.xml",
     ],
     "installable": True,
     "auto_install": False,
