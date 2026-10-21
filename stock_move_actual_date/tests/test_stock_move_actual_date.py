@@ -155,15 +155,14 @@ class TestStockMoveActualDate(TransactionCase):
         account_move.action_post()
         self.assertEqual(valuation_layer.actual_date, date(2025, 8, 31))
 
+    @freeze_time("2025-05-08 23:00:00")
     def test_svl_actual_date_manual_periodic(self):
-        # Not using freeze_time() in this test since it cannot be applied to create_date
-        # without a hack.
+        self.env.user.tz = "Asia/Tokyo"
         self.product_1.product_tmpl_id.categ_id.property_valuation = "manual_periodic"
         _, move = self.create_picking()
         valuation_layer = move.stock_valuation_layer_ids
-        self.assertEqual(
-            valuation_layer.actual_date, valuation_layer.create_date.date()
-        )
+        self.assertFalse(valuation_layer.account_move_id)
+        self.assertEqual(valuation_layer.actual_date, date(2025, 5, 9))
 
     def test_fifo_svl_actual_date(self):
         self.product_1.standard_price = 0.0
