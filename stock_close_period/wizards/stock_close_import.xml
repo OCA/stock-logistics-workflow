@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+     <record id="stock_close_import_wizard" model="ir.ui.view">
+        <field name="name">Import stock close csv</field>
+        <field name="model">stock.close.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Stock Close">
+                <group>
+                    <field name="close_id" />
+                    <field name="file" filename="filename" />
+                </group>
+                <footer>
+                    <button name="import_csv" string="Import" type="object" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_close_import_wizard" model="ir.actions.act_window">
+        <field name="name">Stock Close Import</field>
+        <field name="res_model">stock.close.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_stock_close_import_wizard"
+        action="action_stock_close_import_wizard"
+        parent="menu_stock_close_group"
+        sequence="110"
+        groups="stock_close_period.group_stock_close_period_manager"
+    />
+
+</odoo>
