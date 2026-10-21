@@ -5,7 +5,7 @@
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='show_entire_packs']" position="after">
+            <xpath expr="//group[@name='stock_packages']" position="inside">
                 <field name="put_in_pack_restriction" />
             </xpath>
         </field>

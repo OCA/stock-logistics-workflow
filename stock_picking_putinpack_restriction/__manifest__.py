@@ -4,14 +4,12 @@
 {
     "name": "Stock Picking Put In Pack Restriction",
     "summary": "Force or disallow the use of destination packages per operation type",
-    "version": "18.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Inventory",
     "author": "Camptocamp, BCIM, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "maintainers": ["TDu"],
     "license": "AGPL-3",
     "depends": ["stock"],
-    "application": False,
-    "installable": True,
     "data": ["views/stock_picking_type.xml", "views/stock_picking.xml"],
 }
