@@ -1,3 +1,5 @@
 - [Quartile](https://www.quartile.co):
   - Aung Ko Ko Lin
   - Yoshi Tashiro
+- [Binhex] (https://www.binhex.cloud):
+  - Edilio Escalona Almira <e.escalona@binhex.cloud>
