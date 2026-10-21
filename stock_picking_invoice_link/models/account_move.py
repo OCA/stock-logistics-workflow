@@ -48,7 +48,7 @@ class AccountMove(models.Model):
             "stock.action_picking_tree_all"
         )
         if len(self.picking_ids) > 1:
-            result["domain"] = f"[('id', 'in', {self.picking_ids.ids})]"
+            result["domain"] = [("id", "in", self.picking_ids.ids)]
         else:
             form_view = self.env.ref(form_view_name)
             result["views"] = [(form_view.id, "form")]
@@ -70,6 +70,27 @@ class AccountMoveLine(models.Model):
         help="Related stock moves (only when the invoice has been"
         " generated from a sale order).",
     )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._link_stock_move_id()
+        return lines
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get("stock_move_id"):
+            self._link_stock_move_id()
+        return res
+
+    def _link_stock_move_id(self):
+        """stock.move.invoice_line_ids is redefined as a Many2many, so the lines
+        linked through stock_account's stock_move_id (e.g. by repair) must be
+        added to it too."""
+        for line in self.filtered(
+            lambda x: x.stock_move_id and x.stock_move_id not in x.move_line_ids
+        ):
+            line.move_line_ids = [Command.link(line.stock_move_id.id)]
 
     def copy_data(self, default=None):
         """Copy the move_line_ids in case of refund invoice creating new invoices

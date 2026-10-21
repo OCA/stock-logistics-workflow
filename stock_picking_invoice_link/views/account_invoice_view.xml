@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <!-- Copyright 2013-2014 Alexis de Lattre <alexis.delattre@akretion.com>
          License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
@@ -13,7 +13,7 @@
                     type="object"
                     name="action_show_picking"
                     class="oe_stat_button"
-                    icon="fa-truck"
+                    icon="local_shipping"
                     invisible="picking_count == 0"
                 >
                     <field name="picking_count" widget="statinfo" string="Delivery" />
