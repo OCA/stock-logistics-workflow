@@ -3,7 +3,7 @@
 
 {
     "name": "Stock Picking Restrict Partial Validation",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "development_status": "Beta",
     "category": "Inventory",
     "summary": "Block validation of transfers that are not fully reserved "

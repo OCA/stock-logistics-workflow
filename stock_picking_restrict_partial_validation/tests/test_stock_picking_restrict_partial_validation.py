@@ -40,7 +40,6 @@ class TestStockPickingRestrictPartialValidation(BaseCommon):
                 "move_ids": [
                     Command.create(
                         {
-                            "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_uom_qty": qty,
                             "product_uom": cls.product.uom_id.id,
@@ -99,7 +98,6 @@ class TestStockPickingRestrictPartialValidation(BaseCommon):
         picking.move_ids = [
             Command.create(
                 {
-                    "name": product_2.name,
                     "product_id": product_2.id,
                     "product_uom_qty": 5,
                     "product_uom": product_2.uom_id.id,

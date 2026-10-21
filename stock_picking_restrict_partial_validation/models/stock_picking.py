@@ -1,7 +1,7 @@
 # Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
 
@@ -19,7 +19,7 @@ class StockPicking(models.Model):
         ):
             if picking.state != "assigned":
                 raise UserError(
-                    _(
+                    self.env._(
                         "%(picking)s cannot be validated: this operation "
                         "type requires the transfer to be fully reserved "
                         "before it can be processed.",
@@ -43,7 +43,7 @@ class StockPicking(models.Model):
                     < 0
                 ):
                     raise UserError(
-                        _(
+                        self.env._(
                             "%(picking)s must be processed in full: partial "
                             "validation is not allowed on this operation "
                             "type (%(product)s: %(qty)s of %(demand)s).",
@@ -81,7 +81,7 @@ class StockPicking(models.Model):
                 < 0
             ):
                 raise UserError(
-                    _(
+                    self.env._(
                         "%(picking)s cannot be validated: %(product)s is "
                         "reserved beyond the stock physically available in "
                         "%(location)s. Correct the stock or the reservation "
