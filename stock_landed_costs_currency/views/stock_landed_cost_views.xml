@@ -21,6 +21,22 @@
                 <attribute name="force_save">1</attribute>
                 <attribute name="groups">base.group_multi_currency</attribute>
             </xpath>
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="company_currency_id" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_stock_landed_cost_tree2" model="ir.ui.view">
+        <field name="name">stock.landed.cost.tree2</field>
+        <field name="model">stock.landed.cost</field>
+        <field
+            name="inherit_id"
+            ref="stock_landed_costs.view_stock_landed_cost_tree2"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="company_currency_id" invisible="1" />
+            </xpath>
         </field>
     </record>
 </odoo>
