@@ -1,0 +1,24 @@
+- [Agile Business Group](https://www.agilebg.com)
+  - Lorenzo Battistini \<<lorenzo.battistini@agilebg.com>\>
+  - Alex Comba \<<alex.comba@agilebg.com>\>
+- [Akretion](https://www.akretion.com)
+  - Alexis de Lattre \<<alexis.delattre@akretion.com>\>
+  - Renato Lima \<<renato.lima@akretion.com.br>\>
+- [AvanzOsc](http://avanzosc.es)
+  - Oihane Crucelaegui \<<oihanecrucelaegi@avanzosc.es>\>
+  - Ana Juaristi \<<anajuaristi@avanzosc.es>\>
+  - Alfredo de la Fuente \<<alfredodelafuente@avanzosc.es>\>
+  - Ainara Galdona \<<ainaragaldona@avanzosc.es>\>
+- [Tecnativa](https://www.tecnativa.com)
+  - Pedro M. Baeza
+  - David Vidal
+  - Sergio Teruel
+  - João Marques
+- Unai Alkorta
+- Iñaki Zabala
+- Jacques-Etienne Baudoux \<<je@bcim.be>\>
+- Aitor Bouzas Naveira \<<abouzas@softdil.com>\>
+- Carlos Lopez Mite \<<celm1990@gmail.com>\>
+- Joel Matías Zilli \<<joz@adhoc.com.ar>\>
+- [Trobz](https://trobz.com):  
+  - Thao Le \<<thaolt@trobz.com>\>
