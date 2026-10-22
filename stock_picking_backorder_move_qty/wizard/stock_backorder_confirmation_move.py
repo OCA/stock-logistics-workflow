@@ -14,6 +14,8 @@ class StockBackorderConfirmationMove(models.TransientModel):
     )
     picking_id = fields.Many2one("stock.picking", related="move_id.picking_id")
     move_id = fields.Many2one("stock.move", "Move")
+    product_id = fields.Many2one("product.product", related="move_id.product_id")
+    move_qty = fields.Float(related="move_id.product_uom_qty")
     qty_unprocessed = fields.Float(compute="_compute_qty_unprocessed")
     qty_to_backorder = fields.Float(
         compute="_compute_qty_to_backorder", store=True, readonly=False
