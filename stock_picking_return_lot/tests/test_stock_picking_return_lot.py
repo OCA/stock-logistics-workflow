@@ -3,10 +3,12 @@
 
 from odoo import Command
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tests import Form
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class StockPickingReturnLotTest(TransactionCase):
+class StockPickingReturnLotTest(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -169,16 +171,10 @@ class StockPickingReturnLotTest(TransactionCase):
     def test_full_return_after_partial_return(self):
         self.test_partial_return()
         wiz = self.create_return_wiz(self.picking)
-        self.assertEqual(len(wiz.product_return_moves), 2)
-
-        return_line_1 = wiz.product_return_moves.filtered(
-            lambda m, lot=self.lot_1: m.lot_id == lot
-        )
-        return_line_2 = wiz.product_return_moves.filtered(
-            lambda m, lot=self.lot_2: m.lot_id == lot
-        )
-        self.assertEqual(return_line_1.quantity, 0)
-        self.assertEqual(return_line_2.quantity, 1)
+        # Lot 1 has been fully returned already, so it isn't suggested anymore
+        self.assertEqual(len(wiz.product_return_moves), 1)
+        self.assertEqual(wiz.product_return_moves.lot_id, self.lot_2)
+        self.assertEqual(wiz.product_return_moves.quantity, 1)
         picking_returned_id = wiz.action_create_returns_all()["res_id"]
         picking_returned = self.picking_obj.browse(picking_returned_id)
         move_1 = picking_returned.move_ids.filtered(
@@ -241,3 +237,13 @@ class StockPickingReturnLotTest(TransactionCase):
         self.assertEqual(moves.move_line_ids.lot_id, self.lot_1)
         self.assertEqual(moves[0].product_qty, 1)
         self.assertEqual(moves[1].product_qty, 1)
+
+    def test_return_wizard_form(self):
+        # Test that no AttributeError ('int' object has no attribute 'origin')
+        # is raised when initializing the form
+        wiz_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_id=self.picking.id, active_model="stock.picking"
+            )
+        )
+        self.assertEqual(len(wiz_form.product_return_moves), 2)
