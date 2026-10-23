@@ -14,13 +14,11 @@ class StockMoveLine(models.Model):
 
         # We must filter by .exists() because super() may unlink some move lines
         existing_lines = self.exists()
-        restricted_lines = existing_lines.filtered(
-            lambda line: line.move_id.picking_type_id.put_in_pack_restriction
-        )
-
-        for line in restricted_lines:
-            picking_type = line.move_id.picking_type_id
+        for line in existing_lines:
+            picking_type = line.move_id.picking_type_id or line.picking_type_id
             restriction = picking_type.put_in_pack_restriction
+            if not restriction:
+                continue
             has_package = bool(line.result_package_id)
 
             if restriction == "no_package" and has_package:
