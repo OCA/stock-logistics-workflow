@@ -20,6 +20,7 @@ postgres_image: ''
 rebel_module_groups:
 - stock_picking_batch_extended
 - stock_customer_deposit
+- stock_delivery_qty_picked
 repo_description: stock-logistics-workflow
 repo_name: stock-logistics-workflow
 repo_slug: stock-logistics-workflow
