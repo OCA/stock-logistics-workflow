@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+    <record id="stock.in_picking" model="ir.ui.menu">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+    <record id="stock.out_picking" model="ir.ui.menu">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+</odoo>
