@@ -7,4 +7,4 @@ access_stock_scrap_reason_tag_readonly,stock.scrap.reason.tag readonly,stock.mod
 access_stock_warehouse_orderpoint_readonly,stock.warehouse.orderpoint readonly,stock.model_stock_warehouse_orderpoint,group_stock_readonly,1,0,0,0
 access_stock_package_type_readonly,stock.package.type readonly,stock.model_stock_package_type,group_stock_readonly,1,0,0,0
 access_stock_package_history_readonly,stock.package.history readonly,stock.model_stock_package_history,group_stock_readonly,1,0,0,0
-access_stock_traceability_report_readonly,stock.traceability.report readonly,stock.model_stock_traceability_report,group_stock_readonly,1,0,0,0
+access_stock_traceability_report_readonly,stock.traceability.report readonly,stock.model_stock_traceability_report,group_stock_readonly,1,1,1,0

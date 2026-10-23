@@ -18,4 +18,36 @@
             eval="[(4, ref('stock_readonly.group_stock_readonly'))]"
         />
     </record>
+
+    <!-- The "Receipts", "Deliveries" and "Internal" menus point to server
+         actions. A server action without groups is gated on a write access
+         to its model (stock.picking), which read-only users do not have:
+         list the stock users and the read-only group instead, so the check
+         falls back on the group membership. -->
+    <record id="stock.method_action_picking_tree_incoming" model="ir.actions.server">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock.group_stock_user')), (4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+    <record id="stock.method_action_picking_tree_outgoing" model="ir.actions.server">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock.group_stock_user')), (4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+    <record id="stock.method_action_picking_tree_internal" model="ir.actions.server">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock.group_stock_user')), (4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
+    <!-- The "Physical Inventory" action is already restricted to the stock
+         users: add the read-only group so it can be executed too. -->
+    <record id="stock.action_view_inventory_tree" model="ir.actions.server">
+        <field
+            name="group_ids"
+            eval="[(4, ref('stock_readonly.group_stock_readonly'))]"
+        />
+    </record>
 </odoo>

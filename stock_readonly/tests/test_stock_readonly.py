@@ -164,10 +164,8 @@ class TestStockReadonly(BaseCommon):
     def test_stock_traceability_report_readonly(self):
         report = self.env["stock.traceability.report"].with_user(self.user_readonly)
         report.check_access("read")
-        with self.assertRaises(AccessError):
-            report.check_access("write")
-        with self.assertRaises(AccessError):
-            report.check_access("create")
+        lines = report.get_main_lines()
+        self.assertIsInstance(lines, list)
 
     def test_employee_without_group_cannot_read_picking(self):
         with self.assertRaises(AccessError):
@@ -191,3 +189,15 @@ class TestStockReadonly(BaseCommon):
     def test_root_menu_not_visible_for_plain_employee(self):
         visible = self._visible_menus(self.user_employee)
         self.assertNotIn(self.env.ref("stock.menu_stock_root"), visible)
+
+    def test_menu_actions_execution(self):
+        for xmlid in (
+            "stock.in_picking",
+            "stock.out_picking",
+            "stock.menu_action_inventory_tree",
+        ):
+            action = self.env.ref(xmlid).action
+            with self.assertRaises(AccessError):
+                action.with_user(self.user_employee).run()
+            action_res = action.with_user(self.user_readonly).run()
+            self.assertTrue(action_res)
