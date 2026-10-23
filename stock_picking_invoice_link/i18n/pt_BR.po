@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-15 11:08+0000\n"
-"PO-Revision-Date: 2026-10-22 20:56+0000\n"
+"PO-Revision-Date: 2026-10-23 07:39+0000\n"
 "Last-Translator: Luis Felipe Miléo <mileo@kmee.com.br>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
@@ -109,7 +109,7 @@ msgstr "Movimentação do Estoque"
 #. module: stock_picking_invoice_link
 #: model:ir.model,name:stock_picking_invoice_link.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr "Transferência"
 
 #. module: stock_picking_invoice_link
 #. odoo-python
