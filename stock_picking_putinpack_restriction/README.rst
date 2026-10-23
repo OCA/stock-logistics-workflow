@@ -29,10 +29,10 @@ Stock Picking Put In Pack Restriction
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module adds an option on stock operation type to force or disallow
-the use of destination pacakges.
+the use of destination packages.
 
-When destination packages are not allowed the Put In Pack button will be
-hidden on related transfer.
+When destination packages are not allowed, the ``Put In Pack`` button is
+hidden on related transfers, and any put in pack action is blocked.
 
 **Table of contents**
 
@@ -42,13 +42,19 @@ hidden on related transfer.
 Usage
 =====
 
-Just set the option on some transfer type.
+First enable *Packages* in *Inventory > Configuration > Settings*.
+
+Then set the option *Put In Pack Restriction* in the *Packages* section
+of the operation type form.
 
 The options are:
 
-   -  Not set: no restriction, normal process.
-   -  With Package: the use of a destination package is mandatory.
-   -  No Package: destination package are not allowed.
+-  Not set: no restriction, normal process.
+-  Destination Package required: the use of a destination package is
+   mandatory to validate the transfer.
+-  Destination Package Not Allowed: destination packages are not
+   allowed. The ``Put In Pack`` action is blocked and the transfer can
+   not be validated with a destination package.
 
 Bug Tracker
 ===========
@@ -76,6 +82,9 @@ Contributors
 -  Michael Tietz (MT Software) <mtietz@mt-software.de>
 -  Nicolas Delbovier <nicolas.delbovier@acsone.eu>
    (https://www.acsone.eu/)
+-  `360ERP <https://www.360erp.com>`__:
+
+   -  Andrea Stirpe
 
 Maintainers
 -----------
@@ -89,6 +98,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-TDu| image:: https://github.com/TDu.png?size=40px
+    :target: https://github.com/TDu
+    :alt: TDu
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-TDu| 
 
 This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/18.0/stock_picking_putinpack_restriction>`_ project on GitHub.
 

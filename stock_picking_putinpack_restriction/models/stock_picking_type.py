@@ -17,7 +17,6 @@ class StockPickingType(models.Model):
               * Without Package: No destination package can be used.
               * With Package   : A destination package must be used.
         """,
-        store=True,
     )
 
     @api.model
