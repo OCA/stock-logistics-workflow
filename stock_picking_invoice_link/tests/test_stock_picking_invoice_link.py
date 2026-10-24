@@ -52,7 +52,7 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
                     "quantity": move.product_uom_qty,
                     "price_unit": move.price_unit,
                     "product_id": move.product_id.id,
-                    "product_uom_id": move.product_uom.id,
+                    "product_uom_id": move.uom_id.id,
                     "tax_ids": [Command.set(move.product_id.taxes_id.ids)],
                 }
             )
@@ -109,21 +109,14 @@ class TestStockPickingInvoiceLink(AccountTestInvoicingCommon):
     def test_02_sale_stock_invoice_link(self):
         """Test the stock picking and invoice return"""
         # Create return picking
-        return_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_id=self.pickingA.ids[0],
-                active_model="stock.picking",
-            )
-        )
-        return_wiz = return_form.save()
-        # Remove product ordered line
-        for return_line in return_wiz.product_return_moves:
-            return_line.to_refund = True
-            return_line.quantity = return_line.move_quantity
-        res = return_wiz.action_create_returns()
-        return_picking = self.env["stock.picking"].browse(res["res_id"])
+        # The `stock.return.picking` wizard no longer exists on 20.0: the picking
+        # builds its own return, already carrying the delivered quantities.
+        return_picking = self.pickingA._create_return()
+        return_picking.move_ids.to_refund = True
+        return_picking.action_confirm()
+        return_picking.action_assign()
         # Validate picking
-        return_picking.move_line_ids.write({"quantity": 2})
+        return_picking.move_ids.write({"quantity": 2, "picked": True})
         return_picking.button_validate()
         # Create Refund invoice
         wiz_invoice_refund = (

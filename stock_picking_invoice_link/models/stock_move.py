@@ -15,7 +15,6 @@ class StockMove(models.Model):
         relation="stock_move_invoice_line_rel",
         column1="move_id",
         column2="invoice_line_id",
-        string="Invoice Line",
         copy=False,
         readonly=True,
     )
@@ -42,7 +41,7 @@ class StockMove(models.Model):
         return self.filtered(
             lambda x: (
                 x.state == "done"
-                and not x.location_dest_usage == "inventory"
+                and x.location_dest_usage != "inventory"
                 and (
                     x.location_id.usage == "internal"
                     or (x.location_dest_id.usage == "internal" and x.to_refund)
