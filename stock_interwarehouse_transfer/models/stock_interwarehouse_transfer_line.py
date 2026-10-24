@@ -55,7 +55,7 @@ class StockInterwarehouseTransferLine(models.Model):
         for line in self:
             line.product_uom = line.product_id.uom_id
 
-    @api.depends("move_ids.state", "move_ids.quantity", "move_ids.product_uom")
+    @api.depends("move_ids.state", "move_ids.quantity", "move_ids.uom_id")
     def _compute_qty_progress(self):
         for line in self:
             line.qty_shipped = line._get_stage_done_qty("outgoing")
@@ -143,7 +143,7 @@ class StockInterwarehouseTransferLine(models.Model):
         qty = 0.0
         for move in moves:
             move_qty = move.quantity if move.state == "done" else move.product_uom_qty
-            qty += move.product_uom._compute_quantity(
+            qty += move.uom_id._compute_quantity(
                 move_qty, self.product_uom, rounding_method="HALF-UP"
             )
         return qty
@@ -171,7 +171,7 @@ class StockInterwarehouseTransferLine(models.Model):
         transfer = self.transfer_id
         vals = {
             "product_id": self.product_id.id,
-            "product_uom": self.product_uom.id,
+            "uom_id": self.product_uom.id,
             "product_uom_qty": self.product_uom_qty if qty is None else qty,
             "picking_type_id": picking_type.id,
             "location_id": location.id,
@@ -203,6 +203,6 @@ class StockInterwarehouseTransferLine(models.Model):
             for move in line._get_stage_moves("incoming"):
                 if move.state == "done" or move.move_orig_ids == out_moves:
                     continue
-                if move.product_uom.compare(move.product_uom_qty, 0.0) <= 0:
+                if move.uom_id.compare(move.product_uom_qty, 0.0) <= 0:
                     continue
                 move.move_orig_ids = [fields.Command.set(out_moves.ids)]

@@ -9,6 +9,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 @tagged("post_install", "-at_install")
 class TestStockInterwarehouseTransfer(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -317,7 +319,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
             self.env["stock.move"].create(
                 {
                     "product_id": self.product.id,
-                    "product_uom": self.product.uom_id.id,
+                    "uom_id": self.product.uom_id.id,
                     "product_uom_qty": 1.0,
                     "picking_type_id": self.wh_a.int_type_id.id,
                     "location_id": self.wh_a.lot_stock_id.id,
@@ -336,7 +338,7 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "product_uom_qty": 1.0,
                 "picking_type_id": self.wh_a.int_type_id.id,
                 "location_id": self.wh_a.lot_stock_id.id,

@@ -9,7 +9,7 @@ STAGES = ("outgoing", "incoming")
 class StockInterwarehouseTransfer(models.Model):
     _name = "stock.interwarehouse.transfer"
     _description = "Inter-Warehouse Transfer"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ("mail.thread", "mail.activity.mixin")
     _order = "name desc"
 
     name = fields.Char(
@@ -67,7 +67,6 @@ class StockInterwarehouseTransfer(models.Model):
     )
     reference_id = fields.Many2one(
         "stock.reference",
-        string="Reference",
         copy=False,
     )
     state = fields.Selection(

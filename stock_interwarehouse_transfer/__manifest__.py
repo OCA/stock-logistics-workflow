@@ -3,7 +3,7 @@
 {
     "name": "Stock Inter-Warehouse Transfer",
     "summary": "Push-style transfers between warehouses of the same company.",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "ForgeFlow S.L., Odoo Community Association (OCA)",
@@ -11,7 +11,7 @@
     "license": "AGPL-3",
     "depends": ["stock"],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "data/ir_sequence_data.xml",
         "views/stock_interwarehouse_transfer_views.xml",
     ],
