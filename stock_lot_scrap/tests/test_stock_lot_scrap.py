@@ -47,13 +47,17 @@ class TestStockLotScrap(common.TransactionCase):
         Form(self.lot010)
         res = self.lot010.action_scrap_lot()
         self.assertIn("domain", res)
-        scrap = self.env["stock.scrap"].search(res["domain"])
-        self.assertAlmostEqual(sum(scrap.mapped("scrap_qty")), 5325)
-        self.assertTrue(
-            all(scrap.mapped("move_ids").mapped(lambda x: x.state == "done"))
-        )
-        scrap[:1].action_validate()
+        scraps = self.env["stock.move"].search(res["domain"])
+        self.assertEqual(len(scraps), 2)
+        self.assertTrue(all(scraps.mapped("is_scrap")))
+        self.assertFalse(scraps.filtered(lambda m: m.state in ("done", "cancel")))
+        self.assertAlmostEqual(sum(scraps.mapped("quantity")), 5325)
+        self.assertEqual(scraps.lot_ids, self.lot010)
+        scrap = scraps.filtered(lambda m: m.quantity == 325)
+        scrap.action_scrap()
+        self.assertEqual(scrap.state, "done")
         self.assertIn("Lot was scrapped by", self.lot010.message_ids[:1].body)
+        self.assertAlmostEqual(self.lot010.product_qty, 5000)
 
     def test_warning(self):
         product_new = self.product.create({"name": "Test product 040"})
