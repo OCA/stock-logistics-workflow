@@ -7,4 +7,4 @@ from odoo import fields, models
 class StockLandedCost(models.Model):
     _inherit = "stock.landed.cost"
 
-    purchase_id = fields.Many2one(comodel_name="purchase.order", string="Purchase")
+    purchase_id = fields.Many2one(comodel_name="purchase.order")

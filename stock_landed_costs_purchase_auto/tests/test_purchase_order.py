@@ -11,7 +11,9 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
     def test_order_purchase_basic_user(self):
         self.order = self.order.with_user(self.env.user)
         self.order.button_confirm()
-        self.assertTrue(self.order.landed_cost_ids)
+        # stock.landed.cost is only readable by Inventory / Administrator, so
+        # the landed cost created on behalf of the basic user is checked in sudo.
+        self.assertTrue(self.order.sudo().landed_cost_ids)
 
     def test_order_lc(self):
         self.order.button_confirm()

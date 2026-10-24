@@ -7,6 +7,13 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestPurchaseOrderBase(BaseCommon):
+    # On 20.0 BaseCommon runs the tests as a restricted user built from this
+    # attribute, so the purchase and inventory rights have to be granted.
+    _test_user_groups = (
+        "purchase.group_purchase_manager",
+        "stock.group_stock_manager",
+    )
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
