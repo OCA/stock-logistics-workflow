@@ -23,17 +23,19 @@ License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html). -->
                     <field name="qty_returned" readonly="True" />
                 </div>
             </xpath>
+            <!-- The list now wraps its fields in `column` elements on 20.0 -->
             <xpath
-                expr="//page/field[@name='order_line']/list/field[@name='qty_delivered']"
+                expr="//field[@name='order_line']/list/column[field[@name='qty_delivered']]"
                 position="after"
             >
-                <field
-                    name="qty_returned"
-                    readonly="True"
-                    string="Returned"
-                    column_invisible="parent.state not in ['sale', 'done']"
-                    optional="show"
-                />
+                <column column_invisible="parent.state not in ['sale', 'done']">
+                    <field
+                        name="qty_returned"
+                        readonly="True"
+                        string="Returned"
+                        optional="show"
+                    />
+                </column>
             </xpath>
         </field>
     </record>

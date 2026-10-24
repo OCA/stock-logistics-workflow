@@ -6,6 +6,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestSaleLineReturnedQty(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,18 +38,12 @@ class TestSaleLineReturnedQty(BaseCommon):
     def _return_picking(self, picking, qty, to_refund=True):
         """Helper method to create a return of the original picking. It could
         be refundable or not"""
-        return_wiz_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_ids=picking.ids,
-                active_id=picking.ids[0],
-                active_model="stock.picking",
-            )
-        )
-        return_wiz = return_wiz_form.save()
-        return_wiz.product_return_moves.quantity = qty
-        return_wiz.product_return_moves.to_refund = to_refund
-        res = return_wiz.action_create_returns()
-        return_picking = self.env["stock.picking"].browse(res["res_id"])
+        # The return wizard no longer exists on 20.0: the picking builds
+        # its own return, which stays in draft.
+        return_picking = picking._create_return()
+        return_picking.move_ids.write({"product_uom_qty": qty, "to_refund": to_refund})
+        return_picking.action_confirm()
+        return_picking.action_assign()
         self._validate_picking(return_picking)
 
     def _validate_picking(self, picking):
@@ -79,18 +75,10 @@ class TestSaleLineReturnedQty(BaseCommon):
         self._validate_picking(picking)
         self.assertEqual(picking.state, "done")
         # Create a return picking without validate it, so the returned qty should be 0
-        return_wiz_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_ids=picking.ids,
-                active_id=picking.ids[0],
-                active_model="stock.picking",
-            )
-        )
-        return_wiz = return_wiz_form.save()
-        return_wiz.product_return_moves.quantity = 5.0
-        return_wiz.product_return_moves.to_refund = True
-        res = return_wiz.action_create_returns()
-        return_picking = self.env["stock.picking"].browse(res["res_id"])
+        return_picking = picking._create_return()
+        return_picking.move_ids.write({"product_uom_qty": 5.0, "to_refund": True})
+        return_picking.action_confirm()
+        return_picking.action_assign()
         # Return picking is in assigned state, so the returned qty should be 0
         self.assertEqual(return_picking.state, "assigned")
         # qty_returned should be 0 because the return picking is not done yet
