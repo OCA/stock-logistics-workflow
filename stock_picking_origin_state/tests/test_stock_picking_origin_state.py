@@ -87,13 +87,13 @@ class TestStockPickingOriginState(TransactionCase):
 
     def test_02_three_step_pick_waiting(self):
         """When PICK has no reservation, OUT shows PICK as waiting."""
-        pick, pack, out = self._create_three_step_delivery(available_qty=0)
+        _pick, _pack, out = self._create_three_step_delivery(available_qty=0)
         self.assertEqual(out.origin_state, "waiting")
         self.assertIn(self.warehouse.pick_type_id.display_name, out.origin_state_label)
 
     def test_03_three_step_pick_assigned(self):
         """When PICK is fully reserved, OUT shows PICK as assigned."""
-        pick, pack, out = self._create_three_step_delivery()
+        pick, _pack, out = self._create_three_step_delivery()
         pick.action_assign()
         self.assertEqual(pick.state, "assigned")
         self.assertEqual(out.origin_state, "assigned")
@@ -101,14 +101,14 @@ class TestStockPickingOriginState(TransactionCase):
 
     def test_04_three_step_pick_partial(self):
         """When PICK is partially reserved, OUT reports partially_available."""
-        pick, pack, out = self._create_three_step_delivery(qty=10, available_qty=4)
+        pick, _pack, out = self._create_three_step_delivery(qty=10, available_qty=4)
         pick.action_assign()
         self.assertEqual(out.origin_state, "partially_available")
         self.assertIn(self.warehouse.pick_type_id.display_name, out.origin_state_label)
 
     def test_05_three_step_pick_done_pack_waiting(self):
         """Once PICK is done, OUT escalates to PACK."""
-        pick, pack, out = self._create_three_step_delivery()
+        pick, _pack, out = self._create_three_step_delivery()
         pick.action_assign()
         self._validate_picking(pick)
         self.assertEqual(pick.state, "done")
@@ -128,8 +128,8 @@ class TestStockPickingOriginState(TransactionCase):
 
     def test_07_multiple_pickings_worst_state_wins(self):
         """With several PICKs, the least-favorable state is reported."""
-        pick1, pack1, out1 = self._create_three_step_delivery(origin="Delivery 1")
-        pick2, pack2, out2 = self._create_three_step_delivery(
+        pick1, _pack1, out1 = self._create_three_step_delivery(origin="Delivery 1")
+        pick2, _pack2, _out2 = self._create_three_step_delivery(
             available_qty=0, origin="Delivery 2"
         )
         pick1.action_assign()
