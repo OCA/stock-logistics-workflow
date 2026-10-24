@@ -27,6 +27,9 @@ class TestPickingBatchPartnerEnable(TransactionCase):
         cls.env["stock.quant"]._update_available_quantity(
             cls.product, cls.stock_location, 1000
         )
+        # Batch transfers moved into `stock` behind a group that gates the
+        # auto-batch hooks.
+        cls.env.user.group_ids |= cls.env.ref("stock.group_stock_picking_batch")
         # Enable auto_batch on picking type
         cls.picking_type = cls.env.ref("stock.picking_type_out")
         cls.picking_type.write(
@@ -50,7 +53,7 @@ class TestPickingBatchPartnerEnable(TransactionCase):
                         {
                             "product_id": cls.product.id,
                             "product_uom_qty": 10,
-                            "product_uom": cls.product.uom_id.id,
+                            "uom_id": cls.product.uom_id.id,
                             "location_id": cls.stock_location.id,
                             "location_dest_id": cls.customer_location.id,
                         }
