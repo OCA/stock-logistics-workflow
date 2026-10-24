@@ -12,7 +12,7 @@
         <field name="arch" type="xml">
             <field name="lot_id" position="attributes">
                 <attribute name="domain">
-                    [('product_id','=', parent.product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]
+                    [('product_id', '=', parent.product_id), '|', ('company_id', '=', company_id), ('company_id', '=', False), ('location_ids', 'child_of', location_id)]
                 </attribute>
             </field>
         </field>
@@ -30,7 +30,7 @@
         <field name="arch" type="xml">
             <field name="lot_id" position="attributes">
                 <attribute name="domain">
-                    [('product_id','=', product_id), ('company_id', '=', company_id), ('location_ids', 'child_of', location_id)]
+                    [('product_id', '=', product_id), '|', ('company_id', '=', company_id), ('company_id', '=', False), ('location_ids', 'child_of', location_id)]
                 </attribute>
             </field>
         </field>
