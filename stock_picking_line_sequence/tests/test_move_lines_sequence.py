@@ -3,6 +3,7 @@
 # Copyright 2017 Serpent Consulting Services Pvt. Ltd.
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.tests import Form, common
 
 
@@ -80,38 +81,32 @@ class TestStockMove(common.TransactionCase):
                 "location_id": cls.supplier_location.id,
                 "location_dest_id": cls.customer_location.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.product_large_desk.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": cls.product_large_desk.uom_id.id,
+                            "uom_id": cls.product_large_desk.uom_id.id,
                             "location_id": cls.supplier_location.id,
                             "location_dest_id": cls.customer_location.id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.product_conference_chair.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": cls.product_conference_chair.uom_id.id,
+                            "uom_id": cls.product_conference_chair.uom_id.id,
                             "location_id": cls.supplier_location.id,
                             "location_dest_id": cls.customer_location.id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.product_large_cabinet.id,
                             "product_uom_qty": 5.0,
-                            "product_uom": cls.product_large_cabinet.uom_id.id,
+                            "uom_id": cls.product_large_cabinet.uom_id.id,
                             "location_id": cls.supplier_location.id,
                             "location_dest_id": cls.customer_location.id,
-                        },
+                        }
                     ),
                 ],
             }

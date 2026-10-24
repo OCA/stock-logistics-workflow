@@ -10,10 +10,9 @@
                 <field name="max_line_sequence" invisible="1" />
             </xpath>
             <xpath
-                expr="//notebook/page/field[@name='move_ids']/list/field[@name='state']"
-                position="before"
+                expr="//notebook/page/field[@name='move_ids']/list/field[@name='sequence']"
+                position="after"
             >
-                <field name="sequence" widget="handle" />
                 <field name="visible_sequence" />
             </xpath>
         </field>

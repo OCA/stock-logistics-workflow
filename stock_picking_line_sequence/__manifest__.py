@@ -6,7 +6,7 @@
 {
     "name": "Stock picking lines with sequence number",
     "summary": "Manages the order of stock moves by displaying its sequence",
-    "version": "19.0.1.0.1",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "author": "Camptocamp, "
     "ForgeFlow, "
