@@ -1,7 +1,7 @@
 # Copyright 2022 Tecnativa - Carlos Roca
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import models
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import float_compare
 
 
 class PurchaseOrderLine(models.Model):
@@ -9,10 +9,6 @@ class PurchaseOrderLine(models.Model):
 
     def get_stock_moves_link_invoice(self):
         moves_linked = self.env["stock.move"]
-        if self.product_id.purchase_method == "purchase":
-            to_invoice = self.product_qty - self.qty_invoiced
-        else:
-            to_invoice = self.qty_received - self.qty_invoiced
         for stock_move in self.move_ids.sorted(
             lambda m: (m.write_date, m.id), reverse=True
         ):
@@ -28,23 +24,34 @@ class PurchaseOrderLine(models.Model):
                 )
             ):
                 continue
-            if not stock_move.invoice_line_ids:
-                to_invoice -= (
-                    stock_move.quantity_done
-                    if not stock_move.to_refund
-                    else -stock_move.quantity_done
-                )
-                moves_linked += stock_move
-                continue
-            elif float_is_zero(
-                to_invoice, precision_rounding=self.product_uom.rounding
-            ):
-                break
-            to_invoice -= (
-                stock_move.quantity_done
-                if not stock_move.to_refund
-                else -stock_move.quantity_done
-            )
+            if stock_move.invoice_line_ids:
+                # The move is already linked to one or more invoice lines.
+                # Re-add it only if its done qty is not fully claimed by
+                # those lines (legitimate case: one picking split across
+                # several invoices of the same PO line). Otherwise skip
+                # to avoid over-linking pickings into unrelated invoices.
+                # Net the claim against credit notes so a fully-refunded
+                # move counts as unclaimed again.
+                claimed = 0.0
+                for inv_line in stock_move.invoice_line_ids:
+                    if (
+                        inv_line.purchase_line_id != self
+                        or inv_line.parent_state == "cancel"
+                    ):
+                        continue
+                    sign = 1 if inv_line.move_id.move_type == "in_invoice" else -1
+                    claimed += sign * inv_line.product_uom_id._compute_quantity(
+                        inv_line.quantity, stock_move.product_uom
+                    )
+                if (
+                    float_compare(
+                        stock_move.quantity_done - claimed,
+                        0.0,
+                        precision_rounding=stock_move.product_uom.rounding,
+                    )
+                    <= 0
+                ):
+                    continue
             moves_linked += stock_move
         return moves_linked
 
