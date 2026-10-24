@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models
-from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -35,10 +34,7 @@ class StockMove(models.Model):
             self.env.context.get("_reservation_policy_enforce")
             and self.picking_id.reservation_policy == "line"
             and not self.move_orig_ids
-            and float_compare(
-                need, 0, precision_rounding=self.product_id.uom_id.rounding
-            )
-            > 0
+            and self.product_id.uom_id.compare(need, 0) > 0
         ):
             available = (
                 self.env["stock.quant"]
@@ -47,7 +43,7 @@ class StockMove(models.Model):
                     self.product_id,
                     location_id,
                     need,
-                    uom_id=self.product_uom,
+                    uom_id=self.uom_id,
                     lot_id=lot_id,
                     package_id=package_id,
                     owner_id=owner_id,
@@ -55,14 +51,7 @@ class StockMove(models.Model):
                 )
             )
             available_quantity = sum(quantity for _quant, quantity in available)
-            if (
-                float_compare(
-                    available_quantity,
-                    need,
-                    precision_rounding=self.product_id.uom_id.rounding,
-                )
-                < 0
-            ):
+            if self.product_id.uom_id.compare(available_quantity, need) < 0:
                 return 0.0
         return super()._update_reserved_quantity(
             need,

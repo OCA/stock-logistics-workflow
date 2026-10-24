@@ -143,7 +143,7 @@ class TestReservationPolicy(ReservationPolicyCommon):
         ship = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "product_uom_qty": 10.0,
                 "location_id": output_loc.id,
                 "location_dest_id": self.customer_location.id,
@@ -154,7 +154,7 @@ class TestReservationPolicy(ReservationPolicyCommon):
         pick = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": output_loc.id,
