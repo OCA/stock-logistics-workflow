@@ -128,8 +128,9 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
         pickings = picking_1 | picking_2
 
         moves = pickings.mapped("move_ids").filtered(
-            lambda m: m.product_id == self.product_serial
-            and m.product_id.auto_create_lot
+            lambda m: (
+                m.product_id == self.product_serial and m.product_id.auto_create_lot
+            )
         )
         for line in moves.mapped("move_line_ids"):
             self.assertFalse(line.lot_name)

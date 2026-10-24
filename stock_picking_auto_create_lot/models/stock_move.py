@@ -20,7 +20,6 @@ class StockMove(models.Model):
         )
         for move in moves_not_display:
             move.display_assign_serial = False
-        return
 
     # pylint: disable=missing-return
     def _set_quantities_to_reservation(self):
