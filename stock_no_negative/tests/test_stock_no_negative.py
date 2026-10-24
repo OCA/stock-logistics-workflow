@@ -11,6 +11,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockNoNegative(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -90,7 +92,7 @@ class TestStockNoNegative(BaseCommon):
             {
                 "product_id": self.product.id,
                 "product_uom_qty": 100.0,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "picking_id": self.stock_picking.id,
                 "state": "draft",
                 "location_id": self.location_id.id,
@@ -117,7 +119,7 @@ class TestStockNoNegative(BaseCommon):
             {
                 "product_id": self.product_with_lot.id,
                 "product_uom_qty": 100.0,
-                "product_uom": self.product_with_lot.uom_id.id,
+                "uom_id": self.product_with_lot.uom_id.id,
                 "picking_id": self.stock_picking_with_lot.id,
                 "state": "draft",
                 "location_id": self.location_id.id,
