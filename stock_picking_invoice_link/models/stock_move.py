@@ -40,10 +40,12 @@ class StockMove(models.Model):
 
     def get_moves_delivery_link_invoice(self):
         return self.filtered(
-            lambda x: x.state == "done"
-            and not x.location_dest_usage == "inventory"
-            and (
-                x.location_id.usage == "internal"
-                or (x.location_dest_id.usage == "internal" and x.to_refund)
+            lambda x: (
+                x.state == "done"
+                and not x.location_dest_usage == "inventory"
+                and (
+                    x.location_id.usage == "internal"
+                    or (x.location_dest_id.usage == "internal" and x.to_refund)
+                )
             )
         )
