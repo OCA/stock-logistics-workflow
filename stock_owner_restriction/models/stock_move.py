@@ -47,7 +47,9 @@ class StockMove(models.Model):
         for owner_id, moves_to_assign in dict_key.items():
             super(
                 StockMove,
-                moves_to_assign.with_context(force_restricted_owner_id=owner_id),
+                moves_to_assign.with_context(
+                    force_restricted_owner_id=owner_id.id if owner_id else False
+                ),
             )._action_assign(force_qty=force_qty)
             if (
                 owner_id
@@ -75,7 +77,9 @@ class StockMove(models.Model):
     ):
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if not owner_id and restricted_owner_id is not None:
-            owner_id = restricted_owner_id
+            # The context key holds an id (or False), while quant reservation
+            # methods expect a res.partner recordset.
+            owner_id = self.env["res.partner"].browse(restricted_owner_id or [])
         return super()._update_reserved_quantity(
             need,
             location_id,

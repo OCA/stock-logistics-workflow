@@ -9,6 +9,8 @@ from odoo.addons.stock_owner_restriction import (
 
 
 class TestStockOwnerRestrictionHooks(BaseCommon):
+    _test_user_groups = None
+
     def test_set_default_owner_restriction_hook(self):
         picking_types = self.env["stock.picking.type"].search([], limit=2)
         self.assertEqual(len(picking_types), 2)

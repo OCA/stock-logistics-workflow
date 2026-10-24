@@ -39,7 +39,7 @@ class StockQuant(models.Model):
         if owner_id is None or restricted_owner_id is None:
             return records
         return records.filtered(
-            lambda q: q.owner_id == (restricted_owner_id or self.env["res.partner"])
+            lambda q: q.owner_id.id == (restricted_owner_id or False)
         )
 
     @api.model
@@ -79,7 +79,9 @@ class StockQuant(models.Model):
     ):
         restricted_owner_id = self.env.context.get("force_restricted_owner_id", None)
         if not owner_id and restricted_owner_id is not None:
-            owner_id = restricted_owner_id
+            # The context key holds an id (or False), while stock.quant methods
+            # expect a res.partner recordset.
+            owner_id = self.env["res.partner"].browse(restricted_owner_id or [])
         return super()._get_available_quantity(
             product_id,
             location_id,
