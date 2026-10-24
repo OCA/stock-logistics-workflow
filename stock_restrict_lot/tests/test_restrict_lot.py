@@ -246,8 +246,9 @@ class TestRestrictLot(BaseCommon):
             move_lines, expect_lot, expect_from_location, expect_reserved_qty
         ):
             concern_move_line = move_lines.filtered(
-                lambda mov: mov.lot_id == expect_lot
-                and mov.location_id == expect_from_location
+                lambda mov: (
+                    mov.lot_id == expect_lot and mov.location_id == expect_from_location
+                )
             )
             self.assertEqual(len(concern_move_line), 1)
             self.assertEqual(
