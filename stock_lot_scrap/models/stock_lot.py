@@ -6,7 +6,7 @@
 
 from lxml import etree
 
-from odoo import api, models
+from odoo import Command, api, models
 from odoo.exceptions import ValidationError
 
 
@@ -52,15 +52,37 @@ class StockLot(models.Model):
         return arch, view
 
     def _prepare_scrap_vals(self, quant):
+        """Values of the scrap move (``stock.move`` with ``is_scrap``) for a quant.
+
+        Since Odoo 20, scraps are stock moves flagged as ``is_scrap`` instead of
+        ``stock.scrap`` records.
+        """
         self.ensure_one()
+        company = quant.company_id or self.env.company
         return {
             "origin": quant.lot_id.name,
             "product_id": quant.product_id.id,
-            "product_uom_id": quant.product_id.uom_id.id,
-            "scrap_qty": quant.quantity,
+            "uom_id": quant.product_id.uom_id.id,
+            "product_uom_qty": quant.quantity,
             "location_id": quant.location_id.id,
-            "lot_id": self.id,
-            "package_id": quant.package_id.id,
+            "location_dest_id": company.scrap_location_id.id,
+            "company_id": company.id,
+            "is_scrap": True,
+            "state": "draft",
+            "move_line_ids": [
+                Command.create(
+                    {
+                        "product_id": quant.product_id.id,
+                        "uom_id": quant.product_id.uom_id.id,
+                        "quantity": quant.quantity,
+                        "lot_id": self.id,
+                        "package_id": quant.package_id.id,
+                        "location_id": quant.location_id.id,
+                        "location_dest_id": company.scrap_location_id.id,
+                        "company_id": company.id,
+                    }
+                )
+            ],
         }
 
     def action_scrap_lot(self):
@@ -72,20 +94,16 @@ class StockLot(models.Model):
             raise ValidationError(
                 self.env._("This lot doesn't contain any quant in internal location."),
             )
-        scrap_obj = self.env["stock.scrap"]
-        scraps = scrap_obj.browse()
-        for quant in quants:
-            scrap = scrap_obj.create(
-                self._prepare_scrap_vals(quant),
-            )
-            scraps |= scrap
+        scraps = self.env["stock.move"].create(
+            [self._prepare_scrap_vals(quant) for quant in quants]
+        )
         result = self.env["ir.actions.act_window"]._for_xml_id(
-            "stock.action_stock_scrap"
+            "stock.stock_scrapped_moves_action"
         )
         result["context"] = self.env.context
         if len(scraps) != 1:
             result["domain"] = [("id", "in", scraps.ids)]
         else:  # pragma: no cover
-            result["views"] = [(self.env.ref("stock.stock_scrap_form_view").id, "form")]
+            result["views"] = [(self.env.ref("stock.view_scrap_move_form").id, "form")]
             result["res_id"] = scraps.id
         return result

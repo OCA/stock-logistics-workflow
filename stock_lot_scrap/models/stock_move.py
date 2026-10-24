@@ -8,17 +8,16 @@ from markupsafe import Markup
 from odoo import models
 
 
-class StockScrap(models.Model):
-    _inherit = "stock.scrap"
+class StockMove(models.Model):
+    _inherit = "stock.move"
 
-    def action_validate(self):
-        self.ensure_one()
-        if self.lot_id:
-            self.lot_id.message_post(
+    def _action_scrap(self):
+        for lot in self.lot_ids:
+            lot.message_post(
                 body=Markup(
                     self.env._(
                         "Lot was scrapped by <b>%(name)s</b>.", name=self.env.user.name
                     )
                 )
             )
-        return super().action_validate()
+        return super()._action_scrap()
