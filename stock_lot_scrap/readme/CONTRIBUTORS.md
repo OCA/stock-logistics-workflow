@@ -1,0 +1,11 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Carlos Dauden
+  - Pedro M. Baeza
+  - David Vidal
+  - Vicent Cubells
+  - Carlos Roca
+  - Carolina Fernandez
+- [SodexisTeam](dev@sodexis.com)
+- [Moduon](https://www.moduon.team):
+  - Rafael Blasco
+  - Andrii Kompaniiets
