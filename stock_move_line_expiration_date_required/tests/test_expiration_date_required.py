@@ -53,13 +53,15 @@ class TestExpirationDateRequired(common.TransactionCase):
             self.picking.move_ids,
             view="stock.view_stock_move_operations",
         )
-        with self.assertRaisesRegex(
-            AssertionError, "'expiration_date' is a required field"
+        with (
+            self.assertRaisesRegex(
+                AssertionError, "'expiration_date' is a required field"
+            ),
+            move_form.move_line_ids.edit(0) as move_line_tree,
         ):
-            with move_form.move_line_ids.edit(0) as move_line_tree:
-                move_line_tree.lot_name = "TLE1"
-                move_line_tree.quantity = 1
-                self.assertEqual(move_line_tree.expiration_date, False)
+            move_line_tree.lot_name = "TLE1"
+            move_line_tree.quantity = 1
+            self.assertEqual(move_line_tree.expiration_date, False)
 
     def test_expiration_date_auto_caulculated(self):
         """Test that the expiration date is auto-calculated
