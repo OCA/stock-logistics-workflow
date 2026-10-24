@@ -1,8 +1,6 @@
 # Copyright 2019 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from datetime import date
-
-from odoo.fields import Command
+from odoo import Command, fields
 from odoo.tests.common import TransactionCase
 
 
@@ -37,9 +35,9 @@ class TestStockPickingPurchaseOrderLink(TransactionCase):
                             "name": cls.product.name,
                             "product_id": cls.product.id,
                             "product_qty": 1.0,
-                            "product_uom_id": cls.product.uom_id.id,
+                            "uom_id": cls.product.uom_id.id,
                             "price_unit": 10.0,
-                            "date_planned": date.today(),
+                            "date_planned": fields.Date.today(),
                         },
                     )
                 ],
