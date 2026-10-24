@@ -3,7 +3,6 @@
 
 from odoo import Command, fields, models
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class StockSplitPicking(models.TransientModel):
@@ -38,10 +37,7 @@ class StockSplitPicking(models.TransientModel):
 
     def _check_can_split_by_quantity(self):
         for picking in self.picking_ids:
-            if all(
-                float_is_zero(m.quantity, precision_rounding=m.product_uom.rounding)
-                for m in picking.move_ids
-            ):
+            if all(m.uom_id.is_zero(m.quantity) for m in picking.move_ids):
                 raise UserError(
                     self.env._(
                         "%s: Nothing to split. Fill the quantities you want in a new "
@@ -50,12 +46,7 @@ class StockSplitPicking(models.TransientModel):
                     )
                 )
             if all(
-                float_compare(
-                    m.quantity,
-                    m.product_uom_qty,
-                    precision_rounding=m.product_uom.rounding,
-                )
-                >= 0
+                m.uom_id.compare(m.quantity, m.product_uom_qty) >= 0
                 for m in picking.move_ids
             ):
                 raise UserError(
@@ -85,26 +76,20 @@ class StockSplitPicking(models.TransientModel):
             moves_to_split_off = self.env["stock.move"]
             moves_to_recompute_state = self.env["stock.move"]
             for move in picking.move_ids:
-                rounding = move.product_uom.rounding
                 # Do not split moves that are done or cancelled
                 if move.state in ("done", "cancel"):
                     continue
                 # If there aren't assigned quantities, there's nothing to split
-                if float_is_zero(move.quantity, precision_rounding=rounding):
+                if move.uom_id.is_zero(move.quantity):
                     continue
                 # If it's completely assigned, extract the move entirely
-                if (
-                    float_compare(
-                        move.quantity, move.product_uom_qty, precision_rounding=rounding
-                    )
-                    >= 0
-                ):
+                if move.uom_id.compare(move.quantity, move.product_uom_qty) >= 0:
                     moves_to_split_off += move
                     continue
                 # Otherwise, we split the done quantities and leave the remaining
                 # quantities in the original move.
                 split_moves_vals = move.with_context(cancel_backorder=False)._split(
-                    move.product_uom._compute_quantity(
+                    move.uom_id._compute_quantity(
                         move.quantity, move.product_id.uom_id, rounding_method="HALF-UP"
                     )
                 )
