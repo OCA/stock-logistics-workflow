@@ -5,6 +5,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockOwnerRestriction(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -86,15 +88,15 @@ class TestStockOwnerRestriction(BaseCommon):
     def test_restrict_reserve_qty(self):
         # Restrict quants from one owner to other customer
         self.move_model.create(
-            dict(
-                product_id=self.product.id,
-                picking_id=self.picking_out.id,
-                picking_type_id=self.picking_type_out.id,
-                product_uom_qty=1000.00,
-                location_id=self.source_location.id,
-                location_dest_id=self.customer_location.id,
-                product_uom=self.product.uom_id.id,
-            )
+            {
+                "product_id": self.product.id,
+                "picking_id": self.picking_out.id,
+                "picking_type_id": self.picking_type_out.id,
+                "product_uom_qty": 1000.00,
+                "location_id": self.source_location.id,
+                "location_dest_id": self.customer_location.id,
+                "uom_id": self.product.uom_id.id,
+            }
         )
         # Set restriction options on picking type
         self.picking_type_out.owner_restriction = "standard_behavior"
@@ -228,7 +230,7 @@ class TestStockOwnerRestriction(BaseCommon):
                 "product_uom_qty": 1.0,
                 "location_id": self.source_location.id,
                 "location_dest_id": self.customer_location.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
             }
         )
         source_picking = self._create_outgoing_picking(partner=self.customer)
@@ -240,7 +242,7 @@ class TestStockOwnerRestriction(BaseCommon):
                 "product_uom_qty": 1.0,
                 "location_id": self.source_location.id,
                 "location_dest_id": self.customer_location.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "move_dest_ids": [(4, destination_move.id)],
             }
         )
@@ -254,7 +256,7 @@ class TestStockOwnerRestriction(BaseCommon):
                 "product_uom_qty": 1.0,
                 "location_id": self.source_location.id,
                 "location_dest_id": self.customer_location.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
             }
         )
         self.assertEqual(fallback_move._get_owner_for_assign(), self.customer)
@@ -281,7 +283,7 @@ class TestStockOwnerRestriction(BaseCommon):
                 "product_uom_qty": 1.0,
                 "location_id": self.source_location.id,
                 "location_dest_id": self.customer_location.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
             }
         )
         restricted_move = self.move_model.create(
@@ -292,7 +294,7 @@ class TestStockOwnerRestriction(BaseCommon):
                 "product_uom_qty": 1.0,
                 "location_id": self.source_location.id,
                 "location_dest_id": self.customer_location.id,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
             }
         )
         moves = standard_move | restricted_move
