@@ -35,7 +35,7 @@ class StockMoveLine(models.Model):
             move_line.expiration_date = expiration_dtt_move_line_map[move_line]
         return res
 
-    @api.onchange("product_id", "product_uom_id")
+    @api.onchange("product_id", "uom_id")
     def _onchange_product_id(self):
         res = super()._onchange_product_id()
         if not self.picking_type_use_create_lots:

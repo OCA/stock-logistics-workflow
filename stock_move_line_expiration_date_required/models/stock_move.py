@@ -20,10 +20,14 @@ class StockMove(models.Model):
                 record.move_line_ids.filtered("quantity").mapped("expiration_date")
             )
 
-    def _generate_serial_move_line_commands(self, lot_names, origin_move_line=None):
+    def _generate_serial_move_line_commands(
+        self, field_data, location_dest_id=False, origin_move_line=None
+    ):
         """Override to add a default `expiration_date` into the move lines values."""
         move_lines_commands = super()._generate_serial_move_line_commands(
-            lot_names, origin_move_line=origin_move_line
+            field_data,
+            location_dest_id=location_dest_id,
+            origin_move_line=origin_move_line,
         )
         if not self.product_id.use_expiration_date:
             return move_lines_commands
