@@ -17,22 +17,40 @@ class ProductProduct(models.Model):
         lot_id = self.env.context.get("lot_id")
         if not lot_id:
             return res
-        domain_quant_loc, domain_move_in_loc, domain_move_out_loc = res
+        (
+            domain_quant_loc,
+            domain_move_in_loc,
+            domain_move_out_loc,
+            domain_move_in_loc_done,
+            domain_move_out_loc_done,
+        ) = res
         lot_domain = Domain("restrict_lot_id", "=", lot_id)
         domain_move_in_loc = domain_move_in_loc & lot_domain
         domain_move_out_loc = domain_move_out_loc & lot_domain
-        return domain_quant_loc, domain_move_in_loc, domain_move_out_loc
+        # The "done" domains are applied on stock.move.line, so the restriction
+        # is reached through the move.
+        lot_domain_done = Domain("move_id.restrict_lot_id", "=", lot_id)
+        domain_move_in_loc_done = domain_move_in_loc_done & lot_domain_done
+        domain_move_out_loc_done = domain_move_out_loc_done & lot_domain_done
+        return (
+            domain_quant_loc,
+            domain_move_in_loc,
+            domain_move_out_loc,
+            domain_move_in_loc_done,
+            domain_move_out_loc_done,
+        )
 
     def _compute_quantities_dict(
         self, lot_id, owner_id, package_id, from_date=False, to_date=False
     ):
-        # In v19, a non-None lot_id adds a move_line_ids.lot_id filter that
+        # A non-None lot_id adds a move_line_ids.lot_id filter that
         # excludes pending moves without lines yet. We put lot_id in context
         # so _get_domain_locations() handles the restrict_lot_id filtering,
         # and pass None to super() to skip that extra filter.
+        records = self
         if lot_id:
-            self = self.with_context(lot_id=lot_id)
+            records = self.with_context(lot_id=lot_id)
             lot_id = None
-        return super()._compute_quantities_dict(
+        return super(ProductProduct, records)._compute_quantities_dict(
             lot_id, owner_id, package_id, from_date, to_date
         )

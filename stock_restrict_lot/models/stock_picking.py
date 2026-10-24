@@ -10,3 +10,11 @@ class StockPicking(models.Model):
     restrict_lot_id = fields.Many2one(
         related="move_ids.restrict_lot_id", string="Restrict Lot"
     )
+
+    def _prepare_return_move_default_values(self, move_id):
+        # The `stock.return.picking` wizard no longer exists on 20.0: returns are
+        # built by the picking itself, so the lot restriction is carried here.
+        vals = super()._prepare_return_move_default_values(move_id)
+        if move_id.restrict_lot_id:
+            vals["restrict_lot_id"] = move_id.restrict_lot_id.id
+        return vals

@@ -1,13 +1,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError, ValidationError
-from odoo.tests import Form
 from odoo.tools import mute_logger
 
 from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestRestrictLot(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -51,7 +52,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.stock_loc.id,
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "procure_method": "make_to_order",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -75,7 +76,7 @@ class TestRestrictLot(BaseCommon):
                 "product_id": self.product.id,
                 "location_id": self.customer_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "picking_type_id": self.warehouse.out_type_id.id,
                 "location_dest_id": self.output_loc.id,
                 "procure_method": "make_to_order",
@@ -93,7 +94,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.stock_loc.id,
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "procure_method": "make_to_order",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -111,7 +112,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.stock_loc.id,
                 "location_dest_id": self.output_loc.id,
                 "product_uom_qty": 2,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -154,7 +155,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.warehouse.lot_stock_id.id,
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "warehouse_id": self.warehouse.id,
                 "restrict_lot_id": self.lot.id,
             }
@@ -278,14 +279,9 @@ class TestRestrictLot(BaseCommon):
         assert_move_qty_per_lot(delivery.move_ids, self.lot, 15)
         assert_move_qty_per_lot(delivery.move_ids, lot2, 30)
         # Return picking
-        return_picking_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_ids=pick.ids, active_id=pick.id, active_model=pick._name
-            )
-        )
-        return_picking_form = return_picking_form.save()
-        return_picking_action = return_picking_form.action_create_returns_all()
-        return_pick = self.env["stock.picking"].browse(return_picking_action["res_id"])
+        # The `stock.return.picking` wizard no longer exists on 20.0: the
+        # picking builds its own return, copying every non-cancelled move.
+        return_pick = pick._create_return()
         lots = return_pick.move_ids.restrict_lot_id
         self.assertIn(self.lot, lots)
         self.assertIn(lot2, lots)
@@ -297,7 +293,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.stock_loc.id,
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "procure_method": "make_to_stock",
                 "warehouse_id": self.warehouse.id,
                 "route_ids": [(6, 0, self.warehouse.delivery_route_id.ids)],
@@ -343,7 +339,7 @@ class TestRestrictLot(BaseCommon):
                 "location_id": self.warehouse.lot_stock_id.id,
                 "location_dest_id": self.customer_loc.id,
                 "product_uom_qty": 1,
-                "product_uom": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "warehouse_id": self.warehouse.id,
                 "restrict_lot_id": self.lot.id,
             }
@@ -353,7 +349,7 @@ class TestRestrictLot(BaseCommon):
                 "move_id": move.id,
                 "product_id": move.product_id.id,
                 "quantity": 1,
-                "product_uom_id": move.product_uom.id,
+                "uom_id": move.uom_id.id,
                 "location_id": move.location_id.id,
                 "location_dest_id": move.location_dest_id.id,
                 "lot_id": lot2.id,
