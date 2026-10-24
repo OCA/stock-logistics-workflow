@@ -1,17 +1,17 @@
 # Copyright 2017 Tecnativa <vicent.cubells@tecnativa.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import common
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPickingSendByMail(common.TransactionCase):
+class TestStockPickingSendByMail(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        # Remove this variable in v16 and put instead:
-        from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
-
-        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
         cls.product = cls.env["product.product"].create({"name": "Test product"})
         cls.location_id = cls.env.ref("stock.stock_location_stock")
         cls.location_destination_id = cls.env.ref("stock.stock_location_customers")
@@ -22,15 +22,13 @@ class TestStockPickingSendByMail(common.TransactionCase):
                 "location_id": cls.location_id.id,
                 "location_dest_id": cls.location_destination_id.id,
                 "move_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": cls.product.id,
-                            "product_uom": cls.product.uom_id.id,
+                            "uom_id": cls.product.uom_id.id,
                             "location_id": cls.location_id.id,
                             "location_dest_id": cls.location_destination_id.id,
-                        },
+                        }
                     )
                 ],
             }
