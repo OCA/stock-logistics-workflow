@@ -5,6 +5,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class BackorderPolicyCommon(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -53,11 +55,8 @@ class BackorderPolicyCommon(BaseCommon):
 
     def _create_return(self, picking, quantity):
         """Create and confirm a return picking for the given quantity."""
-        wizard = (
-            self.env["stock.return.picking"]
-            .with_context(active_id=picking.id, active_model="stock.picking")
-            .create({})
-        )
-        wizard.product_return_moves.quantity = quantity
-        res = wizard.action_create_returns()
-        return self.env["stock.picking"].browse(res["res_id"])
+        return_picking = picking._create_return()
+        return_picking.move_ids.product_uom_qty = quantity
+        return_picking.action_confirm()
+        return_picking.action_assign()
+        return return_picking
