@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models
-from odoo.tools import float_compare, float_round
 
 
 class StockMoveLine(models.Model):
@@ -14,18 +13,7 @@ class StockMoveLine(models.Model):
         quantity.
         """
         self.ensure_one()
-        if (
-            float_compare(
-                package_qty,
-                self.quantity,
-                precision_rounding=self.product_uom_id.rounding,
-            )
-            >= 0
-        ):
+        if self.uom_id.compare(package_qty, self.quantity) >= 0:
             return False
-        quantity_left_todo = float_round(
-            self.quantity - package_qty,
-            precision_rounding=self.product_uom_id.rounding,
-            rounding_method="HALF-UP",
-        )
+        quantity_left_todo = self.uom_id.round(self.quantity - package_qty)
         return self.copy(default={"quantity": quantity_left_todo})
