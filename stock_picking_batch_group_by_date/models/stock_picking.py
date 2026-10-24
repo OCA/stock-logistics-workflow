@@ -2,8 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-
-import pytz
+from zoneinfo import ZoneInfo
 
 from odoo import fields, models
 from odoo.fields import Domain
@@ -27,14 +26,14 @@ class StockPicking(models.Model):
         """Get the datetime limits for the batch group by date"""
         self.ensure_one()
         tz = self._get_batch_group_by_date_tz()
-        timezone = pytz.timezone(tz)
+        timezone = ZoneInfo(tz)
         date_tz = fields.Datetime.context_timestamp(
             self.with_context(tz=tz),
             self.scheduled_date,
         )
         to_utc = date_utils.to_timezone(None)
-        from_date_tz = timezone.localize(fields.Datetime.start_of(date_tz, "day"))
-        to_date_tz = timezone.localize(fields.Datetime.end_of(date_tz, "day"))
+        from_date_tz = fields.Datetime.start_of(date_tz, "day").replace(tzinfo=timezone)
+        to_date_tz = fields.Datetime.end_of(date_tz, "day").replace(tzinfo=timezone)
         return to_utc(from_date_tz), to_utc(to_date_tz)
 
     def _get_possible_pickings_domain(self):

@@ -1,11 +1,9 @@
 # Copyright 2026 Camptocamp SA (https://www.camptocamp.com).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
-
 from freezegun import freeze_time
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import TransactionCase
 
 
@@ -24,6 +22,9 @@ class TestPickingBatchPartnerEnable(TransactionCase):
                 "is_storable": True,
             }
         )
+        # Batch pickings are now part of `stock`, behind a group that must be
+        # enabled for the auto-batch hooks to run.
+        cls.env.user.group_ids |= cls.env.ref("stock.group_stock_picking_batch")
         cls.warehouse = cls.env.ref("stock.warehouse0")
         # Ensure there are enough products in stock
         cls.env["stock.quant"]._update_available_quantity(
@@ -52,7 +53,7 @@ class TestPickingBatchPartnerEnable(TransactionCase):
                         {
                             "product_id": cls.product.id,
                             "product_uom_qty": 10,
-                            "product_uom": cls.product.uom_id.id,
+                            "uom_id": cls.product.uom_id.id,
                         }
                     )
                 ],
@@ -71,7 +72,8 @@ class TestPickingBatchPartnerEnable(TransactionCase):
             picking2 = self._create_picking()
         self.assertEqual(picking1.batch_id, picking2.batch_id)
         self.assertEqual(
-            picking1.batch_id.scheduled_date, datetime(2026, 1, 1, 12, 0, 0)
+            picking1.batch_id.scheduled_date,
+            fields.Datetime.to_datetime("2026-01-01 12:00:00"),
         )
         self.assertIn("01/01/2026", picking1.batch_id.description)
 

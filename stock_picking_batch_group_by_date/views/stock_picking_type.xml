@@ -6,14 +6,14 @@
 <odoo>
     <record id="view_picking_type_form_inherit" model="ir.ui.view">
         <field name="model">stock.picking.type</field>
-        <field
-            name="inherit_id"
-            ref="stock_picking_batch.view_picking_type_form_inherit"
-        />
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
         <field name="arch" type="xml">
             <div name="batch_contact" position="after">
-                <span invisible="not auto_batch" />
-                <div name="batch_date" class="o_row" invisible="not auto_batch">
+                <div
+                    name="batch_date"
+                    class="o_row"
+                    invisible="batch_creation_type == 'manual'"
+                >
                     <field name="batch_group_by_date" />
                     <label for="batch_group_by_date" />
                 </div>
