@@ -3,12 +3,15 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="view_template_property_form" model="ir.ui.view">
-        <field name="name">Product template Secondary Unit</field>
+        <field name="name">product.template.auto.create.lot</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="stock.view_template_property_form" />
+        <field name="inherit_id" ref="stock.product_template_form_view_stock" />
         <field name="arch" type="xml">
-            <xpath expr="//div[field[@name='tracking']]" position="after">
-                <field name="auto_create_lot" invisible="tracking == 'none'" />
+            <xpath expr="//group[@name='traceability']" position="inside">
+                <field
+                    name="auto_create_lot"
+                    invisible="store_by not in ['lot', 'serial']"
+                />
             </xpath>
         </field>
     </record>
