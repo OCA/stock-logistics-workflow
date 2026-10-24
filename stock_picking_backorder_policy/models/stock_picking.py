@@ -35,8 +35,10 @@ class StockPicking(models.Model):
         # standard behavior too: the policy is about the original transfer and
         # must not affect goods coming back in.
         pickings = self.filtered(
-            lambda p: p.backorder_policy not in ("always", "never")
-            or p._should_ignore_backorders()
+            lambda p: (
+                p.backorder_policy not in ("always", "never")
+                or p._should_ignore_backorders()
+            )
         )
         return super(StockPicking, pickings)._check_backorder()
 
@@ -62,8 +64,10 @@ class StockPicking(models.Model):
         if rest := (self - never - always):
             super(StockPicking, rest)._action_done()
         if need_log := validated.filtered(
-            lambda p: p.backorder_policy
-            and p.backorder_policy != p.picking_type_id.create_backorder
+            lambda p: (
+                p.backorder_policy
+                and p.backorder_policy != p.picking_type_id.create_backorder
+            )
         ):
             need_log._backorder_policy_update_log()
         return True
