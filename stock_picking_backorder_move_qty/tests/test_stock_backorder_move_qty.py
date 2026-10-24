@@ -7,6 +7,8 @@ from odoo.addons.stock.tests.common import TestStockCommon
 
 
 class TestStockPickingBackorderMoveQty(TestStockCommon):
+    _test_user_groups = None
+
     def _prepare_picking(self):
         picking_out_form = Form(self.env["stock.picking"])
         picking_out_form.picking_type_id = self.picking_type_out

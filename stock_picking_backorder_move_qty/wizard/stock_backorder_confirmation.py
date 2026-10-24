@@ -1,6 +1,6 @@
 # Copyright 2026 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.tools import float_compare
 
 
@@ -21,7 +21,7 @@ class StockBackorderConfirmation(models.TransientModel):
             pickings = self.env["stock.picking"].browse(res["pick_ids"][0][2])
 
             res["backorder_confirmation_move_line_ids"] = [
-                (0, 0, {"move_id": move.id}) for move in pickings.move_ids
+                Command.create({"move_id": move.id}) for move in pickings.move_ids
             ]
 
         return res
@@ -45,7 +45,8 @@ class StockBackorderConfirmation(models.TransientModel):
                 wiz_line.move_id.id: wiz_line.qty_to_backorder
                 for wiz_line in self.backorder_confirmation_move_line_ids
             }
-            self = self.with_context(
-                force_moves_qty_to_backorder=moves_qty_to_backorder
-            )
+            return super(
+                StockBackorderConfirmation,
+                self.with_context(force_moves_qty_to_backorder=moves_qty_to_backorder),
+            ).process()
         return super().process()

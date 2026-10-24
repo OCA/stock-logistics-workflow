@@ -13,22 +13,22 @@ class StockBackorderConfirmationMove(models.TransientModel):
         "stock.backorder.confirmation", "Immediate Transfer"
     )
     picking_id = fields.Many2one("stock.picking", related="move_id.picking_id")
-    move_id = fields.Many2one("stock.move", "Move")
+    move_id = fields.Many2one("stock.move")
     qty_unprocessed = fields.Float(compute="_compute_qty_unprocessed")
     qty_to_backorder = fields.Float(
         compute="_compute_qty_to_backorder", store=True, readonly=False
     )
-    qty_to_backorder_uom_id = fields.Many2one("uom.uom", related="move_id.product_uom")
+    qty_to_backorder_uom_id = fields.Many2one("uom.uom", related="move_id.uom_id")
 
     @api.depends(
         "move_id",
         "move_id.picked",
-        "move_id.product_uom",
+        "move_id.uom_id",
         "move_id.product_uom_qty",
         "move_id.quantity",
         "move_id.state",
-        "move_id.move_line_ids.picked"
-        "move_id.move_line_ids.product_uom_id"
+        "move_id.move_line_ids.picked",
+        "move_id.move_line_ids.uom_id",
         "move_id.move_line_ids.quantity",
     )
     def _compute_qty_unprocessed(self):

@@ -3,7 +3,7 @@
 {
     "name": "Stock Picking Backorder Move Quantity",
     "summary": "Allows to set quantity to backorder by move",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "development_status": "Alpha",
     "category": "Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
@@ -16,7 +16,7 @@
         "stock",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "wizard/stock_backorder_confirmation.xml",
     ],
 }
