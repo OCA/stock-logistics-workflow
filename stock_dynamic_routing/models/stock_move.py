@@ -8,7 +8,7 @@ from collections import OrderedDict, defaultdict, namedtuple
 from psycopg2 import sql
 
 from odoo import api, models
-from odoo.tools.float_utils import float_compare
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -465,20 +465,22 @@ class StockMove(models.Model):
         might trigger a new routing on the destination move.
         """
         next_move_in_chain_ids = []
-        for move in self:
-            origmoves_by_location = OrderedDict()
-            for orig_move in move.move_orig_ids:
-                origmoves_by_location.setdefault(
-                    orig_move.location_dest_id, move.browse()
-                )
-                origmoves_by_location[orig_move.location_dest_id] |= orig_move
-            for location_id, orig_moves in reversed(origmoves_by_location.items()):
-                qty = sum(orig_moves.mapped("product_qty"))
-                split_move = move
-                # NOTE: starting from Odoo 18.0, '_split' method doesn't check
-                # anymore the move quantity against the qty to split, and performs
-                # a split in all cases, letting an empty move behind. Avoid this.
-                split_move_vals = []
+        origmoves_by_location = OrderedDict()
+        for orig_move in self.move_orig_ids:
+            origmoves_by_location.setdefault(orig_move.location_dest_id, self.browse())
+            origmoves_by_location[orig_move.location_dest_id] |= orig_move
+        for location_id, orig_moves in reversed(origmoves_by_location.items()):
+            qty = sum(orig_moves.mapped("product_qty"))
+            dest_moves = orig_moves.move_dest_ids.filtered(
+                lambda r: r.state == "waiting"
+            )
+            for move in dest_moves:
+                if float_is_zero(
+                    qty, precision_rounding=move.product_id.uom_id.rounding
+                ):
+                    # The need is covered, remove the link to orig_moves
+                    move.move_orig_ids -= orig_moves
+                    continue
                 if (
                     float_compare(
                         move.product_qty,
@@ -487,21 +489,25 @@ class StockMove(models.Model):
                     )
                     == 1
                 ):
+                    # When the move qty is bigger than the dest, split it
                     split_move_vals = move._split(qty)
-                if split_move_vals:
                     split_move = self.create(split_move_vals)
                     split_move._action_confirm(merge=False)
-                if split_move != move:
-                    # No split occurs if the quantity was the same.
-                    # But if it did split, detach it from the move on which
-                    # we have a different routing
                     move.move_orig_ids -= orig_moves
-                    split_move.move_orig_ids = orig_moves
-                if split_move.location_id != location_id:
-                    split_move.with_context(
-                        __applying_routing_rule=True
-                    ).location_id = location_id
-                next_move_in_chain_ids.append(split_move.id)
+                    if split_move.location_id != location_id:
+                        split_move.with_context(
+                            __applying_routing_rule=True
+                        ).location_id = location_id
+                    next_move_in_chain_ids.append(split_move.id)
+                    qty = 0  # set need to 0
+                else:
+                    # otherwise decrease the need
+                    qty -= move.product_qty
+                    if move.location_id != location_id:
+                        move.with_context(
+                            __applying_routing_rule=True
+                        ).location_id = location_id
+                    next_move_in_chain_ids.append(move.id)
         # Apply dynamic routing on next waiting moves in the chain
         self.browse(next_move_in_chain_ids).filtered(
             lambda r: r.state == "waiting"
