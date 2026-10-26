@@ -206,6 +206,53 @@ class TestPickingVariableQuantity(BaseCommon):
     def _get_backorder(self, picking):
         return self.env["stock.picking"].search([("backorder_id", "=", picking.id)])
 
+    def _validate_with_wizard(self, picking, backorder):
+        picking.button_validate()
+        wizard = (
+            self.env["stock.backorder.confirmation"]
+            .with_context(button_validate_picking_ids=picking.ids)
+            .create({"pick_ids": [Command.set(picking.ids)]})
+        )
+        if backorder:
+            wizard.process()
+        else:
+            wizard.process_cancel_backorder()
+
+    def test_variable_shortfall_warns_on_last_delivery(self):
+        order, pick, ship = self._confirm_sale_and_get_pickings(10.0)
+        self._process_picking(pick, 6, cancel_backorder=True)
+        ship.move_ids.write({"quantity": 4, "picked": True})
+        self._validate_with_wizard(ship, backorder=True)
+        self.assertFalse(order.activity_ids)
+        backorder = self._get_backorder(ship)
+        backorder.move_ids.write({"quantity": 2, "picked": True})
+        backorder.button_validate()
+        self.assertEqual(order.activity_ids.user_id, order.user_id)
+        self.assertIn("6.0", order.activity_ids.note)
+        self.assertIn("10.0", order.activity_ids.note)
+
+    def test_variable_shortfall_checks_every_move_of_the_line(self):
+        order, pick, ship = self._confirm_sale_and_get_pickings(10.0)
+        self._process_picking(pick, 6, cancel_backorder=True)
+        move = ship.move_ids
+        split = self.env["stock.move"].create(move._split(2))
+        split._action_confirm(merge=False)
+        # The first move of the line does not come from a variable operation.
+        move.move_orig_ids = [Command.clear()]
+        split.move_orig_ids = pick.move_ids
+        move.write({"quantity": 4, "picked": True})
+        split.write({"quantity": 2, "picked": True})
+        ship.button_validate()
+        self.assertEqual(ship.state, "done")
+        self.assertEqual(len(order.activity_ids), 1)
+
+    def test_variable_shortfall_standard_warning_is_not_duplicated(self):
+        order, pick, ship = self._confirm_sale_and_get_pickings(10.0)
+        self._process_picking(pick, 6, cancel_backorder=True)
+        ship.move_ids.write({"quantity": 5, "picked": True})
+        self._validate_with_wizard(ship, backorder=False)
+        self.assertEqual(len(order.activity_ids), 1)
+
     def test_pick_ship_qty_done_exceeded(self):
         pick_picking, ship_picking = self._create_pick_ship_pickings(2.0, 1.0)
         pick_picking.action_assign()

@@ -183,6 +183,48 @@ class StockMove(models.Model):
                 first_dest_move = group_dest_moves.sorted("id")[:1]
                 first_dest_move.product_uom_qty += qty_left
 
+    def _get_variable_quantity_shortages(self):
+        """Sale lines left short after a variable quantity propagation, once
+        they have no pending deliveries, so a shortage is warned once.
+
+        :return: {move: (delivered quantity, expected quantity)}
+        """
+        shortages = {}
+        sale_lines = self.env["sale.order.line"]
+        # Cheapest checks first: only the rare short lines reach the chain.
+        for move in self:
+            line = move.sale_line_id
+            # Kit components are not comparable to the sold product quantity.
+            if (
+                line in sale_lines
+                or move.state != "done"
+                or move.location_dest_id.usage != "customer"
+                or move.product_id != line.product_id
+                or float_compare(
+                    line.product_uom_qty,
+                    line.qty_delivered,
+                    precision_rounding=line.product_uom.rounding,
+                )
+                <= 0
+                or line._get_outgoing_incoming_moves()[0].filtered(
+                    lambda pending: pending.state != "done"
+                )
+            ):
+                continue
+            orig_moves = self.browse(move._rollup_move_origs())
+            if not orig_moves.picking_type_id.filtered("propagate_variable_qty"):
+                continue
+            sale_lines |= line
+            shortages[move] = (
+                line.product_uom._compute_quantity(
+                    line.qty_delivered, move.product_uom
+                ),
+                line.product_uom._compute_quantity(
+                    line.product_uom_qty, move.product_uom
+                ),
+            )
+        return shortages
+
     def _get_variable_quantity_group(self, dest_moves):
         group_moves = self
         group_dest_moves = dest_moves
