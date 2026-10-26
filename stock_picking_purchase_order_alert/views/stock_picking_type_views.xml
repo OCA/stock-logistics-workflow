@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View stock.picking.type form -->
+    <record id="view_stock_picking_type_form" model="ir.ui.view">
+        <field name="name">view.stock.picking.type.form</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='stock_picking_type_lot']" position="after">
+                <group>
+                    <field name="display_quantity_alert_percentage" />
+                    <field
+                        name="quantity_alert_percentage"
+                        attrs="{'invisible': [('display_quantity_alert_percentage', '=', False)],
+                    'required': [('display_quantity_alert_percentage', '=', True)]}"
+                    />
+                    <field
+                        name="groups_ids"
+                        widget="many2many_tags"
+                        attrs="{'invisible': [('display_quantity_alert_percentage', '=', False)]}"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
