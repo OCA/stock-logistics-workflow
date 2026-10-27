@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.responsible.auto.assign</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <group name="first" position="after">
+                <group name="responsible_auto_assign" string="Responsible Assignment">
+                    <field name="responsible_assign_mode" widget="radio" />
+                    <field
+                        name="responsible_assign_same_user"
+                        invisible="responsible_assign_mode != 'previous'"
+                    />
+                    <field
+                        name="responsible_user_ids"
+                        widget="many2many_tags"
+                        invisible="responsible_assign_mode == 'manual' or responsible_assign_same_user"
+                    />
+                    <field
+                        name="responsible_assign_load"
+                        invisible="responsible_assign_mode == 'manual' or responsible_assign_same_user"
+                    />
+                    <field
+                        name="responsible_assign_max_pending"
+                        invisible="responsible_assign_mode != 'ready'"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
