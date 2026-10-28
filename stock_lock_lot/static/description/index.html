@@ -372,8 +372,13 @@ ul.auto-toc {
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/17.0/stock_lock_lot"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-17-0/stock-logistics-workflow-17-0-stock_lock_lot"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module allows you to define whether a Serial Number/lot is blocked
 or not. The default value can be set on the Product Category, in the
-field “Block new Serial Numbers/lots”. Is possible to specify in a
+field “Block new Serial Numbers/lots”. It’s possible to specify in a
 location if locked lots are allowed to move there.</p>
+<p>Additionally, locked lots are automatically excluded from stock
+reservations, preventing them from being allocated to outgoing orders.
+This ensures that blocked inventory cannot be accidentally reserved or
+shipped. The reservation exclusion can be bypassed using the
+‘force_allow_locked_lots’ context when explicitly needed.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -397,8 +402,18 @@ location if locked lots are allowed to move there.</p>
 Serial Numbers/Lots”</li>
 </ol>
 <p>To allow move locked lots to a location: #. Open the locations (menu
-“Inventory &gt; Configuration &gt; Warehouse Management &gt; Locations”) #. check
+“Inventory &gt; Configuration &gt; Warehouse Management &gt; Locations”) #. Check
 the box “Allow Locked”</p>
+<p>To configure lot behavior at product category level: #. Open the product
+categories (menu “Sales &gt; Configuration &gt; Product Categories”) #. In the
+“Warehouse” section, you can configure:</p>
+<ul class="simple">
+<li>“Block new Serial Numbers/lots”: New lots will be created as blocked
+by default</li>
+<li>“Allow reservation of locked lots”: If checked, locked lots can still
+be reserved for orders, but cannot be moved unless the destination
+location allows locked lots</li>
+</ul>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -409,6 +424,33 @@ the box “Allow Locked”</p>
 <li>Now you cannot move that ‘Lot/Serial Number’ to any location that
 does not have the ‘Allow Locked’ field checked</li>
 </ol>
+<p><strong>Reservation Behavior:</strong></p>
+<p>By default, locked lots are automatically excluded from stock
+reservations. When creating outgoing orders (sales orders, transfers,
+etc.), the system will only reserve from unlocked lots. This prevents
+blocked inventory from being allocated to orders.</p>
+<p>However, you can configure this behavior at the product category level:</p>
+<ul class="simple">
+<li>Go to <em>Sales &gt; Configuration &gt; Product Categories</em></li>
+<li>In the Warehouse section, check “Allow reservation of locked lots”</li>
+<li>When enabled, locked lots in this category can still be reserved for
+orders, but they cannot be moved unless the destination location
+allows locked lots</li>
+</ul>
+<p>This is useful when you want to:</p>
+<ul class="simple">
+<li>Reserve specific inventory for future use but prevent actual movement</li>
+<li>Hold stock for quality inspection while still planning orders</li>
+</ul>
+<p>To override this behavior in custom operations, use the
+‘force_allow_locked_lots’ context.</p>
+<p><strong>Example Scenarios:</strong></p>
+<ul class="simple">
+<li><strong>Quality Hold</strong>: Lock a lot for quality inspection - it won’t be
+reserved for customer orders unless the category allows reservation</li>
+<li><strong>Expired Stock</strong>: Lock expired lots to prevent them from being
+shipped</li>
+</ul>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
@@ -438,6 +480,10 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:<ul>
 <li>Pedro M. Baeza</li>
 <li>Ernesto Tejeda</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://www.opensourceintegrators.com">Open Source Integrators</a>:<ul>
+<li>Daniel Reis &lt;<a class="reference external" href="mailto:dreis&#64;opensourceintegrators.com">dreis&#64;opensourceintegrators.com</a>&gt;</li>
 </ul>
 </li>
 </ul>

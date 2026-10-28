@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <group name="first">
                 <field name="lot_default_locked" />
+                <field name="lot_reserve_locked" />
             </group>
         </field>
     </record>
