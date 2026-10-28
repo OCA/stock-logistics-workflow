@@ -16,7 +16,7 @@ class StockQuant(models.Model):
         if self.env.context.get("skip_negative_qty_check"):
             return
 
-        p = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        p = self.env["decimal.precision"].precision_get("Product Unit")
         check_negative_qty = (
             config["test_enable"] and self.env.context.get("test_stock_no_negative")
         ) or not config["test_enable"]
