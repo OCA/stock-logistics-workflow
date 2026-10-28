@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="vpicktree_inh_customerinfo">
+    <record id="vpicktree_inh_customerinfo" model="ir.ui.view">
         <field name="name">vpicktree.inh.customerinfo</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.vpicktree" />
@@ -11,7 +11,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_picking_form_inh_customerinfo">
+    <record id="view_picking_form_inh_customerinfo" model="ir.ui.view">
         <field name="name">view.picking.form.inh.customerinfo</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
@@ -22,7 +22,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_picking_internal_search_inh_customerinfo">
+    <record id="view_picking_internal_search_inh_customerinfo" model="ir.ui.view">
         <field name="name">
                 view.picking.internal.search.inh.customerinfo
             </field>

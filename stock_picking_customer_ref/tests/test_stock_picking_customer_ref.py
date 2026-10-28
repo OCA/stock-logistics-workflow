@@ -2,21 +2,24 @@
 # Copyright 2017 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo import Command
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestStockPickingCustomerRef(TransactionCase):
+class TestStockPickingCustomerRef(BaseCommon):
+    _test_user_groups = ("sales_team.group_sale_manager", "stock.group_stock_manager")
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.SaleOrderObj = cls.env["sale.order"]
 
         cls.product = cls.env["product.product"].create({"name": "Test stuff"})
-        cls.partner = cls.env["res.partner"].create({"name": "Mr. Odoo"})
         cls.sale_order = cls.SaleOrderObj.create(
             {
                 "partner_id": cls.partner.id,
-                "order_line": [(0, 0, {"product_id": cls.product.id})],
+                "order_line": [Command.create({"product_id": cls.product.id})],
             }
         )
         cls.sale_order.with_context(show_sale=True).action_confirm()
@@ -45,7 +48,7 @@ class TestStockPickingCustomerRef(TransactionCase):
             {
                 "partner_id": self.partner.id,
                 "client_order_ref": "CREATE123456",
-                "order_line": [(0, 0, {"product_id": self.product.id})],
+                "order_line": [Command.create({"product_id": self.product.id})],
             }
         )
         sale_order.with_context(show_sale=True).action_confirm()
@@ -64,17 +67,15 @@ class TestStockPickingCustomerRef(TransactionCase):
                 "location_id": self.location_id.id,
                 "location_dest_id": self.location_dest_id.id,
                 "move_line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "product_id": self.product.id,
-                            "product_uom_id": self.env.ref("uom.product_uom_unit").id,
+                            "uom_id": self.env.ref("uom.product_uom_unit").id,
                             "quantity": 50.0,
                             "picking_type_id": self.picking_type_id.id,
                             "location_id": self.location_id.id,
                             "location_dest_id": self.location_dest_id.id,
-                        },
+                        }
                     )
                 ],
             }
