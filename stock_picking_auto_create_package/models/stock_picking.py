@@ -22,13 +22,15 @@ class StockPicking(models.Model):
         Filter move lines that can be put in pack
         """
         return move_lines.filtered(
-            lambda ml: not ml.result_package_id
-            and ml.state not in ("cancel", "done")
-            and ml.quantity
-            and (not ml.move_id.picked or ml.picked)
-            and (
-                ml.product_id.uom_ids
-                or not ml.picking_type_id.auto_pack_requires_packaging
+            lambda ml: (
+                not ml.result_package_id
+                and ml.state not in ("cancel", "done")
+                and ml.quantity
+                and (not ml.move_id.picked or ml.picked)
+                and (
+                    ml.product_id.uom_ids
+                    or not ml.picking_type_id.auto_pack_requires_packaging
+                )
             )
         )
 

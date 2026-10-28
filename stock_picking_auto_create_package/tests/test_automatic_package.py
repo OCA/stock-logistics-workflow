@@ -6,6 +6,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestAutomaticPackage(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -50,7 +52,7 @@ class TestAutomaticPackage(BaseCommon):
                         "location_dest_id": cls.customers.id,
                         "product_id": cls.product.id,
                         "product_uom_qty": 5.0,
-                        "product_uom": cls.product.uom_id.id,
+                        "uom_id": cls.product.uom_id.id,
                     },
                 )
             ],

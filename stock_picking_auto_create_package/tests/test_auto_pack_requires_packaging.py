@@ -7,6 +7,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestAutoPackRequiresPackaging(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -56,7 +58,7 @@ class TestAutoPackRequiresPackaging(BaseCommon):
                             "reference": product.name,
                             "product_id": product.id,
                             "product_uom_qty": product_qty,
-                            "product_uom": product.uom_id.id,
+                            "uom_id": product.uom_id.id,
                             "location_id": location.id,
                             "location_dest_id": location_dest.id,
                         }

@@ -4,9 +4,8 @@
 
 {
     "name": "Stock Picking Auto Create Package",
-    "summary": """
-        Put all move lines in packs on validation.""",
-    "version": "19.0.1.1.0",
+    "summary": "Put all move lines in packs on validation.",
+    "version": "20.0.1.0.0",
     "license": "AGPL-3",
     "author": "BCIM,MT Software,Raumschmiede,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
