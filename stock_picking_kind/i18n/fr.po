@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_kind
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-17 13:19+0000\n"
+"PO-Revision-Date: 2023-03-17 13:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_kind
+#: model_terms:ir.ui.view,arch_db:stock_picking_kind.view_picking_internal_search
+msgid "Customer Deliveries"
+msgstr "Livraisons Client"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__customer_out
+msgid "Customer Delivery"
+msgstr "Livraison Client"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__customer_return
+msgid "Customer Return"
+msgstr "Retour Client"
+
+#. module: stock_picking_kind
+#: model_terms:ir.ui.view,arch_db:stock_picking_kind.view_picking_internal_search
+msgid "Customer Returns"
+msgstr "Retours Client"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__drop_shipping
+msgid "Drop Shipping"
+msgstr ""
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__drop_shipping_return
+msgid "Drop Shipping Return"
+msgstr "Retour Drop Shipping"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields,help:stock_picking_kind.field_stock_picking__picking_kind
+msgid "Indicate the kind of picking based on its locations"
+msgstr ""
+
+#. module: stock_picking_kind
+#: model:ir.model.fields,field_description:stock_picking_kind.field_stock_picking__picking_kind
+#: model_terms:ir.ui.view,arch_db:stock_picking_kind.view_picking_internal_search
+msgid "Picking Kind"
+msgstr "Sorte de picking"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__supplier_in
+msgid "Supplier Reception"
+msgstr "Réception Fournisseur"
+
+#. module: stock_picking_kind
+#: model_terms:ir.ui.view,arch_db:stock_picking_kind.view_picking_internal_search
+msgid "Supplier Receptions"
+msgstr "Réception Fournisseur"
+
+#. module: stock_picking_kind
+#: model:ir.model.fields.selection,name:stock_picking_kind.selection__stock_picking__picking_kind__supplier_return
+msgid "Supplier Return"
+msgstr "Retour Fournisseur"
+
+#. module: stock_picking_kind
+#: model_terms:ir.ui.view,arch_db:stock_picking_kind.view_picking_internal_search
+msgid "Supplier Returns"
+msgstr "Retours Fournisseur"
+
+#. module: stock_picking_kind
+#: model:ir.model,name:stock_picking_kind.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
