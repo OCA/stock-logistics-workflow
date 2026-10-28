@@ -104,3 +104,26 @@ class TestStockQuantSerialUnique(TransactionCase):
         moveline.write({"lot_id": self.serial1.id})
         picking_out.action_confirm()
         picking_out.button_validate()
+
+    def test_internal_move_serial_with_use_create_lots(self):
+        picking_type_internal = self.env["stock.picking.type"].create(
+            {
+                "name": "Internal with Create Lots",
+                "code": "internal",
+                "sequence_code": "INT",
+                "use_create_lots": True,
+            }
+        )
+        shelf_location = self.env.ref("stock.stock_location_components")
+        picking_internal = self._create_picking(
+            self.stock_location,
+            shelf_location,
+            picking_type_internal,
+            self.owner,
+        )
+        moveline = self._create_moveline(self.product, picking_internal)
+        # Use existing serial '001' from internal location
+        # Should NOT raise ValidationError because source is internal
+        moveline.write({"lot_id": self.serial1.id})
+        picking_internal.action_confirm()
+        picking_internal.button_validate()

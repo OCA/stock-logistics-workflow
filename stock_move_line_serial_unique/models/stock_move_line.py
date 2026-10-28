@@ -22,6 +22,12 @@ class StockMoveLine(models.Model):
                 and record.product_id.tracking == "serial"
                 # Check should be done only in the scenario where new serial is created.
                 and record.picking_type_id.use_create_lots
+                # Only check for moves from non-internal locations (e.g. receipts,
+                # production) to internal locations.
+                # Without this, component flushes in subcontracting receipts would
+                # incorrectly trigger the serial uniqueness check.
+                and record.location_id.usage != "internal"
+                and record.location_dest_id.usage == "internal"
             ):
                 lot_id = record.lot_id
                 if not lot_id:
