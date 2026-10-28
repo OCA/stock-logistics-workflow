@@ -1,0 +1,13 @@
+- Alex Comba \<<alex.comba@agilebg.com>\>
+- Marco Dieckhoff \< <marco.dieckhoff@bremskerl.de>\>
+- Lorenzo Battistini \<<lorenzo.battistini@agilebg.com>\>
+- Alessio Gerace \<<alessio.gerace@agilebg.com>\>
+- [TAKOBI](https://takobi.online):
+  - Simone Rubino \<<sir@takobi.online>\>
+- \`Ooops404 \<<https://www.ooops404.com/>\>\_\`:
+  - Eduard Brahas \<<eduardbrhas@outlook.it>\>
+- [Ecosoft](http://ecosoft.co.th):
+  - Pimolnat Suntian \<<pimolnats@ecosoft.co.th>\>
+  - Saran Lim. \<<saranl@ecosoft.co.th>\>
+- [OBS-Solutions Netherlands](https://www.odoo-bs.com/obs-netherlands):
+  - bosd \<<c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\>
