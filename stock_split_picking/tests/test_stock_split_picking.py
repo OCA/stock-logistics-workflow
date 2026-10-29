@@ -155,8 +155,8 @@ class TestStockSplitPicking(TestStockSplitPickingCase):
         # Confirm picking
         self.picking.action_confirm()
 
-        # Split picking: 4 and 6
-        self.move.quantity_done = 4.0
+        # Split picking: 3 and 7, out of the 4 units reserved
+        self.move.quantity_done = 3.0
         self.move_2.quantity_done = 0.0
 
         with (
@@ -167,7 +167,7 @@ class TestStockSplitPicking(TestStockSplitPickingCase):
             new_picking = rc_picking.records
             new_moves = rc_move.records
 
-        # We have a new picking with 4 units in state assigned
+        # We have a new picking with 3 units in state assigned
         self.assertEqual(new_picking.state, "assigned")
         self.assertEqual(
             new_picking.move_ids,
@@ -177,14 +177,15 @@ class TestStockSplitPicking(TestStockSplitPickingCase):
         self.assertEqual(len(new_moves), 1, "Only one new move should be created")
         self.assertAlmostEqual(
             new_moves.quantity_done,
-            4.0,
+            3.0,
             "The new move should have the selected quantities",
         )
         self.assertAlmostEqual(
             new_moves.product_uom_qty,
-            4.0,
+            3.0,
             "The new move should have the selected quantities",
         )
+        self.assertAlmostEqual(new_moves.reserved_availability, 3.0)
 
         # And the backorder one is the original one, with the remaining quantities
         self.assertEqual(self.picking.state, "assigned")
@@ -199,9 +200,19 @@ class TestStockSplitPicking(TestStockSplitPickingCase):
             "The original move should be in the original picking",
         )
         self.assertAlmostEqual(self.move.quantity_done, 0.0)
-        self.assertAlmostEqual(self.move.product_uom_qty, 6.0)
+        self.assertAlmostEqual(self.move.product_uom_qty, 7.0)
+        self.assertAlmostEqual(
+            self.move.reserved_availability,
+            1.0,
+            "The original move should keep the reservation not done",
+        )
         self.assertAlmostEqual(self.move_2.quantity_done, 0.0)
         self.assertAlmostEqual(self.move_2.product_uom_qty, 10.0)
+
+        # Unreserving the new picking releases its reservation from the quants
+        new_picking.do_unreserve()
+        quant = self.env["stock.quant"]._gather(self.product, self.src_location)
+        self.assertAlmostEqual(quant.reserved_quantity, 1.0)
 
     def test_stock_split_picking_extract_entire_move(self):
         # Confirm picking

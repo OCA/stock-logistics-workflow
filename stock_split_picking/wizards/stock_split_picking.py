@@ -116,9 +116,9 @@ class StockSplitPicking(models.TransientModel):
                 )
                 if not split_moves_vals:
                     continue  # pragma: no cover
-                # Adopt the move lines from the original move
+                # Adopt the move lines with done quantities from the original move
                 split_moves_vals[0]["move_line_ids"] = [
-                    Command.set(move.move_line_ids.ids)
+                    Command.set(self._split_done_move_lines(move).ids)
                 ]
                 new_moves_vals += split_moves_vals
                 moves_to_recompute_state += move
@@ -129,6 +129,9 @@ class StockSplitPicking(models.TransientModel):
                     bypass_entire_pack=True, bypass_procurement_creation=True
                 )._action_confirm(merge=False)
                 moves_to_split_off += new_moves
+                # Their state reflects the reservation they adopted, which
+                # confirming them only does when they reserve at confirmation
+                moves_to_recompute_state += new_moves
             # Recompute the state of the remaining moves
             moves_to_recompute_state._recompute_state()
             # If all the picking moves are the ones to be split, then it means
@@ -138,6 +141,37 @@ class StockSplitPicking(models.TransientModel):
             # Create the split orders for the extracted moves, and split them off
             new_pickings += picking._split_off_moves(moves_to_split_off)
         return new_pickings
+
+    def _split_done_move_lines(self, move):
+        """Return the move lines of `move` with done quantities
+
+        A line reserving more than its done quantity keeps only that quantity
+        reserved, and leaves the rest of its reservation to `move` in a new line.
+        The quants are not touched: the reservation is only shared out.
+        """
+        done_lines = move.move_line_ids.filtered("qty_done")
+        remaining_lines_vals = []
+        for line in done_lines:
+            remaining_qty = line.reserved_uom_qty - line.qty_done
+            if (
+                float_compare(
+                    remaining_qty, 0, precision_rounding=line.product_uom_id.rounding
+                )
+                <= 0
+            ):
+                continue
+            remaining_lines_vals += line.copy_data(
+                {
+                    "reserved_uom_qty": remaining_qty,
+                    "qty_done": 0.0,
+                    "result_package_id": False,
+                }
+            )
+            line.with_context(
+                bypass_reservation_update=True
+            ).reserved_uom_qty = line.qty_done
+        self.env["stock.move.line"].create(remaining_lines_vals)
+        return done_lines
 
     def _apply_move(self):
         """Apply mode `mode`: One picking per move
