@@ -40,10 +40,3 @@ class StockMove(models.Model):
         distinct_fields = super()._prepare_merge_moves_distinct_fields()
         distinct_fields.append("interwh_transfer_line_id")
         return distinct_fields
-
-    def _get_new_picking_values(self):
-        vals = super()._get_new_picking_values()
-        transfer = self.interwh_transfer_line_id.transfer_id
-        if len(transfer) == 1:
-            vals["interwarehouse_transfer_id"] = transfer.id
-        return vals
