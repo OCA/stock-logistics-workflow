@@ -118,7 +118,7 @@ addon | version | maintainers | summary
 [stock_picking_restrict_cancel_with_orig_move](stock_picking_restrict_cancel_with_orig_move/) | 18.0.1.0.0 |  | Restrict cancellation of dest moves according to origin.
 [stock_picking_restrict_partial_validation](stock_picking_restrict_partial_validation/) | 18.0.1.0.0 |  | Block validation of transfers that are not fully reserved and processed in full
 [stock_picking_return_empty_package](stock_picking_return_empty_package/) | 18.0.1.0.0 |  | Ensure that only package content is put in stock during a picking return
-[stock_picking_return_lot](stock_picking_return_lot/) | 18.0.1.0.1 |  | Propagate SN/lots from origin picking to return picking.
+[stock_picking_return_lot](stock_picking_return_lot/) | 18.0.1.1.0 |  | Propagate SN/lots from origin picking to return picking.
 [stock_picking_return_restricted_qty](stock_picking_return_restricted_qty/) | 18.0.1.0.0 |  | Restrict the return to delivered quantity
 [stock_picking_sale_order_link](stock_picking_sale_order_link/) | 18.0.1.0.0 |  | Link between picking and sale order
 [stock_picking_send_by_mail](stock_picking_send_by_mail/) | 18.0.1.0.1 |  | Send stock picking by email
