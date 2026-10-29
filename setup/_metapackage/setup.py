@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo-addon-stock_customer_deposit_sale_margin>=16.0dev,<16.1dev',
         'odoo-addon-stock_delivery_note>=16.0dev,<16.1dev',
         'odoo-addon-stock_grn>=16.0dev,<16.1dev',
+        'odoo-addon-stock_interwarehouse_transfer>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_currency>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_delivery>=16.0dev,<16.1dev',
         'odoo-addon-stock_landed_costs_priority>=16.0dev,<16.1dev',
