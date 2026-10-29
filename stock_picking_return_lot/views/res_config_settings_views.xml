@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='group_stock_lot_print_gs1']/ancestor::div[hasclass('row')]"
+                position="after"
+            >
+                <div class="row mt-2" invisible="not group_stock_production_lot">
+                    <field
+                        name="stock_picking_return_lot_restrict"
+                        string="Restrict lot on picking return line"
+                        class="col flex-grow-0 ml16 mr0 pe-2"
+                    />
+                    <div class="col ps-0">
+                        <label for="stock_picking_return_lot_restrict" />
+                        <div
+                            class="text-muted"
+                        >Restrict lot that can be selected based on those used in the move.</div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
