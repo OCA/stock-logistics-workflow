@@ -249,8 +249,10 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         transfer.action_confirm()
         self.assertTrue(transfer.name.startswith("IWT/"))
 
-    def test_15_backorder_linked_to_transfer(self):
-        transfer = self._create_transfer(qty=10.0)
+    def test_15_backorder_and_split_linked_to_transfer(self):
+        transfer = self._create_transfer(
+            lines=[(self.product, 10.0), (self.product_b, 10.0)]
+        )
         transfer.action_confirm()
         out = transfer.picking_ids.filtered(
             lambda p: p.picking_type_id.code == "outgoing"
@@ -261,6 +263,12 @@ class TestStockInterwarehouseTransfer(BaseCommon):
         self.assertTrue(backorders)
         for bo in backorders:
             self.assertEqual(bo.interwarehouse_transfer_id, transfer)
+        in_picking = self._stage_pickings(transfer, "incoming")
+        split = in_picking.copy({"move_ids": []})
+        self.assertFalse(split.interwarehouse_transfer_id)
+        in_picking.move_ids[:1].picking_id = split
+        self.assertEqual(split.interwarehouse_transfer_id, transfer)
+        self.assertEqual(in_picking.interwarehouse_transfer_id, transfer)
 
     def test_16_custom_header_locations_on_moves(self):
         custom_src = self.env["stock.location"].create(
