@@ -5,7 +5,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo import Command, models
-from odoo.tools import float_compare, float_is_zero
+from odoo.tools import float_compare
 
 
 class SaleOrderLine(models.Model):
@@ -40,9 +40,7 @@ class SaleOrderLine(models.Model):
                 )
                 moves_linked += stock_move
                 continue
-            elif float_is_zero(
-                to_invoice, precision_rounding=self.product_uom_id.rounding
-            ):
+            elif self.product_uom_id.is_zero(to_invoice):
                 break
             to_invoice -= (
                 stock_move.quantity
