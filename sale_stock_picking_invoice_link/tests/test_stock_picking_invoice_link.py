@@ -4,6 +4,7 @@
 # Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests import Form, new_test_user, tagged
 
@@ -76,7 +77,7 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass()
         cls.setup_chart_template(chart_template_ref)
-        for _, i in cls.company_data.items():
+        for i in cls.company_data.values():
             if "type" in i and i.type == "product":
                 cls._update_product_qty(i)
         cls.prod_order = cls.company_data["product_order_no"]
@@ -229,22 +230,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             pick_1.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
         # Create return picking
-        return_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_id=pick_1.ids[0],
-                active_model="stock.picking",
-            )
-        )
-        return_wiz = return_form.save()
-
+        return_pick = pick_1._create_return()
         # Remove product ordered line
-        return_wiz.product_return_moves.filtered(
-            lambda line: line.product_id == self.prod_order
+        return_pick.move_ids.filtered(
+            lambda m: m.product_id == self.prod_order
         ).unlink()
-        return_wiz.product_return_moves.quantity = 1.0
-        return_wiz.product_return_moves.to_refund = True
-        res = return_wiz.action_create_returns()
-        return_pick = self.env["stock.picking"].browse(res["res_id"])
+        return_pick.move_ids.product_uom_qty = 1.0
+        return_pick.move_ids.to_refund = True
         # Validate picking
         return_pick.move_ids.quantity = 1.0
         return_pick.button_validate()
@@ -367,21 +359,13 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             pick_1.move_ids.filtered(lambda m: m.product_id == self.prod_del),
         )
         # Create return picking
-        return_form = Form(
-            self.env["stock.return.picking"].with_context(
-                active_id=pick_1.ids[0],
-                active_model="stock.picking",
-            )
-        )
-        return_wiz = return_form.save()
+        return_pick = pick_1._create_return()
         # Remove product ordered line
-        return_wiz.product_return_moves.filtered(
-            lambda line: line.product_id == self.prod_order
+        return_pick.move_ids.filtered(
+            lambda m: m.product_id == self.prod_order
         ).unlink()
-        return_wiz.product_return_moves.quantity = 1.0
-        return_wiz.product_return_moves.to_refund = True
-        res = return_wiz.action_create_returns()
-        return_pick = self.env["stock.picking"].browse(res["res_id"])
+        return_pick.move_ids.product_uom_qty = 1.0
+        return_pick.move_ids.to_refund = True
         # Validate picking
         return_pick.move_ids.quantity = 1.0
         return_pick.button_validate()
@@ -432,14 +416,20 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         self.assertEqual(picking.invoice_ids, invoice)
 
     def test_link_transfer_refunded_order_as_stock_user(self):
-        """A warehouse user can validate a delivery of an order that has a refund."""
+        """A delivery of an order with a credit note links to the invoice, not
+        to the credit note. Validated by a warehouse user.
+        """
         self.prod_order.invoice_policy = "order"
         so = self._create_sale_order_and_confirm()
         invoice = so._create_invoices()
         invoice.action_post()
-        self.env["account.move.reversal"].with_context(
-            active_model="account.move", active_ids=invoice.ids
-        ).create({"reason": "test", "journal_id": invoice.journal_id.id}).refund_moves()
+        action = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=invoice.ids)
+            .create({"reason": "test", "journal_id": invoice.journal_id.id})
+            .refund_moves()
+        )
+        refund = self.env["account.move"].browse(action["res_id"])
         picking = so.picking_ids.filtered(
             lambda x: (
                 x.picking_type_code == "outgoing"
@@ -456,3 +446,39 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         picking.with_user(stock_user).button_validate()
         move = picking.move_ids.filtered(lambda m: m.product_id == self.prod_order)
         self.assertEqual(move.invoice_line_ids.move_id, invoice)
+        self.assertEqual(invoice.picking_ids, picking)
+        self.assertFalse(refund.picking_ids)
+
+    def test_refund_from_order_links_only_returns(self):
+        """A credit note created from the order links the returns only, not a
+        delivery that is not invoiced yet.
+        """
+        so = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "order_line": [
+                    Command.create(
+                        {"product_id": self.prod_del.id, "product_uom_qty": 3}
+                    )
+                ],
+            }
+        )
+        so.action_confirm()
+        pick_1 = so.picking_ids
+        pick_1.move_ids.quantity = 2
+        res = pick_1.button_validate()
+        self.env[res["res_model"]].with_context(**res["context"]).create({}).process()
+        invoice = so._create_invoices()
+        invoice.action_post()
+        pick_2 = so.picking_ids - pick_1
+        pick_2.move_ids.quantity = 1
+        pick_2.button_validate()
+        return_pick = pick_1._create_return()
+        return_pick.move_ids.product_uom_qty = 2.0
+        return_pick.move_ids.to_refund = True
+        return_pick.move_ids.quantity = 2.0
+        return_pick.button_validate()
+        refund = so._create_invoices(final=True)
+        self.assertEqual(refund.move_type, "out_refund")
+        self.assertEqual(refund.picking_ids, return_pick)
+        self.assertEqual(pick_2.invoice_ids, self.env["account.move"])
