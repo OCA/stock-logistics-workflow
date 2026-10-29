@@ -17,14 +17,45 @@ msgstr ""
 "X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_picking_return_lot
+#: model:ir.model,name:stock_picking_return_lot.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_picking_return_lot
+#: model:ir.model,name:stock_picking_return_lot.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_picking_return_lot
+#: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__lot_id_domain
+msgid "Lot Id Domain"
+msgstr ""
+
+#. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__lot_id
 msgid "Lot/Serial Number"
 msgstr "Numero di lotto/serie"
 
 #. module: stock_picking_return_lot
-#: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__lots_visible
+#: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking__lots_visible
 msgid "Lots Visible"
 msgstr "Lotti visibili"
+
+#. module: stock_picking_return_lot
+#: model_terms:ir.ui.view,arch_db:stock_picking_return_lot.res_config_settings_view_form
+msgid "Restrict lot on picking return line"
+msgstr ""
+
+#. module: stock_picking_return_lot
+#: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_company__stock_picking_return_lot_restrict
+#: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_config_settings__stock_picking_return_lot_restrict
+msgid "Restrict lot that can be selected based on those used in the move"
+msgstr ""
+
+#. module: stock_picking_return_lot
+#: model_terms:ir.ui.view,arch_db:stock_picking_return_lot.res_config_settings_view_form
+msgid "Restrict lot that can be selected based on those used in the move."
+msgstr ""
 
 #. module: stock_picking_return_lot
 #: model:ir.model,name:stock_picking_return_lot.model_stock_return_picking
@@ -35,3 +66,8 @@ msgstr "Prelievo di reso"
 #: model:ir.model,name:stock_picking_return_lot.model_stock_return_picking_line
 msgid "Return Picking Line"
 msgstr "Riga prelievo di reso"
+
+#. module: stock_picking_return_lot
+#: model:ir.model.constraint,message:stock_picking_return_lot.constraint_stock_return_picking_line_lot_id_move_id_uniq
+msgid "The same lot cannot be used on multiple lines for the same move"
+msgstr ""
