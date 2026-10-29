@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-04 10:06+0000\n"
+"PO-Revision-Date: 2026-10-29 17:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,17 +14,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_return_lot
 #: model:ir.model,name:stock_picking_return_lot.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Aziende"
 
 #. module: stock_picking_return_lot
 #: model:ir.model,name:stock_picking_return_lot.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_company__display_name
@@ -32,7 +32,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_company__id
@@ -40,12 +40,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__lot_id_domain
 msgid "Lot Id Domain"
-msgstr ""
+msgstr "Dominio ID lotto"
 
 #. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_stock_return_picking_line__lot_id
@@ -60,18 +60,22 @@ msgstr "Lotti visibili"
 #. module: stock_picking_return_lot
 #: model_terms:ir.ui.view,arch_db:stock_picking_return_lot.res_config_settings_view_form
 msgid "Restrict lot on picking return line"
-msgstr ""
+msgstr "Limita lotto nella riga reso prelievo"
 
 #. module: stock_picking_return_lot
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_company__stock_picking_return_lot_restrict
 #: model:ir.model.fields,field_description:stock_picking_return_lot.field_res_config_settings__stock_picking_return_lot_restrict
 msgid "Restrict lot that can be selected based on those used in the move"
 msgstr ""
+"Limita il lotto che può essere selezionato in base a quelli usati nel "
+"movimento"
 
 #. module: stock_picking_return_lot
 #: model_terms:ir.ui.view,arch_db:stock_picking_return_lot.res_config_settings_view_form
 msgid "Restrict lot that can be selected based on those used in the move."
 msgstr ""
+"Limita il lotto che può essere selezionato in base a quelli usati nel "
+"movimento."
 
 #. module: stock_picking_return_lot
 #: model:ir.model,name:stock_picking_return_lot.model_stock_return_picking
@@ -87,3 +91,4 @@ msgstr "Riga prelievo di reso"
 #: model:ir.model.constraint,message:stock_picking_return_lot.constraint_stock_return_picking_line_lot_id_move_id_uniq
 msgid "The same lot cannot be used on multiple lines for the same move"
 msgstr ""
+"Lo stesso lotto non può essere usato su più righe per lo stesso movimento"
