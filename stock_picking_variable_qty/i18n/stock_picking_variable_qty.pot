@@ -29,6 +29,11 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: stock_picking_variable_qty
+#: model:ir.model,name:stock_picking_variable_qty.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_variable_qty
 #: model:ir.model.fields,help:stock_picking_variable_qty.field_stock_picking_type__propagate_variable_qty
 msgid "Update chained destination moves with the quantity actually processed."
 msgstr ""
