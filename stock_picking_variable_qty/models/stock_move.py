@@ -225,6 +225,62 @@ class StockMove(models.Model):
             )
         return shortages
 
+    def _sync_variable_quantity_dest_moves(self):
+        """Propagate the corrections made on done moves to their pending chained
+        moves. Destination moves fully picked as they were reserved are
+        refreshed, but the lines picked by the operator are kept otherwise and
+        the change is logged instead.
+        """
+        moves = self.filtered(
+            lambda move: move.state == "done"
+            and move.move_dest_ids
+            and move.picking_type_id.propagate_variable_qty
+        )
+        dest_moves = moves.move_dest_ids.filtered(
+            lambda move: move.state not in {"done", "cancel"}
+        )
+        if not dest_moves:
+            return
+        dest_moves = moves._get_variable_quantity_group(dest_moves)[1]
+        old_demands = {move: move.product_uom_qty for move in dest_moves}
+        moves._adjust_variable_quantity()
+        changed_moves = dest_moves.filtered(
+            lambda move: float_compare(
+                move.product_uom_qty,
+                old_demands[move],
+                precision_rounding=move.product_uom.rounding,
+            )
+            != 0
+        )
+        picked_moves = changed_moves.filtered("picked")
+        picked_as_reserved_moves = picked_moves.filtered(
+            lambda move: all(move.move_line_ids.mapped("picked"))
+            and float_compare(
+                move.quantity,
+                old_demands[move],
+                precision_rounding=move.product_uom.rounding,
+            )
+            == 0
+        )
+        kept_moves = picked_moves - picked_as_reserved_moves
+        picked_as_reserved_moves.picked = False
+        # Only the lines picked by the operator survive the new reservation
+        changed_moves.move_line_ids.filtered(lambda line: not line.picked).unlink()
+        changed_moves._action_assign()
+        picked_as_reserved_moves.picked = True
+        for picking in kept_moves.picking_id:
+            products = kept_moves.filtered(
+                lambda move, picking=picking: move.picking_id == picking
+            ).product_id
+            picking.message_post(
+                body=self.env._(
+                    "The quantity processed in a previous operation was "
+                    "corrected, but the picked quantities of %(products)s "
+                    "have been kept. Please review them.",
+                    products=", ".join(products.mapped("display_name")),
+                )
+            )
+
     def _get_variable_quantity_group(self, dest_moves):
         group_moves = self
         group_dest_moves = dest_moves
