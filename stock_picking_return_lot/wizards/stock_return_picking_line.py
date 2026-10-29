@@ -1,4 +1,5 @@
 # Copyright 2024 ACSONE SA/NV
+# Copyright 2026 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -14,11 +15,22 @@ class StockReturnPickingLine(models.TransientModel):
         "The same lot cannot be used on multiple lines for the same move",
     )
 
+    lot_id_domain = fields.Binary(compute="_compute_lot_id_domain")
     lot_id = fields.Many2one(
-        "stock.lot",
-        string="Lot/Serial Number",
-        domain="[('product_id', '=', product_id)]",
+        "stock.lot", string="Lot/Serial Number", domain="lot_id_domain"
     )
+
+    @api.depends("move_id")
+    def _compute_lot_id_domain(self):
+        for rec in self:
+            if rec.move_id.company_id.stock_picking_return_lot_restrict:
+                smls = rec.move_id.move_line_ids.filtered(
+                    lambda x: x.state == "done" and x.lot_id
+                )
+                domain = [("id", "in", smls.lot_id.ids)]
+            else:
+                domain = [("product_id", "=", rec.product_id.id)]
+            rec.lot_id_domain = domain
 
     def _prepare_move_default_values(self, new_picking):
         # Set the wizard line lot as the move's restricted lot
