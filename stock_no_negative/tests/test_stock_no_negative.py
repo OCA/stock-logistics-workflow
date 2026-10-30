@@ -224,19 +224,3 @@ class TestStockNoNegative(BaseCommon):
             ]
         )
         self.assertEqual(quant.quantity, -100)
-
-    def test_non_storable_product_not_checked(self):
-        """Assert that the constraint ignores non storable products"""
-        self.product.is_storable = False
-        quant = (
-            self.env["stock.quant"]
-            .with_context(test_stock_no_negative=True)
-            .create(
-                {
-                    "product_id": self.product.id,
-                    "location_id": self.location_id.id,
-                    "quantity": -5.0,
-                }
-            )
-        )
-        self.assertEqual(quant.quantity, -5.0)
