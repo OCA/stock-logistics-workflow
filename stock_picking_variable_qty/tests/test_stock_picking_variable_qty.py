@@ -426,3 +426,98 @@ class TestPickingVariableQuantity(BaseCommon):
         )
         self._process_picking(pick_picking, 12.0)
         self.assertEqual(ship_move.product_uom_qty, 10.0)
+
+    def _get_ship_move_after_pick(self, ordered_qty, done_qty):
+        _order, pick_picking, ship_picking = self._confirm_sale_and_get_pickings(
+            ordered_qty
+        )
+        pick_move = self._process_picking(pick_picking, done_qty)
+        ship_move = pick_move.move_dest_ids
+        ship_picking.action_assign()
+        return pick_move, ship_move
+
+    def test_done_pick_increase_updates_ship_move(self):
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 10.0)
+        self.assertEqual(ship_move.quantity, 10.0)
+        pick_move.move_line_ids.quantity = 12.0
+        self.assertEqual(ship_move.product_uom_qty, 12.0)
+        self.assertEqual(ship_move.quantity, 12.0)
+
+    def test_done_pick_decrease_updates_ship_move(self):
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 10.0)
+        pick_move.move_line_ids.quantity = 8.0
+        self.assertEqual(ship_move.product_uom_qty, 8.0)
+        self.assertEqual(ship_move.quantity, 8.0)
+
+    def test_done_pick_correction_after_partial_pick(self):
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 9.0)
+        self.assertEqual(ship_move.product_uom_qty, 9.0)
+        pick_move.move_line_ids.quantity = 7.0
+        self.assertEqual(ship_move.product_uom_qty, 7.0)
+        self.assertEqual(ship_move.quantity, 7.0)
+
+    def test_done_pick_updates_ship_move_picked_as_reserved(self):
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 10.0)
+        ship_move.picked = True
+        pick_move.move_line_ids.quantity = 12.0
+        self.assertEqual(ship_move.product_uom_qty, 12.0)
+        self.assertEqual(ship_move.quantity, 12.0)
+        self.assertTrue(ship_move.picked)
+
+    def test_done_pick_keeps_ship_move_picked_quantity(self):
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 10.0)
+        ship_move.quantity = 9.0
+        ship_move.picked = True
+        messages = ship_move.picking_id.message_ids
+        picked_line = ship_move.move_line_ids
+        pick_move.move_line_ids.quantity = 12.0
+        self.assertEqual(ship_move.product_uom_qty, 12.0)
+        self.assertEqual(ship_move.move_line_ids, picked_line)
+        self.assertEqual(picked_line.quantity, 9.0)
+        new_messages = ship_move.picking_id.message_ids - messages
+        self.assertEqual(
+            len(
+                new_messages.filtered(
+                    lambda message: "previous operation" in message.body
+                )
+            ),
+            1,
+        )
+
+    def test_done_pick_keeps_ship_move_when_disabled(self):
+        self.warehouse.pick_type_id.propagate_variable_qty = False
+        pick_move, ship_move = self._get_ship_move_after_pick(10.0, 10.0)
+        pick_move.move_line_ids.quantity = 12.0
+        self.assertEqual(ship_move.product_uom_qty, 10.0)
+        self.assertEqual(ship_move.quantity, 10.0)
+
+    def test_done_pick_keeps_ship_lines_picked_by_operator(self):
+        product = self.env["product.product"].create(
+            {"name": "Lot Product", "is_storable": True, "tracking": "lot"}
+        )
+        lots = self.env["stock.lot"].create(
+            [{"name": name, "product_id": product.id} for name in ("A", "B")]
+        )
+        for lot in lots:
+            self.env["stock.quant"]._update_available_quantity(
+                product, self.warehouse.lot_stock_id, 5.0, lot_id=lot
+            )
+        _order, pick_picking, ship_picking = self._confirm_sale_and_get_pickings(
+            10.0, product=product
+        )
+        pick_picking.action_assign()
+        pick_picking.move_ids.picked = True
+        pick_picking.move_ids._action_done()
+        ship_picking.action_assign()
+        ship_move = ship_picking.move_ids
+        lot_a_line = ship_move.move_line_ids.filtered(
+            lambda line: line.lot_id == lots[0]
+        )
+        lot_a_line.picked = True
+        pick_picking.move_line_ids.filtered(
+            lambda line: line.lot_id == lots[1]
+        ).quantity = 4.0
+        # The unconfirmed lot isn't picked on the operator's behalf
+        self.assertEqual(ship_move.product_uom_qty, 9.0)
+        self.assertEqual(ship_move.move_line_ids, lot_a_line)
+        self.assertEqual(lot_a_line.quantity, 5.0)

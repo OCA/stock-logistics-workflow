@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========================
 Stock Picking Variable Qty
 ==========================
@@ -17,7 +13,7 @@ Stock Picking Variable Qty
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -75,6 +71,12 @@ validate that operation with the actual processed quantity.
 
 If the validated quantity differs from the original demand, the module
 updates the chained downstream moves to match that new quantity.
+
+Corrections made on the detailed operations of a validated operation are
+also propagated: the demand of the pending chained moves is updated and
+they are reserved again. When a chained move was already picked with a
+quantity different from its reservation, the picked quantity is kept and
+a message is logged on its transfer so it can be reviewed.
 
 Known issues / Roadmap
 ======================
