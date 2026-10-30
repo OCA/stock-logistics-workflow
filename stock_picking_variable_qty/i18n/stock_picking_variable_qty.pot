@@ -19,6 +19,11 @@ msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_variable_qty
+#: model:ir.model,name:stock_picking_variable_qty.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_variable_qty
 #: model:ir.model.fields,field_description:stock_picking_variable_qty.field_stock_picking_type__propagate_variable_qty
 msgid "Propagate variable quantities"
 msgstr ""
@@ -26,6 +31,14 @@ msgstr ""
 #. module: stock_picking_variable_qty
 #: model:ir.model,name:stock_picking_variable_qty.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_variable_qty
+#. odoo-python
+#: code:addons/stock_picking_variable_qty/models/stock_move.py:0
+msgid ""
+"The quantity processed in a previous operation was corrected, but the picked"
+" quantities of %(products)s have been kept. Please review them."
 msgstr ""
 
 #. module: stock_picking_variable_qty
