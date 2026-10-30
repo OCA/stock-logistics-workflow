@@ -1,0 +1,21 @@
+<odoo>
+    <template
+        id="report_delivery_document_from_address"
+        inherit_id="stock.report_delivery_document"
+    >
+        <xpath expr="//div[@name='div_sched_date']/.." position="inside">
+            <div
+                t-if="o.picking_type_id.code == 'outgoing' and o.picking_type_id.warehouse_id.partner_id"
+                class="col-auto"
+                name="div_fromaddress"
+            >
+                <strong>From Warehouse:</strong>
+                <p><span
+                    t-field="o.picking_type_id.warehouse_id.partner_id.city"
+                /> - <span
+                    t-field="o.picking_type_id.warehouse_id.partner_id.street"
+                /></p>
+            </div>
+        </xpath>
+    </template>
+</odoo>
