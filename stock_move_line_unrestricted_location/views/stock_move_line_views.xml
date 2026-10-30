@@ -1,0 +1,69 @@
+<odoo>
+    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.line.operations.list (in stock_move_line_unrestricted_location_dest)</field>
+        <field name="model">stock.move.line</field>
+        <field name="priority">1000</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree" />
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="domain">
+                    [('id','child_of',parent.warehouse_view_location_dest_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                </attribute>
+                <!-- OLD DOMAIN
+                    [('id','child_of',parent.location_dest_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                -->
+            </field>
+            <field name="location_id" position="attributes">
+                <attribute name="domain">
+                    [('id','child_of',parent.warehouse_view_location_src_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                </attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.move.line.detailed.operations.list (in stock_move_line_unrestricted_location_dest)</field>
+        <field name="model">stock.move.line</field>
+        <field name="priority">1000</field>
+        <field
+            name="inherit_id"
+            ref="stock.view_stock_move_line_detailed_operation_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="attributes">
+                <attribute name="domain">
+                    [('id','child_of',parent.warehouse_view_location_dest_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                </attribute>
+                <!-- OLD DOMAIN
+                    [('id','child_of',parent.location_dest_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                -->
+            </field>
+            <field name="location_id" position="attributes">
+                <attribute name="domain">
+                    [('id','child_of',parent.warehouse_view_location_src_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                </attribute>
+                <!-- OLD DOMAIN
+                    [('id','child_of',parent.location_id),
+                    ('usage','!=','view'),
+                    '|', ('company_id', '=', False), ('company_id', '=', company_id)]
+                -->
+            </field>
+        </field>
+    </record>
+</odoo>
