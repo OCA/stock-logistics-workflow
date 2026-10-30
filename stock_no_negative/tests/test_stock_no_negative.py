@@ -210,3 +210,33 @@ class TestStockNoNegative(BaseCommon):
             ]
         )
         self.assertEqual(quant.quantity, -100)
+
+    def test_true_allow_negative_stock_category(self):
+        """Assert that negative stock levels are allowed when
+        the allow_negative_stock is set active in the product category"""
+        self.product_ctg.allow_negative_stock = True
+        self.stock_picking.action_confirm()
+        self.stock_picking.button_validate()
+        quant = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id", "=", self.location_id.id),
+            ]
+        )
+        self.assertEqual(quant.quantity, -100)
+
+    def test_non_storable_product_not_checked(self):
+        """Assert that the constraint ignores non storable products"""
+        self.product.is_storable = False
+        quant = (
+            self.env["stock.quant"]
+            .with_context(test_stock_no_negative=True)
+            .create(
+                {
+                    "product_id": self.product.id,
+                    "location_id": self.location_id.id,
+                    "quantity": -5.0,
+                }
+            )
+        )
+        self.assertEqual(quant.quantity, -5.0)
