@@ -5,7 +5,7 @@
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
 from odoo.exceptions import UserError
-from odoo.tests import Form, tagged
+from odoo.tests import Form, new_test_user, tagged
 
 from odoo.addons.sale.tests.common import TestSaleCommon
 
@@ -132,7 +132,6 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned", "partially_available")
         )
-        pick_2.move_ids.write({"to_refund": False})
         pick_2.move_line_ids.write({"quantity": 1})
         pick_2.button_validate()
         backorders = pick_obj.search([("backorder_id", "=", pick_2.id)])
@@ -403,8 +402,6 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
             lambda x: x.picking_type_code == "outgoing"
             and x.state in ("confirmed", "assigned")
         )
-        # Force to_refund to False to simulate a delivery
-        picking.move_ids.write({"to_refund": False})
         picking.move_line_ids.write({"quantity": 2})
         picking.button_validate()
         # Two invoice lines has been created, One of them related to product service
@@ -417,3 +414,27 @@ class TestStockPickingInvoiceLink(TestSaleCommon):
         self.assertEqual(len(invoice.picking_ids), 1)
         # Invoices are set in pickings
         self.assertEqual(picking.invoice_ids, invoice)
+
+    def test_link_transfer_refunded_order_as_stock_user(self):
+        """A warehouse user can validate a delivery of an order that has a refund."""
+        self.prod_order.invoice_policy = "order"
+        so = self._create_sale_order_and_confirm()
+        invoice = so._create_invoices()
+        invoice.action_post()
+        self.env["account.move.reversal"].with_context(
+            active_model="account.move", active_ids=invoice.ids
+        ).create({"reason": "test", "journal_id": invoice.journal_id.id}).refund_moves()
+        picking = so.picking_ids.filtered(
+            lambda x: x.picking_type_code == "outgoing"
+            and x.state in ("confirmed", "assigned")
+        )
+        picking.move_line_ids.write({"quantity": 2})
+        stock_user = new_test_user(
+            self.env,
+            login="test_stock_user",
+            groups="stock.group_stock_user",
+            company_id=self.env.company.id,
+        )
+        picking.with_user(stock_user).button_validate()
+        move = picking.move_ids.filtered(lambda m: m.product_id == self.prod_order)
+        self.assertEqual(move.invoice_line_ids.move_id, invoice)
