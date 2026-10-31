@@ -42,7 +42,7 @@ class StockPicking(models.Model):
         if self.env.user.has_group("product.group_product_variant"):
             return {
                 "name": _("Products"),
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "product.product",
                 "type": "ir.actions.act_window",
                 "domain": [("id", "in", self.product_ids.ids)],
@@ -54,7 +54,7 @@ class StockPicking(models.Model):
         else:
             return {
                 "name": _("Products"),
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "product.template",
                 "type": "ir.actions.act_window",
                 "domain": [("id", "in", self.product_template_ids.ids)],
