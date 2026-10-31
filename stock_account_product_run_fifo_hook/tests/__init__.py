@@ -1,0 +1,1 @@
+from . import test_stock_account_product_run_fifo_hook
