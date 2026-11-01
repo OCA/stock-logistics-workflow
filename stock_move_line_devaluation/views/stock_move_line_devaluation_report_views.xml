@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_stock_move_line_devaluation_report_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.devaluation.report.tree</field>
+        <field name="model">stock.move.line.devaluation.report</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date" />
+                <field name="picking_id" />
+                <field name="partner_id" />
+                <field name="responsible_id" />
+                <field name="product_id" />
+                <field name="lot_id" optional="hide" />
+                <field name="analytic_account_id" optional="show" />
+                <field name="qty_done" optional="show" />
+                <field name="returned_qty" optional="show" />
+                <field name="net_qty" />
+                <field name="product_uom_id" string="UoM" />
+                <field name="standard_price" string="Cost" optional="show" />
+                <field name="unit_price" />
+                <field name="total_value" sum="Total" />
+                <field name="pricelist_id" optional="hide" />
+                <field name="location_id" optional="hide" />
+                <field name="location_dest_id" optional="hide" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_stock_move_line_devaluation_report_pivot" model="ir.ui.view">
+        <field name="name">stock.move.line.devaluation.report.pivot</field>
+        <field name="model">stock.move.line.devaluation.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Withdrawal Valuation">
+                <field name="partner_id" type="row" />
+                <field name="product_id" type="row" />
+                <field name="net_qty" type="measure" />
+                <field name="total_value" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_stock_move_line_devaluation_report_search" model="ir.ui.view">
+        <field name="name">stock.move.line.devaluation.report.search</field>
+        <field name="model">stock.move.line.devaluation.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id" />
+                <field name="partner_id" />
+                <field name="responsible_id" />
+                <field name="picking_id" />
+                <field name="lot_id" />
+                <field name="analytic_account_id" />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Customer"
+                        name="group_by_partner"
+                        context="{'group_by': 'partner_id'}"
+                    />
+                    <filter
+                        string="Responsible"
+                        name="group_by_responsible"
+                        context="{'group_by': 'responsible_id'}"
+                    />
+                    <filter
+                        string="Product"
+                        name="group_by_product"
+                        context="{'group_by': 'product_id'}"
+                    />
+                    <filter
+                        string="Analytic Account"
+                        name="group_by_analytic"
+                        context="{'group_by': 'analytic_account_id'}"
+                    />
+                    <filter
+                        string="Date"
+                        name="group_by_date"
+                        context="{'group_by': 'date:month'}"
+                    />
+                    <filter
+                        string="Transfer"
+                        name="group_by_picking"
+                        context="{'group_by': 'picking_id'}"
+                    />
+                    <filter
+                        string="Pricelist"
+                        name="group_by_pricelist"
+                        context="{'group_by': 'pricelist_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
