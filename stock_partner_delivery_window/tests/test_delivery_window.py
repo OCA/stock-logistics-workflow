@@ -40,6 +40,8 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
             "No scheduled date is set on the picking, cannot check",
             time_window_picking.partner_delivery_window_warning,
         )
+        time_window_picking.action_cancel()
+        self.assertFalse(time_window_picking.partner_delivery_window_warning)
 
     @freeze_time("2020-04-02")
     def test_with_timezone_dst_date_dst(self):
