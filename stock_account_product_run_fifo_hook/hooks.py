@@ -178,7 +178,7 @@ def post_load_hook():
         new_svl_vals_manual = []
         real_time_svls_to_vacuum = ValuationLayer
 
-        for product in self:
+        for product in self.with_company(company.id):
             all_candidates = all_candidates_by_product[product.id]
             current_real_time_svls = ValuationLayer
             for svl_to_vacuum in svls_to_vacuum_by_product[product.id]:
