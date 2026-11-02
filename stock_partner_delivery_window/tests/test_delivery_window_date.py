@@ -27,16 +27,13 @@ class TestPartnerDeliveryWindowDate(PartnerDeliveryWindowCommon):
         # No warning with anytime
         anytime_picking = self._create_delivery_picking(self.customer_anytime)
         anytime_picking.scheduled_date = "2020-04-03"  # Friday
-        anytime_picking._compute_partner_delivery_window_warning()
         self.assertFalse(anytime_picking.partner_delivery_window_warning)
         # No warning on friday
         workdays_picking = self._create_delivery_picking(self.customer_working_days)
         workdays_picking.scheduled_date = "2020-04-03"  # Friday
-        workdays_picking._compute_partner_delivery_window_warning()
         self.assertFalse(workdays_picking.partner_delivery_window_warning)
         # But warning on saturday
         workdays_picking.scheduled_date = "2020-04-04"  # Saturday
-        workdays_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on working days",
             workdays_picking.partner_delivery_window_warning,
@@ -44,17 +41,14 @@ class TestPartnerDeliveryWindowDate(PartnerDeliveryWindowCommon):
         # No warning on preferred time window
         time_window_picking = self._create_delivery_picking(self.customer_time_window)
         time_window_picking.scheduled_date = "2020-04-04"  # Saturday
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertFalse(time_window_picking.partner_delivery_window_warning)
         time_window_picking.scheduled_date = "2020-04-03"  # Friday
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             time_window_picking.partner_delivery_window_warning,
         )
         # Warning when no scheduled date
         time_window_picking.scheduled_date = False
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "No scheduled date is set on the picking, cannot check",
             time_window_picking.partner_delivery_window_warning,
