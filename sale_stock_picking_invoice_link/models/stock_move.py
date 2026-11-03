@@ -37,3 +37,20 @@ class StockMove(models.Model):
                 if inv_lines:
                     stock_move.invoice_line_ids = [Command.set(inv_lines.ids)]
         return res
+
+    def _is_sale_invoice_link_candidate(self):
+        """Whether this move can be linked to a customer invoice or refund.
+
+        Accepted endpoints:
+        - customer locations (standard SO deliveries/returns)
+        - transit locations (intercompany flows route through transit)
+        """
+        self.ensure_one()
+        if self.state != "done" or self.scrapped:
+            return False
+        accepted_usages = ("customer", "transit")
+        if self.location_dest_id.usage in accepted_usages:
+            return True
+        if self.to_refund and self.location_id.usage in accepted_usages:
+            return True
+        return False
