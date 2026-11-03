@@ -36,3 +36,18 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         extra_lc = self.order.landed_cost_ids - lc
         self.assertNotIn(new_picking, lc.picking_ids)
         self.assertIn(new_picking, extra_lc.picking_ids)
+
+    def test_order_lc_skips_dropship_picking(self):
+        self.order.button_confirm()
+        existing = self.order.landed_cost_ids
+        dropship = self._create_dropship_picking()
+        self.assertFalse(self.order._landed_cost_picking_eligible(dropship))
+        self.assertFalse(self.order._create_picking_with_stock_landed_cost(dropship))
+        self.assertEqual(self.order.landed_cost_ids, existing)
+
+    def test_create_returns_the_landed_cost(self):
+        self.order.button_confirm()
+        picking = self.order.picking_ids
+        self.assertTrue(self.order._landed_cost_picking_eligible(picking))
+        landed_cost = self.order._create_picking_with_stock_landed_cost(picking)
+        self.assertIn(landed_cost, self.order.landed_cost_ids)

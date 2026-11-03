@@ -37,6 +37,30 @@ class TestPurchaseOrderBase(BaseCommon):
         order = order_form.save()
         return order
 
+    def _create_dropship_picking(self):
+        suppliers = self.env.ref("stock.stock_location_suppliers")
+        customers = self.env.ref("stock.stock_location_customers")
+        return self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.env.ref("stock.picking_type_in").id,
+                "partner_id": self.partner.id,
+                "location_id": suppliers.id,
+                "location_dest_id": customers.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product_storable.id,
+                            "product_uom_qty": 1.0,
+                            "location_id": suppliers.id,
+                            "location_dest_id": customers.id,
+                        },
+                    )
+                ],
+            }
+        )
+
     def _action_picking_validate(self, picking):
         if any(move.state == "confirmed" for move in picking.move_ids):
             picking.action_assign()

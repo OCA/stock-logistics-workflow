@@ -29,11 +29,24 @@ class PurchaseOrder(models.Model):
             "picking_ids": [(4, picking.id)],
         }
 
+    def _landed_cost_picking_eligible(self, picking):
+        """Whether a landed cost makes sense for this picking.
+
+        Dropshipped goods go from the vendor straight to the customer without
+        entering own stock, so there is no remaining quantity to spread a cost
+        over and the landed cost can never post an accounting entry.
+        """
+        return not picking.move_ids or any(
+            not move._is_dropshipped() for move in picking.move_ids
+        )
+
     def _create_picking_with_stock_landed_cost(self, picking):
         # We need to use sudo() because only Inventory > Administrator have
         # permissions on stock.landed.cost
         self.ensure_one()
         StockLandedCost = self.env["stock.landed.cost"].with_company(self.company_id)
+        if not self._landed_cost_picking_eligible(picking):
+            return StockLandedCost.browse()
         if not StockLandedCost._default_account_journal_id():
             raise UserError(
                 self.env._(
@@ -43,13 +56,11 @@ class PurchaseOrder(models.Model):
                     order=self.name,
                 )
             )
-        landed_cost = (
-            self.env["stock.landed.cost"]
-            .with_company(self.company_id)
-            .sudo()
-            .create(self._prepare_landed_cost_values(picking))
+        landed_cost = StockLandedCost.sudo().create(
+            self._prepare_landed_cost_values(picking)
         )
         self.sudo().write({"landed_cost_ids": [(4, landed_cost.id)]})
+        return landed_cost
 
     def _create_picking(self):
         all_pickings = self.mapped("picking_ids")
