@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_move_tree" model="ir.ui.view">
+        <field name="name">stock.picking.move.list</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_picking_move_tree" />
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field name="qty_picked" />
+            </field>
+        </field>
+    </record>
+    <record id="view_move_kandan" model="ir.ui.view">
+        <field name="name">stock.move.kanban</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_kandan" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//span[@invisible='is_inventory']/field[@name='quantity']"
+                position="after"
+            >
+                <span
+                    class="ms-1"
+                    invisible="not picked or state in ('done', 'cancel')"
+                >(picked <field name="qty_picked" />)</span>
+            </xpath>
+        </field>
+    </record>
+</odoo>
