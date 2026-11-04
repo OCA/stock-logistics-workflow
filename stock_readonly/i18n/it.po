@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_readonly
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_readonly
+#: model:res.groups,name:stock_readonly.group_stock_readonly
+msgid "Readonly"
+msgstr ""
+
+#. module: stock_readonly
+#: model:res.groups,comment:stock_readonly.group_stock_readonly
+msgid ""
+"the user has a read-only access to stock\n"
+"            documents (pickings, moves, lots and their details)."
+msgstr ""
