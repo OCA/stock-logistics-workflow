@@ -122,6 +122,11 @@ class StockSplitPicking(models.TransientModel):
                 new_moves.with_context(
                     bypass_entire_pack=True, bypass_procurement_creation=True
                 )._action_confirm(merge=False)
+                # The extracted moves carry the reservation of the original
+                # moves: recompute their state so that they are 'assigned' as
+                # soon as they are fully reserved (the confirmation of a move
+                # linked to a picking does not reserve anything).
+                moves_to_recompute_state += new_moves
                 moves_to_split_off += new_moves
             # Recompute the state of the remaining moves
             moves_to_recompute_state._recompute_state()

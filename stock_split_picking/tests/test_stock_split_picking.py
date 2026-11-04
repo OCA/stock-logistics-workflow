@@ -409,3 +409,30 @@ class TestStockSplitPicking(TestStockSplitPickingCase):
             # fails because we can't split cancelled pickings
             self.picking.action_cancel()
             self.picking._split_off_moves(self.picking.move_ids)
+
+    def test_stock_split_picking_reserved_quantity_state(self):
+        """The move extracted with its reservation must be 'assigned', even
+        when the picking type does not assign on confirmation."""
+        self.picking.picking_type_id.reservation_method = "manual"
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.src_location, 4.0
+        )
+        self.picking.action_confirm()
+        self.picking.action_assign()
+        self.assertAlmostEqual(self.move.quantity, 4.0)
+
+        with RecordCapturer(self.env["stock.picking"], []) as rc_picking:
+            self._split_picking(self.picking, mode="quantity")
+            new_picking = rc_picking.records
+
+        self.assertEqual(len(new_picking), 1)
+        new_move = new_picking.move_ids
+        self.assertAlmostEqual(new_move.product_uom_qty, 4.0)
+        self.assertAlmostEqual(new_move.quantity, 4.0)
+        # the extracted move reserves the stock: it is available
+        self.assertEqual(new_move.state, "assigned")
+        self.assertEqual(new_picking.state, "assigned")
+        # the remaining demand of the original move is not reserved anymore
+        self.assertAlmostEqual(self.move.product_uom_qty, 6.0)
+        self.assertAlmostEqual(self.move.quantity, 0.0)
+        self.assertEqual(self.move.state, "confirmed")
