@@ -15,6 +15,7 @@
     ],
     "pre_init_hook": "pre_init_hook",
     "data": [
+        "views/stock_move.xml",
         "views/stock_move_line.xml",
         "views/stock_picking.xml",
     ],
