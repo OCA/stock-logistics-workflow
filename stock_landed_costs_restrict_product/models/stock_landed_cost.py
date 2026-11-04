@@ -1,0 +1,112 @@
+# Copyright 2025 Binhex <https://www.binhex.cloud>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo import _, models, tools
+from odoo.exceptions import ValidationError
+
+
+class StockLandedCost(models.Model):
+    _inherit = "stock.landed.cost"
+
+    def _get_totals(self):
+        self.ensure_one()
+        groups = self.env["stock.valuation.adjustment.lines"]._read_group(
+            domain=[("cost_id", "=", self.id)],
+            groupby=["cost_line_id"],
+            aggregates=[
+                "__count",
+                "quantity:sum",
+                "weight:sum",
+                "volume:sum",
+                "former_cost:sum",
+            ],
+        )
+        return {
+            cost_line.id: {
+                "count": count,
+                "quantity": quantity,
+                "weight": weight,
+                "volume": volume,
+                "former_cost": former_cost,
+            }
+            for cost_line, count, quantity, weight, volume, former_cost in groups
+        }
+
+    def _update_cost_valuation_adjustment_lines(self, towrite_dict):
+        for key, value in towrite_dict.items():
+            line_id = self.env["stock.valuation.adjustment.lines"].browse(key)
+            line_id.write({"additional_landed_cost": value})
+
+    def compute_landed_cost(self):
+        res = super().compute_landed_cost()
+        apply_rule = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("stock_landed_costs_product.landed_costs_apply_rule")
+        )
+        if apply_rule:
+            for landed_cost in self.filtered(
+                lambda landed_cost: landed_cost._get_targeted_move_ids()
+            ):
+                towrite_dict = {}
+                landed_cost = landed_cost.with_company(landed_cost.company_id)
+                valuations_to_unlink = landed_cost.valuation_adjustment_lines.filtered(
+                    lambda valuation: not valuation._check_rule()
+                )
+                valuations_to_unlink.unlink()
+                totals = landed_cost._get_totals()
+                rounding = landed_cost.currency_id.rounding
+                for line in landed_cost.cost_lines:
+                    line_valuations = landed_cost.valuation_adjustment_lines.filtered(
+                        lambda valuation, line=line: valuation.cost_line_id == line
+                    )
+                    if not line_valuations:
+                        raise ValidationError(
+                            _(
+                                "No product accepts the landed cost %(cost)s.",
+                                cost=line.name,
+                            )
+                        )
+                    line_totals = totals[line.id]
+                    value_split = 0.0
+                    for valuation in line_valuations:
+                        if (
+                            line.split_method == "by_quantity"
+                            and line_totals["quantity"]
+                        ):
+                            per_unit = line.price_unit / line_totals["quantity"]
+                            value = valuation.quantity * per_unit
+                        elif line.split_method == "by_weight" and line_totals["weight"]:
+                            per_unit = line.price_unit / line_totals["weight"]
+                            value = valuation.weight * per_unit
+                        elif line.split_method == "by_volume" and line_totals["volume"]:
+                            per_unit = line.price_unit / line_totals["volume"]
+                            value = valuation.volume * per_unit
+                        elif line.split_method == "equal":
+                            value = line.price_unit / line_totals["count"]
+                        elif (
+                            line.split_method == "by_current_cost_price"
+                            and line_totals["former_cost"]
+                        ):
+                            per_unit = line.price_unit / line_totals["former_cost"]
+                            value = valuation.former_cost * per_unit
+                        else:
+                            value = line.price_unit / line_totals["count"]
+                        if rounding:
+                            value = tools.float_round(
+                                value,
+                                precision_rounding=rounding,
+                                rounding_method="HALF-UP",
+                            )
+                            value_split += value
+                        if valuation.id not in towrite_dict:
+                            towrite_dict[valuation.id] = value
+                        else:
+                            towrite_dict[valuation.id] += value
+                    rounding_diff = landed_cost.currency_id.round(
+                        line.price_unit - value_split
+                    )
+                    if not landed_cost.currency_id.is_zero(rounding_diff):
+                        towrite_dict[max(line_valuations.ids)] += rounding_diff
+                landed_cost._update_cost_valuation_adjustment_lines(towrite_dict)
+        return res
