@@ -18,6 +18,11 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_line_qty_picked
+#: model_terms:ir.ui.view,arch_db:stock_move_line_qty_picked.view_move_kandan
+msgid "(picked"
+msgstr ""
+
+#. module: stock_move_line_qty_picked
 #: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__picked
 msgid "Picked"
 msgstr "Izbrano"
