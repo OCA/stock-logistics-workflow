@@ -131,3 +131,23 @@ class TestStockMove(common.TransactionCase):
                 agg_mls[key]["sequence2"],
                 "The Sequence is not copied properly in " "the aggregated move lines",
             )
+
+    def test_delivery_slip_with_a_cancelled_move(self):
+        picking = self._create_picking()
+        picking.action_confirm()
+        picking.action_assign()
+        picking.move_ids[2]._action_cancel()
+        picking.button_validate()
+        aggregated = picking.move_line_ids._get_aggregated_product_quantities()
+        sequences = [
+            line["sequence2"] for line in aggregated.values() if "sequence2" in line
+        ]
+        self.assertEqual(
+            sequences,
+            sorted(sequences),
+            "The aggregated lines are not in sequence order",
+        )
+        res = self.env["ir.actions.report"]._render(
+            "stock.report_deliveryslip", picking.ids
+        )
+        self.assertRegex(str(res[0]), picking.name)
