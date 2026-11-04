@@ -36,3 +36,12 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         extra_lc = self.order.landed_cost_ids - lc
         self.assertNotIn(new_picking, lc.picking_ids)
         self.assertIn(new_picking, extra_lc.picking_ids)
+
+    def test_order_lc_cancelled_with_its_picking(self):
+        """A cancelled transfer takes its draft landed cost with it."""
+        self.order.button_confirm()
+        lc = self.order.landed_cost_ids
+        self.assertEqual(lc.state, "draft")
+        self.order.picking_ids.move_ids._action_cancel()
+        self.assertEqual(self.order.picking_ids.state, "cancel")
+        self.assertEqual(lc.state, "cancel")
