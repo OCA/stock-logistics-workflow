@@ -45,3 +45,11 @@ class TestPurchaseOrder(TestPurchaseOrderBase):
         self.order.picking_ids.move_ids._action_cancel()
         self.assertEqual(self.order.picking_ids.state, "cancel")
         self.assertEqual(lc.state, "cancel")
+
+    def test_create_returns_the_landed_cost(self):
+        """The creation method hands back the landed cost it created."""
+        self.order.button_confirm()
+        landed_cost = self.order._create_picking_with_stock_landed_cost(
+            self.order.picking_ids
+        )
+        self.assertIn(landed_cost, self.order.landed_cost_ids)
