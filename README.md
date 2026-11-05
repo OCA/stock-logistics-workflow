@@ -22,6 +22,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[stock_picking_sale_order_link](stock_picking_sale_order_link/) | 20.0.1.0.0 |  | Link between picking and sale order
 [stock_restrict_lot](stock_restrict_lot/) | 20.0.1.0.0 | <a href='https://github.com/florian-dacosta'><img src='https://github.com/florian-dacosta.png' width='32' height='32' style='border-radius:50%;' alt='florian-dacosta'/></a> | Base module that add back the concept of restrict lot on stock move
 
 [//]: # (end addons)
