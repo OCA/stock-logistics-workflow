@@ -66,64 +66,63 @@ class TestProductCustomerinfoPicking(TransactionCase):
             }
         )
 
-    def test_product_customerinfo_picking(self):
-        delivery_picking = self.env["stock.picking"].new(
+    @classmethod
+    def _create_delivery_picking(cls, partner, **kwargs):
+        delivery_picking = cls.env["stock.picking"].new(
             {
-                "partner_id": self.agrolait.id,
-                "picking_type_id": self.env.ref("stock.picking_type_out").id,
+                "partner_id": partner.id,
+                "picking_type_id": cls.env.ref("stock.picking_type_out").id,
             }
         )
         delivery_picking._onchange_picking_type()
-        delivery_picking = self.env["stock.picking"].create(
-            {
-                "partner_id": delivery_picking.partner_id.id,
-                "picking_type_id": delivery_picking.picking_type_id.id,
-                "location_id": self.src_location.id,
-                "location_dest_id": self.dest_location.id,
-                "move_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.computer_SC234.id,
-                            "product_uom": self.computer_SC234.uom_id.id,
-                            "product_uom_qty": 1.0,
-                            "location_id": self.src_location.id,
-                            "location_dest_id": self.dest_location.id,
-                        },
-                    )
-                ],
-            }
-        )
-        move = delivery_picking.move_ids[0]
-        move._compute_product_customer_code()
+        vals = {
+            "partner_id": delivery_picking.partner_id.id,
+            "picking_type_id": delivery_picking.picking_type_id.id,
+            "location_id": cls.src_location.id,
+            "location_dest_id": cls.dest_location.id,
+            "move_ids": [
+                Command.create(
+                    {
+                        "product_id": cls.computer_SC234.id,
+                        "product_uom": cls.computer_SC234.uom_id.id,
+                        "product_uom_qty": 1.0,
+                        "location_id": cls.src_location.id,
+                        "location_dest_id": cls.dest_location.id,
+                    },
+                )
+            ],
+        }
+        vals.update(kwargs)
+        return cls.env["stock.picking"].create(vals)
+
+    def test_product_customerinfo_picking(self):
+        delivery_picking = self._create_delivery_picking(self.agrolait)
+        move = delivery_picking.move_ids[:1]
         self.assertEqual(move.product_customer_code, "test_agrolait")
 
     def test_product_customerinfo_two_costumers(self):
-        delivery_picking = self.env["stock.picking"].new(
-            {
-                "partner_id": self.gemini.id,
-                "picking_type_id": self.env.ref("stock.picking_type_out").id,
-            }
-        )
-        delivery_picking._onchange_picking_type()
-        delivery_picking = self.env["stock.picking"].create(
-            {
-                "partner_id": delivery_picking.partner_id.id,
-                "picking_type_id": delivery_picking.picking_type_id.id,
-                "location_id": self.src_location.id,
-                "location_dest_id": self.dest_location.id,
-                "move_ids": [
-                    Command.create(
-                        {
-                            "product_id": self.computer_SC234.id,
-                            "product_uom": self.computer_SC234.uom_id.id,
-                            "product_uom_qty": 1.0,
-                            "location_id": self.src_location.id,
-                            "location_dest_id": self.dest_location.id,
-                        },
-                    )
-                ],
-            }
-        )
-        move = delivery_picking.move_ids[0]
-        move._compute_product_customer_code()
+        delivery_picking = self._create_delivery_picking(self.gemini)
+        move = delivery_picking.move_ids[:1]
         self.assertEqual(move.product_customer_code, "test_gemini")
+
+    def test_product_customerinfo_variant_precedence(self):
+        self.env["product.customerinfo"].create(
+            {
+                "partner_id": self.agrolait.id,
+                "product_tmpl_id": self.computer_SC234.product_tmpl_id.id,
+                "product_id": self.computer_SC234.id,
+                "product_code": "test_agrolait_variant",
+                "product_name": "Variant name for agrolait",
+            }
+        )
+        delivery_picking = self._create_delivery_picking(self.agrolait)
+        move = delivery_picking.move_ids[:1]
+        self.assertEqual(move.product_customer_code, "test_agrolait_variant")
+        self.assertEqual(move.product_customer_name, "Variant name for agrolait")
+
+    def test_product_customerinfo_no_partner(self):
+        delivery_picking = self._create_delivery_picking(
+            self.agrolait, partner_id=False
+        )
+        move = delivery_picking.move_ids[:1]
+        self.assertFalse(move.product_customer_code)
