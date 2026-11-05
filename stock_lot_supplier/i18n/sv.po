@@ -1,0 +1,25 @@
+# Swedish translation of stock_lot_supplier
+# Copyright 2026 ForgeFlow S.L.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: Swedish <>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_lot_supplier
+#: model:ir.model.fields,field_description:stock_lot_supplier.field_stock_lot__supplier_id
+msgid "Supplier"
+msgstr "Leverantör"
+
+#. module: stock_lot_supplier
+#: model_terms:ir.ui.view,arch_db:stock_lot_supplier.stock_lot_supplier_search_view
+msgid "Group by Supplier"
+msgstr "Gruppera efter leverantör"
