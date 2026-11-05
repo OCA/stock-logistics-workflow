@@ -25,7 +25,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[product_customerinfo_picking](product_customerinfo_picking/) | 19.0.1.0.0 |  | This module makes the product customer code visible in the stock moves of a picking.
+[product_customerinfo_picking](product_customerinfo_picking/) | 19.0.1.0.1 |  | This module makes the product customer code visible in the stock moves of a picking.
 [purchase_stock_picking_backorder_policy](purchase_stock_picking_backorder_policy/) | 19.0.1.0.0 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Carry the backorder policy from the vendor and purchase order to its receipts.
 [purchase_stock_picking_invoice_link](purchase_stock_picking_invoice_link/) | 19.0.1.0.0 |  | Adds link between purchases, pickings and invoices
 [sale_line_returned_qty](sale_line_returned_qty/) | 19.0.1.0.0 |  | Track returned quantity of sale order lines.
