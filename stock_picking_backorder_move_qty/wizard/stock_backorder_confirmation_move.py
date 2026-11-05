@@ -38,7 +38,7 @@ class StockBackorderConfirmationMove(models.TransientModel):
             move = line.move_id
             if move.state != "cancel":
                 unprocessed = (
-                    move.product_uom_qty
+                    max([move.product_uom_qty, move.quantity])
                     if not move.picked
                     else move.product_uom_qty - move._get_picked_quantity()
                 )
