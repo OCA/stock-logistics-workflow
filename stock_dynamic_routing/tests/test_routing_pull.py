@@ -977,6 +977,96 @@ class TestRoutingPull(TestRoutingPullCommon):
         self.assertEqual(move_c.picking_id.picking_type_id, self.pick_type_routing_op)
         self.assertEqual(move_d.picking_id.picking_type_id, pick_type_routing_delivery)
 
+    def test_change_dest_move_source_multiple_dest_moves(self):
+        """Only split one delivery when a shared move is re-routed.
+
+        Two deliveries of 4 units are supplied by a shared move of 6 units
+        and another move of 2 units.
+        Re-routing the first, must re-route 6 units, splitting only one delivery.
+        """
+        area1 = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "Area1"}
+        )
+        self.pick_type_routing_op.default_location_dest_id = area1
+        pick_type_routing_delivery = self.env["stock.picking.type"].create(
+            {
+                "name": "Delivery (after routing)",
+                "code": "outgoing",
+                "sequence_code": "OUT(R)",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": area1.id,
+                "default_location_dest_id": self.customer_loc.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": area1.id,
+                "picking_type_id": self.wh.out_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": pick_type_routing_delivery.id,
+                        },
+                    )
+                ],
+            }
+        )
+        pick_picking1, customer_picking1 = self._create_pick_ship(
+            self.wh, [(self.product1, 4)]
+        )
+        pick_picking2, customer_picking2 = self._create_pick_ship(
+            self.wh, [(self.product1, 4)]
+        )
+        move_1 = pick_picking1.move_ids
+        remaining_move = pick_picking2.move_ids
+        delivery_move1 = customer_picking1.move_ids
+        delivery_move2 = customer_picking2.move_ids
+        move_1.write(
+            {
+                "product_uom_qty": 6,
+                "move_dest_ids": [
+                    (4, delivery_move1.id),
+                    (4, delivery_move2.id),
+                ],
+            }
+        )
+        remaining_move.write(
+            {
+                "product_uom_qty": 2,
+                "move_dest_ids": [
+                    (4, delivery_move1.id),
+                    (4, delivery_move2.id),
+                ],
+            }
+        )
+        self._update_product_qty_in_location(self.location_hb_1_2, self.product1, 6)
+        self._update_product_qty_in_location(self.location_shelf_1, self.product1, 2)
+        pick_picking1.action_assign()
+        pick_picking2.action_assign()
+
+        split_delivery = (
+            (move_1.move_dest_ids | remaining_move.move_dest_ids)
+            - delivery_move1
+            - delivery_move2
+        )
+        self.assertEqual(len(split_delivery), 1)
+        routed_deliveries = move_1.move_dest_ids
+        remaining_deliveries = remaining_move.move_dest_ids
+        self.assertEqual(len(routed_deliveries), 2)
+        self.assertEqual(sorted(routed_deliveries.mapped("product_qty")), [2, 4])
+        self.assertEqual(routed_deliveries.location_id, area1)
+        self.assertEqual(routed_deliveries.picking_type_id, pick_type_routing_delivery)
+        self.assertEqual(len(remaining_deliveries), 1)
+        self.assertEqual(remaining_deliveries.product_qty, 2)
+        self.assertEqual(
+            remaining_deliveries.location_id, self.wh.wh_output_stock_loc_id
+        )
+
     def test_change_dest_move_source_chain(self):
         location_qa = self.env["stock.location"].create(
             {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "QA"}
