@@ -290,6 +290,7 @@ class TestRestrictLot(BaseCommon):
         self.assertIn(lot2, lots)
 
     def test_compute_quantites(self):
+        self._update_product_stock(1, self.lot.id, location=self.stock_loc)
         move = self.env["stock.move"].create(
             {
                 "product_id": self.product.id,
@@ -304,11 +305,14 @@ class TestRestrictLot(BaseCommon):
             }
         )
         move._action_confirm()
+        move._action_assign()
 
         lot2 = self.lot.copy({"name": "lot2"})
+        self._update_product_stock(1, lot2.id, location=self.stock_loc)
         move2 = move.copy()
         move2.restrict_lot_id = lot2.id
         move2._action_confirm()
+        move2._action_assign()
 
         product = move.product_id
         self.assertEqual(product.outgoing_qty, 2)
