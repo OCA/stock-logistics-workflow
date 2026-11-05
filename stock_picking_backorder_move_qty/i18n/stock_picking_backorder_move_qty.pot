@@ -35,6 +35,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: stock_picking_backorder_move_qty
+#: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__move_qty
+msgid "Demand"
+msgstr ""
+
+#. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__display_name
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_move__display_name
@@ -69,6 +74,11 @@ msgid "Move"
 msgstr ""
 
 #. module: stock_picking_backorder_move_qty
+#: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_backorder_move_qty
 #: model:ir.model.fields,field_description:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__qty_to_backorder
 msgid "Qty To Backorder"
 msgstr ""
@@ -93,6 +103,14 @@ msgstr ""
 #. module: stock_picking_backorder_move_qty
 #: model:ir.model,name:stock_picking_backorder_move_qty.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_backorder_move_qty
+#: model:ir.model.fields,help:stock_picking_backorder_move_qty.field_stock_backorder_confirmation_move_line__move_qty
+msgid ""
+"This is the quantity of product that is planned to be moved.Lowering this "
+"quantity does not generate a backorder.Changing this quantity on assigned "
+"moves affects the product reservation, and should be done with care."
 msgstr ""
 
 #. module: stock_picking_backorder_move_qty
