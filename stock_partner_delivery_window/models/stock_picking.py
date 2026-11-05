@@ -25,11 +25,15 @@ class StockPicking(models.Model):
             else self.env._("delivery date")
         )
 
-    @api.depends("partner_id", "scheduled_date")
+    @api.depends("partner_id", "scheduled_date", "state")
     def _compute_partner_delivery_window_warning(self):
         for picking in self:
-            partner = picking.partner_id
             picking.partner_delivery_window_warning = False
+
+            if picking.state == "cancel":
+                continue
+
+            partner = picking.partner_id
             if not partner:
                 continue
 

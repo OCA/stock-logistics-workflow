@@ -14,16 +14,13 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # No warning with anytime
         anytime_picking = self._create_delivery_picking(self.customer_anytime)
         anytime_picking.scheduled_date = "2020-04-03"  # Friday
-        anytime_picking._compute_partner_delivery_window_warning()
         self.assertFalse(anytime_picking.partner_delivery_window_warning)
         # No warning on friday
         workdays_picking = self._create_delivery_picking(self.customer_working_days)
         workdays_picking.scheduled_date = "2020-04-03"  # Friday
-        workdays_picking._compute_partner_delivery_window_warning()
         self.assertFalse(workdays_picking.partner_delivery_window_warning)
         # But warning on saturday
         workdays_picking.scheduled_date = "2020-04-04"  # Saturday
-        workdays_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on working days",
             workdays_picking.partner_delivery_window_warning,
@@ -31,21 +28,20 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # No warning on preferred time window
         time_window_picking = self._create_delivery_picking(self.customer_time_window)
         time_window_picking.scheduled_date = "2020-04-04"  # Saturday
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertFalse(time_window_picking.partner_delivery_window_warning)
         time_window_picking.scheduled_date = "2020-04-03"  # Friday
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             time_window_picking.partner_delivery_window_warning,
         )
         # Warning when no scheduled date
         time_window_picking.scheduled_date = False
-        time_window_picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "No scheduled date is set on the picking, cannot check",
             time_window_picking.partner_delivery_window_warning,
         )
+        time_window_picking.action_cancel()
+        self.assertFalse(time_window_picking.partner_delivery_window_warning)
 
     @freeze_time("2020-04-02")
     def test_with_timezone_dst_date_dst(self):
@@ -60,7 +56,6 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 07:59:59"  # Thursday
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -68,22 +63,18 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Scheduled date is in UTC so 2020-04-02 08:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 08:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 13:59:59 == 2020-04-02 15:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 13:59:59"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 14:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 14:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:01"
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -102,7 +93,6 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 08:59:59"  # Thursday
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -110,24 +100,20 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Scheduled date is in UTC so 2020-03-26 09:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 09:00:00"
-        picking._compute_partner_delivery_window_warning()
         # No warning since we're in the timeframe
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 14:59:59 == 2020-04-02 15:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 14:59:59"
-        picking._compute_partner_delivery_window_warning()
         # No warning since we're in the timeframe
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 15:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 15:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 15:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is not preferred
         picking.scheduled_date = "2020-03-26 15:00:01"
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -146,7 +132,6 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Frozen time is in UTC so 2020-04-02 07:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 07:59:59"  # Thursday
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -154,22 +139,18 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Scheduled date is in UTC so 2020-04-02 08:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 08:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 13:59:59 == 2020-04-02 15:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 13:59:59"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 14:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-04-02 14:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-04-02 14:00:01"
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -189,7 +170,6 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Frozen time is in UTC so 2020-03-26 08:59:59 == 2020-04-02 09:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 08:59:59"  # Thursday
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
@@ -197,24 +177,20 @@ class TestPartnerDeliveryWindow(PartnerDeliveryWindowCommon):
         # Scheduled date is in UTC so 2020-03-26 09:00:00 == 2020-04-02 10:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 09:00:00"
-        picking._compute_partner_delivery_window_warning()
         # No warning since we're in the timeframe
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 14:59:59 == 2020-04-02 15:59:59
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 14:59:59"
-        picking._compute_partner_delivery_window_warning()
         # No warning since we're in the timeframe
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 15:00:00 == 2020-04-02 16:00:00
         #  in Brussels which is preferred
         picking.scheduled_date = "2020-03-26 15:00:00"
-        picking._compute_partner_delivery_window_warning()
         self.assertFalse(picking.partner_delivery_window_warning)
         # Scheduled date is in UTC so 2020-03-26 15:00:01 == 2020-04-02 16:00:01
         #  in Brussels which is not preferred
         picking.scheduled_date = "2020-03-26 15:00:01"
-        picking._compute_partner_delivery_window_warning()
         self.assertIn(
             "the partner is set to prefer deliveries on following time windows",
             picking.partner_delivery_window_warning,
