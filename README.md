@@ -142,7 +142,7 @@ addon | version | maintainers | summary
 [stock_scrap_cancel](stock_scrap_cancel/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Stock Scrap Cancel
 [stock_scrap_security](stock_scrap_security/) | 18.0.1.0.0 |  | Manage stock scrap access rights with dedicated security groups.
 [stock_scrap_tier_validation](stock_scrap_tier_validation/) | 18.0.1.0.0 |  | Stock Scrap Tier Validation
-[stock_split_picking](stock_split_picking/) | 18.0.2.1.0 |  | Split a picking in two not transferred pickings
+[stock_split_picking](stock_split_picking/) | 18.0.2.1.1 |  | Split a picking in two not transferred pickings
 [stock_split_picking_dimension](stock_split_picking_dimension/) | 18.0.1.0.0 |  | Split a picking in two not transferred pickings to ensure that the first one doesn't exceed given dimensions (nbr lines, volume, weight)
 [stock_split_picking_kit](stock_split_picking_kit/) | 18.0.1.0.1 |  | Split a picking by a number of kits.
 [stock_valuation_layer_usage](stock_valuation_layer_usage/) | 18.0.1.0.0 |  | Trace where has the stock valuation been used in, including the quantities taken.
