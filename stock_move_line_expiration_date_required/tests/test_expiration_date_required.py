@@ -108,6 +108,53 @@ class TestExpirationDateRequired(common.TransactionCase):
         picking.with_context(skip_sanity_check=False).button_validate()
         self.assertTrue(all(picking.move_line_ids.mapped("expiration_date")))
 
+    def test_partial_receipt_ignores_unprocessed_lines(self):
+        """Ignore undated pending lines in partial and batch receipts."""
+        pending_picking = self.picking.copy()
+        (self.picking | pending_picking).action_confirm()
+        move = self.picking.move_ids
+        move.move_line_ids.unlink()
+        common_vals = {
+            "move_id": move.id,
+            "product_id": self.product.id,
+            "product_uom_id": self.product.uom_id.id,
+            "location_id": move.location_id.id,
+            "location_dest_id": move.location_dest_id.id,
+        }
+        self.env["stock.move.line"].create(
+            [
+                {
+                    **common_vals,
+                    "lot_name": "TLE-PROCESSED",
+                    "quantity": 5,
+                    "picked": True,
+                    "expiration_date": fields.Datetime.now(),
+                },
+                {
+                    **common_vals,
+                    "lot_name": "TLE-UNPROCESSED",
+                    "quantity": 5,
+                    "picked": False,
+                },
+            ]
+        )
+
+        self.picking._sanity_check()
+        pending_move = pending_picking.move_ids
+        pending_move.move_line_ids.unlink()
+        self.env["stock.move.line"].create(
+            {
+                **common_vals,
+                "move_id": pending_move.id,
+                "location_id": pending_move.location_id.id,
+                "location_dest_id": pending_move.location_dest_id.id,
+                "lot_name": "TLE-PENDING-RECEIPT",
+                "quantity": 10,
+                "picked": False,
+            }
+        )
+        (self.picking | pending_picking)._sanity_check(separate_pickings=False)
+
     def test_lot_no_expiration_date(self):
         """Test that lots without expiration dates works properly"""
         self.product.use_expiration_date = False
