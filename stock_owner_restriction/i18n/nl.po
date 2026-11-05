@@ -17,6 +17,28 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_owner_restriction
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking_type__display_name
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_quant__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_owner_restriction
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_product_product__id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking_type__id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_quant__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_owner_restriction
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move__owner_restriction
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move_line__owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking__owner_restriction
 #: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_picking_type__owner_restriction
 msgid "Owner Restriction"
@@ -43,6 +65,11 @@ msgid "Picking partner or unassigned owner"
 msgstr "Picking partner of niet-toegewezen eigenaar"
 
 #. module: stock_owner_restriction
+#: model:ir.model,name:stock_owner_restriction.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_owner_restriction
 #: model:ir.model,name:stock_owner_restriction.model_product_product
 msgid "Product Variant"
 msgstr "Productvariant"
@@ -51,6 +78,12 @@ msgstr "Productvariant"
 #: model:ir.model,name:stock_owner_restriction.model_stock_quant
 msgid "Quants"
 msgstr "Quantiteiten"
+
+#. module: stock_owner_restriction
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move__restricted_owner_id
+#: model:ir.model.fields,field_description:stock_owner_restriction.field_stock_move_line__restricted_owner_id
+msgid "Restricted Owner"
+msgstr ""
 
 #. module: stock_owner_restriction
 #: model:ir.model.fields.selection,name:stock_owner_restriction.selection__stock_picking_type__owner_restriction__standard_behavior
