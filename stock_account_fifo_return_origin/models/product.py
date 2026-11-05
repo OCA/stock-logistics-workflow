@@ -12,7 +12,9 @@ class Product(models.Model):
         origin_move = self.env.context.get("origin_returned_move")
         if not origin_move:
             return candidates
-        origin_svl = origin_move.stock_valuation_layer_ids.filtered(
+        origin_svl = origin_move.sudo().stock_valuation_layer_ids.filtered(
             lambda x: x.remaining_qty > 0.00
+            and x.company_id == company
+            and x.lot_id.id == (lot.id if lot else False)
         )
         return origin_svl | candidates
