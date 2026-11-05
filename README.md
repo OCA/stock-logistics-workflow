@@ -42,7 +42,7 @@ addon | version | maintainers | summary
 [stock_lot_scrap](stock_lot_scrap/) | 19.0.1.0.0 |  | This module adds a button in Production Lot/Serial Number view form to Scrap all products contained.
 [stock_move_line_expiration_date_required](stock_move_line_expiration_date_required/) | 19.0.1.0.0 |  | Stock Move Line Expiration Date Required
 [stock_move_valuation_usage](stock_move_valuation_usage/) | 19.0.1.0.0 |  | Trace where stock move valuation has been used, including quantities and values taken.
-[stock_no_negative](stock_no_negative/) | 19.0.1.0.0 |  | Disallow negative stock levels by default
+[stock_no_negative](stock_no_negative/) | 19.0.1.0.1 |  | Disallow negative stock levels by default
 [stock_owner_restriction](stock_owner_restriction/) | 19.0.1.0.0 |  | Do not reserve quantity with assigned owner
 [stock_partner_delivery_window](stock_partner_delivery_window/) | 19.0.1.0.1 | <a href='https://github.com/jbaudoux'><img src='https://github.com/jbaudoux.png' width='32' height='32' style='border-radius:50%;' alt='jbaudoux'/></a> | Define preferred delivery time windows for partners
 [stock_picking_auto_create_lot](stock_picking_auto_create_lot/) | 19.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Auto create lots for incoming pickings
