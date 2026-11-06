@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-21 05:55+0000\n"
+"PO-Revision-Date: 2026-11-06 14:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -193,7 +193,7 @@ msgstr "Nome"
 #. module: stock_grn
 #: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
 msgid "No transfer found. Let's create one!"
-msgstr "Nessun trasferimento trovato. Crearne uno!"
+msgstr "Nessun trasferimento trovato. Creiamone uno!"
 
 #. module: stock_grn
 #: model_terms:ir.ui.view,arch_db:stock_grn.stock_move_search_view
@@ -258,7 +258,8 @@ msgstr "Trasferimento"
 #: model_terms:ir.actions.act_window,help:stock_grn.action_picking_tree_grn
 msgid "Transfers allow you to move products from one location to another."
 msgstr ""
-"I trasferimento consentono di movimentare i prodotti tra le ubicazioni."
+"I trasferimenti consentono di spostare i prodotti da un'ubicazione a "
+"un'altra."
 
 #. module: stock_grn
 #: model:ir.model.fields,field_description:stock_grn.field_stock_grn_type__name
