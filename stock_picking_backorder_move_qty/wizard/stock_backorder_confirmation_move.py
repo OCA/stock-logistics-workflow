@@ -16,11 +16,27 @@ class StockBackorderConfirmationMove(models.TransientModel):
     move_id = fields.Many2one("stock.move", "Move")
     product_id = fields.Many2one("product.product", related="move_id.product_id")
     move_qty = fields.Float(related="move_id.product_uom_qty")
+    move_qty_validated = fields.Float(
+        compute="_compute_qty_validated", string="Validated"
+    )
     qty_unprocessed = fields.Float(compute="_compute_qty_unprocessed")
     qty_to_backorder = fields.Float(
-        compute="_compute_qty_to_backorder", store=True, readonly=False
+        compute="_compute_qty_to_backorder",
+        store=True,
+        readonly=False,
+        string="To backorder",
     )
     qty_to_backorder_uom_id = fields.Many2one("uom.uom", related="move_id.product_uom")
+
+    @api.depends(
+        "move_id",
+        "move_id.picked",
+        "move_id.quantity",
+    )
+    def _compute_qty_validated(self):
+        for line in self:
+            move = line.move_id
+            line.move_qty_validated = move.quantity if move.picked else 0.0
 
     @api.depends(
         "move_id",
