@@ -16,12 +16,23 @@ class StockBackorderConfirmation(models.TransientModel):
     def default_get(self, fields):
         res = super().default_get(fields)
         if "backorder_confirmation_move_line_ids" in fields and res.get("pick_ids"):
+            prec = self.env["decimal.precision"].precision_get("Product Unit")
             # default_get returns x2m values as [(6, 0, ids)]
             # because of webclient limitations
             pickings = self.env["stock.picking"].browse(res["pick_ids"][0][2])
 
             res["backorder_confirmation_move_line_ids"] = [
-                (0, 0, {"move_id": move.id}) for move in pickings.move_ids
+                (0, 0, {"move_id": move.id})
+                for move in pickings.move_ids
+                # Use same condition as in stock.picking._check_backorder to ignore
+                #  fully picked lines
+                if (move.product_uom_qty and not move.picked)
+                or float_compare(
+                    move._get_picked_quantity(),
+                    move.product_uom_qty,
+                    precision_digits=prec,
+                )
+                < 0
             ]
 
         return res
