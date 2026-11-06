@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Ariel Barreiros License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="stock_operation_tracking" name="Stock Operation Tracking">
+        <t
+            t-set="multiple_carrier_tracking"
+            t-value="picking.get_multiple_carrier_tracking()"
+        />
+        <t t-if="multiple_carrier_tracking">
+            <t t-foreach="multiple_carrier_tracking" t-as="line">
+                <a
+                    t-att-href="line[1]"
+                    target="_blank"
+                    class="btn btn-sm btn-light border me-1 mb-1"
+                    title="Track this parcel"
+                >
+                    <i class="fa fa-fw fa-external-link me-1" role="img" />
+                    <span t-out="line[0]" />
+                </a>
+            </t>
+        </t>
+        <t t-elif="picking.carrier_tracking_url">
+            <a
+                t-att-href="picking.carrier_tracking_url"
+                target="_blank"
+                class="btn btn-sm btn-light border"
+                title="Track this shipment"
+            >
+                <i class="fa fa-fw fa-external-link me-1" role="img" />
+                <span t-field="picking.carrier_tracking_ref" />
+            </a>
+        </t>
+        <t t-else="">
+            <span t-field="picking.carrier_tracking_ref" />
+        </t>
+    </template>
+
+    <template
+        id="stock_operation_document"
+        inherit_id="stock_picking_portal.stock_operation_document"
+    >
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div t-if="o.carrier_tracking_ref" class="col-auto" name="div_tracking">
+                <strong>Tracking:</strong>
+                <p>
+                    <t
+                        t-call="stock_picking_portal_tracking_reference.stock_operation_tracking"
+                    >
+                        <t t-set="picking" t-value="o" />
+                    </t>
+                </p>
+            </div>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_stock_operations"
+        inherit_id="stock_picking_portal.portal_my_stock_operations"
+    >
+        <xpath expr="//thead/tr" position="inside">
+            <th class="text-center">Tracking</th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='stock_operation_ids']/tr" position="inside">
+            <td class="text-center">
+                <t
+                    t-set="picking"
+                    t-value="stock_operations_tracking.get(operation.id)"
+                />
+                <t
+                    t-if="picking and picking.carrier_tracking_ref"
+                    t-call="stock_picking_portal_tracking_reference.stock_operation_tracking"
+                />
+            </td>
+        </xpath>
+    </template>
+</odoo>

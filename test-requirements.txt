@@ -1,0 +1,1 @@
+odoo-addon-stock_picking_portal @ git+https://github.com/OCA/stock-logistics-workflow.git@refs/pull/2451/head#subdirectory=stock_picking_portal
