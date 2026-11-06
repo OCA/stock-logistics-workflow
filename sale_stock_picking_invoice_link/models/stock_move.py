@@ -23,7 +23,13 @@ class StockMove(models.Model):
             for stock_move in stock_moves.filtered(
                 lambda sm: sm.sale_line_id and sm.product_id.invoice_policy == "order"
             ):
-                inv_type = "out_refund" if stock_move.to_refund else "out_invoice"
+                # A move only refunds when it comes back from the customer
+                inv_type = (
+                    "out_refund"
+                    if stock_move.to_refund
+                    and stock_move.location_id.usage == "customer"
+                    else "out_invoice"
+                )
                 inv_lines = (
                     self.env["account.move.line"]
                     .sudo()
@@ -35,5 +41,5 @@ class StockMove(models.Model):
                     )
                 )
                 if inv_lines:
-                    stock_move.invoice_line_ids = [Command.set(inv_lines.ids)]
+                    stock_move.sudo().invoice_line_ids = [Command.set(inv_lines.ids)]
         return res
