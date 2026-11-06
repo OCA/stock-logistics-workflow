@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-02 16:25+0000\n"
+"PO-Revision-Date: 2026-11-06 13:47+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_move_line_qty_picked
 #: model_terms:ir.ui.view,arch_db:stock_move_line_qty_picked.view_move_kandan
 msgid "(picked"
-msgstr ""
+msgstr "(prelevato"
 
 #. module: stock_move_line_qty_picked
 #: model:ir.model.fields,field_description:stock_move_line_qty_picked.field_stock_move_line__picked
