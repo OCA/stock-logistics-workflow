@@ -1,0 +1,33 @@
+PR: https://github.com/OCA/stock-logistics-workflow/pull/2459
+Prepared against head: ccdf00d254554af312a7b0f136a02d242044508c
+
+Review items addressed:
+1. Fix _pick_qty reservation-limit double counting by replacing the current
+   move line's old reserved quantity with the newly picked quantity before
+   comparing against move demand.
+2. Strengthen regression coverage so a valid reservation increase close to
+   demand fails on the old implementation and passes on the corrected one.
+3. Correct the different-UoM expectation: picking 1.5 boxes should increase
+   the move line reservation from 1.0 to 1.5 boxes when still within demand.
+4. Replace legacy x2many (4, id) tuples in the touched test with Command.link().
+
+Files to copy into the repository are under fixed/.
+Alternatively apply pr2459-review-fixes.patch from the repository root.
+
+Suggested focused commit message before the final history cleanup:
+  [19.0][FIX] stock_move_line_qty_picked: avoid reservation double count
+
+Reviewer rrebollo also requested commit-history cleanup/squashing. This ZIP does
+not rewrite Git history. The current migration commit is
+05d5922a75fb941b32a0cd4a07138d1d385f64e6; the later migration-fix commits
+should be folded into the migration commit as requested before asking for a new
+review.
+
+Validation performed here:
+- Original source blob SHAs matched the current PR branch files.
+- Python syntax/compile checks passed for both modified files.
+- Diff whitespace check passed.
+
+Run the repository's normal OCA pre-commit and Odoo test suite locally before
+pushing, because this environment does not contain the Odoo runtime/pre-commit
+environments required to execute the full suite.
