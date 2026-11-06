@@ -14,3 +14,14 @@ class StockPicking(models.Model):
         if res and res.purchase_id.sudo().landed_cost_ids:
             res.purchase_id._create_picking_with_stock_landed_cost(res)
         return res
+
+    def _cancel_orphan_landed_costs(self):
+        """Cancel the draft landed costs left behind by a cancelled transfer."""
+        costs = (
+            self.env["stock.landed.cost"]
+            .sudo()
+            .search([("picking_ids", "in", self.ids), ("state", "=", "draft")])
+        )
+        costs.filtered(
+            lambda cost: all(picking.state == "cancel" for picking in cost.picking_ids)
+        ).button_cancel()

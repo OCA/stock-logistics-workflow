@@ -43,13 +43,11 @@ class PurchaseOrder(models.Model):
                     order=self.name,
                 )
             )
-        landed_cost = (
-            self.env["stock.landed.cost"]
-            .with_company(self.company_id)
-            .sudo()
-            .create(self._prepare_landed_cost_values(picking))
+        landed_cost = StockLandedCost.sudo().create(
+            self._prepare_landed_cost_values(picking)
         )
         self.sudo().write({"landed_cost_ids": [(4, landed_cost.id)]})
+        return landed_cost
 
     def _create_picking(self):
         all_pickings = self.mapped("picking_ids")
