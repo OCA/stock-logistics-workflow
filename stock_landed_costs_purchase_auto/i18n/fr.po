@@ -17,6 +17,33 @@ msgstr ""
 "X-Generator: Weblate 5.6.2\n"
 
 #. module: stock_landed_costs_purchase_auto
+#. odoo-python
+#: code:addons/stock_landed_costs_purchase_auto/models/purchase_order.py:0
+msgid ""
+"Cannot create a landed cost for purchase order %(order)s: no default journal "
+"is configured for landed costs. Please set it in Inventory > Configuration > "
+"Settings."
+msgstr ""
+
+#. module: stock_landed_costs_purchase_auto
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_landed_costs_purchase_auto
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__id
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_landed_cost__id
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_landed_costs_purchase_auto
 #: model:ir.model.fields,field_description:stock_landed_costs_purchase_auto.field_purchase_order__landed_cost_number
 msgid "Landed Cost Number"
 msgstr "Numéro de Frais Logistique"
@@ -46,6 +73,11 @@ msgstr "Ligne de commande fournisseur"
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_landed_cost
 msgid "Stock Landed Cost"
 msgstr "Frais logistique de stock"
+
+#. module: stock_landed_costs_purchase_auto
+#: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: stock_landed_costs_purchase_auto
 #: model:ir.model,name:stock_landed_costs_purchase_auto.model_stock_picking
