@@ -36,7 +36,7 @@ class StockBackorderConfirmationMove(models.TransientModel):
     def _compute_qty_validated(self):
         for line in self:
             move = line.move_id
-            line.move_qty_validated = move.quantity if move.picked else 0.0
+            line.move_qty_validated = move._get_picked_quantity() if move.picked else 0.0
 
     @api.depends(
         "move_id",
