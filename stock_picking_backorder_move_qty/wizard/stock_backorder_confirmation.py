@@ -43,9 +43,8 @@ class StockBackorderConfirmation(models.TransientModel):
                     precision_digits=prec,
                 )
                 < 0
-            ]
-
-        return res
+            )
+        )
 
     def process(self):
         prec = self.env["decimal.precision"].precision_get("Product Unit")
