@@ -119,6 +119,17 @@ class TestStockMoveActualDate(TransactionCase):
         )
         self.assertEqual(new_move.actual_date, date(2026, 7, 1))
 
+    @freeze_time("2026-10-29 03:00:00")
+    def test_undated_scrap_ignores_picking_actual_date(self):
+        # An undated scrap must not take its receipt's actual_date.
+        receipt, _move = self.create_picking(date(2024, 9, 1))
+        scrap = self.create_scrap(receipt)
+        self.assertEqual(scrap.move_ids.actual_date, date(2026, 10, 29))
+        self.assertEqual(scrap.move_ids.account_move_ids.date, date(2026, 10, 29))
+        receipt.actual_date = date(2024, 8, 1)
+        self.assertEqual(scrap.move_ids.actual_date, date(2026, 10, 29))
+        self.assertEqual(scrap.move_ids.account_move_ids.date, date(2026, 10, 29))
+
     def test_inventory_adjustment_actual_date(self):
         quant = self.env["stock.quant"].create(
             {

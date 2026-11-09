@@ -33,7 +33,8 @@ class StockMove(models.Model):
             # A move added to a picking that already has an actual_date (e.g. a new
             # PO line creating a move in an existing receipt) should inherit it.
             picking_id = vals.get("picking_id")
-            if picking_id:
+            # Core puts the picking on a scrap move; the scrap's own date wins.
+            if picking_id and not vals.get("scrap_id"):
                 picking = self.env["stock.picking"].browse(picking_id)
                 if picking.actual_date:
                     vals["actual_date_source"] = picking.actual_date
