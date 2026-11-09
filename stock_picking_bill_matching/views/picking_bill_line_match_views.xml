@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="picking_bill_line_match_search" model="ir.ui.view">
+        <field name="name">picking.bill.line.match.search</field>
+        <field name="model">picking.bill.line.match</field>
+        <field name="arch" type="xml">
+            <search string="Search Matching Lines">
+                <filter
+                    string="Unmatched"
+                    name="unmatched"
+                    domain="[('unmatched_qty', '&gt;', 0.001)]"
+                />
+                <filter
+                    string="Matched (Partial/Full)"
+                    name="matched"
+                    domain="[('is_matched', '=', True)]"
+                />
+                <separator />
+                <filter
+                    string="Vendor Bills"
+                    name="type_bill"
+                    domain="[('line_type', '=', 'vendor_bill')]"
+                />
+                <filter
+                    string="Receipts"
+                    name="type_receipt"
+                    domain="[('line_type', '=', 'stock_move')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Product"
+                        name="group_product"
+                        context="{'group_by':'product_id'}"
+                    />
+                    <filter
+                        string="Type"
+                        name="group_type"
+                        context="{'group_by':'line_type'}"
+                    />
+                    <filter
+                        string="Document"
+                        name="group_document"
+                        context="{'group_by':'reference'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="picking_bill_line_match_tree" model="ir.ui.view">
+        <field name="name">picking.bill.line.match.tree</field>
+        <field name="model">picking.bill.line.match</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-info="line_type == 'vendor_bill'"
+                decoration-warning="line_type == 'stock_move' and not is_done"
+                decoration-success="is_done == True or is_matched == True"
+                decoration-muted="state in ['draft', 'cancel']"
+                create="0"
+                delete="0"
+            >
+
+                <header>
+                    <!-- Buttons are always visible now -->
+                    <button
+                        name="action_match_lines"
+                        type="object"
+                        string="Match Selected"
+                        class="btn btn-primary"
+                        invisible="context.get('hide_match')"
+                    />
+                    <button
+                        name="action_unmatch_lines"
+                        type="object"
+                        string="Unmatch Selected"
+                        class="btn btn-secondary"
+                        invisible="context.get('hide_unmatch')"
+                    />
+                    <button
+                        name="action_add_to_picking"
+                        type="object"
+                        string="Create / Add to Picking"
+                        class="btn btn-info"
+                        invisible="context.get('hide_match')"
+                    />
+                </header>
+
+                <field name="product_id" invisible="1" />
+                <field name="sm_id" invisible="1" />
+                <field name="aml_id" invisible="1" />
+                <field name="state" invisible="1" />
+                <field name="is_matched" invisible="1" />
+                <field name="is_done" invisible="1" />
+
+                <!-- Badges and Clear Identification -->
+                <field
+                    name="line_type"
+                    widget="badge"
+                    decoration-info="line_type == 'vendor_bill'"
+                    decoration-warning="line_type == 'stock_move'"
+                />
+                <field name="reference" />
+                <field name="matching_reference" string="Match Ref." optional="show" />
+                <button
+                    name="action_open_line"
+                    type="object"
+                    string="View"
+                    icon="fa-eye"
+                />
+
+                <!-- Data -->
+                <field name="product_id" string="Product" />
+                <field name="line_qty" string="Initial Qty" />
+                <field name="unmatched_qty" string="Unmatched Qty" />
+                <field name="line_uom_id" string="UoM" />
+                <field
+                    name="line_amount_untaxed"
+                    string="Amount Untaxed"
+                    widget="monetary"
+                    sum="Total"
+                />
+
+                <field name="currency_id" invisible="1" />
+                <field name="partner_id" string="Partner" optional="hide" />
+            </tree>
+        </field>
+    </record>
+</odoo>
