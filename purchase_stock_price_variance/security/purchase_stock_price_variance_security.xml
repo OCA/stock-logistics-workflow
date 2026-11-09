@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="group_manage_price_variance_check" model="res.groups">
+        <field name="name">Manage Price Variance Check</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('stock.group_stock_user'))]"
+        />
+    </record>
+</odoo>
