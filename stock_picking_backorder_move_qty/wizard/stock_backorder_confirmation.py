@@ -59,7 +59,7 @@ class StockBackorderConfirmation(models.TransientModel):
                 for wiz_line in self.backorder_confirmation_move_line_ids
             )
             or len(self.backorder_confirmation_move_line_ids)
-            != len(self.pick_ids.move_ids)
+            != len(self._default_get_backorder_wizard_moves(self.pick_ids))
         ):
             moves_qty_to_backorder = {
                 wiz_line.move_id.id: wiz_line.qty_to_backorder
