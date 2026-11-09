@@ -25,7 +25,7 @@ class StockMoveValuationUsage(models.Model):
         help="Outgoing stock move that consumed from the source move",
         required=False,
     )
-    company_id = fields.Many2one("res.company", "Company", readonly=True, required=True)
+    company_id = fields.Many2one("res.company", readonly=True, required=True)
     quantity = fields.Float(string="Taken Quantity")
     value = fields.Float(string="Taken Value")
 
