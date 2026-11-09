@@ -1067,6 +1067,97 @@ class TestRoutingPull(TestRoutingPullCommon):
             remaining_deliveries.location_id, self.wh.wh_output_stock_loc_id
         )
 
+    def test_change_dest_move_source_multiple_products(self):
+        """Keep quantity budgets independent when routing several products."""
+        area1 = self.env["stock.location"].create(
+            {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "Area1"}
+        )
+        self.pick_type_routing_op.default_location_dest_id = area1
+        pick_type_routing_delivery = self.env["stock.picking.type"].create(
+            {
+                "name": "Delivery (after routing)",
+                "code": "outgoing",
+                "sequence_code": "OUT(R)",
+                "warehouse_id": self.wh.id,
+                "use_create_lots": False,
+                "use_existing_lots": True,
+                "default_location_src_id": area1.id,
+                "default_location_dest_id": self.customer_loc.id,
+            }
+        )
+        self.env["stock.routing"].create(
+            {
+                "location_id": area1.id,
+                "picking_type_id": self.wh.out_type_id.id,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "method": "pull",
+                            "picking_type_id": pick_type_routing_delivery.id,
+                        },
+                    )
+                ],
+            }
+        )
+
+        pickings = self.env["stock.picking"]
+        moves_by_product = {}
+        for product in (self.product1, self.product2):
+            pick_picking1, customer_picking1 = self._create_pick_ship(
+                self.wh, [(product, 4)]
+            )
+            pick_picking2, customer_picking2 = self._create_pick_ship(
+                self.wh, [(product, 4)]
+            )
+            move_1 = pick_picking1.move_ids
+            remaining_move = pick_picking2.move_ids
+            delivery_move1 = customer_picking1.move_ids
+            delivery_move2 = customer_picking2.move_ids
+            move_1.write(
+                {
+                    "product_uom_qty": 6,
+                    "move_dest_ids": [
+                        (4, delivery_move1.id),
+                        (4, delivery_move2.id),
+                    ],
+                }
+            )
+            remaining_move.write(
+                {
+                    "product_uom_qty": 2,
+                    "move_dest_ids": [
+                        (4, delivery_move1.id),
+                        (4, delivery_move2.id),
+                    ],
+                }
+            )
+            pickings |= pick_picking1 | pick_picking2
+            moves_by_product[product] = (move_1, remaining_move)
+            self._update_product_qty_in_location(self.location_hb_1_2, product, 6)
+            self._update_product_qty_in_location(self.location_shelf_1, product, 2)
+
+        # Assign all products together so their destination moves are processed
+        # by the same _routing_pull_switch_source call.
+        pickings.action_assign()
+
+        for product, (move_1, remaining_move) in moves_by_product.items():
+            with self.subTest(product=product.name):
+                routed_deliveries = move_1.move_dest_ids
+                remaining_deliveries = remaining_move.move_dest_ids
+                self.assertEqual(len(routed_deliveries), 2)
+                self.assertEqual(
+                    sorted(routed_deliveries.mapped("product_qty")), [2, 4]
+                )
+                self.assertEqual(routed_deliveries.location_id, area1)
+                self.assertEqual(len(remaining_deliveries), 1)
+                self.assertEqual(remaining_deliveries.product_qty, 2)
+                self.assertEqual(
+                    remaining_deliveries.location_id, self.wh.wh_output_stock_loc_id
+                )
+                self.assertEqual(len(routed_deliveries | remaining_deliveries), 3)
+
     def test_change_dest_move_source_chain(self):
         location_qa = self.env["stock.location"].create(
             {"location_id": self.wh.wh_output_stock_loc_id.id, "name": "QA"}
