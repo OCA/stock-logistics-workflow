@@ -23,10 +23,20 @@ class StockBackorderConfirmation(models.TransientModel):
 
             res["backorder_confirmation_move_line_ids"] = [
                 (0, 0, {"move_id": move.id})
-                for move in pickings.move_ids
-                # Use same condition as in stock.picking._check_backorder to ignore
-                #  fully picked lines
-                if (move.product_uom_qty and not move.picked)
+                for move in self._default_get_backorder_wizard_moves(pickings)
+            ]
+
+        return res
+
+    @api.model
+    def _default_get_backorder_wizard_moves(self, pickings):
+        """Return the moves Odoo will backorder, mirroring
+        ``stock.picking._check_backorder``."""
+        prec = self.env["decimal.precision"].precision_get("Product Unit")
+        return pickings.move_ids.filtered(
+            lambda move: move.state != "cancel"
+            and (
+                (move.product_uom_qty and not move.picked)
                 or float_compare(
                     move._get_picked_quantity(),
                     move.product_uom_qty,
