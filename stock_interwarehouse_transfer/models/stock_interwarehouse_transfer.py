@@ -67,7 +67,6 @@ class StockInterwarehouseTransfer(models.Model):
     )
     reference_id = fields.Many2one(
         "stock.reference",
-        string="Reference",
         copy=False,
     )
     state = fields.Selection(
