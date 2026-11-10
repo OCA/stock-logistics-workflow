@@ -6,109 +6,111 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-11-10 22:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
 msgid "<span class=\"mr-sm-2\">Move State:</span>"
-msgstr ""
+msgstr "<span class=\"mr-sm-2\">Stato movimento:</span>"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
 msgid "<span class=\"sr-only\">-</span>"
-msgstr ""
+msgstr "<span class=\"sr-only\">-</span>"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
 msgid "<span class=\"sr-only\">Date: </span>"
-msgstr ""
+msgstr "<span class=\"sr-only\">Data: </span>"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
 msgid "All"
-msgstr ""
+msgstr "Tutti"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_stock_operations_owner_template
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Available"
-msgstr ""
+msgstr "Disponibile"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Cancelled"
-msgstr ""
+msgstr "Annullato"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Done"
-msgstr ""
+msgstr "Completato"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
 msgid "Follow your consigned pickings"
-msgstr ""
+msgstr "Segui i tuoi prelievi in conto deposito"
 
 #. module: stock_picking_portal_owner
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_menu_owner_stock_operations
 #: model_terms:ir.ui.view,arch_db:stock_picking_portal_owner.portal_my_home_owner_stock_operations
 msgid "My Consigned Pickings"
-msgstr ""
+msgstr "I miei prelievi in conto deposito"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "Nuovo"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Partially Available"
-msgstr ""
+msgstr "Parzialmente disponibile"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Stock Operation viewed by customer %s"
-msgstr ""
+msgstr "Operazione di magazzino visualizzata dal cliente %s"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Waiting Another Move"
-msgstr ""
+msgstr "In attesa di un altro movimento"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "Waiting Availability"
-msgstr ""
+msgstr "In attesa di disponibilità"
 
 #. module: stock_picking_portal_owner
 #. odoo-python
 #: code:addons/stock_picking_portal_owner/controllers/portal.py:0
 #, python-format
 msgid "You don't have the access rights to Stock Operations."
-msgstr ""
+msgstr "Non hai i diritti di accesso alle operazioni di magazzino."
