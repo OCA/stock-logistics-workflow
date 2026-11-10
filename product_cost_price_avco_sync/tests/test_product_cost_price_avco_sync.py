@@ -4,7 +4,7 @@
 import logging
 from time import sleep
 
-from odoo.tests.common import tagged
+from odoo.tests import Form, tagged
 
 from odoo.addons.base.tests.common import BaseCommon
 
@@ -634,6 +634,57 @@ class TestProductCostPriceAvcoSync(BaseCommon):
             f"After restore initial values Quant:{quant.quantity} "
             f"Standard Price:{quant.product_id.standard_price}"
         )
+
+    def _validate_picking(self, p_type, qty, price_unit=0.0):
+        picking = (self.picking_in if p_type == "IN" else self.picking_out).copy()
+        move = picking.move_ids
+        move.write({"product_uom_qty": qty, "price_unit": price_unit})
+        picking.action_confirm()
+        move.quantity = qty
+        move.picked = True
+        picking.button_validate()
+        return move
+
+    def _return_move(self, move, qty):
+        return_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_id=move.picking_id.id, active_model="stock.picking"
+            )
+        )
+        with return_form.product_return_moves.edit(0) as line:
+            line.quantity = qty
+        action = return_form.save().action_create_returns()
+        return_picking = self.env["stock.picking"].browse(action["res_id"])
+        return_picking.move_ids.quantity = qty
+        return_picking.move_ids.picked = True
+        return_picking.button_validate()
+        return return_picking.move_ids
+
+    def test_return_keeps_returned_move_cost(self):
+        """A return comes back with the cost of the returned delivery, as core
+        does, also after replaying the chain, and sets the cost when there is
+        no stock to average with."""
+        move_in_1 = self._validate_picking("IN", 10.0, price_unit=5.0)
+        move_out_1 = self._validate_picking("OUT", 10.0)
+        self._validate_picking("IN", 10.0, price_unit=8.0)
+        self._validate_picking("OUT", 10.0)
+        self.assertAlmostEqual(self.product.standard_price, 8.0, 2)
+        # Return with stock at zero: core values it and sets the cost
+        return_1 = self._return_move(move_out_1, 2.0)
+        self.assertAlmostEqual(return_1.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 5.0, 2)
+        # Leave the stock negative and return more with it
+        self._validate_picking("OUT", 5.0)
+        return_2 = self._return_move(move_out_1, 3.0)
+        self.assertAlmostEqual(return_2.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 5.0, 2)
+        # Replaying the chain keeps what core did
+        move_in_1.stock_valuation_layer_ids.action_force_avco_sync()
+        self.assertAlmostEqual(return_1.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(return_2.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 5.0, 2)
+        self.assertAlmostEqual(self.product.quantity_svl, 0.0, 2)
+        self.assertAlmostEqual(self.product.value_svl, 0.0, 2)
 
     def print_svl(self, char_info=""):
         msg_list = [f"{char_info}"]

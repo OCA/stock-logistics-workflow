@@ -566,10 +566,49 @@ class StockValuationLayer(models.Model):
             and self.description
         )
 
+    def _get_avco_returned_unit_cost(self, svls_dic):
+        """Unit cost of the move this layer returns, or None when the layer is
+        not a return of a move valued in the same chain.
+
+        Core values a return at the cost of the returned move, its layers plus
+        the ones hanging from them (`stock.move._get_price_unit`), and the
+        replay has to do the same: taking the running cost instead makes the
+        value of a return depend on when the chain was last replayed. The
+        returned layers that are part of this replay count with their replayed
+        figures, the earlier ones with what they hold.
+        """
+        self.ensure_one()
+        returned_move = self.stock_move_id.origin_returned_move_id.sudo()
+        if not returned_move:
+            return None
+        key = self._get_avco_sync_key()
+        layers = returned_move.stock_valuation_layer_ids.filtered(
+            lambda x: x._get_avco_sync_key() == key
+        )
+        # Same exclusion as core: dropshipping adds positive layers that do not
+        # take part in the valuation
+        if returned_move._is_dropshipped() or returned_move._is_dropshipped_returned():
+            rounding = self.uom_id.rounding
+            layers = layers.filtered(
+                lambda x: float_compare(x.value, 0.0, precision_rounding=rounding) <= 0
+            )
+        layers |= layers.stock_valuation_layer_ids
+        replayed = svls_dic[key]["svls"]
+        quantity = value = 0.0
+        for layer in layers:
+            layer_data = replayed.get(layer) or layer
+            quantity += layer_data["quantity"]
+            value += layer_data["value"]
+        if float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
+            return None
+        return value / quantity
+
     def _is_avco_valued_at_current_cost(self):
         """Layers whose unit cost is not a purchase price but whatever the
         product was worth when they were created, so replaying the chain has to
-        re-price them instead of averaging them in: returns, inventory
+        re-price them instead of averaging them in: returns of moves that are
+        not valued in the chain (the others come back with the cost of the
+        returned move, see `_get_avco_returned_unit_cost`), inventory
         adjustments, and the layers core writes with no move at all to switch a
         product from one valuation model to another.
         """
@@ -645,12 +684,17 @@ class StockValuationLayer(models.Model):
                 svl_dic["unit_cost_processed"] = True
         # Incoming line in layer
         if f_compare > 0:
-            if self._is_avco_valued_at_current_cost():
+            returned_unit_cost = self._get_avco_returned_unit_cost(svls_dic)
+            if returned_unit_cost is None and self._is_avco_valued_at_current_cost():
                 self._update_avco_svl_values(
                     svl_data, unit_cost=svl_dic["previous_unit_cost"]
                 )
-            # Normal incoming moves
+            # Normal incoming moves, and returns, which come back with the cost
+            # of the returned move and average in like any other receipt: with
+            # no stock on hand they set the cost, as core does
             else:
+                if returned_unit_cost is not None:
+                    self._update_avco_svl_values(svl_data, unit_cost=returned_unit_cost)
                 svl_dic["unit_cost_processed"] = True
                 svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
                     svl_dic["previous_unit_cost"],
