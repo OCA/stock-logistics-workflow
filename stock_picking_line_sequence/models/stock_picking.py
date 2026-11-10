@@ -34,13 +34,20 @@ class StockPicking(models.Model):
                 # Check if the record ID is an integer (real ID)
                 # not NewId
                 if isinstance(line.id, int):
-                    line.sequence = current_sequence
+                    if line.sequence != current_sequence:
+                        line.sequence = current_sequence
                     current_sequence += 1
 
     def copy(self, default=None):
         return super(StockPicking, self.with_context(keep_line_sequence=True)).copy(
             default
         )
+
+    def action_confirm(self):
+        result = super().action_confirm()
+        if not self.env.context.get("keep_line_sequence"):
+            self._reset_sequence()
+        return result
 
     def button_validate(self):
         return super(
