@@ -1,0 +1,6 @@
+- Sandra Figueroa Varela \<<sandrafigvar@gmail.com>\>
+- Tecnativa \<<https://www.tecnativa.com>\>:
+  - Vicent Cubells
+  - Carlos Roca
+- Nils Coenen \<<nils.coenen@nico-solutions.de>\>
+- Frederic Grall \<<fgr@apik.cloud>>
