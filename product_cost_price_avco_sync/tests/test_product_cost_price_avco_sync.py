@@ -4,7 +4,7 @@
 import logging
 from time import sleep
 
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import Form, TransactionCase, tagged
 
 _logger = logging.getLogger(__name__)
 
@@ -500,6 +500,50 @@ class TestProductCostPriceAvcoSync(TransactionCase):
                 quant.quantity, quant.product_id.standard_price
             )
         )
+
+    def _validate_picking(self, p_type, qty, price_unit=0.0):
+        picking = (self.picking_in if p_type == "IN" else self.picking_out).copy()
+        move = picking.move_lines
+        move.write({"product_uom_qty": qty, "price_unit": price_unit})
+        picking.action_confirm()
+        move.quantity_done = qty
+        picking.button_validate()
+        return move
+
+    def _return_move(self, move, qty):
+        return_form = Form(
+            self.env["stock.return.picking"].with_context(
+                active_id=move.picking_id.id, active_model="stock.picking"
+            )
+        )
+        with return_form.product_return_moves.edit(0) as line:
+            line.quantity = qty
+        action = return_form.save().create_returns()
+        return_picking = self.env["stock.picking"].browse(action["res_id"])
+        return_picking.move_lines.quantity_done = qty
+        return_picking.button_validate()
+        return return_picking.move_lines
+
+    def test_return_keeps_returned_move_cost(self):
+        """A return comes back with the cost of the returned delivery, as core
+        does, also when it is validated with negative stock and the whole chain
+        is replayed."""
+        self._validate_picking("IN", 10.0, price_unit=5.0)
+        move_out_1 = self._validate_picking("OUT", 10.0)
+        self._validate_picking("IN", 10.0, price_unit=8.0)
+        self._validate_picking("OUT", 10.0)
+        self.assertAlmostEqual(self.product.standard_price, 8.0, 2)
+        # Return with stock at zero: no replay, core values it
+        return_1 = self._return_move(move_out_1, 2.0)
+        self.assertAlmostEqual(return_1.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 5.0, 2)
+        # Leave the stock negative, so the next return replays the chain
+        self._validate_picking("OUT", 5.0)
+        return_2 = self._return_move(move_out_1, 3.0)
+        self.assertAlmostEqual(return_1.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(return_2.stock_valuation_layer_ids.unit_cost, 5.0, 2)
+        self.assertAlmostEqual(self.product.standard_price, 5.0, 2)
+        self.assertAlmostEqual(self.product.value_svl, 0.0, 2)
 
     def print_svl(self, char_info=""):
         msg_list = ["{}".format(char_info)]

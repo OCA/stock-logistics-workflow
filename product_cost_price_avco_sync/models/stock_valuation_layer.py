@@ -144,6 +144,29 @@ class StockValuationLayer(models.Model):
             else unit_cost
         )
 
+    def _get_avco_returned_unit_cost(self, svls_dic):
+        """Unit cost of the move this layer returns, as replayed so far, or None
+        when the layer is not a return of a move with layers in the replay.
+
+        Core values a return at the cost of the returned move
+        (`stock.move._get_price_unit`), so the replay has to do the same instead
+        of taking the running cost, or the value of a return would depend on
+        whether there was negative stock when it was validated.
+        """
+        self.ensure_one()
+        returned_move = self.stock_move_id.origin_returned_move_id.sudo()
+        origin_layers = returned_move.stock_valuation_layer_ids.filtered(
+            lambda layer: layer in svls_dic
+        )
+        quantity = sum(svls_dic[layer]["quantity"] for layer in origin_layers)
+        if float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
+            return None
+        value = sum(
+            svls_dic[layer]["quantity"] * svls_dic[layer]["unit_cost"]
+            for layer in origin_layers
+        )
+        return value / quantity
+
     def vacumm_avco_svl(self, qty, svls_dic, vacuum_dic):
         self.ensure_one()
         svl_dic = svls_dic[self]
@@ -345,12 +368,20 @@ class StockValuationLayer(models.Model):
                 # Incoming line in layer
                 elif f_compare > 0:
                     total_qty = previous_qty + qty
-                    # Return moves
-                    if not svl.stock_move_id or svl.stock_move_id.move_orig_ids:
+                    returned_unit_cost = svl._get_avco_returned_unit_cost(svls_dic)
+                    if returned_unit_cost is not None:
+                        # Return of a valued move: it comes back with the cost
+                        # the returned move left with, as core values returns
+                        unit_cost = returned_unit_cost
+                        svl.update_avco_svl_values(svl_dic, unit_cost=unit_cost)
+                    # Moves chained to a previous one without a returned cost
+                    if returned_unit_cost is None and (
+                        not svl.stock_move_id or svl.stock_move_id.move_orig_ids
+                    ):
                         svl.update_avco_svl_values(
                             svl_dic, unit_cost=previous_unit_cost
                         )
-                    # Normal incoming moves
+                    # Normal incoming moves and returns
                     else:
                         unit_cost_processed = True
                         if previous_qty <= 0.0:
