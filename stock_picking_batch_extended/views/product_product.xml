@@ -1,0 +1,15 @@
+<odoo>
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.normal.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <field name="description_picking" position="attributes">
+                <attribute
+                    name="placeholder"
+                >This note will show up on the batch picking printout.</attribute>
+                <attribute name="nolabel">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
