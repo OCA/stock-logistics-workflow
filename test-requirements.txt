@@ -1,0 +1,1 @@
+odoo-addon-base_line_numbering @ git+https://github.com/OCA/server-ux.git@refs/pull/1398/head#subdirectory=base_line_numbering
