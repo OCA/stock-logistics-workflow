@@ -240,3 +240,27 @@ class TestSourceRelocate(SourceRelocateCommon):
                 }
             ],
         )
+
+    def test_rule_display_name(self):
+        rules = self.env["stock.source.relocate"].create(
+            [
+                {
+                    "location_id": self.wh.lot_stock_id.id,
+                    "picking_type_id": self.wh.pick_type_id.id,
+                    "relocate_location_id": self.loc_replenish.id,
+                },
+                {
+                    "location_id": self.loc_shelf.id,
+                    "picking_type_id": self.wh.pick_type_id.id,
+                    "relocate_location_id": self.loc_shelf_1.id,
+                },
+            ]
+        )
+        self.assertEqual(
+            rules.mapped("display_name"),
+            [
+                f"{self.wh.lot_stock_id.display_name} → "
+                f"{self.loc_replenish.display_name}",
+                f"{self.loc_shelf.display_name} → {self.loc_shelf_1.display_name}",
+            ],
+        )
