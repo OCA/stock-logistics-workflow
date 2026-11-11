@@ -1,0 +1,218 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_responsible_auto_assign
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-27 22:36+0000\n"
+"PO-Revision-Date: 2026-10-27 22:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_responsible_auto_assign
+#. odoo-python
+#: code:addons/stock_picking_responsible_auto_assign/models/stock_picking.py:0
+msgid ""
+"%(pickings)s: already in progress, change the responsible by hand if you "
+"really want to take it away from %(users)s."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_res_users__picking_assign_available
+msgid "Available for Picking Assignment"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_same_user
+msgid ""
+"Copy the responsible of the previous transfer instead of balancing the "
+"workload within the pool of this operation type."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_res_users__display_name
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking__next_picking_id
+msgid ""
+"First chained transfer that follows this one, e.g. the pack of what this "
+"transfer picks."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_res_users__id
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__is_in_progress
+#: model_terms:ir.ui.view,arch_db:stock_picking_responsible_auto_assign.view_picking_internal_search
+msgid "In Progress"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_user_ids
+msgid ""
+"Internal users that receive the transfers of this operation type "
+"automatically, e.g. warehouse operators restricted to their operation types."
+" The transfer goes to the user with the lowest pending workload."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_mode__manual
+msgid "Manual"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_mode
+msgid ""
+"Manual: nothing is assigned automatically.\n"
+"When the transfer is ready: assign the responsible as soon as the transfer is reserved.\n"
+"Together with the previous operation: assign the responsible when the chained previous transfer (e.g. pick before pack) gets its own responsible, so both users are known from the start."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_max_pending
+msgid "Max Pending Transfers per User"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__next_picking_id
+msgid "Next Operation"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__next_picking_user_id
+msgid "Next Operation Responsible"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_load__moves
+msgid "Number of lines"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_load__pickings
+msgid "Number of transfers"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking__picking_progress
+msgid "Picked lines over the lines of the transfer."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model,name:stock_picking_responsible_auto_assign.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking__picking_progress
+msgid "Progress"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_load__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking__is_in_progress
+msgid ""
+"Ready transfer where the operator already picked some lines (e.g. scanned "
+"them in the barcode app) but did not validate yet."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.actions.server,name:stock_picking_responsible_auto_assign.action_picking_auto_assign_responsible
+msgid "Reassign Responsible"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_mode
+#: model_terms:ir.ui.view,arch_db:stock_picking_responsible_auto_assign.view_picking_type_form
+msgid "Responsible Assignment"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_user_ids
+msgid "Responsible Pool"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking__next_picking_user_id
+msgid ""
+"Responsible of the next operation, e.g. who packs what this transfer picks. "
+"Changing it changes the responsible of that transfer."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_same_user
+msgid "Same Responsible as Previous Operation"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model,name:stock_picking_responsible_auto_assign.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_mode__previous
+msgid "Together with the previous operation"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model,name:stock_picking_responsible_auto_assign.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_max_pending
+msgid ""
+"Transfers a user can have pending at the same time. Beyond it the transfer "
+"waits unassigned and is handed out when the user finishes one, so the work "
+"flows as a queue. 0 means no limit."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_res_users__picking_assign_available
+msgid ""
+"Uncheck it when the user is absent: the automatic assignment of transfers "
+"will skip this user until it is checked again."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model,name:stock_picking_responsible_auto_assign.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,help:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_load
+msgid ""
+"What is summed over the pending transfers of each user to pick the least "
+"loaded one."
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields.selection,name:stock_picking_responsible_auto_assign.selection__stock_picking_type__responsible_assign_mode__ready
+msgid "When the transfer is ready"
+msgstr ""
+
+#. module: stock_picking_responsible_auto_assign
+#: model:ir.model.fields,field_description:stock_picking_responsible_auto_assign.field_stock_picking_type__responsible_assign_load
+msgid "Workload Measure"
+msgstr ""
