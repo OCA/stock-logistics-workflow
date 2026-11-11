@@ -1,0 +1,5 @@
+- [Camptocamp](https://www.camptocamp.com):
+  - Akim Juillerat \<<akim.juillerat@camptocamp.com>\>
+  - Ricardo Almeida Soares \<<ricardo.almeidasoares@camptocamp.com>\>
+  - Iván Todorovich \<<ivan.todorovich@camptocamp.com>\>
+  - Simone Orsi \<<simone.orsi@camptocamp.com>\>
