@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_move_tree_inherited_inherit" model="ir.ui.view">
+        <field name="name">stock_picking_batch.picking.move.list.inherit</field>
+        <field name="model">stock.move</field>
+        <field
+            name="inherit_id"
+            ref="stock_picking_batch.view_picking_move_tree_inherited"
+        />
+        <field name="arch" type="xml">
+            <!-- List the moves in batch position order, grouped per transfer -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="default_order">batch_position</attribute>
+            </xpath>
+            <field name="product_id" position="before">
+                <field name="batch_position" />
+            </field>
+        </field>
+    </record>
+    <record
+        id="stock_picking_batch_action_renumber_positions"
+        model="ir.actions.server"
+    >
+        <field name="name">Renumber positions</field>
+        <field name="model_id" ref="stock_picking_batch.model_stock_picking_batch" />
+        <field
+            name="binding_model_id"
+            ref="stock_picking_batch.model_stock_picking_batch"
+        />
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field
+            name="group_ids"
+            eval="[Command.link(ref('stock.group_stock_manager'))]"
+        />
+        <field name="code">
+        for rec in records:
+            rec.action_renumber_lines_positions()</field>
+    </record>
+</odoo>
