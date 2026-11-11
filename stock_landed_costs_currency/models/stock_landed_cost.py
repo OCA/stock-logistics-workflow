@@ -13,6 +13,14 @@ class LandedCost(models.Model):
         default=lambda self: self.env.company.currency_id,
     )
 
+    company_currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        related="company_id.currency_id",
+        string="Company Currency",
+    )
+
+    amount_total = fields.Monetary(currency_field="company_currency_id")
+
     @api.onchange("account_journal_id")
     def _onchange_account_journal_id(self):
         if self.account_journal_id and self.account_journal_id.currency_id:
