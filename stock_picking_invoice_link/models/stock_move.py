@@ -15,7 +15,6 @@ class StockMove(models.Model):
         relation="stock_move_invoice_line_rel",
         column1="move_id",
         column2="invoice_line_id",
-        string="Invoice Line",
         copy=False,
         readonly=True,
     )
