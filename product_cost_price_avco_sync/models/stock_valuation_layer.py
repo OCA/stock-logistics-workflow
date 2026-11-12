@@ -295,7 +295,58 @@ class StockValuationLayer(models.Model):
             vals["remaining_qty"] = self.remaining_qty + fifo_vals.get(
                 "remaining_qty", 0.0
             )
+        elif float_compare(quantity_diff, 0.0, precision_digits=precision_qty) > 0:
+            # Fewer units leaving: they are on hand again. They first settle
+            # what this layer still owed to the negative stock vacuum, and the
+            # rest goes back to the receipts the outgoing moves took them from.
+            remaining = self.remaining_qty + quantity_diff
+            if float_compare(remaining, 0.0, precision_digits=precision_qty) > 0:
+                remaining = self._give_back_avco_remaining_qty(remaining)
+                vals["remaining_value"] = remaining * self.unit_cost
+            vals["remaining_qty"] = remaining
         self.write(vals)
+
+    def _give_back_avco_remaining_qty(self, quantity):
+        """Put `quantity` units back on hand in the incoming layers of the
+        chain, undoing what the outgoing moves took from them, and return what
+        did not fit.
+
+        Odoo takes the units of an outgoing move from the oldest layers that
+        still have some (`product._run_fifo`), so what has been taken is always
+        the oldest part of the chain. Giving the units back from the newest
+        layer that had some taken keeps it that way. Whatever does not fit
+        stays on the outgoing layer, which is where the correction layer Odoo
+        would have created would hold it.
+        """
+        self.ensure_one()
+        precision_qty = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        candidates = (
+            self.env["stock.valuation.layer"]
+            .sudo()
+            .search(
+                self._get_avco_chain_domain()
+                + [("quantity", ">", 0), ("stock_valuation_layer_id", "=", False)],
+                order="create_date desc, id desc",
+            )
+        )
+        for candidate in candidates:
+            taken = candidate.quantity - candidate.remaining_qty
+            if float_compare(taken, 0.0, precision_digits=precision_qty) <= 0:
+                continue
+            given_back = min(taken, quantity)
+            candidate.write(
+                {
+                    "remaining_qty": candidate.remaining_qty + given_back,
+                    "remaining_value": candidate.remaining_value
+                    + given_back * candidate.unit_cost,
+                }
+            )
+            quantity -= given_back
+            if float_is_zero(quantity, precision_digits=precision_qty):
+                return 0.0
+        return quantity
 
     def _get_manual_adjustment_price(self):
         """Return the cost a manual adjustment layer was created for, or None.

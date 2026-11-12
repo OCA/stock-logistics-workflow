@@ -686,6 +686,50 @@ class TestProductCostPriceAvcoSync(BaseCommon):
         self.assertAlmostEqual(self.product.quantity_svl, 0.0, 2)
         self.assertAlmostEqual(self.product.value_svl, 0.0, 2)
 
+    def _assert_remaining(self, quantity, value):
+        layers = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", self.product.id)]
+        )
+        self.assertAlmostEqual(sum(layers.mapped("remaining_qty")), quantity, 2)
+        self.assertAlmostEqual(sum(layers.mapped("remaining_value")), value, 2)
+
+    def test_reduced_vendor_return_gives_units_back(self):
+        """A vendor return whose done quantity is set to zero afterwards puts
+        the units back on hand, so the remaining quantity the stock valuation
+        report shows matches the stock again."""
+        move_in = self._validate_picking("IN", 100.0, price_unit=22.11)
+        return_move = self._return_move(move_in, 100.0)
+        self._assert_remaining(0.0, 0.0)
+        return_move.move_line_ids.quantity = 0.0
+        self.assertAlmostEqual(return_move.stock_valuation_layer_ids.quantity, 0.0, 2)
+        self.assertAlmostEqual(self.product.quantity_svl, 100.0, 2)
+        self.assertAlmostEqual(self.product.value_svl, 2211.0, 2)
+        self._assert_remaining(100.0, 2211.0)
+        self.assertAlmostEqual(self.product.standard_price, 22.11, 2)
+
+    def test_reduced_delivery_gives_units_back_newest_first(self):
+        """The units a reduced delivery gives back return to the newest
+        receipts it took them from, so the next delivery takes them in the
+        same order Odoo would have."""
+        move_in_1 = self._validate_picking("IN", 10.0, price_unit=5.0)
+        move_in_2 = self._validate_picking("IN", 10.0, price_unit=8.0)
+        move_out = self._validate_picking("OUT", 15.0)
+        self.assertAlmostEqual(move_in_2.stock_valuation_layer_ids.remaining_qty, 5.0)
+        move_out.move_line_ids.quantity = 5.0
+        self.assertAlmostEqual(move_in_1.stock_valuation_layer_ids.remaining_qty, 5.0)
+        self.assertAlmostEqual(move_in_2.stock_valuation_layer_ids.remaining_qty, 10.0)
+        self._assert_remaining(15.0, 105.0)
+        self.assertAlmostEqual(self.product.quantity_svl, 15.0, 2)
+
+    def test_reduced_oversold_delivery_settles_its_deficit(self):
+        """Reducing a delivery made without stock first cancels the deficit it
+        left for the negative stock vacuum, without inventing stock."""
+        move_out = self._validate_picking("OUT", 5.0)
+        self.assertAlmostEqual(move_out.stock_valuation_layer_ids.remaining_qty, -5.0)
+        move_out.move_line_ids.quantity = 2.0
+        self.assertAlmostEqual(move_out.stock_valuation_layer_ids.remaining_qty, -2.0)
+        self.assertAlmostEqual(self.product.quantity_svl, -2.0, 2)
+
     def print_svl(self, char_info=""):
         msg_list = [f"{char_info}"]
         total_qty = total_value = 0.0
