@@ -60,3 +60,4 @@ class StockPicking(models.Model):
         # so we don't have to create a backorder if a move is missing
         if "date_backdating" not in self.env.context:
             return super()._create_backorder()
+        return self.env["stock.picking"].browse()
