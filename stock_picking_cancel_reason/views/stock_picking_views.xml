@@ -11,21 +11,21 @@
             <xpath expr="//button[@name='action_cancel']" position="before">
                 <button
                     name="%(action_stock_picking_cancel)d"
-                    states="assigned,confirmed,partially_available,draft,waiting)"
+                    invisible="state not in ('assigned', 'confirmed', 'draft', 'waiting')"
                     string="Cancel"
                     type="action"
                     groups="base.group_user"
                 />
             </xpath>
             <xpath expr="/form/sheet/div/h1" position="after">
-                <div attrs="{'invisible': [('state', '!=', 'cancel')]}">
+                <div invisible="state != 'cancel'">
                     <label for="cancel_reason_id" string="Cancellation reason:" />
                     <field
                         name="cancel_reason_id"
                         class="oe_inline"
                         options='{"no_open": True}'
                     />
-                    <div attrs="{'invisible': [('cancel_description', '=', False)]}">
+                    <div invisible="not cancel_description">
                         <label for="cancel_description" string="Description:" />
                         <field name="cancel_description" />
                     </div>
@@ -44,8 +44,9 @@
                         name="web_ribbon"
                         title="Archived"
                         bg_color="bg-danger"
-                        attrs="{'invisible': [('active', '=', True)]}"
+                        invisible="active"
                     />
+                    <!-- Required by the archived ribbon modifier. -->
                     <field name="active" invisible="True" />
                     <group>
                         <field name="name" />
@@ -59,9 +60,9 @@
         <field name="name">Stock Picking Cancel Reason</field>
         <field name="model">stock.picking.cancel.reason</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -83,7 +84,7 @@
     <record id="action_stock_picking_cancel_reason" model="ir.actions.act_window">
         <field name="name">Stock Picking Cancel Reason</field>
         <field name="res_model">stock.picking.cancel.reason</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem

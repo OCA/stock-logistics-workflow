@@ -11,7 +11,7 @@ class StockPickingCancel(models.TransientModel):
     reason_id = fields.Many2one(
         comodel_name="stock.picking.cancel.reason", string="Reason", required=True
     )
-    description = fields.Text(string="Description")
+    description = fields.Text()
 
     def confirm_cancel(self):
         self.ensure_one()
