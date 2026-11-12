@@ -15,12 +15,11 @@
                 </group>
                 <footer>
                     <button
-                    name="confirm_cancel"
-                    string="Confirm"
-                    type="object"
-                    class="oe_highlight"
-                />
-                    or
+                        name="confirm_cancel"
+                        string="Confirm"
+                        type="object"
+                        class="oe_highlight"
+                    />
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </form>

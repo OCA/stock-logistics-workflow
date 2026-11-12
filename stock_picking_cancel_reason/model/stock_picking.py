@@ -11,10 +11,11 @@ class StockPicking(models.Model):
         comodel_name="stock.picking.cancel.reason",
         string="Reason for cancellation",
         readonly=True,
+        copy=False,
         ondelete="restrict",
     )
     cancel_description = fields.Text(
-        string="Description for cancellation", readonly=True
+        string="Description for cancellation", readonly=True, copy=False
     )
 
 
