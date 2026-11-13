@@ -104,7 +104,7 @@ addon | version | maintainers | summary
 [stock_picking_origin_reference_purchase](stock_picking_origin_reference_purchase/) | 16.0.1.0.0 |  | Transfer to Purchase Order navigation from the Source Document.
 [stock_picking_origin_reference_sale](stock_picking_origin_reference_sale/) | 16.0.1.0.0 |  | Transfer to Sales Order navigation from the Source Document.
 [stock_picking_partner_note](stock_picking_partner_note/) | 16.0.1.1.0 |  | Add partner notes on picking
-[stock_picking_portal](stock_picking_portal/) | 16.0.1.0.0 |  | Show customer delivery orders in portal
+[stock_picking_portal](stock_picking_portal/) | 16.0.1.0.1 |  | Show customer delivery orders in portal
 [stock_picking_product_assortment](stock_picking_product_assortment/) | 16.0.1.0.0 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Stock Picking Product Assortment
 [stock_picking_product_link](stock_picking_product_link/) | 16.0.1.0.0 | <a href='https://github.com/robinkeunen'><img src='https://github.com/robinkeunen.png' width='32' height='32' style='border-radius:50%;' alt='robinkeunen'/></a> | Adds a "Product" smart button on stock pickings.
 [stock_picking_progress](stock_picking_progress/) | 16.0.1.0.0 | <a href='https://github.com/mmequignon'><img src='https://github.com/mmequignon.png' width='32' height='32' style='border-radius:50%;' alt='mmequignon'/></a> <a href='https://github.com/JuMiSanAr'><img src='https://github.com/JuMiSanAr.png' width='32' height='32' style='border-radius:50%;' alt='JuMiSanAr'/></a> | Compute the stock.picking progression
