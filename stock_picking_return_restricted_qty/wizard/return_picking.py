@@ -19,9 +19,7 @@ class ReturnPicking(models.TransientModel):
     def _create_return(self):
         restrict_return_qty = self.picking_id.picking_type_id.restrict_return_qty
 
-        precision = self.env["decimal.precision"].precision_get(
-            "Product Unit of Measure"
-        )
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         for return_line in self.product_return_moves:
             quantity = return_line.get_returned_restricted_quantity(return_line.move_id)
 
