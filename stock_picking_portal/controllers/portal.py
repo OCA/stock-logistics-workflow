@@ -3,7 +3,7 @@
 
 import binascii
 
-from odoo import _, fields, http
+from odoo import fields, http
 from odoo.exceptions import AccessDenied, AccessError, MissingError, UserError
 from odoo.http import request
 
@@ -83,23 +83,23 @@ class CustomerPortal(portal.CustomerPortal):
 
     def _get_stock_operations_searchbar_sortings(self):
         return {
-            "date": {"label": _("Order Date"), "order": "scheduled_date desc"},
-            "name": {"label": _("Reference"), "order": "name"},
-            "state": {"label": _("State"), "order": "state"},
+            "date": {"label": self.env._("Order Date"), "order": "scheduled_date desc"},
+            "name": {"label": self.env._("Reference"), "order": "name"},
+            "state": {"label": self.env._("State"), "order": "state"},
         }
 
     def _get_stock_operations_searchbar_filters(self):
         return {
             "all": {
-                "label": _("All"),
+                "label": self.env._("All"),
                 "domain": [("picking_type_id.code", "in", ("outgoing", "incoming"))],
             },
             "outgoing": {
-                "label": _("Delivery"),
+                "label": self.env._("Delivery"),
                 "domain": [("picking_type_id.code", "=", "outgoing")],
             },
             "incoming": {
-                "label": _("Receipt"),
+                "label": self.env._("Receipt"),
                 "domain": [("picking_type_id.code", "=", "incoming")],
             },
         }
@@ -111,7 +111,7 @@ class CustomerPortal(portal.CustomerPortal):
         date_end=None,
         sortby=None,
         filterby=None,
-        **kwargs
+        **kwargs,
     ):
         """
         Prepares the value required for rendering the stock operations
@@ -194,15 +194,15 @@ class CustomerPortal(portal.CustomerPortal):
         access_token=None,
         message=False,
         download=False,
-        **kw
+        **kw,
     ):
         """
         Render the stock operation page for a given operation ID.
 
         Args:
             operation_id (int): The ID of the stock operation to render.
-            report_type (str, optional): The type of report to generate for the stock operation.
-                Can be "html", "pdf", or "text". Defaults to None.
+            report_type (str, optional): The type of report to generate for the
+                stock operation. Can be "html", "pdf", or "text". Defaults to None.
             access_token (str, optional): The access token for the stock operation.
                                           Defaults to None.
             message (bool or str, optional): A message to display on the page.
@@ -232,16 +232,16 @@ class CustomerPortal(portal.CustomerPortal):
             or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
         ):
             raise AccessDenied(
-                _("You don't have the access rights to Stock Operations.")
+                self.env._("You don't have the access rights to Stock Operations.")
             )
         if request.env.user.share and access_token:
             today = fields.Date.today().isoformat()
             session_obj_date = request.session.get(
-                "view_stock_operation_%s" % operation_sudo.id
+                f"view_stock_operation_{operation_sudo.id}"
             )
             if session_obj_date != today:
-                request.session["view_stock_operation_%s" % operation_sudo.id] = today
-                msg = _(
+                request.session[f"view_stock_operation_{operation_sudo.id}"] = today
+                msg = self.env._(
                     "Stock Operation viewed by customer %s",
                     (
                         operation_sudo.partner_id.name
@@ -272,7 +272,7 @@ class CustomerPortal(portal.CustomerPortal):
 
     @http.route(
         ["/my/stock_operations/<int:operation_id>/accept"],
-        type="json",
+        type="jsonrpc",
         auth="public",
         website=True,
     )
@@ -287,22 +287,36 @@ class CustomerPortal(portal.CustomerPortal):
             access_token (str, optional): The access token for the portal user.
                 If not provided, it will be retrieved from the query string.
             name (str, optional): The name of the user accepting the operation.
-            signature (str, optional): The signature of the user accepting the operation.
+            signature (str, optional): The signature of the user accepting the
+                operation.
 
         Returns:
-            dict: A dictionary containing the URL to redirect the user to after accepting
-                the operation, and a flag to indicate whether to force a refresh of the
-                page."""
+            dict: A dictionary containing the URL to redirect the user to after
+                accepting the operation, and a flag to indicate whether to force
+                a refresh of the page."""
         access_token = access_token or request.httprequest.args.get("access_token")
         try:
             operation_sudo = self._document_check_access(
                 "stock.picking", operation_id, access_token=access_token
             )
         except (AccessError, MissingError):
-            return {"error": _("Invalid Stock Operation.")}
+            return {"error": self.env._("Invalid Stock Operation.")}
+
+        portal_visible_operation_ids = request.env[
+            "stock.picking"
+        ]._get_available_operations()
+        if (
+            not portal_visible_operation_ids
+            or operation_sudo.picking_type_id.id not in portal_visible_operation_ids
+        ):
+            return {
+                "error": self.env._(
+                    "You don't have the access rights to Stock Operations."
+                )
+            }
 
         if not signature:
-            return {"error": _("Signature is missing.")}
+            return {"error": self.env._("Signature is missing.")}
 
         try:
             operation_sudo.write(
@@ -313,7 +327,7 @@ class CustomerPortal(portal.CustomerPortal):
                 }
             )
         except (TypeError, binascii.Error, UserError):
-            return {"error": _("Invalid signature data.")}
+            return {"error": self.env._("Invalid signature data.")}
 
         pdf = (
             request.env["ir.actions.report"]
@@ -322,11 +336,11 @@ class CustomerPortal(portal.CustomerPortal):
         )
 
         operation_sudo.with_context(mail_create_nosubscribe=True).message_post(
-            body=_("Stock Operation signed by %s", name),
+            body=self.env._("Stock Operation signed by %s", name),
             message_type="comment",
             subtype_xmlid="mail.mt_comment",
             author_id=self._get_portal_message_author_id(operation_sudo),
-            attachments=[("%s.pdf" % operation_sudo.name, pdf)],
+            attachments=[(f"{operation_sudo.name}.pdf", pdf)],
         )
         query_string = "&message=sign_ok"
         return {

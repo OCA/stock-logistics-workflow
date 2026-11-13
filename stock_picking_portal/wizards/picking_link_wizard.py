@@ -10,15 +10,6 @@ class PickingLinkWizard(models.TransientModel):
     _name = "picking.link.wizard"
     _description = "Generate signature link"
 
-    @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
-        res_id = self.env.context.get("active_id")
-        res_model = self.env.context.get("active_model")
-        if res_id and res_model:
-            res.update({"res_model": res_model, "res_id": res_id})
-        return res
-
     picking_id = fields.Many2one(
         "stock.picking",
         string="Picking",

@@ -10,9 +10,9 @@ from odoo import Command
 from odoo.http import Request
 from odoo.tests import HttpCase, tagged
 
+from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.portal.controllers import portal
 from odoo.addons.stock_picking_portal.controllers.portal import CustomerPortal
-from odoo.addons.website.tools import MockRequest
 
 
 @tagged("post_install", "-at_install")
@@ -52,7 +52,7 @@ class TestStockPickingPortal(HttpCase):
                     "email": user,
                     "name": user,
                     "password": user,
-                    "groups_id": [Command.set([portal_group.id])],
+                    "group_ids": [Command.set([portal_group.id])],
                 }
             )
         )
@@ -101,12 +101,12 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_1(self):
-        """Ensure that it is possible to open Stock Operations, either using the access token
-        or being connected as portal user"""
+        """Ensure that it is possible to open Stock Operations, either using the
+        access token or being connected as portal user"""
 
         picking = self._get_picking()
         login = None
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
         response = self.url_open(
             url=picking_url,
@@ -119,7 +119,7 @@ class TestStockPickingPortal(HttpCase):
         )
         picking._portal_ensure_token()
         picking_token = picking.access_token
-        picking_url = "%s?access_token=%s" % (picking_url, picking_token)
+        picking_url = f"{picking_url}?access_token={picking_token}"
 
         response = self.url_open(
             url=picking_url,
@@ -149,12 +149,12 @@ class TestStockPickingPortal(HttpCase):
         )
 
     def test_SO_portal_access_2(self):
-        """Check that it is possible to open Stock Operations, either using the access token
-        or being connected as portal user"""
+        """Check that it is possible to open Stock Operations, either using the
+        access token or being connected as portal user"""
 
         picking = self._get_picking()
         login = self.portal_user_1.login
-        picking_url = "/my/stock_operations/%s" % picking.id
+        picking_url = f"/my/stock_operations/{picking.id}"
         self.authenticate(login, login)
 
         response = self.url_open(
@@ -218,8 +218,10 @@ class TestStockPickingPortal(HttpCase):
         date_begin = datetime.now() + relativedelta(days=-1)
         date_end = datetime.now() + relativedelta(days=1)
         response = self.url_open(
-            url="/my/stock_operations?date_begin=%s&date_end=%s"
-            % (date_begin.strftime("%Y-%m-%d"), date_end.strftime("%Y-%m-%d")),
+            url=(
+                f"/my/stock_operations?date_begin={date_begin.strftime('%Y-%m-%d')}"
+                f"&date_end={date_end.strftime('%Y-%m-%d')}"
+            ),
             allow_redirects=True,
         )
         self.assertEqual(
@@ -264,17 +266,19 @@ class TestStockPickingPortal(HttpCase):
     def test_accept_picking_authenticated(self):
         """Check that the portal user can accept a picking"""
         picking = self._get_picking()
+        self.config_obj.create(
+            {
+                "portal_visible_operation_ids": self.operation_types.ids,
+            }
+        ).execute()
         picking._portal_ensure_token()
         access_token = picking.access_token
-        redirect_url = "/my/stock_operations/%s?access_token=%s&message=sign_ok" % (
-            picking.id,
-            access_token,
+        redirect_url = (
+            f"/my/stock_operations/{picking.id}?access_token={access_token}"
+            "&message=sign_ok"
         )
         base_url = picking.get_base_url()
-        url = "/my/stock_operations/%s/accept?access_token=%s" % (
-            picking.id,
-            access_token,
-        )
+        url = f"/my/stock_operations/{picking.id}/accept?access_token={access_token}"
         data = {
             "params": {
                 "name": self.portal_user_1.name,
@@ -287,7 +291,7 @@ class TestStockPickingPortal(HttpCase):
             "Signature is missing.",
             msg="Should be a signature error",
         )
-        e_url = "/my/stock_operations/%s/accept?" % picking.id
+        e_url = f"/my/stock_operations/{picking.id}/accept?"
         res = self.opener.post(base_url + e_url, json={})
         result = res.json()
         self.assertEqual(
@@ -324,6 +328,31 @@ class TestStockPickingPortal(HttpCase):
             msg="Should be a signature error",
         )
 
+    def test_accept_picking_not_portal_visible(self):
+        """A picking of a type not enabled in the portal cannot be signed."""
+        picking = self._get_picking()
+        picking._portal_ensure_token()
+        base_url = picking.get_base_url()
+        url = (
+            f"/my/stock_operations/{picking.id}/accept"
+            f"?access_token={picking.access_token}"
+        )
+        data = {
+            "params": {
+                "signature": "R0lGODlhAQABAAD/ACwAAAAAAQABAAACAA==",
+                "name": self.portal_user_1.name,
+            }
+        }
+        res = self.opener.post(base_url + url, json=data)
+        result = res.json()
+        self.assertEqual(
+            result["result"]["error"],
+            "You don't have the access rights to Stock Operations.",
+            msg="Non portal visible operations must not be signable",
+        )
+        self.assertFalse(picking.signed_by)
+        self.assertFalse(picking.signature)
+
     def test_generate_signature_link(self):
         """Check that the signature link is correctly generated"""
         picking = self._get_picking()
@@ -337,8 +366,8 @@ class TestStockPickingPortal(HttpCase):
         picking_link._compute_link()
         self.assertEqual(
             picking_link.link,
-            "%s/my/stock_operations/%s?access_token=%s"
-            % (picking.get_base_url(), picking.id, picking.access_token),
+            f"{picking.get_base_url()}/my/stock_operations/{picking.id}"
+            f"?access_token={picking.access_token}",
             msg="The signature link should be correctly generated",
         )
 

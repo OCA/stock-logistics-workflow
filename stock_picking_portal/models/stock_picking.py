@@ -19,9 +19,9 @@ class StockPick(models.Model):
     def _compute_access_url(self):
         super()._compute_access_url()
         for picking in self:
-            picking.access_url = "/my/stock_operations/%s" % (picking.id)
+            picking.access_url = f"/my/stock_operations/{picking.id}"
         return
 
     def _get_report_base_filename(self):
         self.ensure_one()
-        return "%s %s" % (self.picking_type_id.name, self.name)
+        return f"{self.picking_type_id.name} {self.name}"
