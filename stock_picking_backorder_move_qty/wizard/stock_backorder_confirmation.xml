@@ -20,6 +20,7 @@
                         />
                         <field name="product_id" />
                         <field name="move_qty" />
+                        <field name="move_qty_validated" />
                         <field name="qty_to_backorder" />
                         <field name="qty_to_backorder_uom_id" readonly="1" />
                     </list>
