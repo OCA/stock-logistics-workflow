@@ -20,4 +20,5 @@
         "views/stock_move_line.xml",
         "views/stock_warehouse.xml",
     ],
+    "maintainers": ["lmignon", "jbaudoux"],
 }
