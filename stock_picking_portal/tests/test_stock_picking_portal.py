@@ -49,7 +49,7 @@ class TestStockPickingPortal(HttpCase):
             .create(
                 {
                     "login": user,
-                    "email": user,
+                    "email": f"{user}@test.com",
                     "name": user,
                     "password": user,
                     "groups_id": [Command.set([portal_group.id])],
