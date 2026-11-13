@@ -1,6 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, models
+from odoo.tools.float_utils import float_compare
 
 
 class StockMove(models.Model):
@@ -23,22 +24,29 @@ class StockMove(models.Model):
             move.display_assign_serial = False
         return
 
-    # pylint: disable=missing-return
-    def _set_quantities_to_reservation(self):
-        super()._set_quantities_to_reservation()
-        for move in self:
-            if move.state not in ("partially_available", "assigned"):
-                continue
+    def _set_quantity_done_prepare_vals(self, qty):
+        if (
+            self.state in ("partially_available", "assigned")
+            and self.product_id.tracking != "none"
+            and self.picking_type_id.auto_create_lot
+            and (
+                self.product_id.auto_create_lot
+                or self.product_id.categ_id.auto_create_lot
+            )
+            and self.move_line_ids
+        ):
+            total_qty = self.product_uom._compute_quantity(
+                qty, self.product_uom, round=False
+            )
             if (
-                move.product_id.tracking == "none"
-                or not (
-                    move.product_id.auto_create_lot
-                    or move.product_id.categ_id.auto_create_lot
+                float_compare(
+                    total_qty, 0, precision_rounding=self.product_uom.rounding
                 )
-                or not move.picking_type_id.auto_create_lot
+                > 0
             ):
-                continue
-            for move_line in move.move_line_ids:
-                if move_line.lot_id:
-                    # Create-backorder wizard would open without this.
-                    move_line.quantity = move_line.quantity_product_uom
+                first_ml = self.move_line_ids[0]
+                first_ml_qty = self.product_uom._compute_quantity(
+                    total_qty, first_ml.product_uom_id, round=False
+                )
+                first_ml.quantity = first_ml_qty
+        return super()._set_quantity_done_prepare_vals(qty)
