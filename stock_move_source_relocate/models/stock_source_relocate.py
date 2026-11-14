@@ -100,17 +100,13 @@ class StockSourceRelocate(models.Model):
                 continue
             rule.rule_message = rule._rule_message_template().format(rule=rule)
 
-    def name_get(self):
-        res = []
+    @api.depends("location_id", "relocate_location_id")
+    def _compute_display_name(self):
         for record in self:
-            res.append(
-                (
-                    record.id,
-                    f"{self.location_id.display_name} → "
-                    f"{self.relocate_location_id.display_name}",
-                )
+            record.display_name = (
+                f"{record.location_id.display_name} → "
+                f"{record.relocate_location_id.display_name}"
             )
-        return res
 
     def _rule_for_move(self, move):
         rules = self.search(
