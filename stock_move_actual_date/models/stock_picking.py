@@ -13,4 +13,5 @@ class StockPicking(models.Model):
 
     def _get_stock_moves(self):
         self.ensure_one()
-        return self.move_ids
+        # Scrap moves follow their scrap's actual_date, not the picking's.
+        return self.move_ids.filtered(lambda m: not m.scrap_id)
