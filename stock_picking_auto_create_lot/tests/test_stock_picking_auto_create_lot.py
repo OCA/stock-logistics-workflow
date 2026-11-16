@@ -137,8 +137,10 @@ class TestStockPickingAutoCreateLot(CommonStockPickingAutoCreateLot, Transaction
             serials.append(move.lot_id.name)
         self.assertUniqueIn(serials)
         move_lines_serial = self.picking.move_line_ids.filtered(
-            lambda m: m.product_id.tracking == "serial"
-            and m.product_id.categ_id.auto_create_lot
+            lambda m: (
+                m.product_id.tracking == "serial"
+                and m.product_id.categ_id.auto_create_lot
+            )
         )
         serials = []
         for move in move_lines_serial:
