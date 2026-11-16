@@ -18,7 +18,7 @@ class CommonStockPickingAutoCreateLot:
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.lot_obj = cls.env["stock.lot"]
         cls.warehouse = cls.env.ref("stock.warehouse0")
-        # Not an external id in 20.0 (it is demo data there).
+        # Same as stock's own tests: the in type of the warehouse.
         cls.picking_type_in = cls.warehouse.in_type_id
         cls.supplier_location = cls.env.ref("stock.stock_location_suppliers")
         cls.supplier = cls.env["res.partner"].create({"name": "Supplier - test"})

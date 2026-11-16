@@ -17,7 +17,7 @@ class IrActionReport(models.Model):
                     lambda x: (
                         not x.lot_id
                         and not x.lot_name
-                        and x.product_id.tracking != "none"
+                        and x.product_id.tracking
                         and (
                             x.product_id.auto_create_lot
                             or x.product_id.categ_id.auto_create_lot
