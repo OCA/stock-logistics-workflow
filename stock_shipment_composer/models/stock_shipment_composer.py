@@ -1,10 +1,14 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
-from markupsafe import Markup
-
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+
+
+class ValidationPending(Exception):
+    def __init__(self, action):
+        super().__init__()
+        self.action = action
 
 
 class StockShipmentComposer(models.Model):
@@ -202,6 +206,21 @@ class StockShipmentComposer(models.Model):
                 )
             )
         pickings = self.move_ids.picking_id
+        context = {"skip_sanity_check": True, "validated_by_composer": self.id}
+        try:
+            with self.env.cr.savepoint():
+                self._prepare_moves_for_validation()
+                # Run sanity_check here and skip the one in button_validate().
+                pickings._sanity_check(separate_pickings=False)
+                res = pickings.with_context(**context).button_validate()
+                if pickings.filtered(lambda x: x.state != "done"):
+                    raise ValidationPending(res)
+        except ValidationPending as pending:
+            return pending.action
+        return res
+
+    def _prepare_moves_for_validation(self):
+        pickings = self.move_ids.picking_id
         # Reset picked state on all move lines of related pickings, so only the
         # moves handled by this composer get validated.
         pickings.move_line_ids.picked = False
@@ -210,21 +229,7 @@ class StockShipmentComposer(models.Model):
             move = line.move_id
             move.quantity = line.quantity
             move.picked = True
-        for picking in pickings:
-            picking.message_post(
-                body=Markup("<b>%(label)s:</b> %(source)s %(link)s")
-                % {
-                    "label": self.env._("Transferred by"),
-                    "source": self.env._("Shipment Composer"),
-                    "link": self._get_html_link(),
-                }
-            )
-        # Run sanity_check here and skip the one in button_validate().
-        pickings._sanity_check(separate_pickings=False)
-        # Set the composer on all moves of the pickings before validation
         self.move_ids.shipment_composer_id = self
-        context = {"skip_sanity_check": True, "validated_by_composer": True}
-        return pickings.with_context(**context).button_validate()
 
     def action_view_operations(self):
         action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")

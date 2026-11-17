@@ -1,6 +1,8 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
+from markupsafe import Markup
+
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
@@ -18,8 +20,20 @@ class StockPicking(models.Model):
             rec.shipment_composer_ids = rec.move_ids.shipment_composer_ids
 
     def button_validate(self):
-        if self.env.context.get("validated_by_composer"):
-            return super().button_validate()
+        composer_id = self.env.context.get("validated_by_composer")
+        if composer_id:
+            res = super().button_validate()
+            composer = self.env["stock.shipment.composer"].browse(composer_id)
+            for picking in self.filtered(lambda x: x.state == "done"):
+                picking.message_post(
+                    body=Markup("<b>%(label)s:</b> %(source)s %(link)s")
+                    % {
+                        "label": self.env._("Transferred by"),
+                        "source": self.env._("Shipment Composer"),
+                        "link": composer._get_html_link(),
+                    }
+                )
+            return res
         for rec in self:
             if rec.shipment_composer_ids.filtered(
                 lambda x: x.state in ["in_progress", "draft"]

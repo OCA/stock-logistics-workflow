@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare
 
 
@@ -105,6 +105,24 @@ class StockMove(models.Model):
         if res:
             res[0]["move_split_origin_id"] = self.id
         return res
+
+    def _action_done(self, cancel_backorder=False):
+        composer_id = self.env.context.get("validated_by_composer")
+        if cancel_backorder and composer_id:
+            other_lines = self.composer_line_ids.filtered(
+                lambda x: x.composer_id.id != composer_id
+                and x.state not in ["done", "cancel"]
+            )
+            if other_lines:
+                raise UserError(
+                    self.env._(
+                        "You cannot validate without a backorder while other shipment "
+                        "composers (%(composers)s) have open lines on the same "
+                        "moves. Cancel or adjust them first.",
+                        composers=", ".join(other_lines.composer_id.mapped("name")),
+                    )
+                )
+        return super()._action_done(cancel_backorder=cancel_backorder)
 
     @api.depends_context("is_shipment_composer")
     @api.depends(

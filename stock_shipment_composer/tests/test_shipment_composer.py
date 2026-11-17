@@ -164,6 +164,39 @@ class TestShipmentComposer(TransactionCase):
         self.assertNotIn("done", (line2 | line3).move_id.mapped("state"))
         self.assertEqual((line2 | line3).mapped("quantity"), [2.0, 2.0])
 
+    def test_action_done_discarded_backorder_wizard(self):
+        self.line1.quantity = 3.0
+        self.composer1.action_confirm()
+        message_count = len(self.picking.message_ids)
+        backorder_wizard_dict = self.composer1.action_done()
+        self.assertEqual(
+            backorder_wizard_dict["res_model"], "stock.backorder.confirmation"
+        )
+        self.assertEqual(self.move.quantity, 5.0)
+        self.assertFalse(self.move.picked)
+        self.assertEqual(len(self.picking.message_ids), message_count)
+        self.assertEqual(self.composer1.state, "in_progress")
+
+    def test_action_done_no_backorder_blocked_by_other_composer(self):
+        self.line1.quantity = 3.0
+        composer2 = self.create_composer()
+        self.create_composer_line(composer2, self.move, quantity=2.0)
+        self.composer1.action_confirm()
+        composer2.action_confirm()
+        backorder_wizard_dict = self.composer1.action_done()
+        backorder_wizard = Form(
+            self.env[(backorder_wizard_dict.get("res_model"))].with_context(
+                **backorder_wizard_dict["context"]
+            )
+        ).save()
+        with self.assertRaises(UserError):
+            backorder_wizard.process_cancel_backorder()
+        composer2.action_cancel()
+        backorder_wizard.process_cancel_backorder()
+        self.assertEqual(self.picking.state, "done")
+        self.assertEqual(self.composer1.state, "done")
+        self.assertEqual(self.move.quantity, 3.0)
+
     def test_split_transfer_keeps_composer_lines(self):
         self.line1.quantity = 3.0
         composer2 = self.create_composer()
