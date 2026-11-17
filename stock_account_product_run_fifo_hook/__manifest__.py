@@ -3,9 +3,9 @@
 
 {
     "name": "Stock Account Product Run FIFO Hook",
-    "summary": "Add more flexibility in the run fifo method.",
+    "summary": "Add hooks in the FIFO valuation of stock moves.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "license": "LGPL-3",

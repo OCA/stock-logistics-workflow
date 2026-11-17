@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>Stock Account Product Run FIFO Hook</title>
 <style type="text/css">
 
 /*
@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:1dbf0355d6990139e88792218ba4f0810b0869c6595740bc0cacae5e04913311
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/license-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_account_product_run_fifo_hook"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-19-0/stock-logistics-workflow-19-0-stock_account_product_run_fifo_hook"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/license-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_account_product_run_fifo_hook"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-20-0/stock-logistics-workflow-20-0-stock_account_product_run_fifo_hook"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=20.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module adds hook points in the FIFO valuation process to add more
 flexibility in the information that is stored and processed during FIFO
 candidate calculations.</p>
@@ -384,8 +384,20 @@ extension points for custom modules to:</p>
 <ul class="simple">
 <li>Access FIFO candidate move information during valuation</li>
 <li>Enrich stock moves with custom candidate data</li>
-<li>Control standard price update logic during FIFO operations</li>
+<li>Know which outgoing move consumes each FIFO candidate</li>
 </ul>
+<p>In Odoo 20, the per-quantity FIFO computation moved from <tt class="docutils literal">_run_fifo()</tt>
+to <tt class="docutils literal">_get_fifo_value()</tt> (<tt class="docutils literal">_run_fifo()</tt> now values whole products in
+batch), so the hook is injected in <tt class="docutils literal">_get_fifo_value()</tt>. Core no longer
+passes the outgoing move being valued, so this module also patches
+<tt class="docutils literal">stock.move._set_value()</tt> to put it in the <tt class="docutils literal">valued_move</tt> context
+key.</p>
+<p>The FIFO replay done by <tt class="docutils literal">_run_fifo(correction=True)</tt> uses its own
+candidate stack without source moves, so it does not call the hook. It
+runs when a valued move line quantity, location or lot is edited, a move
+date changes, a product value is adjusted, the costing method changes,
+or a receipt fills stock that was already sold, and it rewrites the
+<tt class="docutils literal">value</tt> of the outgoing moves.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -414,14 +426,15 @@ extension points for custom modules to:</p>
 </li>
 <li><p class="first">Override the hook methods to add custom logic:</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">_run_fifo_prepare_candidate_update(candidate_move, qty_taken, value_taken, valued_move=None)</tt>
+<li><p class="first"><tt class="docutils literal">_run_fifo_prepare_candidate_update(candidate_move, qty_taken, value_taken, valued_move)</tt>
 — Called for each FIFO candidate when it is consumed.</p>
 <ul class="simple">
 <li><tt class="docutils literal">candidate_move</tt>: The FIFO source move being consumed</li>
 <li><tt class="docutils literal">qty_taken</tt>: Quantity consumed from this candidate</li>
 <li><tt class="docutils literal">value_taken</tt>: Value consumed from this candidate</li>
-<li><tt class="docutils literal">valued_move</tt>: (obtained via context) The stock move being
-valued that is consuming this candidate</li>
+<li><tt class="docutils literal">valued_move</tt>: The stock move being valued that is consuming
+this candidate (<tt class="docutils literal">None</tt> when core estimates a FIFO price without
+valuing a move)</li>
 </ul>
 <p>Use it to capture exact qty/value taken, create usage records, or
 track valuation relationships between moves.</p>
@@ -431,31 +444,21 @@ track valuation relationships between moves.</p>
 </ol>
 <div class="section" id="when-valued-move-is-passed-to-context">
 <h3><a class="toc-backref" href="#toc-entry-2">When <tt class="docutils literal">valued_move</tt> is Passed to Context</a></h3>
-<p>The <tt class="docutils literal">valued_move</tt> is passed to context when an outgoing stock move
-calls <tt class="docutils literal">_set_value()</tt> for FIFO costing:</p>
-<pre class="code python literal-block">
-<span class="c1"># In stock.move._set_value() for FIFO moves:</span><span class="w">
-</span><span class="k">for</span> <span class="n">move</span> <span class="ow">in</span> <span class="n">fifo_moves</span><span class="p">:</span><span class="w">
-</span>    <span class="nb">super</span><span class="p">(</span><span class="n">StockMove</span><span class="p">,</span> <span class="n">move</span><span class="o">.</span><span class="n">with_context</span><span class="p">(</span><span class="n">valued_move</span><span class="o">=</span><span class="n">move</span><span class="p">))</span><span class="o">.</span><span class="n">_set_value</span><span class="p">(</span><span class="w">
-</span>        <span class="n">correction_quantity</span><span class="o">=</span><span class="n">correction_quantity</span><span class="w">
-</span>    <span class="p">)</span>
-</pre>
-<p>This happens when:</p>
-<ol class="arabic simple">
-<li>An outgoing stock move (customer delivery, internal transfer, etc.)
-is being valued</li>
-<li>The product uses FIFO costing method</li>
-<li>The system needs to consume FIFO candidates to determine the move’s
-valuation</li>
-</ol>
-<p>During this process:</p>
+<p>This module sets <tt class="docutils literal">valued_move</tt> when <tt class="docutils literal">stock.move._set_value()</tt> values
+an outgoing FIFO move, keeping the core batch valuation of all the
+moves.</p>
+<p>The hook is called:</p>
 <ul class="simple">
-<li><tt class="docutils literal">_run_fifo()</tt> is called to calculate the unit cost</li>
-<li>For each FIFO candidate consumed,
-<tt class="docutils literal">_run_fifo_prepare_candidate_update()</tt> hook is called</li>
-<li>The <tt class="docutils literal">valued_move</tt> (the move being valued) is available in context</li>
-<li>You can use it to link the candidate to the move being valued</li>
+<li>after the outgoing move is done (moves are valued after
+<tt class="docutils literal">_action_done()</tt>)</li>
+<li>once per move line for lot valuated products, with the quantity and
+value of the lot</li>
+<li>when core estimates a FIFO price without valuing a move (e.g. COGS of
+an invoice without stock moves, PoS), with <tt class="docutils literal">valued_move</tt> set to
+<tt class="docutils literal">None</tt>: check it before storing anything</li>
 </ul>
+<p>The quantity valued beyond the available candidates (negative stock) and
+the FIFO replay of <tt class="docutils literal">_run_fifo(correction=True)</tt> do not call the hook.</p>
 </div>
 </div>
 <div class="section" id="bug-tracker">
@@ -463,7 +466,7 @@ valuation</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_account_product_run_fifo_hook%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_account_product_run_fifo_hook%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -496,7 +499,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_account_product_run_fifo_hook">OCA/stock-logistics-workflow</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_account_product_run_fifo_hook">OCA/stock-logistics-workflow</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

@@ -6,5 +6,16 @@ This module provides extension points for custom modules to:
 
 - Access FIFO candidate move information during valuation
 - Enrich stock moves with custom candidate data
-- Control standard price update logic during FIFO operations
+- Know which outgoing move consumes each FIFO candidate
 
+In Odoo 20, the per-quantity FIFO computation moved from `_run_fifo()` to
+`_get_fifo_value()` (`_run_fifo()` now values whole products in batch), so the hook
+is injected in `_get_fifo_value()`. Core no longer passes the outgoing move being
+valued, so this module also patches `stock.move._set_value()` to put it in the
+`valued_move` context key.
+
+The FIFO replay done by `_run_fifo(correction=True)` uses its own candidate stack
+without source moves, so it does not call the hook. It runs when a valued move line
+quantity, location or lot is edited, a move date changes, a product value is adjusted,
+the costing method changes, or a receipt fills stock that was already sold, and it
+rewrites the `value` of the outgoing moves.

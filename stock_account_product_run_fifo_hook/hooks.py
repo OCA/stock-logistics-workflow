@@ -1,60 +1,212 @@
 # Copyright 2026 ForgeFlow, S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
+from collections import defaultdict
+from datetime import timedelta
+
+from odoo.exceptions import UserError
+
 from odoo.addons.stock_account.models.product import ProductProduct
+from odoo.addons.stock_account.models.stock_move import StockMove
+
+
+def _get_fifo_value_new(self, quantity, lot=None, stack_size_extra_qty=0):
+    """Returns the value for the next outgoing product base on the qty give as
+    argument."""
+    self.ensure_one()
+    # START OF HOOK
+    # The patch is global to the process, but the hook method only exists in the
+    # databases where this module is installed: use core in the others
+    if not hasattr(self, "_run_fifo_prepare_candidate_update"):
+        return self._get_fifo_value_original(
+            quantity, lot=lot, stack_size_extra_qty=stack_size_extra_qty
+        )
+    # END OF HOOK
+    if self.uom_id.compare(quantity, 0) <= 0:
+        std_price = lot.standard_price if lot else self.standard_price
+        return quantity * std_price
+
+    fifo_cost = 0
+    fifo_stack, qty_on_first_move = self._get_fifo_stack(
+        lot=lot, stack_size_extra_qty=stack_size_extra_qty
+    )
+    last_move = False
+    # Going up to get the quantity in the argument
+    while quantity > 0 and fifo_stack:
+        move = fifo_stack.pop(0)
+        last_move = move
+        move_value = move.value
+        if qty_on_first_move:
+            valued_qty = move._get_valued_qty()
+            in_qty = qty_on_first_move
+            in_value = move_value * in_qty / valued_qty
+            qty_on_first_move = 0
+        else:
+            in_qty = move._get_valued_qty(lot=lot)
+            in_value = move_value
+            if lot:
+                valued_qty = move._get_valued_qty()
+                in_value = in_value * in_qty / valued_qty if valued_qty else 0
+        if in_qty > quantity:
+            in_value = in_value * quantity / in_qty
+            in_qty = quantity
+        # START OF HOOK
+        valued_move = self.env.context.get("valued_move")
+        self._run_fifo_prepare_candidate_update(move, in_qty, in_value, valued_move)
+        # END OF HOOK
+        fifo_cost += in_value
+        quantity -= in_qty
+    # When we required more quantity than available we extrapolate with the last
+    # known price
+    if quantity > 0:
+        if last_move and last_move.quantity:
+            fifo_cost += quantity * (last_move.value / last_move.quantity)
+        else:
+            fifo_cost += quantity * self.standard_price
+    return fifo_cost
+
+
+def _set_value_new(self, recompute_date=None, skip_check=False):  # noqa: C901
+    """Set the value of the move.
+
+    :param recompute_date: if provided, valuation runs in correction mode. The given
+        moves changed position in the valuation timeline (their date moved, or the
+        quantity of one of their lines was edited), which shifts the on-hand context
+        of every later move. The valuation of every impacted product is therefore
+        replayed from ``recompute_date`` (the earliest impacted date among the moves)
+        through
+    :param skip_check: internal flag set while replaying, to only refresh in-move
+        values without re-triggering the replay detection below (which would loop).
+    :return: the outgoing moves whose value changed during a valuation replay.
+    """
+    # START OF HOOK
+    # The patch is global to the process, but the hook method only exists in the
+    # databases where this module is installed: use core in the others
+    if not hasattr(self.env["product.product"], "_run_fifo_prepare_candidate_update"):
+        return self._set_value_original(
+            recompute_date=recompute_date, skip_check=skip_check
+        )
+    # END OF HOOK
+    changed_moves = self.env["stock.move"]
+    moves_already_sold = self.filtered(
+        lambda m: m.is_in and m.remaining_qty != m._get_valued_qty()
+    )
+    if not recompute_date and not skip_check and moves_already_sold:
+        recompute_date = min(self.mapped("date"))
+        for move in moves_already_sold:
+            product = move.product_id.with_company(move.company_id)
+            if product.cost_method != "fifo":
+                continue
+            oversold_stack = product._get_fifo_stack(
+                at_date=move.date - timedelta(seconds=1), allow_negative=True
+            )[0]
+            oversold_moves = (
+                self.env["stock.move"]
+                .concat(oversold_stack)
+                .filtered(lambda m: m.is_out)
+            )
+            if oversold_moves:
+                recompute_date = min(recompute_date, *oversold_moves.mapped("date"))
+        self._set_value(recompute_date=recompute_date)
+        return changed_moves
+
+    if recompute_date and any(
+        m.remaining_qty != m._get_valued_qty() or m.is_out for m in self
+    ):
+        self.filtered(lambda m: m.is_in)._set_value(skip_check=True)
+        return self.product_id._correct_inventory_valuation(recompute_date)
+
+    self = self.sorted(key=lambda m: (m.date, m.id))
+    products_to_recompute = set()
+    lots_to_recompute = set()
+    fifo_qty_already_processed = defaultdict(float)
+    for move in self:
+        move = move.with_company(move.company_id)
+        if not move.is_out or move.product_id.cost_method != "fifo":
+            continue
+        if move.product_id.lot_valuated:
+            for move_line in move.move_line_ids.filtered("lot_id"):
+                fifo_qty_already_processed[move_line.lot_id] -= (
+                    move_line.quantity_product_uom
+                )
+        else:
+            fifo_qty_already_processed[move.product_id] -= move._get_valued_qty()
+
+    for move in self:
+        move = move.with_company(move.company_id)
+        if move.is_in:
+            products_to_recompute.add(move.product_id.id)
+            if move.product_id.lot_valuated:
+                if any(not ml.lot_id for ml in move.move_line_ids):
+                    raise UserError(
+                        self.env._(
+                            "A lot/serial number is required for product '%s' as "
+                            "it has lot valuation enabled.",
+                            move.product_id.display_name,
+                        )
+                    )
+                lots_to_recompute.update(move.move_line_ids.lot_id.ids)
+            move.value = move.sudo()._get_value()
+            continue
+        # Outgoing moves
+        if not move.is_out:
+            continue
+        if move.product_id.cost_method == "fifo" or (
+            move.product_id.cost_method == "average" and move.product_id.lot_valuated
+        ):
+            products_to_recompute.add(move.product_id.id)
+        if move.product_id.lot_valuated and move.product_id.cost_method != "standard":
+            lots_to_recompute.update(move.move_line_ids.lot_id.ids)
+        if move.product_id.cost_method == "fifo":
+            # START OF HOOK
+            move = move.with_context(valued_move=move)
+            # END OF HOOK
+            if not move.product_id.lot_valuated:
+                valued_qty = move._get_valued_qty()
+                move.value = -move.product_id._get_fifo_value(
+                    valued_qty,
+                    stack_size_extra_qty=-fifo_qty_already_processed[move.product_id],
+                )
+                fifo_qty_already_processed[move.product_id] += valued_qty
+            else:
+                value = 0.0
+                for move_line in move.move_line_ids:
+                    ml_qty = move_line.quantity_product_uom
+                    if move_line.lot_id:
+                        value += move.product_id._get_fifo_value(
+                            ml_qty,
+                            lot=move_line.lot_id,
+                            stack_size_extra_qty=-fifo_qty_already_processed[
+                                move_line.lot_id
+                            ],
+                        )
+                        fifo_qty_already_processed[move_line.lot_id] += ml_qty
+                    else:
+                        value += move.product_id.standard_price * ml_qty
+                move.value = -value
+        else:
+            if not move.product_id.lot_valuated:
+                move.value = -move.product_id.standard_price * move._get_valued_qty()
+            else:
+                value = 0.0
+                for move_line in move.move_line_ids:
+                    price = (
+                        move_line.lot_id.standard_price
+                        if move_line.lot_id
+                        else move.product_id.standard_price
+                    )
+                    value += price * move_line.quantity_product_uom
+                move.value = -value
+
+    # Recompute the standard price
+    self.env["product.product"].browse(products_to_recompute)._update_standard_price()
+    self.env["stock.lot"].browse(lots_to_recompute)._update_standard_price()
+    return changed_moves
 
 
 def post_load_hook():
-    def _run_fifo_new(self, quantity, lot=None, at_date=None, location=None):
-        self.ensure_one()
-
-        # If no hook is implemented, use original
-        if not hasattr(self, "_run_fifo_prepare_candidate_update"):
-            return self._run_fifo_original(quantity, lot, at_date, location)
-
-        if self.uom_id.compare(quantity, 0) <= 0:
-            if at_date:
-                return quantity * self._get_standard_price_at_date(at_date)
-            return quantity * self.standard_price
-        external_location = location and location.is_valued_external  # noqa: F841
-
-        fifo_cost = 0
-        fifo_stack, qty_on_first_move = self._run_fifo_get_stack(
-            lot=lot, at_date=at_date, location=location
-        )
-        last_move = False
-        # Going up to get the quantity in the argument
-        while quantity > 0 and fifo_stack:
-            move = fifo_stack.pop(0)
-            last_move = move
-            move_value = move.value
-            if at_date:
-                move_value = move._get_value(at_date=at_date)
-            if qty_on_first_move:
-                valued_qty = move._get_valued_qty()
-                in_qty = qty_on_first_move
-                in_value = move_value * in_qty / valued_qty
-                qty_on_first_move = 0
-            else:
-                in_qty = move._get_valued_qty()
-                in_value = move_value
-            if in_qty > quantity:
-                in_value = in_value * quantity / in_qty
-                in_qty = quantity
-            # Start Hook Prepare Candidate
-            valued_move = self.env.context.get("valued_move")
-            self._run_fifo_prepare_candidate_update(move, in_qty, in_value, valued_move)
-            # End Hook Prepare Candidate
-            fifo_cost += in_value
-            quantity -= in_qty
-        # When we required more quantity than available we extrapolate with
-        # the last known price
-        if quantity > 0:
-            if last_move and last_move.quantity:
-                fifo_cost += quantity * (last_move.value / last_move.quantity)
-            else:
-                fifo_cost += quantity * self.standard_price
-        return fifo_cost
-
-    if not hasattr(ProductProduct, "_run_fifo_original"):
-        ProductProduct._run_fifo_original = ProductProduct._run_fifo
-    ProductProduct._run_fifo = _run_fifo_new
+    if not hasattr(ProductProduct, "_get_fifo_value_original"):
+        ProductProduct._get_fifo_value_original = ProductProduct._get_fifo_value
+    ProductProduct._get_fifo_value = _get_fifo_value_new
+    if not hasattr(StockMove, "_set_value_original"):
+        StockMove._set_value_original = StockMove._set_value
+    StockMove._set_value = _set_value_new

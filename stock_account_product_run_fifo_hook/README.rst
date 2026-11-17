@@ -21,13 +21,13 @@ Stock Account Product Run FIFO Hook
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_account_product_run_fifo_hook
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_account_product_run_fifo_hook
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-19-0/stock-logistics-workflow-19-0-stock_account_product_run_fifo_hook
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-20-0/stock-logistics-workflow-20-0-stock_account_product_run_fifo_hook
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -42,7 +42,21 @@ extension points for custom modules to:
 
 - Access FIFO candidate move information during valuation
 - Enrich stock moves with custom candidate data
-- Control standard price update logic during FIFO operations
+- Know which outgoing move consumes each FIFO candidate
+
+In Odoo 20, the per-quantity FIFO computation moved from ``_run_fifo()``
+to ``_get_fifo_value()`` (``_run_fifo()`` now values whole products in
+batch), so the hook is injected in ``_get_fifo_value()``. Core no longer
+passes the outgoing move being valued, so this module also patches
+``stock.move._set_value()`` to put it in the ``valued_move`` context
+key.
+
+The FIFO replay done by ``_run_fifo(correction=True)`` uses its own
+candidate stack without source moves, so it does not call the hook. It
+runs when a valued move line quantity, location or lot is edited, a move
+date changes, a product value is adjusted, the costing method changes,
+or a receipt fills stock that was already sold, and it rewrites the
+``value`` of the outgoing moves.
 
 **Table of contents**
 
@@ -62,14 +76,15 @@ Usage
 
 3. Override the hook methods to add custom logic:
 
-   - ``_run_fifo_prepare_candidate_update(candidate_move, qty_taken, value_taken, valued_move=None)``
+   - ``_run_fifo_prepare_candidate_update(candidate_move, qty_taken, value_taken, valued_move)``
      — Called for each FIFO candidate when it is consumed.
 
      - ``candidate_move``: The FIFO source move being consumed
      - ``qty_taken``: Quantity consumed from this candidate
      - ``value_taken``: Value consumed from this candidate
-     - ``valued_move``: (obtained via context) The stock move being
-       valued that is consuming this candidate
+     - ``valued_move``: The stock move being valued that is consuming
+       this candidate (``None`` when core estimates a FIFO price without
+       valuing a move)
 
      Use it to capture exact qty/value taken, create usage records, or
      track valuation relationships between moves.
@@ -77,32 +92,22 @@ Usage
 When ``valued_move`` is Passed to Context
 -----------------------------------------
 
-The ``valued_move`` is passed to context when an outgoing stock move
-calls ``_set_value()`` for FIFO costing:
+This module sets ``valued_move`` when ``stock.move._set_value()`` values
+an outgoing FIFO move, keeping the core batch valuation of all the
+moves.
 
-.. code:: python
+The hook is called:
 
-   # In stock.move._set_value() for FIFO moves:
-   for move in fifo_moves:
-       super(StockMove, move.with_context(valued_move=move))._set_value(
-           correction_quantity=correction_quantity
-       )
+- after the outgoing move is done (moves are valued after
+  ``_action_done()``)
+- once per move line for lot valuated products, with the quantity and
+  value of the lot
+- when core estimates a FIFO price without valuing a move (e.g. COGS of
+  an invoice without stock moves, PoS), with ``valued_move`` set to
+  ``None``: check it before storing anything
 
-This happens when:
-
-1. An outgoing stock move (customer delivery, internal transfer, etc.)
-   is being valued
-2. The product uses FIFO costing method
-3. The system needs to consume FIFO candidates to determine the move's
-   valuation
-
-During this process:
-
-- ``_run_fifo()`` is called to calculate the unit cost
-- For each FIFO candidate consumed,
-  ``_run_fifo_prepare_candidate_update()`` hook is called
-- The ``valued_move`` (the move being valued) is available in context
-- You can use it to link the candidate to the move being valued
+The quantity valued beyond the available candidates (negative stock) and
+the FIFO replay of ``_run_fifo(correction=True)`` do not call the hook.
 
 Bug Tracker
 ===========
@@ -110,7 +115,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_account_product_run_fifo_hook%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_account_product_run_fifo_hook%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -143,6 +148,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_account_product_run_fifo_hook>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_account_product_run_fifo_hook>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
