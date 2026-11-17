@@ -22,11 +22,8 @@ class StockPicking(models.Model):
     def button_validate(self):
         composer_id = self.env.context.get("validated_by_composer")
         if composer_id:
-            composer = self.env["stock.shipment.composer"].browse(composer_id)
-            composer._prepare_moves_for_validation()
-            # Run sanity_check here and skip the one in button_validate().
-            self._sanity_check(separate_pickings=False)
             res = super().button_validate()
+            composer = self.env["stock.shipment.composer"].browse(composer_id)
             for picking in self.filtered(lambda x: x.state == "done"):
                 picking.message_post(
                     body=Markup("<b>%(label)s:</b> %(source)s %(link)s")

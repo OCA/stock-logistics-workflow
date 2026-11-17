@@ -5,12 +5,6 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
-class ValidationPending(Exception):
-    def __init__(self, action):
-        super().__init__()
-        self.action = action
-
-
 class StockShipmentComposer(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _name = "stock.shipment.composer"
@@ -206,15 +200,11 @@ class StockShipmentComposer(models.Model):
                 )
             )
         pickings = self.move_ids.picking_id
+        self._prepare_moves_for_validation()
+        # Run sanity_check here and skip the one in button_validate().
+        pickings._sanity_check(separate_pickings=False)
         context = {"skip_sanity_check": True, "validated_by_composer": self.id}
-        try:
-            with self.env.cr.savepoint():
-                res = pickings.with_context(**context).button_validate()
-                if pickings.filtered(lambda x: x.state != "done"):
-                    raise ValidationPending(res)
-        except ValidationPending as pending:
-            return pending.action
-        return res
+        return pickings.with_context(**context).button_validate()
 
     def _prepare_moves_for_validation(self):
         pickings = self.move_ids.picking_id

@@ -171,8 +171,6 @@ class TestShipmentComposer(TransactionCase):
         self.assertEqual(
             backorder_wizard_dict["res_model"], "stock.backorder.confirmation"
         )
-        self.assertEqual(self.move.quantity, 5.0)
-        self.assertFalse(self.move.picked)
         self.assertNotIn(
             "Transferred by", "".join(self.picking.message_ids.mapped("body"))
         )
