@@ -167,15 +167,26 @@ class TestShipmentComposer(TransactionCase):
     def test_action_done_discarded_backorder_wizard(self):
         self.line1.quantity = 3.0
         self.composer1.action_confirm()
-        message_count = len(self.picking.message_ids)
         backorder_wizard_dict = self.composer1.action_done()
         self.assertEqual(
             backorder_wizard_dict["res_model"], "stock.backorder.confirmation"
         )
         self.assertEqual(self.move.quantity, 5.0)
         self.assertFalse(self.move.picked)
-        self.assertEqual(len(self.picking.message_ids), message_count)
+        self.assertNotIn(
+            "Transferred by", "".join(self.picking.message_ids.mapped("body"))
+        )
         self.assertEqual(self.composer1.state, "in_progress")
+        # Any pre-validation wizard validates again with the action context.
+        self.picking.with_context(
+            **backorder_wizard_dict["context"], skip_backorder=True
+        ).button_validate()
+        self.assertEqual(self.picking.state, "done")
+        self.assertEqual(self.composer1.state, "done")
+        self.assertEqual(self.move.quantity, 3.0)
+        self.assertIn(
+            "Transferred by", "".join(self.picking.message_ids.mapped("body"))
+        )
 
     def test_action_done_no_backorder_blocked_by_other_composer(self):
         self.line1.quantity = 3.0
