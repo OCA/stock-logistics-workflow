@@ -485,3 +485,62 @@ class TestStockPicking(common.TransactionCase):
         returned_picking = self._picking_return(returned_picking, 500.00)
 
         self.assertEqual(product.qty_available, 500)
+
+    def test_auto_fill_skip_if_other_line_has_qty_done_no_show_reserved(self):
+        self.product_9.tracking = "none"
+        self.picking_type_in.show_reserved = False
+        move = self.move_model.create(
+            {
+                "product_id": self.product_9.id,
+                "picking_id": self.picking.id,
+                "name": self.product_9.display_name,
+                "picking_type_id": self.picking_type_in.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.picking_type_in.default_location_dest_id.id,
+                "product_uom": self.product_9.uom_id.id,
+            }
+        )
+        self.picking.action_confirm()
+        self.assertEqual(self.picking.state, "assigned")
+        self.assertEqual(len(self.picking.move_line_ids), 1)
+        move.quantity_done = 3.0
+        self.picking.action_pack_operation_auto_fill()
+        self.assertEqual(len(self.picking.move_line_ids), 2)
+        self.assertEqual(self.picking.move_line_ids[0].qty_done, 0.0)
+        self.assertEqual(self.picking.move_line_ids[1].qty_done, 3.0)
+        self.picking.action_assign()
+        self.assertEqual(len(self.picking.move_line_ids), 1)
+        self.assertEqual(self.picking.move_line_ids.qty_done, 3.0)
+
+    def test_auto_fill_skip_if_other_line_has_qty_done_show_reserved(self):
+        self.product_9.tracking = "none"
+        self.picking_type_in.show_reserved = True
+        picking = self.picking_model.with_context(
+            default_picking_type_id=self.picking_type_in.id
+        ).create(
+            {
+                "partner_id": self.supplier.id,
+                "picking_type_id": self.picking_type_in.id,
+                "location_id": self.supplier_location.id,
+            }
+        )
+        move = self.move_model.create(
+            {
+                "product_id": self.product_9.id,
+                "picking_id": picking.id,
+                "name": self.product_9.display_name,
+                "picking_type_id": self.picking_type_in.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.supplier_location.id,
+                "location_dest_id": self.picking_type_in.default_location_dest_id.id,
+                "product_uom": self.product_9.uom_id.id,
+            }
+        )
+        picking.action_confirm()
+        self.assertEqual(picking.state, "assigned")
+        self.assertEqual(len(picking.move_line_ids), 1)
+        move.quantity_done = 3.0
+        picking.action_pack_operation_auto_fill()
+        self.assertEqual(len(picking.move_line_ids), 1)
+        self.assertEqual(picking.move_line_ids.qty_done, 3.0)
