@@ -37,6 +37,8 @@ class StockMove(models.Model):
                     date_backdating,
                     round=False,
                 )
+            if self.product_id.lot_valuated:
+                return dict.fromkeys(self.lot_ids, converted_price)
             return {self.env["stock.lot"]: converted_price}
         return price_unit
 
