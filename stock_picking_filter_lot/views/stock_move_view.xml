@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_scrap_move_form" model="ir.ui.view">
+        <field name="name">stock.scrap.move.form - stock_picking_filter_lot</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_scrap_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_id'][1]" position="attributes">
+                <attribute
+                    name="groups"
+                >stock.group_stock_multi_locations,stock.group_production_lot</attribute>
+            </xpath>
+            <xpath expr="//field[@name='lot_ids']" position="before">
+                <field name="company_id" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='lot_ids']" position="attributes">
+                <attribute
+                    name="domain"
+                >[('product_id', '=', product_id), '|', ('company_id', '=', company_id), ('company_id', '=', False), ('location_ids', 'child_of', location_id), ('id', 'in', context.get('lot_ids'))] if context.get('lot_ids') else [('product_id', '=', product_id), '|', ('company_id', '=', company_id), ('company_id', '=', False), ('location_ids', 'child_of', location_id)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
