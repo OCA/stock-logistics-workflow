@@ -14,5 +14,6 @@
     "data": [
         "views/stock_picking_view.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
     "installable": True,
 }
