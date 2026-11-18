@@ -1,0 +1,3 @@
+- Eduardo de Miguel ([Moduon](https://www.moduon.team/))
+- Emilio Pascual ([Moduon](https://www.moduon.team/))
+- Fahmi Yasser ([Smile](https://smile.eu/en/))
