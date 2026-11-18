@@ -1,0 +1,1 @@
+from . import test_stock_picking_responsible_auto_assign
