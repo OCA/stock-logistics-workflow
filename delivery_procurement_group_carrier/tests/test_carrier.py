@@ -63,3 +63,36 @@ class TestProcurementGroupCarrier(TestProcurementGroupCarrierCommon):
         self.assertFalse(out_transfer.carrier_id)
         self.assertFalse(pick_transfer.carrier_id)
         self.assertFalse(move_group.carrier_id)
+
+    def test_reused_group_gets_order_carrier(self):
+        """A group reused on a new confirmation takes the current order carrier"""
+        order = self._create_sale_order([(self.product, 1.0)], carrier=self.carrier)
+        order.action_confirm()
+        group = order.picking_ids.group_id
+        self.assertEqual(group.carrier_id, self.carrier)
+        order.with_context(disable_cancel_warning=True).action_cancel()
+        order.action_draft()
+        # Some modules keep the group to reuse it (e.g. groups by order line)
+        if not order.order_line._get_procurement_group():
+            order.procurement_group_id = group
+        order.carrier_id = self.carrier2
+        order.action_confirm()
+        new_pickings = order.picking_ids.filtered(lambda p: p.state != "cancel")
+        self.assertTrue(new_pickings)
+        self.assertEqual(group.carrier_id, self.carrier2)
+        self.assertEqual(new_pickings.carrier_id, self.carrier2)
+
+    def test_group_with_open_pickings_keeps_carrier(self):
+        """A group with open pickings keeps its carrier when more is procured"""
+        order = self._create_sale_order([(self.product, 1.0)], carrier=self.carrier)
+        order.action_confirm()
+        out_transfer = order.picking_ids
+        group = out_transfer.group_id
+        # Carrier changed on the open picking and its group
+        out_transfer.with_context(
+            skip_align_group_carrier=True
+        ).carrier_id = self.carrier2
+        group.carrier_id = self.carrier2
+        order.order_line.product_uom_qty = 2.0
+        self.assertEqual(group.carrier_id, self.carrier2)
+        self.assertEqual(out_transfer.carrier_id, self.carrier2)
