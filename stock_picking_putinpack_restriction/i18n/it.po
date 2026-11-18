@@ -1,0 +1,101 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_putinpack_restriction
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-08-22 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model.fields,help:stock_picking_putinpack_restriction.field_stock_picking__put_in_pack_restriction
+#: model:ir.model.fields,help:stock_picking_putinpack_restriction.field_stock_picking_type__put_in_pack_restriction
+msgid ""
+"\n"
+"            Control restriction on the put in pack process.\n"
+"\n"
+"            Options:\n"
+"              * False (not set): No restriction.\n"
+"              * Without Package: No destination package can be used.\n"
+"              * With Package   : A destination package must be used.\n"
+"        "
+msgstr ""
+"\n"
+"            Controlla la limitazione nel processo di creazione collo.\n"
+"\n"
+"            Opzioni:\n"
+"              * Falso (non impostato): nessuna limitazione.\n"
+"              * Senza collo: non può essere utilizzato un collo di "
+"destinazione.\n"
+"              * Con collo: deve essere utilizzato un collo di destinazione.\n"
+"        "
+
+#. module: stock_picking_putinpack_restriction
+#: code:addons/stock_picking_putinpack_restriction/models/stock_move_line.py:0
+#, python-format
+msgid "A package is required for transfer type %s."
+msgstr "È richiesto un collo per il tipo trasferimento %s."
+
+#. module: stock_picking_putinpack_restriction
+#: code:addons/stock_picking_putinpack_restriction/models/stock_picking.py:0
+#, python-format
+msgid "Destination package can not be used with %s transfer."
+msgstr ""
+"Il collo di destinazione non può essere utilizzato con il trasferimento %s."
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_move_line____last_update
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking____last_update
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking_type____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model,name:stock_picking_putinpack_restriction.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo prelievo"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model,name:stock_picking_putinpack_restriction.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimenti prodotto (riga movimento di magazzino)"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking__put_in_pack_restriction
+#: model:ir.model.fields,field_description:stock_picking_putinpack_restriction.field_stock_picking_type__put_in_pack_restriction
+msgid "Put In Pack Restriction"
+msgstr "Rilitazione assegnazione collo"
+
+#. module: stock_picking_putinpack_restriction
+#: model:ir.model,name:stock_picking_putinpack_restriction.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
+
+#. module: stock_picking_putinpack_restriction
+#: code:addons/stock_picking_putinpack_restriction/models/stock_move_line.py:0
+#, python-format
+msgid "Using a package on transfer type %s is not allowed."
+msgstr "Non è consentito utilizzare un collo nel tipo trasferimento %s."
