@@ -142,6 +142,8 @@ class TestStockAutoMove(TransactionCase):
             [
                 ("product_id", "=", self.product_a1232.id),
                 ("location_id", "=", self.location_3.id),
+                # Transparent push on validation leaves an empty quant
+                ("quantity", ">", 0),
             ]
         )
         quants_in_1 = self.env["stock.quant"].search(
@@ -254,17 +256,13 @@ class TestStockAutoMove(TransactionCase):
         picking.move_line_ids.write({"picked": True, "quantity": 1})
         picking._action_done()
 
-        # As move_dest_ids include backorders
-        self.assertEqual(len(move1.move_dest_ids), 2)
+        self.assertEqual(len(move1.move_dest_ids), 1)
 
         self.assertTrue(move1.move_dest_ids.mapped("auto_move"))
         move_done = move1.move_dest_ids.filtered(
             lambda m: not m.picking_id.backorder_id
         )
         self.assertEqual(move_done.state, "done")
-
-        move_back = move1.move_dest_ids.filtered("picking_id.backorder_id")
-        self.assertEqual(move_back.state, "waiting")
 
         # look up for the back order created
         back_order = self.env["stock.picking"].search(
@@ -276,23 +274,18 @@ class TestStockAutoMove(TransactionCase):
         back_order.move_line_ids.picked = True
         back_order._action_done()
 
-        self.assertEqual(len(back_order.move_ids.move_dest_ids), 2)
+        self.assertEqual(len(back_order.move_ids.move_dest_ids), 1)
 
-        self.assertEqual(
-            back_order.move_ids.move_dest_ids.mapped("auto_move"), [True, True]
-        )
-        self.assertEqual(
-            back_order.move_ids.move_dest_ids.mapped("state"), ["done", "done"]
-        )
+        self.assertEqual(back_order.move_ids.move_dest_ids.mapped("auto_move"), [True])
+        self.assertEqual(back_order.move_ids.move_dest_ids.mapped("state"), ["done"])
 
-    def test_60_partial_chained_auto_move(self):
+    def test_60_partial_chained_auto_move_mixed(self):
         """
         Test case:
             - product with tracking set to serial.
             - warehouse reception steps set to two steps.
             - create picking with two move lines.
-            - set one of the move on the second step picking to be an auto
-            move.
+            - set the second product on a route without auto move.
             - do partial reception on first step
         Expected Result:
             The second step movement should be processed automatically
@@ -304,6 +297,9 @@ class TestStockAutoMove(TransactionCase):
         warehouse.reception_route_id.rule_ids.auto_move = True
         warehouse.int_type_id.use_create_lots = False
         warehouse.int_type_id.use_existing_lots = True
+        route_manual = warehouse.reception_route_id.copy()
+        route_manual.rule_ids.auto_move = False
+        self.product_2.route_ids |= route_manual
 
         picking = (
             self.env["stock.picking"]
@@ -344,11 +340,9 @@ class TestStockAutoMove(TransactionCase):
             }
         )
 
+        # Same group keeps both second step moves in one picking
+        (move1 | move2).group_id = self.auto_group
         picking.action_confirm()
-        self.assertTrue(move1.move_dest_ids.auto_move)
-        self.assertTrue(move2.move_dest_ids.auto_move)
-        second_step_picking = move2.move_dest_ids.picking_id
-        move2.move_dest_ids.auto_move = False
 
         # do partial reception of the first picking
         move1.move_line_ids.write({"picked": True, "quantity": 2})
@@ -356,6 +350,9 @@ class TestStockAutoMove(TransactionCase):
         move2.move_line_ids.write({"picked": True, "quantity": 1})
 
         picking._action_done()
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertFalse(move2.move_dest_ids.auto_move)
+        second_step_picking = move1.move_dest_ids.picking_id
 
         second_step_back_order = self.env["stock.picking"].search(
             [("backorder_id", "=", second_step_picking.id)]
@@ -368,9 +365,76 @@ class TestStockAutoMove(TransactionCase):
         self.assertEqual(len(second_step_back_order.move_line_ids), 1)
         self.assertTrue(
             second_step_back_order.move_line_ids.filtered(
-                lambda m: m.state == "partially_available"
+                lambda m: m.state == "assigned"
             )
         )
+
+    def test_61_chained_move_set_auto(self):
+        """
+        Test case:
+            - warehouse reception steps set to two steps without auto move.
+            - receive two products.
+            - set one of the moves on the second step picking to be an auto
+            move.
+        Expected Result:
+            The auto move is processed on availability check and a back order
+            is created with the other move.
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.reception_steps = "two_steps"
+
+        picking = (
+            self.env["stock.picking"]
+            .with_context(default_picking_type_id=warehouse.in_type_id.id)
+            .create(
+                {
+                    "partner_id": self.env.ref("base.res_partner_1").id,
+                    "picking_type_id": warehouse.in_type_id.id,
+                    "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                }
+            )
+        )
+
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_a1232.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
+
+        move2 = self.env["stock.move"].create(
+            {
+                "name": "Supply source location for test",
+                "product_id": self.product_2.id,
+                "product_uom": self.product_uom_unit_id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": warehouse.wh_input_stock_loc_id.id,
+                "picking_type_id": warehouse.in_type_id.id,
+            }
+        )
+
+        picking.action_confirm()
+        picking.move_line_ids.picked = True
+        picking._action_done()
+        second_step_picking = move1.move_dest_ids.picking_id
+        self.assertEqual(move2.move_dest_ids.picking_id, second_step_picking)
+
+        move1.move_dest_ids.auto_move = True
+        second_step_picking.action_assign()
+
+        self.assertEqual(move1.move_dest_ids.state, "done")
+        second_step_back_order = self.env["stock.picking"].search(
+            [("backorder_id", "=", second_step_picking.id)]
+        )
+        self.assertEqual(second_step_back_order.move_ids, move2.move_dest_ids)
 
     def test_70_procurement_auto_move_keep_group(self):
         """Check that move generated with procurement rule
@@ -520,9 +584,6 @@ class TestStockAutoMove(TransactionCase):
         )
 
         picking.action_confirm()
-        self.assertTrue(move1.move_dest_ids.auto_move)
-        self.assertTrue(move2.move_dest_ids.auto_move)
-        second_step_picking = move2.move_dest_ids.picking_id
 
         # do partial reception of the first picking
         move1.move_line_ids.write({"picked": True, "quantity": 2})
@@ -537,6 +598,9 @@ class TestStockAutoMove(TransactionCase):
             .create({})
         )
         wizard.process_cancel_backorder()
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertTrue(move2.move_dest_ids.auto_move)
+        second_step_picking = move2.move_dest_ids.picking_id
 
         second_step_back_order = self.env["stock.picking"].search(
             [("backorder_id", "=", second_step_picking.id)]
@@ -565,12 +629,11 @@ class TestStockAutoMove(TransactionCase):
             not yet done ones (and not cancelled).
 
         PICKING 1                           PICKING 2
-            PRODUCT 1 (AUTO): 10 (5 done) =>    PRODUCT 1 (AUTO): 10
-                                                    (5 done, 5 cancelled)
+            PRODUCT 1 (AUTO): 10 (5 done) =>    PRODUCT 1 (AUTO): 5 (5 done)
                                                 ^
                                                 | (backorder)
                                             PICKING 3
-            PRODUCT 2: 10 (5 done)        =>    PRODUCT 2: 10 (5 partially ready)
+            PRODUCT 2: 10 (5 done)        =>    PRODUCT 2: 5 (5 ready)
         """
         vals = {"name": "PROCUREMENT PURCHASE TEST"}
         self.procurement = self.procurement_group_obj.create(vals)
@@ -633,9 +696,6 @@ class TestStockAutoMove(TransactionCase):
         )
 
         picking.action_confirm()
-        self.assertTrue(move1.move_dest_ids.auto_move)
-        self.assertFalse(move2.move_dest_ids.auto_move)
-        second_step_picking = move2.move_dest_ids.picking_id
 
         # do partial reception of the first picking
         move1.move_line_ids.write({"picked": True, "quantity": 5})
@@ -650,6 +710,9 @@ class TestStockAutoMove(TransactionCase):
             .create({})
         )
         wizard.process_cancel_backorder()
+        self.assertTrue(move1.move_dest_ids.auto_move)
+        self.assertFalse(move2.move_dest_ids.auto_move)
+        second_step_picking = move1.move_dest_ids.picking_id
 
         # We need to ensure that all moves are done or cancelled in the
         # second picking
@@ -667,7 +730,5 @@ class TestStockAutoMove(TransactionCase):
         )
 
         self.assertTrue(second_step_back_order)
-        self.assertEqual(
-            "partially_available", second_step_back_order.move_line_ids.state
-        )
+        self.assertEqual("assigned", second_step_back_order.move_line_ids.state)
         self.assertEqual(5.0, second_step_back_order.move_line_ids.quantity)
