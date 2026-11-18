@@ -1,0 +1,188 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_valuation_usage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-08 16:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__dest_stock_move_id
+msgid "Destination Stock Move"
+msgstr "Movimento di magazzino destinazione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_product_product__id
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.view_move_form_inherit
+msgid "Incoming Usage"
+msgstr "Utilizzo ricezione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__incoming_usage_quantity
+msgid "Incoming Usage quantity"
+msgstr "Quantità utilizzo ricezione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__incoming_usage_value
+msgid "Incoming Usage value"
+msgstr "Valore utilizzo ricezione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__incoming_usage_ids
+msgid "Incoming Valuation Usage"
+msgstr "Utilizzo valorizzazione ricezione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,help:stock_move_valuation_usage.field_stock_move_valuation_usage__src_stock_move_id
+msgid "Incoming stock move that was used as a source for valuation"
+msgstr "Movimento di ricezione magazzino usato come origine per la valutazione"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,help:stock_move_valuation_usage.field_stock_move_valuation_usage__dest_stock_move_id
+msgid "Outgoing stock move that consumed from the source move"
+msgstr "Movimento di uscita di magazzino che ha consumato il movimento origine"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__product_id
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model,name:stock_move_valuation_usage.model_product_product
+msgid "Product Variant"
+msgstr "Variante prodotto"
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.stock_move_valuation_usage_list
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.view_move_form_inherit
+msgid "Source Moves Used"
+msgstr "Movimenti origine usati"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__src_stock_move_id
+msgid "Source Stock Move"
+msgstr "Movimento di magazzino origine"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model,name:stock_move_valuation_usage.model_stock_move
+msgid "Stock Move"
+msgstr "Movimento di magazzino"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model,name:stock_move_valuation_usage.model_stock_move_valuation_usage
+msgid "Stock Move Valuation Usage"
+msgstr "Utilizzo valutazione movimento di magazzino"
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.stock_move_valuation_usage_pivot
+msgid "Stock Move Valuation Usage Analysis"
+msgstr "Analisi utilizzo valutazione movimento di magazzino"
+
+#. module: stock_move_valuation_usage
+#: model:ir.actions.act_window,name:stock_move_valuation_usage.stock_move_valuation_usage_action
+#: model:ir.ui.menu,name:stock_move_valuation_usage.stock_move_valuation_usage_menu
+msgid "Stock Move Valuation Usages"
+msgstr "Utilizzo valutazione movimento di magazzino"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__quantity
+msgid "Taken Quantity"
+msgstr "Quantità prelevata"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move_valuation_usage__value
+msgid "Taken Value"
+msgstr "Valore prelevato"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,help:stock_move_valuation_usage.field_stock_move__incoming_usage_ids
+#: model:ir.model.fields,help:stock_move_valuation_usage.field_stock_move__usage_ids
+msgid ""
+"Trace in what stock moves has this move's valuation been used, including the"
+" quantities and values taken."
+msgstr ""
+"Traccia in quali movimenti di magazzino è stata utilizzata questa "
+"valutazione, inclusi i quantitativi e i valori rilevati."
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.view_move_form_inherit
+msgid "Usage"
+msgstr "Uilizzo"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_quantity
+msgid "Usage Quantity"
+msgstr "Quantità utilizzo"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_value
+msgid "Usage Value"
+msgstr "Valore utilizzo"
+
+#. module: stock_move_valuation_usage
+#: model:ir.model.fields,field_description:stock_move_valuation_usage.field_stock_move__usage_ids
+msgid "Valuation Usage"
+msgstr "Utilizzo valorizzazione"
+
+#. module: stock_move_valuation_usage
+#: model_terms:ir.ui.view,arch_db:stock_move_valuation_usage.stock_move_valuation_usage_list
+msgid "Value"
+msgstr "Valore"
+
+#. module: stock_move_valuation_usage
+#. odoo-python
+#: code:addons/stock_move_valuation_usage/models/stock_move_valuation_usage.py:0
+msgid "You can't use same move as origin and destination"
+msgstr "Non si può usare lo stesso movimento come origine e destinazione"
