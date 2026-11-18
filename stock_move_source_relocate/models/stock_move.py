@@ -37,6 +37,12 @@ class StockMove(models.Model):
                 relocated_moves |= relocated
         if relocated_moves:
             relocated_moves._after_apply_source_relocate_rule()
+            # The source location changed
+            # => Reservation must be tried again on it.
+            relocated_moves.exists().with_context(
+                # Skip the relocation rules to avoid recursing.
+                exclude_apply_source_relocate=True
+            )._action_assign()
 
     def _apply_source_relocate_rule(self, relocation):
         """Perform the source location relocation.
