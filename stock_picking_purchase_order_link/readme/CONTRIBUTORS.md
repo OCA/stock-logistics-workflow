@@ -1,0 +1,5 @@
+- Adria Gil Sorribes \<<adria.gil@forgeflow.com>\>
+- Jaume Planas \<<jaume.planas@minorisa.net>\>
+- Joan Mateu Jordi \<<joan.mateu@forgeflow.com>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
