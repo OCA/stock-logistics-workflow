@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form_inherit" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="arch" type="xml">
+            <field name="use_existing_lots" position="after">
+                <field
+                    name="display_lots_on_hand_first"
+                    invisible="not use_existing_lots"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
