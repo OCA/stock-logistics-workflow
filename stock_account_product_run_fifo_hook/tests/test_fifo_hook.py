@@ -21,6 +21,17 @@ class TestFifoHook(TestStockValuationCommon):
             _record,
         )
 
+    def _patch_reset(self):
+        resets = []
+
+        def _reset(self, valued_moves):
+            resets.append(valued_moves)
+            return True
+
+        return resets, patch.object(
+            type(self.env["product.product"]), "_run_fifo_correction_reset", _reset
+        )
+
     def test_prepare_candidate_update_called(self):
         product = self.product_fifo
         move_in_1 = self._make_in_move(product, 10, 10)
@@ -94,4 +105,20 @@ class TestFifoHook(TestStockValuationCommon):
         self.assertEqual(
             calls,
             [(move_in_1, 2.0, 20.0, move_out), (move_in_2, 2.0, 12.0, move_out)],
+        )
+
+    def test_prepare_candidate_update_correction(self):
+        product = self.product_fifo
+        move_in_1 = self._make_in_move(product, 5, 10)
+        move_out = self._make_out_move(product, 8)
+        self.assertEqual(move_out.value, -80.0)
+        calls, hook = self._patch_hook()
+        resets, reset = self._patch_reset()
+        with hook, reset:
+            move_in_2 = self._make_in_move(product, 10, 6)
+        self.assertEqual(move_out.value, -68.0)
+        self.assertEqual(resets, [move_out])
+        self.assertEqual(
+            calls,
+            [(move_in_1, 5.0, 50.0, move_out), (move_in_2, 3.0, 18.0, move_out)],
         )

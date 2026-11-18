@@ -41,7 +41,6 @@ In Odoo 19, the valuation logic has shifted from
 extension points for custom modules to:
 
 - Access FIFO candidate move information during valuation
-- Enrich stock moves with custom candidate data
 - Know which outgoing move consumes each FIFO candidate
 
 In Odoo 20, the per-quantity FIFO computation moved from ``_run_fifo()``
@@ -51,12 +50,13 @@ passes the outgoing move being valued, so this module also patches
 ``stock.move._set_value()`` to put it in the ``valued_move`` context
 key.
 
-The FIFO replay done by ``_run_fifo(correction=True)`` uses its own
-candidate stack without source moves, so it does not call the hook. It
-runs when a valued move line quantity, location or lot is edited, a move
-date changes, a product value is adjusted, the costing method changes,
-or a receipt fills stock that was already sold, and it rewrites the
-``value`` of the outgoing moves.
+Odoo 20 also replays the FIFO valuation (``_run_fifo(correction=True)``)
+when a valued move line quantity, location or lot is edited, a move date
+changes, a product value is adjusted, the costing method changes, or a
+receipt fills stock that was already sold. This module patches it to
+call the same hook for each candidate consumed during the replay, and
+adds ``_run_fifo_correction_reset()`` before it so that custom modules
+can drop the data stored for the outgoing moves that are replayed.
 
 **Table of contents**
 
@@ -106,8 +106,18 @@ The hook is called:
   an invoice without stock moves, PoS), with ``valued_move`` set to
   ``None``: check it before storing anything
 
-The quantity valued beyond the available candidates (negative stock) and
-the FIFO replay of ``_run_fifo(correction=True)`` do not call the hook.
+The quantity valued beyond the available candidates (negative stock)
+does not call the hook. When a later receipt fills that shortage, the
+FIFO replay calls the hook with the receipt as candidate.
+
+FIFO replay
+-----------
+
+Before replaying the FIFO valuation, ``_correct_inventory_valuation()``
+calls ``_run_fifo_correction_reset(valued_moves)`` with the outgoing
+moves whose value is recomputed. Override it to drop the data stored for
+those moves: the replay calls ``_run_fifo_prepare_candidate_update()``
+again for each of them.
 
 Bug Tracker
 ===========

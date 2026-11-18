@@ -1,12 +1,27 @@
 # Copyright 2026 ForgeFlow, S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
+from typing import NamedTuple
 
+from odoo import models
 from odoo.exceptions import UserError
 
 from odoo.addons.stock_account.models.product import ProductProduct
 from odoo.addons.stock_account.models.stock_move import StockMove
+
+
+# START OF HOOK
+class FifoCandidate(NamedTuple):
+    """Core FifoCandidate with the incoming move the candidate comes from."""
+
+    quantity: float
+    value: float
+    out_move: models.Model = None
+    in_move: models.Model = None
+
+
+# END OF HOOK
 
 
 def _get_fifo_value_new(self, quantity, lot=None, stack_size_extra_qty=0):
@@ -63,6 +78,185 @@ def _get_fifo_value_new(self, quantity, lot=None, stack_size_extra_qty=0):
         else:
             fifo_cost += quantity * self.standard_price
     return fifo_cost
+
+
+def _run_fifo_new(self, at_date=None, lot=None, correction=False):  # noqa: C901
+    # START OF HOOK
+    # Only the FIFO replay is hooked, and only in the databases where this module
+    # is installed
+    if not correction or not hasattr(self, "_run_fifo_prepare_candidate_update"):
+        return self._run_fifo_original(at_date=at_date, lot=lot, correction=correction)
+    # END OF HOOK
+    std_price_by_product_id = {}
+    value_by_product_id = {}
+    stack_by_product = defaultdict(list)
+    products = self.sudo()._with_valuation_context()
+    if at_date:
+        if correction and at_date != datetime.min:  # noqa: DTZ901
+            at_date = at_date - timedelta(seconds=1)
+        products = products.with_context(to_date=at_date)
+        if lot:
+            lot = lot.with_context(to_date=at_date)
+    qty_by_product = {
+        p: (lot.product_qty if lot else p.qty_available) for p in products
+    }
+    for product in products:
+        quantity = qty_by_product.get(product, 0)
+        std_price = lot.standard_price if lot else product.standard_price
+        if product.uom_id.compare(quantity, 0) < 0:
+            if at_date:
+                last_in = product._get_last_in(at_date)
+                std_price = last_in._get_price_unit() if last_in else std_price
+            std_price_by_product_id[product.id] = std_price
+            value_by_product_id[product.id] = quantity * std_price
+            if correction:
+                stack_by_product[product] = [
+                    FifoCandidate(quantity, quantity * std_price)
+                ]
+            continue
+
+        fifo_stack, qty_on_first_move = product._get_fifo_stack(
+            lot=lot, at_date=at_date
+        )
+        value = 0
+        for index, move in enumerate(fifo_stack):
+            if index == 0 and qty_on_first_move:
+                full_qty = move._get_valued_qty()
+                valued_qty = qty_on_first_move
+                valued_value = (
+                    move.value * qty_on_first_move / full_qty if full_qty else 0
+                )
+            else:
+                valued_qty = move._get_valued_qty(lot=lot)
+                valued_value = move.value
+                if lot:
+                    full_qty = move._get_valued_qty()
+                    valued_value = move.value * valued_qty / full_qty if full_qty else 0
+            value += valued_value
+            if correction:
+                stack_by_product[product].append(
+                    FifoCandidate(valued_qty, valued_value)
+                )
+                # START OF HOOK
+                stack_by_product[product][-1] = stack_by_product[product][-1]._replace(
+                    in_move=move
+                )
+                # END OF HOOK
+
+        std_price = value / quantity if quantity else std_price
+        std_price_by_product_id[product.id] = std_price
+        value_by_product_id[product.id] = value
+
+    if not correction:
+        return std_price_by_product_id, value_by_product_id
+
+    moves_by_product = self._get_stock_moves_with_valuation_by_product(at_date, lot=lot)
+    std_price_history_by_product = self._get_std_price_history_by_product(at_date)
+
+    for product in self:
+        stack = stack_by_product[product]
+        unit_price = std_price_by_product_id.get(product.id, product.standard_price)
+        price_changes = iter(
+            std_price_history_by_product.get(product, self.env["product.value"])
+        )
+        next_change = next(price_changes, None)
+        for move in moves_by_product.get(product, self.env["stock.move"]):
+            while next_change and next_change.date <= move.date:
+                unit_price = next_change.value
+                # START OF HOOK
+                in_moves = [m.in_move for m in stack]
+                # END OF HOOK
+                stack[:] = [
+                    FifoCandidate(m.quantity, m.quantity * unit_price, m.out_move)
+                    for m in stack
+                ]
+                # START OF HOOK
+                stack[:] = [
+                    m._replace(in_move=in_move)
+                    for m, in_move in zip(stack, in_moves, strict=True)
+                ]
+                # END OF HOOK
+                next_change = next(price_changes, None)
+
+            if move.is_in:
+                full_in_qty = move._get_valued_qty()
+                in_qty = move._get_valued_qty(lot=lot) if lot else full_in_qty
+                unit_price = move.value / full_in_qty if full_in_qty else unit_price
+                while in_qty > 0 and stack and stack[0].quantity < 0:
+                    shortage_move = stack[0]
+                    shortage = -shortage_move.quantity
+                    filled = min(shortage, in_qty)
+                    if shortage_move.out_move:
+                        old_unit = shortage_move.value / shortage_move.quantity
+                        shortage_move.out_move.value += filled * (old_unit - unit_price)
+                        # START OF HOOK
+                        product._run_fifo_prepare_candidate_update(
+                            move, filled, filled * unit_price, shortage_move.out_move
+                        )
+                        # END OF HOOK
+                    in_qty -= filled
+                    remaining_qty = shortage_move.quantity + filled
+                    if remaining_qty < 0:
+                        stack[0] = FifoCandidate(
+                            remaining_qty,
+                            remaining_qty * unit_price,
+                            shortage_move.out_move,
+                        )
+                    else:
+                        stack.pop(0)
+                if in_qty > 0:
+                    stack.append(FifoCandidate(in_qty, in_qty * unit_price))
+                    # START OF HOOK
+                    stack[-1] = stack[-1]._replace(in_move=move)
+                    # END OF HOOK
+            elif move.is_out:
+                out_qty = (
+                    move._get_valued_qty(lot=lot) if lot else move._get_valued_qty()
+                )
+                out_value = 0
+                while out_qty > 0 and stack and stack[0].quantity > 0:
+                    candidate_qty, candidate_value = stack[0].quantity, stack[0].value
+                    # START OF HOOK
+                    candidate_move = stack[0].in_move
+                    # END OF HOOK
+                    if candidate_qty > out_qty:
+                        consumed_value = candidate_value * out_qty / candidate_qty
+                        stack[0] = FifoCandidate(
+                            candidate_qty - out_qty, candidate_value - consumed_value
+                        )
+                        # START OF HOOK
+                        stack[0] = stack[0]._replace(in_move=candidate_move)
+                        if candidate_move:
+                            product._run_fifo_prepare_candidate_update(
+                                candidate_move, out_qty, consumed_value, move
+                            )
+                        # END OF HOOK
+                        out_value += consumed_value
+                        out_qty = 0
+                    else:
+                        # START OF HOOK
+                        if candidate_move:
+                            product._run_fifo_prepare_candidate_update(
+                                candidate_move, candidate_qty, candidate_value, move
+                            )
+                        # END OF HOOK
+                        out_value += candidate_value
+                        out_qty -= candidate_qty
+                        stack.pop(0)
+                if out_qty > 0:
+                    out_value += out_qty * unit_price
+                    stack.append(FifoCandidate(-out_qty, -out_qty * unit_price, move))
+                if lot:
+                    move.value -= out_value
+                elif move.value != -out_value:
+                    move.value = -out_value
+
+        std_price_by_product_id[product.id] = unit_price
+        value_by_product_id[product.id] = sum(
+            stack_tuple.value for stack_tuple in stack
+        )
+
+    return std_price_by_product_id, value_by_product_id
 
 
 def _set_value_new(self, recompute_date=None, skip_check=False):  # noqa: C901
@@ -210,3 +404,6 @@ def post_load_hook():
     if not hasattr(StockMove, "_set_value_original"):
         StockMove._set_value_original = StockMove._set_value
     StockMove._set_value = _set_value_new
+    if not hasattr(ProductProduct, "_run_fifo_original"):
+        ProductProduct._run_fifo_original = ProductProduct._run_fifo
+    ProductProduct._run_fifo = _run_fifo_new

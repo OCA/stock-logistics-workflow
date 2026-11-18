@@ -27,5 +27,13 @@ The hook is called:
   without stock moves, PoS), with `valued_move` set to `None`: check it before storing
   anything
 
-The quantity valued beyond the available candidates (negative stock) and the FIFO
-replay of `_run_fifo(correction=True)` do not call the hook.
+The quantity valued beyond the available candidates (negative stock) does not call the
+hook. When a later receipt fills that shortage, the FIFO replay calls the hook with the
+receipt as candidate.
+
+## FIFO replay
+
+Before replaying the FIFO valuation, `_correct_inventory_valuation()` calls
+`_run_fifo_correction_reset(valued_moves)` with the outgoing moves whose value is
+recomputed. Override it to drop the data stored for those moves: the replay calls
+`_run_fifo_prepare_candidate_update()` again for each of them.
