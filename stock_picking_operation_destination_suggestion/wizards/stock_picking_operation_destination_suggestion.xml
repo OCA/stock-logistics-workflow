@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record
+        model="ir.ui.view"
+        id="stock_picking_operation_destination_suggest_form_view"
+    >
+        <field name="model">stock.picking.operation.destination.suggestion</field>
+        <field name="arch" type="xml">
+            <form string="Destination Suggestion">
+                <h1>
+                    <field name="picking_id" invisible="1" />
+                </h1>
+                <span
+                >Choose the location destination based on the suggested ones:</span>
+                <br />
+                <field name="chosen_location_suggestion_domain" invisible="1" />
+                <label for="chosen_location_suggestion_id">Selected location</label>
+                <field
+                    name="chosen_location_suggestion_id"
+                    required="1"
+                    domain="chosen_location_suggestion_domain"
+                />
+                <br />
+                <label for="destination_location_suggestion_ids" string="Suggestions" />
+                <field name="destination_location_suggestion_ids">
+                    <tree>
+                        <field name="display_name" nolabel="1" />
+                    </tree>
+                </field>
+                <notebook>
+                    <page string="Operations">
+                        <label for="move_line_ids" string="Selected operations" />
+                        <field name="move_line_ids">
+                            <tree>
+                                <field name="product_id" />
+                                <field name="qty_done" />
+                            </tree>
+                        </field>
+                    </page>
+
+                </notebook>
+                <footer>
+                    <button
+                        name="doit"
+                        string="Apply suggestion"
+                        class="btn-primary"
+                        type="object"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.act_window"
+        id="stock_picking_operation_destination_suggest_act_window"
+    >
+        <field name="name">Destination Suggestion</field>
+        <field name="res_model">stock.picking.operation.destination.suggestion</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

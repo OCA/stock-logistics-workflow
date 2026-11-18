@@ -1,0 +1,4 @@
+- When the picking is ready, done quantities on operations.
+- Click on 'Suggest Destination'
+- Following the suggested destination locations, pick one and Apply.
+- The destination location is applied on all selected operations.
