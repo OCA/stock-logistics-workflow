@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_stock_shipment_composer_wizard_form" model="ir.ui.view">
+        <field name="name">stock.shipment.composer.wizard.form</field>
+        <field name="model">stock.shipment.composer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Shipment Composer">
+                <group>
+                    <field name="picking_type_id" />
+                    <field name="partner_id" />
+                    <field name="move_ids" invisible="1" />
+                </group>
+                <field name="line_ids">
+                    <tree editable="bottom">
+                        <field
+                            name="move_id"
+                            domain="[('partner_id','=',parent.partner_id),('picking_type_id','=',parent.picking_type_id),('state','not in',['done','cancel']),('id','not in',parent.move_ids)]"
+                        />
+                        <field name="quantity" />
+                        <field name="product_uom_qty" />
+                        <field name="reserved_availability" />
+                        <field name="quantity_done" />
+                        <field name="uom_id" />
+                        <field name="remarks" />
+                    </tree>
+                </field>
+                <footer>
+                    <button
+                        string="Create Composer"
+                        type="object"
+                        name="action_create_composer"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
