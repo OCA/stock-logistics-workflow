@@ -1,0 +1,3 @@
+Stock movements sometimes fail to get a final destination location when putaway rules cannot find an available or empty storage spot.
+
+The OCA module stock_picking_putaway_recompute provides a feature to manually trigger a putaway recomputation. This extension automates that process by creating a scheduled job to recompute putaways periodically and automatically, eliminating the need for manual intervention.
