@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
-    <record model="ir.rule" id="stock_move_valuation_usage_company_rule">
+    <record id="stock_move_valuation_usage_company_rule" model="ir.rule">
         <field name="name">Company Valuation Usages</field>
         <field name="model_id" ref="model_stock_move_valuation_usage" />
         <field name="global" eval="True" />

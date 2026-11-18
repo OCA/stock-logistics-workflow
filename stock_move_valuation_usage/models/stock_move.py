@@ -72,9 +72,9 @@ class StockMove(models.Model):
     def _action_done(self, cancel_backorder=False):
         result = super()._action_done(cancel_backorder=cancel_backorder)
         dropship_fifo = result.filtered(
-            lambda m: m.is_dropship
-            and m.product_id.cost_method == "fifo"
-            and m.quantity > 0
+            lambda m: (
+                m.is_dropship and m.product_id.cost_method == "fifo" and m.quantity > 0
+            )
         )
         for move in dropship_fifo:
             move._create_usage_record(
@@ -90,9 +90,11 @@ class StockMove(models.Model):
 
     def _handle_negative_fifo_revaluation(self):
         incoming_fifo = self.filtered(
-            lambda m: m.location_id.usage in ("supplier", "production")
-            and m.location_dest_id.usage == "internal"
-            and m.product_id.cost_method == "fifo"
+            lambda m: (
+                m.location_id.usage in ("supplier", "production")
+                and m.location_dest_id.usage == "internal"
+                and m.product_id.cost_method == "fifo"
+            )
         )
 
         for move in incoming_fifo:

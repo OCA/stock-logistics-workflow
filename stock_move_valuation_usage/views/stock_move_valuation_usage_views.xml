@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="stock_move_valuation_usage_form" model="ir.ui.view">
         <field name="name">stock.move.valuation.usage.form</field>
@@ -61,8 +62,8 @@
         <field name="search_view_id" ref="stock_move_valuation_usage_search" />
     </record>
     <menuitem
-        action="stock_move_valuation_usage_action"
         id="stock_move_valuation_usage_menu"
+        action="stock_move_valuation_usage_action"
         parent="stock.menu_warehouse_report"
         groups="base.group_no_one"
     />
