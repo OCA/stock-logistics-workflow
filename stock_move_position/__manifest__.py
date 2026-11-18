@@ -5,7 +5,7 @@
 {
     "name": "Stock Move Position",
     "summary": "Adds position to stock move and numbering from picking",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "category": "stock",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
