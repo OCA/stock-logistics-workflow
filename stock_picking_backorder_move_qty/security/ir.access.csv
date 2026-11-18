@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_stock_backorder_confirmation_move_line,access_stock_backorder_confirmation_move_line,stock.backorder.confirmation.move.line,stock.group_stock_user,cru,
