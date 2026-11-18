@@ -55,24 +55,23 @@ class StockLot(models.Model):
                 )
             )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Force the locking/unlocking, ignoring the value of 'locked'."""
-        product = self.env["product.product"].browse(
-            vals.get(
+        for vals in vals_list:
+            product_id = vals.get(
                 "product_id",
                 # Web quick-create provide in context
                 self.env.context.get(
                     "product_id", self.env.context.get("default_product_id", False)
                 ),
             )
-        )
-        vals["locked"] = self._get_product_locked(product)
-        lot = super(
+            product = self.env["product.product"].browse(product_id)
+            vals["locked"] = self._get_product_locked(product)
+        lots = super(
             StockLot, self.with_context(bypass_lock_permission_check=True)
-        ).create(vals)
-
-        return self.browse(lot.id)  # for cleaning context
+        ).create(vals_list)
+        return lots
 
     def write(self, values):
         """ "Lock the lot if changing the product and locking is required"""
