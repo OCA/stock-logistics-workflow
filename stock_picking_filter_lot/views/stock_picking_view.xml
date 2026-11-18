@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Restrict the lot/serial selectable in the Operations tab
+                 (move's lot_ids many2many_tags) to those still in stock
+                 (quantity > 0) at the move's source location or its children.
+                 This directly checks quant_ids to avoid timing issues with
+                 computed location_ids field. -->
+            <xpath
+                expr="//field[@name='move_ids_without_package']//list//field[@name='lot_ids']"
+                position="attributes"
+            >
+                <attribute
+                    name="domain"
+                >[('product_id', '=', product_id), ('quant_ids.location_id', 'child_of', location_id), ('quant_ids.quantity', '&gt;', 0), '|', ('company_id', '=', company_id), ('company_id', '=', False)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

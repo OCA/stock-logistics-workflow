@@ -85,6 +85,9 @@ Contributors
 
   - Bhavesh Heliconia
 
+- Saran Lim. <saranl@ecosoft.co.th>
+  (`www.ecosoft.co.th <http://www.ecosoft.co.th>`__)
+
 Maintainers
 -----------
 
