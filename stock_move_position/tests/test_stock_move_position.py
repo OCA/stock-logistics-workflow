@@ -108,3 +108,22 @@ class TestStockMovePosition(StockMovePositionCommon):
         self.assertEqual(move.position, "1")
         new_move = self.env["stock.move"].create(move._split(4))
         self.assertEqual(new_move.position, "1")
+
+    def test_order_by_position_is_numeric(self):
+        """Moves sorted by position follow the numbers, not the text.
+
+        Scenario:
+            1. Create a transfer with 10 lines (positions 1 to 10).
+            2. Sort its moves by position.
+        Expected:
+            - Position 10 comes last, not right after 1.
+        """
+        picking = self._create_picking(self.out_type, [(self.product, 1)] * 10)
+        moves = self.env["stock.move"].search(
+            [("picking_id", "=", picking.id)], order="position"
+        )
+        self.assertEqual(moves.mapped("position")[-2:], ["9", "10"])
+        moves = self.env["stock.move"].search(
+            [("picking_id", "=", picking.id)], order="position desc"
+        )
+        self.assertEqual(moves.mapped("position")[:2], ["10", "9"])

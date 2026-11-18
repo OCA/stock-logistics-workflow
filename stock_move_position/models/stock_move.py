@@ -4,6 +4,7 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models
+from odoo.tools import SQL
 
 
 class StockMove(models.Model):
@@ -43,3 +44,11 @@ class StockMove(models.Model):
         res = super()._prepare_move_split_vals(qty)
         res["position"] = self.position
         return res
+
+    def _order_field_to_sql(self, alias, field_name, direction, nulls, query):
+        # Sort position as a number ("10" after "9"), to list the moves of a transfer
+        # in their order in the views.
+        if field_name == "position":
+            sql_field = self._field_to_sql(alias, field_name, query)
+            return SQL("LPAD(%s, 10, '0') %s %s", sql_field, direction, nulls)
+        return super()._order_field_to_sql(alias, field_name, direction, nulls, query)
