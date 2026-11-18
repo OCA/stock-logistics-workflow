@@ -52,22 +52,16 @@ class StockMove(models.Model):
             rec.usage_quantity = sum(rec.usage_ids.mapped("quantity"))
             rec.usage_value = sum(rec.usage_ids.mapped("value"))
 
-    def _set_value(self, correction_quantity=None):
-        fifo_moves = self.filtered(
-            lambda m: m._is_out() and m.product_id.cost_method == "fifo"
-        )
-        if fifo_moves:
-            # Process FIFO moves with context
-            for move in fifo_moves:
-                super(StockMove, move.with_context(valued_move=move))._set_value(
-                    correction_quantity=correction_quantity
+    def _set_value(self, recompute_date=None, skip_check=False):
+        if not recompute_date:
+            # The FIFO valuation creates the usage records of these moves again
+            self.filtered(
+                lambda m: (
+                    m.is_out
+                    and m.product_id.with_company(m.company_id).cost_method == "fifo"
                 )
-            # Process non-FIFO moves normally
-            return (self - fifo_moves)._set_value(
-                correction_quantity=correction_quantity
-            )
-        else:
-            return super()._set_value(correction_quantity=correction_quantity)
+            ).sudo().incoming_usage_ids.unlink()
+        return super()._set_value(recompute_date=recompute_date, skip_check=skip_check)
 
     def _action_done(self, cancel_backorder=False):
         result = super()._action_done(cancel_backorder=cancel_backorder)
@@ -83,40 +77,7 @@ class StockMove(models.Model):
                 quantity=move.quantity,
                 value=move.quantity * move._get_unit_cost(),
             )
-        # Backfill usage links for earlier outgoing moves
-        # that had no stock (negative FIFO scenario)
-        result._handle_negative_fifo_revaluation()
         return result
-
-    def _handle_negative_fifo_revaluation(self):
-        incoming_fifo = self.filtered(
-            lambda m: (
-                m.location_id.usage in ("supplier", "production")
-                and m.location_dest_id.usage == "internal"
-                and m.product_id.cost_method == "fifo"
-            )
-        )
-
-        for move in incoming_fifo:
-            # Find negative outgoing moves for this product
-            negative_moves = self.env["stock.move"].search(
-                [
-                    ("product_id", "=", move.product_id.id),
-                    ("state", "=", "done"),
-                    ("location_id.usage", "=", "internal"),
-                    ("location_dest_id.usage", "=", "customer"),
-                    ("company_id", "=", move.company_id.id),
-                    ("date", "<=", move.date),
-                    ("incoming_usage_ids", "=", False),
-                ]
-            )
-            for out_move in negative_moves:
-                out_move._create_usage_record(
-                    src_move=move,
-                    dest_move=out_move,
-                    quantity=out_move.quantity,
-                    value=out_move.quantity * move._get_unit_cost(),
-                )
 
     def _get_unit_cost(self):
         self.ensure_one()

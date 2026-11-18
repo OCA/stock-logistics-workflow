@@ -5,7 +5,3 @@
   in 'Inventory / Reporting / Stock Move Valuation Usage', where you will 
   be able to identify the source moves that were used to value 
   this move, and the quantity and value that was taken.
-- Create several MTO order
-- Deliver the products to a customer in a random way and check the
-  section 'Move Valuation Usage'. The MTO logic is respected, then
-  FIFO applies.

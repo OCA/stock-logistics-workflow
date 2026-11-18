@@ -1,7 +1,7 @@
 # 2026 Copyright ForgeFlow, S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import api, fields, models, tools
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -29,13 +29,7 @@ class StockMoveValuationUsage(models.Model):
     quantity = fields.Float(string="Taken Quantity")
     value = fields.Float(string="Taken Value")
 
-    def init(self):
-        tools.create_index(
-            self.env.cr,
-            "stock_move_valuation_usage_index",
-            self._table,
-            ["src_stock_move_id", "dest_stock_move_id"],
-        )
+    _index = models.Index("(src_stock_move_id, dest_stock_move_id)")
 
     @api.constrains("src_stock_move_id", "dest_stock_move_id")
     def _check_same_move(self):

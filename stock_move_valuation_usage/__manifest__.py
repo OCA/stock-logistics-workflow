@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Stock Move Valuation Usage",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "development_status": "Alpha",
     "license": "AGPL-3",
@@ -12,8 +12,7 @@
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["sale", "stock_account_product_run_fifo_hook"],
     "data": [
-        "security/ir.model.access.csv",
-        "security/ir_rule.xml",
+        "security/ir.access.csv",
         "views/stock_move_valuation_usage_views.xml",
         "views/stock_move_views.xml",
     ],

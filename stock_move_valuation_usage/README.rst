@@ -21,13 +21,13 @@ Stock Move Valuation Usage
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
-    :target: https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_move_valuation_usage
+    :target: https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_move_valuation_usage
     :alt: OCA/stock-logistics-workflow
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-19-0/stock-logistics-workflow-19-0-stock_move_valuation_usage
+    :target: https://translation.odoo-community.org/projects/stock-logistics-workflow-20-0/stock-logistics-workflow-20-0-stock_move_valuation_usage
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -41,19 +41,16 @@ Note: In Odoo 19.0, stock valuation layer model was removed and
 valuation is now tracked directly on stock moves through the 'value'
 field.
 
+Note: In Odoo 20.0, the value of the outgoing FIFO moves is replayed
+when an earlier move changes (date, quantity or cost), or when a receipt
+fills stock that was already delivered. The usage records of the
+replayed moves are rebuilt from that replay, so a receipt that fills a
+negative stock is linked to the deliveries it covers, for the quantity
+it covers.
+
 This kind of traceability is important in case that at some point you
 want to conduct a revaluation (for example, in case that the purchase
 order price changes after the products have been received into stock).
-
-Also, it changes the way the outgoing move values are calculated in
-order to respect the MTO case. When creating the outgoing move
-valuation, Odoo uses FIFO to consume from the first available incoming
-moves with value. The module stock_move_valuation_usage improves this
-process. For standard FIFO, it always uses the oldest move. However, for
-MTO cases, when there is a fixed link between the incoming move and the
-outgoing move, the system should use the specific incoming move not just
-the oldest one. Also, when the case is not MTO, the system should avoid
-using moves that are "reserved".
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -75,10 +72,6 @@ Usage
   in 'Inventory / Reporting / Stock Move Valuation Usage', where you
   will be able to identify the source moves that were used to value this
   move, and the quantity and value that was taken.
-- Create several MTO order
-- Deliver the products to a customer in a random way and check the
-  section 'Move Valuation Usage'. The MTO logic is respected, then FIFO
-  applies.
 
 Bug Tracker
 ===========
@@ -86,7 +79,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/stock-logistics-workflow/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_valuation_usage%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/stock-logistics-workflow/issues/new?body=module:%20stock_move_valuation_usage%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -118,6 +111,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_move_valuation_usage>`_ project on GitHub.
+This module is part of the `OCA/stock-logistics-workflow <https://github.com/OCA/stock-logistics-workflow/tree/20.0/stock_move_valuation_usage>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
