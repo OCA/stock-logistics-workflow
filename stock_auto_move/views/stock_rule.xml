@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2014-2015 NDP Systèmes (<https://www.ndp-systemes.fr>)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="stock_auto_move_procurement_rule_form_view">
+        <field name="name">stock.rule.form.view (in stock_auto_move)</field>
+        <field name="model">stock.rule</field>
+        <field name="inherit_id" ref="stock.view_stock_rule_form" />
+        <field name="priority" eval="16" />
+        <field name="arch" type="xml">
+            <data>
+                <field name="procure_method" position="after">
+                    <field name="auto_move" />
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>
