@@ -1,0 +1,202 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_line_portal_owner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-21 09:27+0000\n"
+"PO-Revision-Date: 2026-09-21 09:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "<span class=\"d-none d-md-inline\">Document #</span>"
+msgstr "<span class=\"d-none d-md-inline\">Documento #</span>"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "<span class=\"mr-sm-2\">Move State:</span>"
+msgstr "<span class=\"mr-sm-2\">Estado:</span>"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "<span class=\"sr-only\">-</span>"
+msgstr ""
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "<span class=\"sr-only\">Date: </span>"
+msgstr "<span class=\"sr-only\">Fecha: </span>"
+
+#. module: stock_move_line_portal_owner
+#: model:ir.model.fields,field_description:stock_move_line_portal_owner.field_stock_move_line__access_warning
+msgid "Access warning"
+msgstr "Advertencia de Acceso"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+#, python-format
+msgid "All"
+msgstr "Todos"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Available"
+msgstr "Disponible"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: stock_move_line_portal_owner
+#: model:ir.model.fields,help:stock_move_line_portal_owner.field_stock_move_line__access_url
+msgid "Customer Portal URL"
+msgstr ""
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+#, python-format
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Done"
+msgstr "Hecho"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_home_stock_move_line_owner
+msgid "Follow, view your consigned moves"
+msgstr "Sigue, visualiza tus movimientos de almancen consignados y vinculados directamente a tu cuenta"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Move Operations"
+msgstr "Movimientos en consignación"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Movement Date"
+msgstr "Fecha de Movimiento"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Movement date"
+msgstr "Fecha de Movimiento"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_home_menu_stock_move_line_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_home_stock_move_line_owner
+msgid "My Consigned Moves"
+msgstr "Mis Movimientos en consignación"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "New"
+msgstr "Nuevo"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Partially Available"
+msgstr "Parcialmente Disponible"
+
+#. module: stock_move_line_portal_owner
+#: model:ir.model.fields,field_description:stock_move_line_portal_owner.field_stock_move_line__access_url
+msgid "Portal Access URL"
+msgstr "URL de Acceso al Portal"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_move_line_portal_owner
+#: model:ir.model,name:stock_move_line_portal_owner.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimientos de producto (línea de movimiento de stock)"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+#, python-format
+msgid "Receipt"
+msgstr "Recepción"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: stock_move_line_portal_owner
+#: model:ir.model.fields,field_description:stock_move_line_portal_owner.field_stock_move_line__access_token
+msgid "Security Token"
+msgstr "Token de Seguridad"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+#, python-format
+msgid "State"
+msgstr "Estado"
+
+#. module: stock_move_line_portal_owner
+#: model_terms:ir.ui.view,arch_db:stock_move_line_portal_owner.portal_my_stock_move_line_owner
+msgid "There are currently no move operations for your account."
+msgstr "Actualmente no hay operaciones de movimiento para su cuenta."
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Waiting Another Move"
+msgstr "Esperando otro Movimiento"
+
+#. module: stock_move_line_portal_owner
+#. odoo-python
+#: code:addons/stock_move_line_portal_owner/controllers/portal.py:0
+#, python-format
+msgid "Waiting Availability"
+msgstr "Esperando Disponibilidad"
