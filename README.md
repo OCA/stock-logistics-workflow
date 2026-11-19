@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [stock_picking_import_serial_number](stock_picking_import_serial_number/) | 17.0.1.0.0 | <a href='https://github.com/sergio-teruel'><img src='https://github.com/sergio-teruel.png' width='32' height='32' style='border-radius:50%;' alt='sergio-teruel'/></a> | Import S/N from excel file for incoming pickings
 [stock_picking_invoice_link](stock_picking_invoice_link/) | 17.0.1.2.5 |  | Adds link between pickings and invoices
 [stock_picking_kind](stock_picking_kind/) | 17.0.1.0.0 |  | Computes the kind of picking based on locations
-[stock_picking_line_sequence](stock_picking_line_sequence/) | 17.0.1.0.1 |  | Manages the order of stock moves by displaying its sequence
+[stock_picking_line_sequence](stock_picking_line_sequence/) | 17.0.1.1.0 |  | Manages the order of stock moves by displaying its sequence
 [stock_picking_mass_action](stock_picking_mass_action/) | 17.0.1.0.0 |  | Stock Picking Mass Action
 [stock_picking_mrp_mass_production_order](stock_picking_mrp_mass_production_order/) | 17.0.1.0.0 | <a href='https://github.com/peluko00'><img src='https://github.com/peluko00.png' width='32' height='32' style='border-radius:50%;' alt='peluko00'/></a> | Stock Picking MRP Mass Production Order
 [stock_picking_origin_reference](stock_picking_origin_reference/) | 17.0.1.0.0 |  | Add clickable button to the Transfer Source Document.
