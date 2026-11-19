@@ -11,6 +11,30 @@
         <xpath expr="//table[2]/thead/tr/th[1]" position="before">
             <th><strong>Seq.</strong></th>
         </xpath>
+        <xpath
+            expr="//table[2]//t[@t-if='has_serial_number']/tr[@t-foreach='o.move_line_ids']"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >o.move_line_ids.sorted(lambda line: line.move_id.sequence2)</attribute>
+        </xpath>
+        <xpath
+            expr="//table[2]//t[@t-foreach='packages']//t[@t-if='has_serial_number']/tr[@t-foreach='package_move_lines']"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >package_move_lines.sorted(lambda line: line.move_id.sequence2)</attribute>
+        </xpath>
+        <xpath
+            expr="//table[2]//t[@t-if='has_serial_number']/tr[@t-foreach='move_lines']"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >move_lines.sorted(lambda line: line.move_id.sequence2)</attribute>
+        </xpath>
     </template>
 
     <template

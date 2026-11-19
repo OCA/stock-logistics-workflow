@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_picking" inherit_id="stock.report_picking">
+        <xpath
+            expr="//table[1]//tr[contains(@t-foreach,'o.move_line_ids_without_package.sorted')]"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >o.move_line_ids_without_package.sorted(lambda ml: (ml.move_id.sequence2,ml.location_id.complete_name, ml.location_dest_id.complete_name))</attribute>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ========================================
 Stock picking lines with sequence number
 ========================================
@@ -17,7 +13,7 @@ Stock picking lines with sequence number
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github
@@ -47,7 +43,12 @@ For further information, please visit:
 Usage
 =====
 
+Go to *Inventory > Operations > Transfers*, open a transfer and drag its
+lines on the *Operations* tab to order them; the *Sequence* column shows
+the resulting position of each line.
 
+Printing the *Delivery Slip* or the *Picking Operations* report from
+that transfer lists its lines in that order.
 
 Bug Tracker
 ===========
@@ -79,6 +80,7 @@ Contributors
 - ForgeFlow S.L. <contact@forgeflow.com>
 - Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 - Sulivan Lominchar <slominchar@archeti.com>
+- Edilio Escalona Almira <e.escalona@binhex.cloud>
 
 Maintainers
 -----------
