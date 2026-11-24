@@ -14,6 +14,7 @@ class TestStockLotLocation(BaseCommon):
             {
                 "name": "Test Product",
                 "is_storable": True,
+                "tracking": "lot",
             }
         )
         cls.lot = cls.env["stock.lot"].create(
@@ -66,3 +67,18 @@ class TestStockLotLocation(BaseCommon):
             self.lot.location_ids,
             "Location 2 should still be in lot.location_ids",
         )
+
+    def test_location_ids_follow_quant_quantity(self):
+        Quant = self.env["stock.quant"]
+        Quant._update_available_quantity(
+            self.product, self.location_1, 1, lot_id=self.lot
+        )
+        self.assertEqual(self.lot.location_ids, self.location_1)
+        Quant._update_available_quantity(
+            self.product, self.location_1, -1, lot_id=self.lot
+        )
+        self.assertFalse(self.lot.location_ids)
+        Quant._update_available_quantity(
+            self.product, self.location_1, 2, lot_id=self.lot
+        )
+        self.assertEqual(self.lot.location_ids, self.location_1)
