@@ -82,3 +82,25 @@ class TestStockLotLocation(BaseCommon):
             self.product, self.location_1, 2, lot_id=self.lot
         )
         self.assertEqual(self.lot.location_ids, self.location_1)
+
+    def test_search_lots_available_in_location(self):
+        child_location = self.env["stock.location"].create(
+            {"name": "Shelf 1", "location_id": self.location_1.id}
+        )
+        lot_2 = self.env["stock.lot"].create(
+            {"product_id": self.product.id, "name": "LOT-002"}
+        )
+        self.env["stock.lot"].create({"product_id": self.product.id, "name": "LOT-003"})
+        Quant = self.env["stock.quant"]
+        Quant._update_available_quantity(
+            self.product, child_location, 1, lot_id=self.lot
+        )
+        Quant._update_available_quantity(self.product, self.location_2, 1, lot_id=lot_2)
+        self.env.flush_all()
+        lots = self.env["stock.lot"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_ids", "child_of", self.location_1.id),
+            ]
+        )
+        self.assertEqual(lots, self.lot)
