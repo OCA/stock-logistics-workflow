@@ -19,13 +19,3 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.17\n"
-
-#. module: stock_exception
-#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__check_on_confirm
-msgid "Check On Confirm"
-msgstr "Chequear al Confirmar"
-
-#. module: stock_exception
-#: model:ir.model.fields,field_description:stock_exception.field_exception_rule__check_on_validate
-msgid "Check On Validate"
-msgstr "Chequear al Validar"
