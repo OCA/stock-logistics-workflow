@@ -32,19 +32,82 @@ Stock Exception
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows you attach several customizable exceptions to your
-stock picking in a way that you can filter pickings by exceptions type
-and fix them. Exceptions are checked via a scheduled action as well as
-during confirmation and validation.
+This module adds exception rules to transfers, built on
+``base_exception``. A rule describes a situation that needs attention
+before a transfer goes ahead: a delivery without contact, a quantity
+that is too large, a product without data needed for shipping, and so
+on.
 
-This is especially useful in an scenario for mass stock picking import,
-because it's likely some pickings have errors when you import them (like
-product not found in Odoo, wrong line format etc.)
+Rules can check the transfer (``stock.picking``) or its stock moves
+(``stock.move``); an exception found on a move is shown on its transfer.
+They are checked:
+
+- when the transfer is confirmed, including when another document
+  confirms it, such as a sale or purchase order;
+- when the transfer is validated;
+- by the scheduled action *Stock: Test Draft Pickings Exception*, for
+  draft transfers (inactive by default).
+
+A rule either **warns** (the user can ignore it and go on) or **blocks**
+(*Is Blocking*: the transfer cannot be validated until the cause is
+fixed).
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+To create the rules, go to *Inventory > Configuration > Stock Exception
+Rules* (needs the group *Exception manager*). A few example rules are
+provided archived; activate them or create new ones.
+
+For each rule, set:
+
+- **Exception Name** and **Description**: the text shown to the user.
+  The name is the short title, the description says what to do about it.
+  Both are translatable.
+- **Apply on**: *Stock Picking* to check the transfer, *Stock Move* to
+  check each of its lines.
+- **Exception Type**: *By domain* (a filter, e.g.
+  ``[('partner_id', '=', False)]``), *By python code* (set
+  ``failed = True`` when the exception applies; the record is ``self``)
+  or *By method* (a method provided by another module).
+- **Sequence**: the order of the rules; the first exception found is the
+  one shown in the transfer list.
+- **Is Blocking**: when ticked, the exception cannot be ignored.
+
+Usage
+=====
+
+When a rule applies to a transfer, its exceptions are shown in three
+places, all with the **Exception Name** and **Description** of the rule:
+
+- **On confirmation or validation**, a popup *Outstanding exceptions to
+  manage* lists them. Tick *Ignore Exceptions* and confirm to go on, or
+  close it and fix the cause first. After ignoring, click *Validate*
+  again to validate the transfer. Blocking exceptions cannot be ignored.
+- **On the transfer form**, a red banner lists them as *name:
+  description*, with *(Blocking exception)* after the blocking ones, and
+  a button *Ignore Exceptions* for exception rule managers.
+- **In the list of transfers**, the column *Main Exception* shows the
+  first exception (lowest sequence); the filter *Blocked in Draft* finds
+  the transfers that have one.
+
+Editing the stock moves of a confirmed transfer resets *Ignore
+Exceptions*, so the rules are checked again.
+
+To try it with the demo data, open the delivery to *Customer on Credit
+Hold*:
+
+1. Click *Mark as To Do*: the rule *Customer on credit hold* applies. It
+   only warns: tick *Ignore Exceptions* in the popup to go on.
+2. Duplicate the delivery, set the quantity above 10 and click *Mark as
+   To Do*: the rule *More than 10 units for a customer on credit hold*
+   applies as well. It is blocking, so the exceptions cannot be ignored
+   until the quantity is lowered.
 
 Bug Tracker
 ===========
