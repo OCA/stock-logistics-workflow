@@ -3,6 +3,8 @@
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.base_exception.exceptions import BaseExceptionError
+
 
 class TestStockException(TransactionCase):
     @classmethod
@@ -49,6 +51,16 @@ class TestStockException(TransactionCase):
             }
         )
 
+    def _store_exceptions(self):
+        """Detect without rolling back, so the exceptions are readable here.
+
+        The normal flow stores them in a transaction of its own and rolls this
+        one back, so they are not visible from the test.
+        """
+        self.picking.with_context(
+            base_exception_no_rollback={"stock.picking": self.picking.ids}
+        ).detect_exceptions()
+
     def test01_confirm_picking_fail_by_py(self):
         self.stock_exception = self.exception_rule.create(
             {
@@ -59,14 +71,16 @@ class TestStockException(TransactionCase):
                 "code": "if not self.partner_id: failed=True",
             }
         )
-        exception_action = self.picking.action_confirm()
-        self.assertEqual(exception_action.get("res_model"), "stock.exception.confirm")
+        with self.assertRaises(BaseExceptionError):
+            self.picking.action_confirm()
+        self._store_exceptions()
         self.assertTrue(self.picking.exceptions_summary)
         self.assertTrue(self.picking.exception_ids)
         rules = self.env["exception.rule"].browse(self.picking.exception_ids.ids)
         self.assertIn(self.picking.id, rules.mapped("picking_ids.id"))
 
-        self.picking.button_validate()
+        with self.assertRaises(BaseExceptionError):
+            self.picking.button_validate()
         self.assertTrue(self.picking.exceptions_summary)
 
         # Test ignore exception make possible for the picking to validate
@@ -87,10 +101,13 @@ class TestStockException(TransactionCase):
                 "exception_type": "by_domain",
             }
         )
-        exception_action = self.picking.action_confirm()
-        self.assertEqual(exception_action.get("res_model"), "stock.exception.confirm")
+        with self.assertRaises(BaseExceptionError):
+            self.picking.action_confirm()
+        self._store_exceptions()
         self.assertTrue(self.picking.exceptions_summary)
         self.assertTrue(self.picking.exception_ids)
+        exception_action = self.picking.action_popup_exceptions()
+        self.assertEqual(exception_action.get("res_model"), "stock.exception.confirm")
         exception_form = Form(
             self.env["stock.exception.confirm"].with_context(
                 **exception_action.get("context")

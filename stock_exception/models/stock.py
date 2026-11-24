@@ -37,16 +37,15 @@ class StockPicking(models.Model):
         if self.state in ["waiting", "confirmed", "assigned"]:
             self.ignore_exception = False
 
+    def _must_popup_exception(self):
+        return True
+
     def action_confirm(self):
-        for rec in self:
-            if rec.detect_exceptions() and not rec.ignore_exception:
-                return rec._popup_exceptions()
+        self.detect_exceptions()
         return super().action_confirm()
 
     def button_validate(self):
-        for rec in self:
-            if rec.detect_exceptions() and not rec.ignore_exception:
-                return rec._popup_exceptions()
+        self.detect_exceptions()
         return super().button_validate()
 
     @api.model
