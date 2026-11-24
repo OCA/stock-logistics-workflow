@@ -1,5 +1,6 @@
 # Copyright 2024 Open Source Integrators
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
+from odoo.exceptions import ValidationError
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
@@ -127,3 +128,33 @@ class TestStockException(TransactionCase):
         self.assertEqual(self.picking.state, "draft")
         self.picking.action_confirm()
         self.assertEqual(self.picking.state, "assigned")
+
+    def test04_confirm_moves_of_new_picking(self):
+        """A picking confirmed through its moves, in the transaction that
+        created it (as a sale order confirmation does), reports the exception
+        instead of failing on the uncommitted picking."""
+        self.exception_rule.create(
+            {
+                "name": "No Partner",
+                "model": "stock.picking",
+                "exception_type": "by_py_code",
+                "code": "if not self.partner_id: failed=True",
+            }
+        )
+        picking = self.picking.copy()
+        self.assertTrue(picking.move_ids)
+        with self.assertRaisesRegex(ValidationError, "No Partner"):
+            picking.move_ids._action_confirm()
+            self.env.flush_all()
+
+    def test05_cron_stores_exceptions(self):
+        self.exception_rule.create(
+            {
+                "name": "No Partner",
+                "model": "stock.picking",
+                "exception_type": "by_py_code",
+                "code": "if not self.partner_id: failed=True",
+            }
+        )
+        self.env["stock.picking"].test_all_draft_pickings()
+        self.assertTrue(self.picking.exception_ids)

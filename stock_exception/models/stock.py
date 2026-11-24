@@ -11,7 +11,9 @@ class StockPicking(models.Model):
     @api.model
     def test_all_draft_pickings(self):
         picking_set = self.search([("state", "=", "draft")])
-        picking_set.detect_exceptions()
+        picking_set.with_context(
+            base_exception_no_rollback={self._name: picking_set.ids}
+        ).detect_exceptions()
         return True
 
     @api.model
@@ -30,7 +32,11 @@ class StockPicking(models.Model):
             lambda s: s.state in ["waiting", "confirmed", "assigned"]
         )
         if pickings:
-            pickings._check_exception()
+            # The pickings may not be committed yet (e.g. created by a sale
+            # order confirmation): detect in the current transaction.
+            pickings.with_context(
+                base_exception_no_rollback={self._name: pickings.ids}
+            )._check_exception()
 
     @api.onchange("move_ids")
     def onchange_ignore_exception(self):
