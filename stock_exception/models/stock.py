@@ -3,6 +3,8 @@
 
 from odoo import api, models
 
+from odoo.addons.base_exception.exceptions import BaseExceptionError
+
 
 class StockPicking(models.Model):
     _inherit = ["stock.picking", "base.exception"]
@@ -21,8 +23,14 @@ class StockPicking(models.Model):
         return "picking_ids"
 
     def detect_exceptions(self):
-        all_exceptions = super().detect_exceptions()
         moves = self.mapped("move_ids")
+        try:
+            all_exceptions = super().detect_exceptions()
+        except BaseExceptionError:
+            # Check the moves as well before stopping, so the exceptions of
+            # both the pickings and their moves are stored and shown together.
+            moves.detect_exceptions()
+            raise
         all_exceptions += moves.detect_exceptions()
         return all_exceptions
 

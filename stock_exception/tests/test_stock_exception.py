@@ -1,5 +1,7 @@
 # Copyright 2024 Open Source Integrators
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
+from unittest.mock import patch
+
 from odoo.exceptions import ValidationError
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
@@ -158,3 +160,22 @@ class TestStockException(TransactionCase):
         )
         self.env["stock.picking"].test_all_draft_pickings()
         self.assertTrue(self.picking.exception_ids)
+
+    def test06_move_rules_checked_when_picking_rule_applies(self):
+        self.exception_rule.create(
+            {
+                "name": "No Partner",
+                "model": "stock.picking",
+                "exception_type": "by_py_code",
+                "code": "if not self.partner_id: failed=True",
+            }
+        )
+        StockMove = type(self.env["stock.move"])
+        with (
+            patch.object(
+                StockMove, "detect_exceptions", autospec=True, return_value=[]
+            ) as detect_move_exceptions,
+            self.assertRaises(BaseExceptionError),
+        ):
+            self.picking.action_confirm()
+        detect_move_exceptions.assert_called()
