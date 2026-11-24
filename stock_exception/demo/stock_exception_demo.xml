@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- A customer on credit hold, and two rules that only apply to it, so
+         the demo rules do not interfere with other transfers. -->
+    <record id="demo_partner_category_credit_hold" model="res.partner.category">
+        <field name="name">Credit Hold</field>
+    </record>
+    <record id="demo_partner_credit_hold" model="res.partner">
+        <field name="name">Customer on Credit Hold</field>
+        <field name="is_company" eval="True" />
+        <field
+            name="category_id"
+            eval="[Command.link(ref('demo_partner_category_credit_hold'))]"
+        />
+    </record>
+    <record id="demo_rule_credit_hold" model="exception.rule">
+        <field name="name">Customer on credit hold</field>
+        <field
+            name="description"
+        >Check with accounting before shipping to this customer.</field>
+        <field name="sequence">10</field>
+        <field name="model">stock.picking</field>
+        <field name="exception_type">by_domain</field>
+        <field
+            name="domain"
+            eval="str([('partner_id.commercial_partner_id.category_id', 'in', [ref('demo_partner_category_credit_hold')])])"
+        />
+    </record>
+    <record id="demo_rule_credit_hold_large_quantity" model="exception.rule">
+        <field name="name">More than 10 units for a customer on credit hold</field>
+        <field
+            name="description"
+        >Lower the quantity to 10 units or less: this exception cannot be ignored.</field>
+        <field name="sequence">20</field>
+        <field name="model">stock.move</field>
+        <field name="exception_type">by_domain</field>
+        <field
+            name="domain"
+            eval="str([('picking_id.partner_id.commercial_partner_id.category_id', 'in', [ref('demo_partner_category_credit_hold')]), ('product_uom_qty', '>', 10)])"
+        />
+        <field name="is_blocking" eval="True" />
+    </record>
+    <record id="demo_picking_credit_hold" model="stock.picking">
+        <field name="partner_id" ref="demo_partner_credit_hold" />
+        <field name="picking_type_id" ref="stock.picking_type_out" />
+        <field name="location_id" ref="stock.stock_location_stock" />
+        <field name="location_dest_id" ref="stock.stock_location_customers" />
+        <field
+            name="move_ids"
+            eval="[Command.create({
+                'product_id': ref('product.product_product_6'),
+                'product_uom_qty': 5,
+                'location_id': ref('stock.stock_location_stock'),
+                'location_dest_id': ref('stock.stock_location_customers'),
+            })]"
+        />
+    </record>
+</odoo>

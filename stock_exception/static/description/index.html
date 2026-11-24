@@ -375,27 +375,90 @@ ul.auto-toc {
 !! source digest: sha256:343db3f446d0466aa23bbc727561bef31f93941607ecede05ad8d4b51e321ff3
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/stock-logistics-workflow/tree/19.0/stock_exception"><img alt="OCA/stock-logistics-workflow" src="https://img.shields.io/badge/github-OCA%2Fstock--logistics--workflow-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/stock-logistics-workflow-19-0/stock-logistics-workflow-19-0-stock_exception"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/stock-logistics-workflow&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module allows you attach several customizable exceptions to your
-stock picking in a way that you can filter pickings by exceptions type
-and fix them. Exceptions are checked via a scheduled action as well as
-during confirmation and validation.</p>
-<p>This is especially useful in an scenario for mass stock picking import,
-because it’s likely some pickings have errors when you import them (like
-product not found in Odoo, wrong line format etc.)</p>
+<p>This module adds exception rules to transfers, built on
+<tt class="docutils literal">base_exception</tt>. A rule describes a situation that needs attention
+before a transfer goes ahead: a delivery without contact, a quantity
+that is too large, a product without data needed for shipping, and so
+on.</p>
+<p>Rules can check the transfer (<tt class="docutils literal">stock.picking</tt>) or its stock moves
+(<tt class="docutils literal">stock.move</tt>); an exception found on a move is shown on its transfer.
+They are checked:</p>
+<ul class="simple">
+<li>when the transfer is confirmed, including when another document
+confirms it, such as a sale or purchase order;</li>
+<li>when the transfer is validated;</li>
+<li>by the scheduled action <em>Stock: Test Draft Pickings Exception</em>, for
+draft transfers (inactive by default).</li>
+</ul>
+<p>A rule either <strong>warns</strong> (the user can ignore it and go on) or <strong>blocks</strong>
+(<em>Is Blocking</em>: the transfer cannot be validated until the cause is
+fixed).</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-4">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-5">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
+<p>To create the rules, go to <em>Inventory &gt; Configuration &gt; Stock Exception
+Rules</em> (needs the group <em>Exception manager</em>). A few example rules are
+provided archived; activate them or create new ones.</p>
+<p>For each rule, set:</p>
+<ul class="simple">
+<li><strong>Exception Name</strong> and <strong>Description</strong>: the text shown to the user.
+The name is the short title, the description says what to do about it.
+Both are translatable.</li>
+<li><strong>Apply on</strong>: <em>Stock Picking</em> to check the transfer, <em>Stock Move</em> to
+check each of its lines.</li>
+<li><strong>Exception Type</strong>: <em>By domain</em> (a filter, e.g.
+<tt class="docutils literal"><span class="pre">[('partner_id',</span> <span class="pre">'=',</span> False)]</tt>), <em>By python code</em> (set
+<tt class="docutils literal">failed = True</tt> when the exception applies; the record is <tt class="docutils literal">self</tt>)
+or <em>By method</em> (a method provided by another module).</li>
+<li><strong>Sequence</strong>: the order of the rules; the first exception found is the
+one shown in the transfer list.</li>
+<li><strong>Is Blocking</strong>: when ticked, the exception cannot be ignored.</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
+<p>When a rule applies to a transfer, its exceptions are shown in three
+places, all with the <strong>Exception Name</strong> and <strong>Description</strong> of the rule:</p>
+<ul class="simple">
+<li><strong>On confirmation or validation</strong>, a popup <em>Outstanding exceptions to
+manage</em> lists them. Tick <em>Ignore Exceptions</em> and confirm to go on, or
+close it and fix the cause first. After ignoring, click <em>Validate</em>
+again to validate the transfer. Blocking exceptions cannot be ignored.</li>
+<li><strong>On the transfer form</strong>, a red banner lists them as <em>name:
+description</em>, with <em>(Blocking exception)</em> after the blocking ones, and
+a button <em>Ignore Exceptions</em> for exception rule managers.</li>
+<li><strong>In the list of transfers</strong>, the column <em>Main Exception</em> shows the
+first exception (lowest sequence); the filter <em>Blocked in Draft</em> finds
+the transfers that have one.</li>
+</ul>
+<p>Editing the stock moves of a confirmed transfer resets <em>Ignore
+Exceptions</em>, so the rules are checked again.</p>
+<p>To try it with the demo data, open the delivery to <em>Customer on Credit
+Hold</em>:</p>
+<ol class="arabic simple">
+<li>Click <em>Mark as To Do</em>: the rule <em>Customer on credit hold</em> applies. It
+only warns: tick <em>Ignore Exceptions</em> in the popup to go on.</li>
+<li>Duplicate the delivery, set the quantity above 10 and click <em>Mark as
+To Do</em>: the rule <em>More than 10 units for a customer on credit hold</em>
+applies as well. It is blocking, so the exceptions cannot be ignored
+until the quantity is lowered.</li>
+</ol>
+</div>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/stock-logistics-workflow/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -403,15 +466,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-2">Credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
 <div class="section" id="authors">
-<h3><a class="toc-backref" href="#toc-entry-3">Authors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-5">Authors</a></h3>
 <ul class="simple">
 <li>Ecosoft</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h3><a class="toc-backref" href="#toc-entry-4">Contributors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-6">Contributors</a></h3>
 <ul class="simple">
 <li>Tharathip Chaweewongphan &lt;<a class="reference external" href="mailto:tharathipc&#64;ecosoft.co.th">tharathipc&#64;ecosoft.co.th</a>&gt;</li>
 <li>Open Source Integrators <a class="reference external" href="http://www.opensourceintegrators.com">http://www.opensourceintegrators.com</a><ul>
@@ -422,7 +485,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h3><a class="toc-backref" href="#toc-entry-5">Maintainers</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h3>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />

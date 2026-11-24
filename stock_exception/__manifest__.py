@@ -16,5 +16,6 @@
         "wizard/stock_exception_confirm_view.xml",
         "views/stock_view.xml",
     ],
+    "demo": ["demo/stock_exception_demo.xml"],
     "installable": True,
 }
