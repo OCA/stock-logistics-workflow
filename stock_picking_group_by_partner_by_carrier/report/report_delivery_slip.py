@@ -31,7 +31,7 @@ class DeliverySlipReport(models.AbstractModel):
     def _get_sale_data(self, line, moves, picking, qty, uom):
         return {
             "is_header": False,
-            "concept": line.product_id.name_get()[0][-1],
+            "concept": line.product_id.display_name,
             "qty": float_round(qty, precision_rounding=uom.rounding),
             "product": line.product_id,
             "uom": uom,
