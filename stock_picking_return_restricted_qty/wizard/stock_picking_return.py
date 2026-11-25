@@ -64,4 +64,24 @@ class ReturnPickingLine(models.TransientModel):
                 continue
             if line.state in {"partially_available", "assigned", "done"}:
                 qty -= line.quantity
+        # Quantities consumed by a chained destination move (e.g. a delivery
+        # linked to the receipt through MTO) that came back to us through a
+        # return of that destination move are on hand again, so they can be
+        # returned too.
+        chained_moves = stock_move.move_dest_ids.filtered(
+            lambda m: not m.origin_returned_move_id
+        )
+        for returned_move in chained_moves.returned_move_ids:
+            qty += self._get_net_returned_quantity(returned_move)
+        return max(qty, 0.0)
+
+    @api.model
+    def _get_net_returned_quantity(self, returned_move):
+        """Quantity of a done return move, minus what was sent again through
+        returns of that return."""
+        if returned_move.state != "done":
+            return 0.0
+        qty = returned_move.product_qty
+        for move in returned_move.returned_move_ids:
+            qty -= self._get_net_returned_quantity(move)
         return max(qty, 0.0)

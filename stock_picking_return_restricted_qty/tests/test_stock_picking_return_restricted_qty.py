@@ -116,3 +116,97 @@ class StockPickingReturnRestrictedQtyTest(BaseCommon):
         wiz.product_return_moves.quantity = 80
         wiz.product_return_moves._onchange_quantity()
         self.assertEqual(wiz.product_return_moves.quantity, 80)
+
+    def _create_picking(self, picking_type, location, location_dest, product, qty):
+        return self.env["stock.picking"].create(
+            {
+                "partner_id": self.partner.id,
+                "picking_type_id": picking_type.id,
+                "location_id": location.id,
+                "location_dest_id": location_dest.id,
+                "move_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": product.name,
+                            "product_id": product.id,
+                            "product_uom_qty": qty,
+                            "product_uom": product.uom_id.id,
+                            "location_id": location.id,
+                            "location_dest_id": location_dest.id,
+                        },
+                    )
+                ],
+            }
+        )
+
+    def _validate(self, picking):
+        picking.action_confirm()
+        picking.action_assign()
+        picking.move_ids.quantity = picking.move_ids.product_uom_qty
+        picking.button_validate()
+
+    def _return(self, picking, qty):
+        wiz = self.get_return_picking_wizard(picking)
+        wiz.product_return_moves.quantity = qty
+        return_picking = self.env["stock.picking"].browse(wiz._create_returns()[0])
+        self._validate(return_picking)
+        return return_picking
+
+    def _create_chained_receipt_and_delivery(self):
+        """Receipt whose move is chained to a delivery move (as with MTO)."""
+        product = self.env["product.product"].create(
+            {"name": "test_chained_product", "type": "product"}
+        )
+        supplier_location = self.env.ref("stock.stock_location_suppliers")
+        stock_location = self.env.ref("stock.stock_location_stock")
+        customer_location = self.env.ref("stock.stock_location_customers")
+        picking_type_in = self.env.ref("stock.picking_type_in")
+        picking_type_in.restrict_return_qty = True
+        receipt = self._create_picking(
+            picking_type_in, supplier_location, stock_location, product, 10
+        )
+        delivery = self._create_picking(
+            self.env.ref("stock.picking_type_out"),
+            stock_location,
+            customer_location,
+            product,
+            10,
+        )
+        delivery.move_ids.move_orig_ids = receipt.move_ids
+        self._validate(receipt)
+        self._validate(delivery)
+        return receipt, delivery
+
+    def test_return_chained_move_consumed(self):
+        """Goods received and delivered through a chained move can't be
+        returned to the vendor."""
+        receipt, _delivery = self._create_chained_receipt_and_delivery()
+        wiz = self.get_return_picking_wizard(receipt)
+        self.assertEqual(wiz.product_return_moves.quantity, 0)
+        wiz.product_return_moves.quantity = 10
+        with self.assertRaises(UserError):
+            wiz._create_returns()
+
+    def test_return_chained_move_returned_back(self):
+        """Goods delivered through a chained move and returned by the
+        customer can be returned to the vendor."""
+        receipt, delivery = self._create_chained_receipt_and_delivery()
+        self._return(delivery, 4)
+        wiz = self.get_return_picking_wizard(receipt)
+        self.assertEqual(wiz.product_return_moves.quantity, 4)
+        wiz.product_return_moves.quantity = 5
+        with self.assertRaises(UserError):
+            wiz._create_returns()
+        wiz.product_return_moves.quantity = 4
+        wiz._create_returns()
+
+    def test_return_chained_move_returned_back_and_redelivered(self):
+        """Goods returned by the customer and delivered again are not
+        available to be returned to the vendor."""
+        receipt, delivery = self._create_chained_receipt_and_delivery()
+        customer_return = self._return(delivery, 4)
+        self._return(customer_return, 3)
+        wiz = self.get_return_picking_wizard(receipt)
+        self.assertEqual(wiz.product_return_moves.quantity, 1)
