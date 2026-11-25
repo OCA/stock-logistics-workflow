@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.form (in stock_account_avco_return_origin)</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock_account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='valuation_setting_container']" position="inside">
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    id="avco_return_origin_cost_setting"
+                >
+                    <div class="o_setting_left_pane">
+                        <field name="avco_return_origin_cost" />
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="avco_return_origin_cost" />
+                        <div class="text-muted">
+                            Value supplier returns of AVCO products at the
+                            original receipt price instead of the current
+                            average cost.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
