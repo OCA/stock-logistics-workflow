@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="stock_quant_threshold_filter_tree_view" model="ir.ui.view">
+        <field name="name">stock.quant.threshold.filter.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">stock_quant_threshold_filter_list</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_quant_threshold_filter_search_view" model="ir.ui.view">
+        <field name="name">stock.quant.threshold.filter.search</field>
+        <field name="model">stock.quant</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.quant_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <searchpanel>
+                    <field name="location_id" string="Location" icon="fa-map-marker" />
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_quant_threshold_filter_action" model="ir.actions.act_window">
+        <field name="name">Inventory Adjustments (Threshold Filter)</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="stock_quant_threshold_filter_tree_view" />
+        <field name="search_view_id" ref="stock_quant_threshold_filter_search_view" />
+        <field
+            name="domain"
+        >[('location_id.usage', 'in', ['internal', 'transit'])]</field>
+        <field name="context">{
+            'inventory_mode': True,
+            'search_default_to_apply': 1,
+        }</field>
+    </record>
+
+    <menuitem
+        id="menu_stock_quant_threshold_filter"
+        name="Inventory Adjustments (Threshold Filter)"
+        parent="stock.menu_stock_warehouse_mgmt"
+        action="stock_quant_threshold_filter_action"
+        sequence="11"
+    />
+
+</odoo>
