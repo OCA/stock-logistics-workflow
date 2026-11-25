@@ -23,18 +23,20 @@ class StockQuant(models.Model):
         if not check_negative_qty:
             return
 
-        for quant in self:
-            disallowed_by_product = (
-                not quant.product_id.allow_negative_stock
-                and not quant.product_id.categ_id.allow_negative_stock
-            )
-            disallowed_by_location = not quant.location_id.allow_negative_stock
+        # Test the cheap condition first so the product, category and location
+        # are only loaded for the (rare) negative quants.
+        negative_quants = self.filtered(
+            lambda q: float_compare(q.quantity, 0, precision_digits=p) == -1
+        )
+        for quant in negative_quants:
+            product = quant.product_id
+            location = quant.location_id
             if (
-                float_compare(quant.quantity, 0, precision_digits=p) == -1
-                and quant.product_id.is_storable
-                and quant.location_id.usage in ["internal", "transit"]
-                and disallowed_by_product
-                and disallowed_by_location
+                product.is_storable
+                and location.usage in ["internal", "transit"]
+                and not product.allow_negative_stock
+                and not product.categ_id.allow_negative_stock
+                and not location.allow_negative_stock
             ):
                 msg_add = ""
                 if quant.lot_id:
