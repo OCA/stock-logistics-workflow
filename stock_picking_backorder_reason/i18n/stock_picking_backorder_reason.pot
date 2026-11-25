@@ -1,0 +1,372 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_backorder_reason
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-17 08:58+0000\n"
+"PO-Revision-Date: 2023-07-17 08:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_choice_view_form
+msgid "Apply"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#. odoo-python
+#: code:addons/stock_picking_backorder_reason/wizards/stock_backorder_reason_choice.py:0
+#, python-format
+msgid "Back order reason: <em>{reason}</em>."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_choice_view_form
+msgid "Backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_reason_search_view
+msgid "Backorder Action"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__backorder_action_to_do
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__backorder_action_to_do
+msgid "Backorder Action To Do"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_picking_type_form_view
+msgid "Backorder Reason"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason_purchase
+msgid "Backorder Reason Purchase"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason_sale
+msgid "Backorder Reason Sale"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_picking__backorder_reason_strategy
+msgid "Backorder Reason Strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.actions.act_window,name:stock_picking_backorder_reason.stock_backorder_reason_act_window
+#: model:ir.ui.menu,name:stock_picking_backorder_reason.stock_backorder_reason_menu
+msgid "Backorder Reasons"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__reason_id
+msgid "Backorder reason"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_company__partner_purchase_backorder_default_strategy__cancel
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_company__partner_sale_backorder_default_strategy__cancel
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_partner__purchase_reason_backorder_strategy__cancel
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_partner__sale_reason_backorder_strategy__cancel
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__stock_picking__backorder_reason_strategy__cancel
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_choice_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__stock_backorder_reason__backorder_action_to_do__cancel
+msgid "Cancel backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason
+msgid ""
+"Check this if you want people selecting a backorder reason when "
+"applicable.This will trigger a backorder strategy rule defined on that "
+"reason."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason_purchase
+msgid ""
+"Check this in order to consider pickings in this type as Purchase ones for "
+"backorder reason cancellation."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_picking_type__backorder_reason_sale
+msgid ""
+"Check this in order to consider pickings in this type as Sale ones for "
+"backorder reason cancellation."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__choice_line_ids
+msgid "Choice Line"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#. odoo-python
+#: code:addons/stock_picking_backorder_reason/models/stock_picking.py:0
+#, python-format
+msgid "Choose a reason for backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_backorder_reason__backorder_action_to_do
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_backorder_reason_choice__backorder_action_to_do
+msgid ""
+"Choose here a backorder strategy to apply when this reason is selected.If "
+"you don't set an action to do, the reason will be only put in "
+"concernedpickings chatter."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_company__partner_purchase_backorder_default_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_config_settings__partner_purchase_backorder_default_strategy
+msgid ""
+"Choose the default strategy to set on partners for backorders on purchase "
+"flows (for suppliers)."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_company__partner_sale_backorder_default_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_config_settings__partner_sale_backorder_default_strategy
+msgid ""
+"Choose the default strategy to set on partners for backorders on sale flows "
+"(for customers)."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_partner__purchase_reason_backorder_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_users__purchase_reason_backorder_strategy
+msgid ""
+"Choose the strategy that will be applied on pickings that have backorder "
+"choice enabled and depending on partner purchase strategy."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_partner__sale_reason_backorder_strategy
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_res_users__sale_reason_backorder_strategy
+msgid ""
+"Choose the strategy that will be applied on pickings that have backorder "
+"choice enabled and depending on partner sale strategy."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_company__partner_purchase_backorder_default_strategy__create
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_company__partner_sale_backorder_default_strategy__create
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_partner__purchase_reason_backorder_strategy__create
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__res_partner__sale_reason_backorder_strategy__create
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__stock_picking__backorder_reason_strategy__create
+msgid "Create"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__stock_backorder_reason__backorder_action_to_do__create
+msgid "Create backorder"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__create_uid
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__create_uid
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__create_date
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__create_date
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__display_name
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__display_name
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_reason_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_picking_type_search_view
+msgid "Has Backorder Reason"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__id
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__id
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#. odoo-python
+#: code:addons/stock_picking_backorder_reason/models/stock_picking_type.py:0
+#, python-format
+msgid ""
+"If you enable the backorder reason feature, you should choose if this is for"
+" sale or purchase."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason____last_update
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice____last_update
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__write_uid
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__write_uid
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__write_date
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__write_date
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:stock.backorder.reason,name:stock_picking_backorder_reason.stock_backorder_reason_missing
+msgid "Missing products"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_company__partner_purchase_backorder_default_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_config_settings__partner_purchase_backorder_default_strategy
+msgid "Partner Purchase Backorder Default Strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_company__partner_sale_backorder_default_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_config_settings__partner_sale_backorder_default_strategy
+msgid "Partner Sale Backorder Default Strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.res_config_settings_view_form
+msgid "Partner default backorder strategy for purchase flow (with reason)."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.res_config_settings_view_form
+msgid "Partner default backorder strategy for sale flow (with reason)."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice__picking_ids
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model_terms:ir.ui.view,arch_db:stock_picking_backorder_reason.stock_backorder_choice_view_form
+msgid ""
+"Please fill in a reason for backorder. You can see the further action that will\n"
+"                    result in choosing that reason if filled in in reason."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_partner__purchase_reason_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_users__purchase_reason_backorder_strategy
+msgid "Purchase Reason Backorder Strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_partner__sale_reason_backorder_strategy
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_res_users__sale_reason_backorder_strategy
+msgid "Sale Reason Backorder Strategy"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_stock_backorder_reason
+msgid "Stock Backorder Reason"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_stock_backorder_reason_choice
+msgid "Stock Backorder Reason Choice"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_stock_backorder_reason_choice_line
+msgid "Stock Backorder Reason Choice Line"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,help:stock_picking_backorder_reason.field_stock_picking__backorder_reason_strategy
+msgid ""
+"This is a technical field that says if a backorder is accepteddepending on "
+"partner configuration accordingly with picking type one."
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model,name:stock_picking_backorder_reason.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:stock.backorder.reason,name:stock_picking_backorder_reason.stock_backorder_reason_urgent
+msgid "Urgent"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields.selection,name:stock_picking_backorder_reason.selection__stock_backorder_reason__backorder_action_to_do__use_partner_option
+msgid "Use partner option"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:ir.model.fields,field_description:stock_picking_backorder_reason.field_stock_backorder_reason_choice_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: stock_picking_backorder_reason
+#: model:stock.backorder.reason,name:stock_picking_backorder_reason.stock_backorder_reason_never
+msgid "Won't be delivered"
+msgstr ""
