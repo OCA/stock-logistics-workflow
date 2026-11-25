@@ -1,0 +1,208 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_stock_price_variance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-11 06:28+0000\n"
+"PO-Revision-Date: 2025-03-11 06:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_category__bypass_price_variance_check
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_product__bypass_price_variance_check
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_template__bypass_price_variance_check
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_stock_picking__bypass_price_variance_check
+msgid "Bypass Price Variance Check"
+msgstr "価格差チェックをバイパス"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model,name:purchase_stock_price_variance.model_res_company
+msgid "Companies"
+msgstr "会社"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model,name:purchase_stock_price_variance.model_res_config_settings
+msgid "Config Settings"
+msgstr "コンフィグ設定"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_company__enable_price_variance_error
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_config_settings__enable_price_variance_error
+msgid "Enable Price Variance Error"
+msgstr "価格差エラーを有効化"
+
+#. module: purchase_stock_price_variance
+#: model_terms:ir.ui.view,arch_db:purchase_stock_price_variance.view_stock_config_settings
+msgid ""
+"Enable the feature that triggers an error when receiving a product if\n"
+"                            the price difference exceeds the threshold."
+msgstr "入荷時に価格差がしきい値を超えた場合にエラーを発生させる機能を有効化します。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_stock_picking__bypass_price_variance_check
+msgid ""
+"If enabled, no error is raised for price variance between the product's "
+"standard price and purchase receipt unit price."
+msgstr "有効にすると、商品の標準価格と購買単価の間の価格差によるエラーは発生しません。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_category__bypass_price_variance_check
+msgid ""
+"If enabled, the products under this category will not raise an error for "
+"price variance between the product's standard price and the purchase receipt"
+" unit price."
+msgstr "有効にすると、このカテゴリ内の製品は、標準価格と購買単価の価格差によるエラーを発生させません。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_product__bypass_price_variance_check
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_template__bypass_price_variance_check
+msgid ""
+"If enabled, this product will not raise an error for price variance between "
+"the product's standard price and the purchase receipt unit price."
+msgstr "有効にすると、この製品は、標準価格と購買単価の価格差によるエラーを発生させません。"
+
+#. module: purchase_stock_price_variance
+#: model:res.groups,name:purchase_stock_price_variance.group_manage_price_variance_check
+msgid "Manage Price Variance Check"
+msgstr "価格差チェックの管理"
+
+#. module: purchase_stock_price_variance
+#: model_terms:ir.ui.view,arch_db:purchase_stock_price_variance.view_stock_config_settings
+msgid ""
+"Maximum allowable variance (in monetary amount, based on company\n"
+"                            currency) between the product's standard price and the purchase receipt\n"
+"                            unit price.\n"
+"                            Keeping it at zero means that this threshold will not be checked."
+msgstr ""
+"製品の標準価格と購買単価の間で許容される最大の価格差（会社の通貨単位）。\n"
+" 0に設定すると、このしきい値はチェックされません。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_product__price_variance_threshold_amount
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_template__price_variance_threshold_amount
+msgid ""
+"Maximum allowable variance (in monetary amount, based on company currency) "
+"between the product's standard price and the purchase receipt unit price. "
+"Setting this to zero means the threshold will refer to the global setting."
+msgstr "製品の標準価格と購買単価の間で許容される最大の価格差（会社の通貨単位）。0に設定すると、このグローバル設定が利用されます。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_res_company__price_variance_threshold_amount
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_res_config_settings__price_variance_threshold_amount
+msgid ""
+"Maximum allowable variance (in monetary amount, based on company currency) "
+"between the product's standard price and the purchase receipt unit price. "
+"Setting this to zero means this threshold will not be checked."
+msgstr "製品の標準価格と購買単価の間で許容される最大の価格差（会社の通貨単位）。0に設定すると、このしきい値はチェックされません。"
+
+#. module: purchase_stock_price_variance
+#: model_terms:ir.ui.view,arch_db:purchase_stock_price_variance.view_stock_config_settings
+msgid ""
+"Maximum variance (in percent) allowable between the product's standard\n"
+"                            price and purchase receipt unit price.\n"
+"                            Keeping it at zero means that this threshold will not be checked."
+msgstr "製品の標準価格に対する購買単価の許容される最大差異（パーセント）。0に設定すると、このしきい値はチェックされません。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_product__price_variance_threshold_percent
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_product_template__price_variance_threshold_percent
+msgid ""
+"Maximum variance (in percent) allowable between the product's standard price"
+" and purchase receipt unit price. Setting this to zero means the threshold "
+"will refer to the global setting."
+msgstr "製品の標準価格に対する購買単価の許容される最大差異（パーセント）。0 に設定すると、このグローバル設定が利用されます。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_res_company__price_variance_threshold_percent
+#: model:ir.model.fields,help:purchase_stock_price_variance.field_res_config_settings__price_variance_threshold_percent
+msgid ""
+"Maximum variance (in percent) allowable between the product's standard price"
+" and purchase receipt unit price.Setting this to zero means this threshold "
+"will not be checked."
+msgstr "製品の標準価格に対する購買単価の許容される最大差異（パーセント）。0に設定すると、このしきい値はチェックされません。"
+
+#. module: purchase_stock_price_variance
+#: model_terms:ir.ui.view,arch_db:purchase_stock_price_variance.view_template_property_form
+msgid "Price Discrepancy Settings"
+msgstr "価格差異設定"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_product__price_variance_threshold_amount
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_template__price_variance_threshold_amount
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_company__price_variance_threshold_amount
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_config_settings__price_variance_threshold_amount
+msgid "Price Variance Threshold Amount"
+msgstr "価格差しきい値（金額）"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_product__price_variance_threshold_percent
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_product_template__price_variance_threshold_percent
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_company__price_variance_threshold_percent
+#: model:ir.model.fields,field_description:purchase_stock_price_variance.field_res_config_settings__price_variance_threshold_percent
+msgid "Price Variance Threshold Percent"
+msgstr "価格差しきい値（パーセント）"
+
+#. module: purchase_stock_price_variance
+#. odoo-python
+#: code:addons/purchase_stock_price_variance/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Price variance exceeding a threshold detected for the following products:"
+msgstr "以下の製品でしきい値を超える価格差が検出されました:"
+
+#. module: purchase_stock_price_variance
+#. odoo-python
+#: code:addons/purchase_stock_price_variance/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Price variance exceeding a threshold detected for the following products:\n"
+"\n"
+msgstr ""
+"以下の製品でしきい値を超える価格差が検出されました:\n"
+"\n"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model,name:purchase_stock_price_variance.model_product_template
+msgid "Product"
+msgstr "プロダクト"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model,name:purchase_stock_price_variance.model_product_category
+msgid "Product Category"
+msgstr "プロダクトカテゴリ"
+
+#. module: purchase_stock_price_variance
+#. odoo-python
+#: code:addons/purchase_stock_price_variance/models/product_template.py:0
+#: code:addons/purchase_stock_price_variance/models/product_template.py:0
+#: code:addons/purchase_stock_price_variance/models/res_company.py:0
+#: code:addons/purchase_stock_price_variance/models/res_company.py:0
+#, python-format
+msgid "The threshold values cannot be negative."
+msgstr "しきい値は負の値にはできません。"
+
+#. module: purchase_stock_price_variance
+#: model:ir.model,name:purchase_stock_price_variance.model_stock_picking
+msgid "Transfer"
+msgstr "運送"
+
+#. module: purchase_stock_price_variance
+#. odoo-python
+#: code:addons/purchase_stock_price_variance/models/product_category.py:0
+#: code:addons/purchase_stock_price_variance/models/product_template.py:0
+#: code:addons/purchase_stock_price_variance/models/stock_picking.py:0
+#: code:addons/purchase_stock_price_variance/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You do not have permission to modify the 'Bypass Price Variance Check' "
+"field. Please contact an administrator or a user with the appropriate "
+"permissions."
+msgstr "「価格差異チェックをバイパス」のフィールドを変更する権限がありません。管理者または適切な権限を持つユーザーにお問い合わせください。"
