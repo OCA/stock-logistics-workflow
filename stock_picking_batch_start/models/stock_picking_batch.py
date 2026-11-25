@@ -18,7 +18,7 @@ class StockPickingBatch(models.Model):
         for batch in self:
             allowed = False
             if batch.picking_ids:
-                allowed = all(batch.mapped("picking_ids.action_start_allowed"))
+                allowed = any(batch.mapped("picking_ids.action_start_allowed"))
             batch.action_start_allowed = allowed
 
     @api.depends("picking_ids", "picking_ids.action_cancel_start_allowed")
@@ -26,7 +26,7 @@ class StockPickingBatch(models.Model):
         for batch in self:
             allowed = False
             if batch.picking_ids:
-                allowed = all(batch.mapped("picking_ids.action_cancel_start_allowed"))
+                allowed = any(batch.mapped("picking_ids.action_cancel_start_allowed"))
             batch.action_cancel_start_allowed = allowed
 
     @api.depends("picking_ids", "picking_ids.started")
@@ -39,7 +39,9 @@ class StockPickingBatch(models.Model):
                 batch.started = started
 
     def action_start(self):
-        self.picking_ids.action_start()
+        self.picking_ids.filtered(lambda p: p.action_start_allowed).action_start()
 
     def action_cancel_start(self):
-        self.picking_ids.action_cancel_start()
+        self.picking_ids.filtered(
+            lambda p: p.action_cancel_start_allowed
+        ).action_cancel_start()
