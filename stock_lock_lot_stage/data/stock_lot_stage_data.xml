@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="lot_stage_pending" model="stock.lot.stage">
+        <field name="name">Pending</field>
+        <field name="sequence">10</field>
+        <field name="locked" eval="True" />
+    </record>
+    <record id="lot_stage_testing" model="stock.lot.stage">
+        <field name="name">Testing</field>
+        <field name="sequence">20</field>
+        <field name="locked" eval="True" />
+    </record>
+    <record id="lot_stage_partially_approved" model="stock.lot.stage">
+        <field name="name">Partially Approved</field>
+        <field name="sequence">30</field>
+        <field name="locked" eval="False" />
+    </record>
+    <record id="lot_stage_approved" model="stock.lot.stage">
+        <field name="name">Approved</field>
+        <field name="sequence">40</field>
+        <field name="locked" eval="False" />
+        <field name="approve_full_qty" eval="True" />
+    </record>
+    <record id="lot_stage_rejected" model="stock.lot.stage">
+        <field name="name">Rejected</field>
+        <field name="sequence">50</field>
+        <field name="locked" eval="True" />
+    </record>
+</odoo>
