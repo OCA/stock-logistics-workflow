@@ -14,3 +14,11 @@ class ProductCategory(models.Model):
         "by default. This means they will not be available for use "
         "in stock moves or other operations",
     )
+    lot_reserve_locked = fields.Boolean(
+        string="Block reservation of locked lots",
+        help="If checked, locked lots in this category will be blocked from "
+        "reservation. If unchecked, locked lots can still be reserved for "
+        "orders, but they cannot be moved unless the destination "
+        "location allows locked lots",
+        default=False,
+    )
