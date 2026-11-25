@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="split_picking_from_batch_view_form" model="ir.ui.view">
+        <field name="name">split.picking.from.batch.form</field>
+        <field name="model">split.picking.from.batch</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="move_ids" nolabel="1">
+                    <tree editable="bottom" create="0">
+                        <field name="product_id" readonly="1" />
+                        <field name="picking_id" readonly="1" />
+                        <field name="product_uom_qty" readonly="1" />
+                        <field name="picked" readonly="1" />
+                        <field name="state" readonly="1" />
+                        <field name="quantity" />
+                    </tree>
+                </field>
+                <footer>
+                    <button
+                        name="split_pickings"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
