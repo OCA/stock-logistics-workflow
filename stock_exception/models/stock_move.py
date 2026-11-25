@@ -22,3 +22,9 @@ class StockMove(models.Model):
     def _detect_exceptions(self, rule):
         records = super()._detect_exceptions(rule)
         return records.mapped("picking_id")
+
+    def _detect_exception_get_exc_class_values(self):
+        # The exceptions of a move are stored on its picking: let the client
+        # open the popup on the picking, which is the record on screen.
+        res = super()._detect_exception_get_exc_class_values()
+        return dict(res, target_model="stock.picking")

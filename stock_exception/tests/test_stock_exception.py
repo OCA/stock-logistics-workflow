@@ -1,5 +1,6 @@
 # Copyright 2024 Open Source Integrators
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
+import json
 from unittest.mock import patch
 
 from odoo.exceptions import ValidationError
@@ -179,3 +180,19 @@ class TestStockException(TransactionCase):
         ):
             self.picking.action_confirm()
         detect_move_exceptions.assert_called()
+
+    def test07_move_exception_popups_on_the_picking(self):
+        """A move exception opens the popup on the transfer, where it is shown."""
+        self.exception_rule.create(
+            {
+                "name": "Too Many Units",
+                "model": "stock.move",
+                "exception_type": "by_py_code",
+                "code": "if self.product_uom_qty > 0: failed=True",
+            }
+        )
+        with self.assertRaises(BaseExceptionError) as error:
+            self.picking.action_confirm()
+        self.assertEqual(
+            json.loads(error.exception.args[0])["target_model"], "stock.picking"
+        )
