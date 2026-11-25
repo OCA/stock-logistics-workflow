@@ -1,0 +1,92 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_move_value
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-07-13 10:23+0000\n"
+"PO-Revision-Date: 2024-07-13 10:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_move_value
+#: model:ir.model.fields,help:stock_move_value.field_stock_move__move_origin_value
+msgid ""
+"Corresponding value of the origin move as of the the time move was done. "
+"Only updated for vendor returns."
+msgstr ""
+"在庫移動完了時点での元在庫移動の数量見合い評価額です。仕入返品のときのみ更新されます。"
+
+#. module: stock_move_value
+#: model:ir.model.fields,field_description:stock_move_value.field_stock_move__value_currency_id
+msgid "Currency"
+msgstr "通貨"
+
+#. module: stock_move_value
+#: model_terms:ir.ui.view,arch_db:stock_move_value.view_move_search_inherit
+msgid "Discrepancy Reviewed"
+msgstr "差額レビュー済"
+
+#. module: stock_move_value
+#: model:ir.model.fields,field_description:stock_move_value.field_stock_move__move_origin_value
+msgid "Move Origin Value"
+msgstr "元移動評価額"
+
+#. module: stock_move_value
+#: model:ir.model.fields,field_description:stock_move_value.field_stock_move__move_value
+msgid "Move Value"
+msgstr "移動評価額"
+
+#. module: stock_move_value
+#: model:ir.model.fields,help:stock_move_value.field_stock_move__value_discrepancy
+msgid "Move Value + Move Origin Value. Only updated for vendor returns."
+msgstr "移動評価額 + 元移動評価額。仕入返品のときのみ更新されます。"
+
+#. module: stock_move_value
+#: model_terms:ir.ui.view,arch_db:stock_move_value.view_move_search_inherit
+msgid "Return Value Discrepancy"
+msgstr "返品評価額差異"
+
+#. module: stock_move_value
+#: model:ir.model.fields,help:stock_move_value.field_stock_move__to_review_discrepancy
+msgid ""
+"Selected when Value Discrepancy is not zero. Users are expected to unselect "
+"it when review is done."
+msgstr ""
+"返品評価額差異があるときに選択されます。レビューが済みましたら選択を外してください。"
+
+#. module: stock_move_value
+#: model:ir.model,name:stock_move_value.model_stock_move
+msgid "Stock Move"
+msgstr "在庫移動"
+
+#. module: stock_move_value
+#: model_terms:ir.ui.view,arch_db:stock_move_value.view_move_tree
+#: model_terms:ir.ui.view,arch_db:stock_move_value.view_stock_move_form_inherit
+msgid "To Review"
+msgstr "要レビュー"
+
+#. module: stock_move_value
+#: model:ir.model.fields,field_description:stock_move_value.field_stock_move__to_review_discrepancy
+#: model_terms:ir.ui.view,arch_db:stock_move_value.view_move_search_inherit
+msgid "To Review Discrepancy"
+msgstr "要差異レビュー"
+
+#. module: stock_move_value
+#: model:ir.model.fields,field_description:stock_move_value.field_stock_move__value_discrepancy
+msgid "Value Discrepancy"
+msgstr "評価額差異"
+
+#. module: stock_move_value
+#: model:ir.model.fields,help:stock_move_value.field_stock_move__move_value
+msgid ""
+"Value of the move including related SVL values (i.e. price differences and "
+"landed costs)"
+msgstr ""
+"関連在庫評価レイヤー(価格差異や仕入諸掛によるもの)の金額を含む移動の評価額。"
