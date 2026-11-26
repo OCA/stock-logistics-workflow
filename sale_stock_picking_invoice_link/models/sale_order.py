@@ -64,6 +64,8 @@ class SaleOrderLine(models.Model):
             )
             < 0
         ):
-            stock_moves = stock_moves.filtered("to_refund")
+            stock_moves = stock_moves.filtered(
+                lambda m: m.to_refund and m.location_id.usage == "customer"
+            )
         vals["move_line_ids"] = [Command.set(stock_moves.ids)]
         return vals
