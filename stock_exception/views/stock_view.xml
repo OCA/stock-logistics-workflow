@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="action_stock_test_list" model="ir.actions.act_window">
         <field name="name">Stock Exception Rules</field>
@@ -12,8 +13,8 @@
         >{'active_test': False, 'default_model' : 'stock.picking'}</field>
     </record>
     <menuitem
-        action="action_stock_test_list"
         id="menu_stock_test"
+        action="action_stock_test_list"
         parent="stock.menu_stock_config_settings"
     />
     <record id="view_picking_form" model="ir.ui.view">
