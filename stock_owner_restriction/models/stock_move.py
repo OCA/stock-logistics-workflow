@@ -4,6 +4,7 @@
 from collections import defaultdict
 
 from odoo import api, fields, models
+from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -99,3 +100,34 @@ class StockMove(models.Model):
             owner_id=owner_id,
             strict=strict,
         )
+
+    def _set_quantity_done(self, qty):
+        # stock.move.quantity's inverse: reserves quants directly, bypassing
+        # _action_assign entirely (manual immediate quantities, MRP
+        # consumption, subcontracting, or any import writing this field).
+        self.ensure_one()
+        if (
+            not self.picking_type_id
+            or self.picking_type_id.owner_restriction == "standard_behavior"
+        ):
+            return super()._set_quantity_done(qty)
+        owner_id = (
+            False
+            if self.picking_type_id.owner_restriction == "unassigned_owner"
+            else self._get_owner_for_assign()
+        )
+        res = super(
+            StockMove, self.with_context(force_restricted_owner_id=owner_id)
+        )._set_quantity_done(qty)
+        if (
+            owner_id
+            and self.picking_type_id.owner_restriction == "partner_or_unassigned"
+            and float_compare(
+                self.quantity, qty, precision_rounding=self.product_uom.rounding
+            )
+            < 0
+        ):
+            res = super(
+                StockMove, self.with_context(force_restricted_owner_id=False)
+            )._set_quantity_done(qty)
+        return res

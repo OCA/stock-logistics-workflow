@@ -236,6 +236,48 @@ class TestStockOwnerRestriction(TransactionCase):
         self.assertEqual(ship_move.quantity, 100.00)
         self.assertEqual(ship.move_line_ids.owner_id, self.owner)
 
+    def test_set_quantity_done_import_unassigned_owner(self):
+        """Writing move.quantity directly must still respect the restriction.
+
+        This is what a stock.picking import does via
+        move_ids_without_package/quantity (as opposed to product_uom_qty
+        alone): it reserves through stock.move._set_quantity's inverse,
+        entirely bypassing _action_assign. Reproduces the WH/OUT/723826
+        incident, where that path grabbed a quant owned by a different
+        partner because it was older (lower in_date) than the free stock.
+        """
+        self.picking_type_out.owner_restriction = "unassigned_owner"
+        owned_quant = self.env["stock.quant"].search(
+            [("product_id", "=", self.product.id), ("owner_id", "=", self.owner.id)]
+        )
+        owned_quant.in_date = "2000-01-01 00:00:00"
+
+        fields_list = [
+            "partner_id/.id",
+            "picking_type_id/.id",
+            "location_id/.id",
+            "location_dest_id/.id",
+            "move_ids_without_package/product_id/.id",
+            "move_ids_without_package/name",
+            "move_ids_without_package/product_uom_qty",
+            "move_ids_without_package/quantity",
+        ]
+        row = [
+            str(self.customer.id),
+            str(self.picking_type_out.id),
+            str(self.picking_type_out.default_location_src_id.id),
+            str(self.customer_location.id),
+            str(self.product.id),
+            self.product.display_name,
+            "500",
+            "500",
+        ]
+        result = self.picking_model.load(fields_list, [row])
+        self.assertFalse(result["messages"], result["messages"])
+        picking = self.picking_model.browse(result["ids"][0])
+        self.assertEqual(sum(picking.move_line_ids.mapped("quantity")), 500.00)
+        self.assertFalse(picking.move_line_ids.mapped("owner_id"))
+
     def test_search_qty(self):
         products = self.env["product.product"].search(
             [("id", "=", self.product.id), ("qty_available", ">", 500.00)]
