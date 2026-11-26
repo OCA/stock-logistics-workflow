@@ -1,0 +1,68 @@
+# Copyright 2021 Ecosoft Co., Ltd (https://ecosoft.co.th)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
+
+from odoo import api, models
+
+from odoo.addons.base_exception.exceptions import BaseExceptionError
+
+
+class StockPicking(models.Model):
+    _inherit = ["stock.picking", "base.exception"]
+    _name = "stock.picking"
+
+    @api.model
+    def test_all_draft_pickings(self):
+        picking_set = self.search([("state", "=", "draft")])
+        picking_set.with_context(
+            base_exception_no_rollback={self._name: picking_set.ids}
+        ).detect_exceptions()
+        return True
+
+    @api.model
+    def _reverse_field(self):
+        return "picking_ids"
+
+    def detect_exceptions(self):
+        moves = self.mapped("move_ids")
+        try:
+            all_exceptions = super().detect_exceptions()
+        except BaseExceptionError:
+            # Check the moves as well before stopping, so the exceptions of
+            # both the pickings and their moves are stored and shown together.
+            moves.detect_exceptions()
+            raise
+        all_exceptions += moves.detect_exceptions()
+        return all_exceptions
+
+    @api.constrains("ignore_exception", "move_ids", "state")
+    def stock_check_exception(self):
+        pickings = self.filtered(
+            lambda s: s.state in ["waiting", "confirmed", "assigned"]
+        )
+        if pickings:
+            # The pickings may not be committed yet (e.g. created by a sale
+            # order confirmation): detect in the current transaction.
+            pickings.with_context(
+                base_exception_no_rollback={self._name: pickings.ids}
+            )._check_exception()
+
+    @api.onchange("move_ids")
+    def onchange_ignore_exception(self):
+        if self.state in ["waiting", "confirmed", "assigned"]:
+            self.ignore_exception = False
+
+    def _must_popup_exception(self):
+        return True
+
+    def action_confirm(self):
+        self.detect_exceptions()
+        return super().action_confirm()
+
+    def button_validate(self):
+        self.detect_exceptions()
+        return super().button_validate()
+
+    @api.model
+    def _get_popup_action(self):
+        action = self.env.ref("stock_exception.action_stock_exception_confirm")
+        return action
