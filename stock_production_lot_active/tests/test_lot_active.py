@@ -37,3 +37,31 @@ class TestLotActive(BaseCommon):
                     "active": True,
                 }
             )
+
+    def test_archive_waits_until_the_stock_has_left(self):
+        product = self.env["product.product"].create(
+            {"name": "Storable Lot Product", "is_storable": True, "tracking": "lot"}
+        )
+        lot = self.env["stock.lot"].create(
+            {"name": "lot with stock", "product_id": product.id}
+        )
+        stock = self.warehouse.lot_stock_id
+        transit = self.env["stock.location"].create(
+            {"name": "Transit Test", "usage": "transit"}
+        )
+        customers = self.env.ref("stock.stock_location_customers")
+        quant_model = self.env["stock.quant"]
+        # In stock.
+        quant_model._update_available_quantity(product, stock, 1, lot_id=lot)
+        with self.assertRaises(ValidationError):
+            lot.action_archive()
+        # In transit.
+        quant_model._update_available_quantity(product, stock, -1, lot_id=lot)
+        quant_model._update_available_quantity(product, transit, 1, lot_id=lot)
+        with self.assertRaises(ValidationError):
+            lot.action_archive()
+        # Sold: the company no longer holds it.
+        quant_model._update_available_quantity(product, transit, -1, lot_id=lot)
+        quant_model._update_available_quantity(product, customers, 1, lot_id=lot)
+        lot.action_archive()
+        self.assertFalse(lot.active)

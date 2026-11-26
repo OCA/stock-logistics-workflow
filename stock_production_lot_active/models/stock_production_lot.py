@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class StockLot(models.Model):
@@ -17,3 +18,35 @@ class StockLot(models.Model):
         another inactive entry we have to set the active_test flag to False.
         """
         return super(StockLot, self.with_context(active_test=False))._check_unique_lot()
+
+    @api.constrains("active")
+    def _check_archived_without_stock(self):
+        archived = self.filtered(lambda lot: not lot.active)
+        if not archived or self.env.context.get("do_not_check_quant"):
+            return
+        # sudo: also count stock in companies the user cannot see.
+        quants = (
+            self.env["stock.quant"]
+            .sudo()
+            .search(
+                [
+                    ("lot_id", "in", archived.ids),
+                    ("location_id.usage", "in", ("internal", "transit")),
+                    "|",
+                    ("quantity", "!=", 0),
+                    ("reserved_quantity", "!=", 0),
+                ]
+            )
+        )
+        if quants:
+            lines = {
+                f"{quant.lot_id.name}: {quant.location_id.display_name}"
+                for quant in quants
+            }
+            raise ValidationError(
+                self.env._(
+                    "You cannot archive a lot that still has stock on hand. "
+                    "Move it out first:\n%(lines)s",
+                    lines="\n".join(sorted(lines)),
+                )
+            )

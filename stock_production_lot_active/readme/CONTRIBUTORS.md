@@ -5,3 +5,5 @@
 - Daniel Reis \<<dreis@opensourceintegrators.com>\>
 - [Tecnativa](https://www.tecnativa.com)
   - Juan Carlos Oñate
+- [Quartile](https://www.quartile.co):
+  - Yoshi Tashiro
