@@ -46,7 +46,7 @@ class TestStockException(TransactionCase):
                         {
                             "product_id": cls.product_1.id,
                             "product_uom_qty": 1,
-                            "product_uom": cls.product_1.uom_id.id,
+                            "uom_id": cls.product_1.uom_id.id,
                             "location_id": cls.stock_location.id,
                             "location_dest_id": cls.customer_location.id,
                         },
@@ -196,3 +196,25 @@ class TestStockException(TransactionCase):
         self.assertEqual(
             json.loads(error.exception.args[0])["target_model"], "stock.picking"
         )
+
+    def test08_ignore_wizard_returns_confirmation_action(self):
+        """Ignoring from the wizard keeps the action the confirmation returns."""
+        self.exception_rule.create(
+            {
+                "name": "No Partner",
+                "model": "stock.picking",
+                "exception_type": "by_py_code",
+                "code": "if not self.partner_id: failed=True",
+            }
+        )
+        self.picking.move_ids.product_uom_qty = 0
+        self._store_exceptions()
+        wizard = (
+            self.env["stock.exception.confirm"]
+            .with_context(active_model="stock.picking", active_ids=self.picking.ids)
+            .create({"ignore": True})
+        )
+        with patch("odoo.modules.module.current_test", False):
+            action = wizard.action_confirm()
+        self.assertEqual(action.get("res_model"), "stock.zero.demand.confirmation")
+        self.assertTrue(self.picking.ignore_exception)

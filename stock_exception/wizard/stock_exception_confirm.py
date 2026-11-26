@@ -15,5 +15,8 @@ class StockExceptionConfirm(models.TransientModel):
         self.ensure_one()
         if self.ignore:
             self.related_model_id.ignore_exception = True
-            self.related_model_id.action_confirm()
+            action = self.related_model_id.action_confirm()
+            # The confirmation may need another step (e.g. zero demand warning)
+            if isinstance(action, dict):
+                return action
         return super().action_confirm()

@@ -72,7 +72,7 @@
             <filter name="activities_exception" position="after">
                 <separator orientation="vertical" />
                 <filter
-                    icon="fa-exclamation-circle"
+                    icon="error"
                     name="tofix"
                     string="Blocked in Draft"
                     domain="[('main_exception_id','!=',False)]"

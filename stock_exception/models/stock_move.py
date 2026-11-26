@@ -19,8 +19,8 @@ class StockMove(models.Model):
     def _reverse_field(self):
         return "picking_ids"
 
-    def _detect_exceptions(self, rule):
-        records = super()._detect_exceptions(rule)
+    def _detect_exceptions(self, rule_info):
+        records = super()._detect_exceptions(rule_info)
         return records.mapped("picking_id")
 
     def _detect_exception_get_exc_class_values(self):

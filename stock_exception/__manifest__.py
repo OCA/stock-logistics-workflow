@@ -4,14 +4,14 @@
 {
     "name": "Stock Exception",
     "summary": "Custom exceptions on stock picking",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Generic Modules/Warehouse Management",
     "author": "Ecosoft, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "depends": ["stock", "base_exception"],
     "license": "AGPL-3",
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "data/stock_exception_data.xml",
         "wizard/stock_exception_confirm_view.xml",
         "views/stock_view.xml",
