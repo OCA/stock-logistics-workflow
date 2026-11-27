@@ -347,9 +347,7 @@ def post_load_hook():
                 quantities[forced_quantity[0]] += forced_quantity[1]
             else:
                 for line in lines:
-                    quantities[line.lot_id] += line.product_uom_id._compute_quantity(
-                        line.quantity, move.product_id.uom_id
-                    )
+                    quantities[line.lot_id] += line.quantity_product_uom
             if float_is_zero(
                 sum(quantities.values()),
                 precision_rounding=move.product_id.uom_id.rounding,
