@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field
+            name="name"
+        >Operation Types - stock_picking_type_restrict_location</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form" />
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <div name="default_location_dest_id_div" position="after">
+                <field
+                    name="restrict_location"
+                    invisible="code not in ('incoming', 'outgoing', 'internal')"
+                />
+            </div>
+        </field>
+    </record>
+    <record id="view_pickingtype_filter" model="ir.ui.view">
+        <field
+            name="name"
+        >stock.picking.type.filter - stock_picking_type_restrict_location</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_pickingtype_filter" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator />
+                <filter
+                    name="unrestricted_location"
+                    string="Unrestricted Locations"
+                    domain="[('restrict_location', '=', False)]"
+                    groups="stock.group_stock_multi_locations"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
