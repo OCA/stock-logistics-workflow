@@ -14,7 +14,7 @@ class StockLot(models.Model):
         string="Locations",
     )
 
-    @api.depends("quant_ids", "quant_ids.location_id")
+    @api.depends("quant_ids", "quant_ids.location_id", "quant_ids.quantity")
     def _compute_location_ids(self):
         for lot in self:
             lot.location_ids = lot.quant_ids.filtered(

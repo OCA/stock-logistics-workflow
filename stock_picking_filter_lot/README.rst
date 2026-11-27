@@ -53,6 +53,9 @@ To use this module:
 3. Note that lots must have a company assigned to them for proper
    filtering.
 
+The same filter applies to the Serial Numbers column of the Operations
+tab of a picking whose source location is internal or transit.
+
 Bug Tracker
 ===========
 
@@ -74,20 +77,20 @@ Authors
 Contributors
 ------------
 
-- Simone Rubino <simone.rubino@agilebg.com>
-  (`www.agilebg.com <http://www.agilebg.com>`__)
-- Lois Rilo <lois.rilo@forgeflow.com>
-  (`www.forgeflow.com <http://www.forgeflow.com>`__)
-- Alan Ramos <alan.ramos@jarsa.com.mx>
-  (`www.jarsa.com.mx <http://www.jarsa.com.mx>`__)
-- Tharathip Chaweewongphan <tharathipc@ecosoft.co.th>
-  (`www.ecosoft.co.th <http://www.ecosoft.co.th>`__)
-- Jesus Alcala <jesus.alcala@jarsa.com.mx>
-  (`www.jarsa.com.mx <http://www.jarsa.com.mx>`__)
-- `OERP Canada <https://www.oerp.ca/>`__ <info@oerp.ca>
-- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
+-  Simone Rubino <simone.rubino@agilebg.com>
+   (`www.agilebg.com <http://www.agilebg.com>`__)
+-  Lois Rilo <lois.rilo@forgeflow.com>
+   (`www.forgeflow.com <http://www.forgeflow.com>`__)
+-  Alan Ramos <alan.ramos@jarsa.com.mx>
+   (`www.jarsa.com.mx <http://www.jarsa.com.mx>`__)
+-  Tharathip Chaweewongphan <tharathipc@ecosoft.co.th>
+   (`www.ecosoft.co.th <http://www.ecosoft.co.th>`__)
+-  Jesus Alcala <jesus.alcala@jarsa.com.mx>
+   (`www.jarsa.com.mx <http://www.jarsa.com.mx>`__)
+-  `OERP Canada <https://www.oerp.ca/>`__ <info@oerp.ca>
+-  `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
 
-  - Bhavesh Heliconia
+   -  Bhavesh Heliconia
 
 Maintainers
 -----------
