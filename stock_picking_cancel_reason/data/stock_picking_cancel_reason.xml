@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="cancel_reason_no_needed" model="stock.picking.cancel.reason">
+        <field name="name">No longer needed</field>
+    </record>
+    <record id="cancel_reason_other_provider" model="stock.picking.cancel.reason">
+        <field name="name">Other Provider selected</field>
+    </record>
+</odoo>
