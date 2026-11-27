@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_product_link
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-12-06 14:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: stock_picking_product_link
+#: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking__product_count
+msgid "Number of Products"
+msgstr "Numero di prodotti"
+
+#. module: stock_picking_product_link
+#: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking__product_template_ids
+msgid "Product Templates"
+msgstr "Modelli prodotto"
+
+#. module: stock_picking_product_link
+#. odoo-python
+#: code:addons/stock_picking_product_link/models/stock_picking.py:0
+#: code:addons/stock_picking_product_link/models/stock_picking.py:0
+#: model:ir.model.fields,field_description:stock_picking_product_link.field_stock_picking__product_ids
+#: model_terms:ir.ui.view,arch_db:stock_picking_product_link.view_picking_form
+#, python-format
+msgid "Products"
+msgstr "Prodotti"
+
+#. module: stock_picking_product_link
+#: model_terms:ir.ui.view,arch_db:stock_picking_product_link.view_picking_form
+msgid ""
+"This displays the amount of products (variants) in the                     "
+"stock transfer. If you do not have product variants enabled, but"
+"                     somehow someone else did, there exists a rare case "
+"where the                     amount displayed is higher than the amount of "
+"products you see                     when clicking on this button."
+msgstr ""
+"Questo visualizza il numero di prodotti (varianti) nel                     "
+"trasferimento di magazzino. Se non sono abilitate le varianti di prodotto, "
+"ma                     in qualche modo qualcun altro lo ha fatto, esiste un "
+"caso raro quando                     il numero visualizzato è maggiore del "
+"numero dei prodotti che si vedono                     facendo clic su questo "
+"pulsante."
+
+#. module: stock_picking_product_link
+#: model:ir.model.fields,help:stock_picking_product_link.field_stock_picking__product_count
+msgid ""
+"This displays the amount of products (variants) in the stock transfer.\n"
+"            The amount of product templates may be lower."
+msgstr ""
+"Questo visualizza il numero dei prodotti (varianti) nel trasferimento di "
+"magazzino.\n"
+"            Il numero dei modelli prodotto può essere inferiore."
+
+#. module: stock_picking_product_link
+#: model:ir.model,name:stock_picking_product_link.model_stock_picking
+msgid "Transfer"
+msgstr "Trasferimento"
