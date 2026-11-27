@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestStockPickingCancelReason(TransactionCase):
     def setUp(self):
-        super(TestStockPickingCancelReason, self).setUp()
+        super().setUp()
         StockPicking = self.env["stock.picking"]
         CancelReason = self.env["stock.picking.cancel.reason"]
         partner = self.env["res.partner"].create({"name": "Test Partner"})
