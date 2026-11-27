@@ -1,0 +1,11 @@
+- Ana Juaristi \<<anajuaristi@avanzosc.es>\>
+- Alfredo de la Fuente \<<alfredodelafuente@avanzosc.es>\>
+- Oihane Crucelaegui \<<oihanecrucelaegi@avanzosc.es>\>
+- Lionel Sausin \<<ls@numerigraphe.com>\>
+- Ainara Galdona \<<ainaragaldona@avanzosc.es>\>
+- [Tecnativa](https://www.tecnativa.com):
+  - Pedro M. Baeza
+  - Ernesto Tejeda
+- Henry Backman \<<henry.backman@camptocamp.com>\>
+- [Studio73](https://www.studio73.es):
+  - Eugenio Micó \<<eugenio@studio73.es>>
