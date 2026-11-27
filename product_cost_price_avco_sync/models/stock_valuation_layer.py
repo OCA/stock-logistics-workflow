@@ -295,7 +295,58 @@ class StockValuationLayer(models.Model):
             vals["remaining_qty"] = self.remaining_qty + fifo_vals.get(
                 "remaining_qty", 0.0
             )
+        elif float_compare(quantity_diff, 0.0, precision_digits=precision_qty) > 0:
+            # Fewer units leaving: they are on hand again. They first settle
+            # what this layer still owed to the negative stock vacuum, and the
+            # rest goes back to the receipts the outgoing moves took them from.
+            remaining = self.remaining_qty + quantity_diff
+            if float_compare(remaining, 0.0, precision_digits=precision_qty) > 0:
+                remaining = self._give_back_avco_remaining_qty(remaining)
+                vals["remaining_value"] = remaining * self.unit_cost
+            vals["remaining_qty"] = remaining
         self.write(vals)
+
+    def _give_back_avco_remaining_qty(self, quantity):
+        """Put `quantity` units back on hand in the incoming layers of the
+        chain, undoing what the outgoing moves took from them, and return what
+        did not fit.
+
+        Odoo takes the units of an outgoing move from the oldest layers that
+        still have some (`product._run_fifo`), so what has been taken is always
+        the oldest part of the chain. Giving the units back from the newest
+        layer that had some taken keeps it that way. Whatever does not fit
+        stays on the outgoing layer, which is where the correction layer Odoo
+        would have created would hold it.
+        """
+        self.ensure_one()
+        precision_qty = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        candidates = (
+            self.env["stock.valuation.layer"]
+            .sudo()
+            .search(
+                self._get_avco_chain_domain()
+                + [("quantity", ">", 0), ("stock_valuation_layer_id", "=", False)],
+                order="create_date desc, id desc",
+            )
+        )
+        for candidate in candidates:
+            taken = candidate.quantity - candidate.remaining_qty
+            if float_compare(taken, 0.0, precision_digits=precision_qty) <= 0:
+                continue
+            given_back = min(taken, quantity)
+            candidate.write(
+                {
+                    "remaining_qty": candidate.remaining_qty + given_back,
+                    "remaining_value": candidate.remaining_value
+                    + given_back * candidate.unit_cost,
+                }
+            )
+            quantity -= given_back
+            if float_is_zero(quantity, precision_digits=precision_qty):
+                return 0.0
+        return quantity
 
     def _get_manual_adjustment_price(self):
         """Return the cost a manual adjustment layer was created for, or None.
@@ -566,10 +617,49 @@ class StockValuationLayer(models.Model):
             and self.description
         )
 
+    def _get_avco_returned_unit_cost(self, svls_dic):
+        """Unit cost of the move this layer returns, or None when the layer is
+        not a return of a move valued in the same chain.
+
+        Core values a return at the cost of the returned move, its layers plus
+        the ones hanging from them (`stock.move._get_price_unit`), and the
+        replay has to do the same: taking the running cost instead makes the
+        value of a return depend on when the chain was last replayed. The
+        returned layers that are part of this replay count with their replayed
+        figures, the earlier ones with what they hold.
+        """
+        self.ensure_one()
+        returned_move = self.stock_move_id.origin_returned_move_id.sudo()
+        if not returned_move:
+            return None
+        key = self._get_avco_sync_key()
+        layers = returned_move.stock_valuation_layer_ids.filtered(
+            lambda x: x._get_avco_sync_key() == key
+        )
+        # Same exclusion as core: dropshipping adds positive layers that do not
+        # take part in the valuation
+        if returned_move._is_dropshipped() or returned_move._is_dropshipped_returned():
+            rounding = self.uom_id.rounding
+            layers = layers.filtered(
+                lambda x: float_compare(x.value, 0.0, precision_rounding=rounding) <= 0
+            )
+        layers |= layers.stock_valuation_layer_ids
+        replayed = svls_dic[key]["svls"]
+        quantity = value = 0.0
+        for layer in layers:
+            layer_data = replayed.get(layer) or layer
+            quantity += layer_data["quantity"]
+            value += layer_data["value"]
+        if float_is_zero(quantity, precision_rounding=self.uom_id.rounding):
+            return None
+        return value / quantity
+
     def _is_avco_valued_at_current_cost(self):
         """Layers whose unit cost is not a purchase price but whatever the
         product was worth when they were created, so replaying the chain has to
-        re-price them instead of averaging them in: returns, inventory
+        re-price them instead of averaging them in: returns of moves that are
+        not valued in the chain (the others come back with the cost of the
+        returned move, see `_get_avco_returned_unit_cost`), inventory
         adjustments, and the layers core writes with no move at all to switch a
         product from one valuation model to another.
         """
@@ -645,12 +735,17 @@ class StockValuationLayer(models.Model):
                 svl_dic["unit_cost_processed"] = True
         # Incoming line in layer
         if f_compare > 0:
-            if self._is_avco_valued_at_current_cost():
+            returned_unit_cost = self._get_avco_returned_unit_cost(svls_dic)
+            if returned_unit_cost is None and self._is_avco_valued_at_current_cost():
                 self._update_avco_svl_values(
                     svl_data, unit_cost=svl_dic["previous_unit_cost"]
                 )
-            # Normal incoming moves
+            # Normal incoming moves, and returns, which come back with the cost
+            # of the returned move and average in like any other receipt: with
+            # no stock on hand they set the cost, as core does
             else:
+                if returned_unit_cost is not None:
+                    self._update_avco_svl_values(svl_data, unit_cost=returned_unit_cost)
                 svl_dic["unit_cost_processed"] = True
                 svl_dic["previous_unit_cost"] = self._get_avco_svl_price(
                     svl_dic["previous_unit_cost"],
