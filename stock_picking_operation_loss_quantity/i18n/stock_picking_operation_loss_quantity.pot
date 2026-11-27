@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_operation_loss_quantity
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_operation_loss_quantity
+#: model_terms:ir.ui.view,arch_db:stock_picking_operation_loss_quantity.view_stock_move_line_detailed_operation_tree
+msgid "Are you sure the product is out of stock?"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,help:stock_picking_operation_loss_quantity.field_stock_warehouse__use_loss_picking
+msgid ""
+"Check this if you want to use the loss feature during picking operations."
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,field_description:stock_picking_operation_loss_quantity.field_stock_warehouse__use_loss_picking
+msgid "Enable the Loss feature"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,field_description:stock_picking_operation_loss_quantity.field_stock_move_line__is_action_lose_quantity_allowed
+msgid "Is Action Lose Quantity Allowed"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model_terms:ir.ui.view,arch_db:stock_picking_operation_loss_quantity.stock_warehouse_form_view
+#: model_terms:ir.ui.view,arch_db:stock_picking_operation_loss_quantity.view_stock_move_line_detailed_operation_tree
+msgid "Loss"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#. odoo-python
+#: code:addons/stock_picking_operation_loss_quantity/models/stock_warehouse.py:0
+#, python-format
+msgid "Loss Control"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,field_description:stock_picking_operation_loss_quantity.field_stock_warehouse__loss_location_id
+msgid "Loss Location"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,field_description:stock_picking_operation_loss_quantity.field_stock_warehouse__loss_type_id
+msgid "Loss Picking Type"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#. odoo-python
+#: code:addons/stock_picking_operation_loss_quantity/models/stock_warehouse.py:0
+#: model:ir.model.fields,field_description:stock_picking_operation_loss_quantity.field_stock_warehouse__loss_route_id
+#, python-format
+msgid "Loss Route"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#. odoo-python
+#: code:addons/stock_picking_operation_loss_quantity/models/stock_warehouse.py:0
+#, python-format
+msgid "Loss Sequence"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#. odoo-python
+#: code:addons/stock_picking_operation_loss_quantity/models/stock_warehouse.py:0
+#, python-format
+msgid "Losses"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model,name:stock_picking_operation_loss_quantity.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model,name:stock_picking_operation_loss_quantity.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,help:stock_picking_operation_loss_quantity.field_stock_warehouse__loss_type_id
+msgid "The operation type for loss operations"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model.fields,help:stock_picking_operation_loss_quantity.field_stock_warehouse__loss_route_id
+msgid "The route used to lock the quants for which a loss is declared"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#: model:ir.model,name:stock_picking_operation_loss_quantity.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_picking_operation_loss_quantity
+#. odoo-python
+#: code:addons/stock_picking_operation_loss_quantity/models/stock_move_line.py:0
+#, python-format
+msgid "You are not allowed to declare loss quantities"
+msgstr ""
