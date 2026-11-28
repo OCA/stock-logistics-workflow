@@ -318,6 +318,35 @@ class PickingBillLineMatch(models.Model):
             else self.picking_id.id,
         }
 
+    def action_show_all_receipts(self):
+        """Widen the screen to every open receipt of the vendor."""
+        return self._reopen_matching_screen(all_receipts=True)
+
+    def action_show_proposed_receipts(self):
+        """Come back to the receipts the bill itself references."""
+        return self._reopen_matching_screen(all_receipts=False)
+
+    def _reopen_matching_screen(self, all_receipts):
+        """Reopen the matching screen of the bill it was opened from.
+
+        The screen opens narrowed to the receipts the bill references (see
+        ``account.move._get_proposed_receipt_domain``). The widening stays one
+        click away, in the screen's own header, so a bill whose reference is
+        missing or wrong is never a dead end — and the automatic phases are
+        skipped on the way back, since the operator only asked to see more.
+        """
+        move = self.env["account.move"].browse(
+            self.env.context.get("picking_matching_move_id") or 0
+        )
+        if not move:
+            raise UserError(
+                _("Open the matching screen from a vendor bill to change its scope.")
+            )
+        return move.with_context(
+            picking_matching_all_receipts=all_receipts,
+            picking_matching_no_auto_match=True,
+        ).action_picking_matching()
+
     def action_unmatch_lines(self):
         """DEBUG/UNDO: Easily sever the M2M links of selected lines."""
 

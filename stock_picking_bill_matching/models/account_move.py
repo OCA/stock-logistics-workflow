@@ -14,6 +14,31 @@ from .picking_bill_line_match import MATCHING_PRECISION, qty_in_uom
 _logger = logging.getLogger(__name__)
 
 
+def _and_domain(leaves):
+    """Prefix notation for the AND of ``leaves``.
+
+    Odoo domains have no parentheses: ``|`` and ``&`` bind the two expressions
+    that follow them, and consecutive expressions are AND-ed by default. That
+    default is why ``["|"] + A + B`` looks like "A or B" but is really
+    "a1 and a2 or (a3 and b1) ..." as soon as A and B have more than one leaf:
+    each conjunction has to be spelled out with ``&``.
+    """
+    leaves = list(leaves)
+    if len(leaves) <= 1:
+        return leaves
+    return ["&"] * (len(leaves) - 1) + leaves
+
+
+def _or_domains(subdomains):
+    """Prefix notation for the OR of several AND-ed subdomains."""
+    groups = [_and_domain(sub) for sub in subdomains if sub]
+    if not groups:
+        return []
+    if len(groups) == 1:
+        return groups[0]
+    return ["|"] * (len(groups) - 1) + [leaf for group in groups for leaf in group]
+
+
 class AccountMove(models.Model):
     _inherit = "account.move"
 
@@ -496,11 +521,81 @@ class AccountMove(models.Model):
             },
         }
 
+    def _get_proposed_receipt_domain(self):
+        """Domain of the receipt lines the screen should propose by default.
+
+        The candidate receipt of a bill line is already known when the screen
+        opens: the NF-e import stamps the reference of the order line on the
+        bill line (``J-MT/OC/26/40795-1``) and the receipt derives the very
+        same reference from its purchase order. Only the screen ignored it, so
+        the operator was asked to choose among every open receipt of the
+        vendor for that product — 149 lines and six years of history on a
+        supplier like Jung's — while the right one is a single row.
+
+        Narrowing keeps the answer visible without deciding anything: the
+        operator still picks the receipt, it is just the only one proposed.
+        The products whose bill line carries no reference keep the wide
+        candidate set, because the module then falls back to the product-only
+        wildcard and narrowing there would hide the only receipts able to
+        absorb the line.
+
+        Returns a domain to AND with the bill's own lines, or None when there
+        is nothing to narrow (no bill line, or no reference at all).
+        """
+        bill_lines = self._get_bill_product_lines()
+        if not bill_lines:
+            return None
+        bill_rows = self.env["picking.bill.line.match"].search(
+            [("aml_id", "in", bill_lines.ids)]
+        )
+        refs_by_product = defaultdict(set)
+        for row in bill_rows:
+            if row.matching_reference:
+                refs_by_product[row.product_id.id].add(row.matching_reference)
+        if not refs_by_product:
+            # nothing recognized: the screen stays as wide as it used to be
+            return None
+        wildcard_products = bill_lines.filtered(
+            lambda line: not refs_by_product.get(line.product_id.id)
+        ).mapped("product_id")
+        common = [
+            ("company_id", "=", self.company_id.id),
+            (
+                "partner_id",
+                "in",
+                (self.partner_id | self.partner_id.commercial_partner_id).ids,
+            ),
+            ("line_type", "=", "stock_move"),
+            # the receipts already linked to this bill stay visible: the
+            # operator comes back to this screen to check or undo them
+            ("account_move_id", "in", (self.id, False)),
+        ]
+        subdomains = [
+            common
+            + [
+                ("product_id", "=", product_id),
+                ("matching_reference", "in", sorted(references)),
+            ]
+            for product_id, references in refs_by_product.items()
+        ]
+        if wildcard_products:
+            subdomains.append(common + [("product_id", "in", wildcard_products.ids)])
+        domain = _or_domains(subdomains)
+        if not self.env["picking.bill.line.match"].search_count(domain):
+            # the references this bill carries match no receipt at all (the
+            # goods are not ordered yet, or the reference is wrong): hiding
+            # everything would be a dead end, so nothing is hidden
+            return None
+        return ["|", ("account_move_id", "=", self.id)] + domain
+
     def action_picking_matching(self):
         self.ensure_one()
         context = dict(self.env.context, default_account_move_id=self.id)
+        # the operator widened or narrowed the screen from its own header:
+        # only the screen is reopened, the automatic phases must not run again
+        reopening = self.env.context.get("picking_matching_no_auto_match")
 
-        if not self.env.context.get("search_default_matched"):
+        if not (reopening or self.env.context.get("search_default_matched")):
             # 1. reference-driven automatic matching: only the lines whose
             # reference identifies their receipt are consumed (deterministic)
             matched = self._auto_match_referenced_lines()
@@ -537,32 +632,54 @@ class AccountMove(models.Model):
                 ("account_move_id", "=", self.id),
                 ("sm_id", "in", linked_sm_ids),
             ]
-            context.update({"hide_match": True})
+            context.update(
+                {
+                    "hide_match": True,
+                    "hide_all_receipts": True,
+                    "hide_proposed_only": True,
+                }
+            )
         else:
-            domain = [
-                (
-                    "partner_id",
-                    "in",
-                    (self.partner_id | self.partner_id.commercial_partner_id).ids,
-                ),
-                ("company_id", "=", self.company_id.id),
-                ("account_move_id", "in", (self.id, False)),
-                (
-                    "product_id",
-                    "in",
-                    self.invoice_line_ids.mapped("product_id").ids,
-                ),
-            ]
+            all_receipts = self.env.context.get("picking_matching_all_receipts")
+            proposed = None if all_receipts else self._get_proposed_receipt_domain()
+            if proposed:
+                # the wizard already identified the receipt of each bill line:
+                # propose those instead of the whole history of the vendor for
+                # the product (see _get_proposed_receipt_domain). ``proposed``
+                # is already AND-ed with the bill's own lines.
+                domain = proposed
+            else:
+                domain = [
+                    (
+                        "partner_id",
+                        "in",
+                        (self.partner_id | self.partner_id.commercial_partner_id).ids,
+                    ),
+                    ("company_id", "=", self.company_id.id),
+                    ("account_move_id", "in", (self.id, False)),
+                    (
+                        "product_id",
+                        "in",
+                        self.invoice_line_ids.mapped("product_id").ids,
+                    ),
+                ]
             context.update(
                 {
                     "hide_unmatch": True,
-                    "search_default_group_product": 1,
+                    # one fold per order line: a bill line is immediately
+                    # followed by the receipts carrying the same reference
+                    "search_default_group_matching_reference": 1,
+                    "picking_matching_move_id": self.id,
+                    "hide_all_receipts": bool(proposed),
+                    "hide_proposed_only": not proposed,
                 }
             )
 
         return {
             "type": "ir.actions.act_window",
-            "name": _("Picking Matching"),
+            "name": _("Picking Matching (all receipts)")
+            if self.env.context.get("picking_matching_all_receipts")
+            else _("Picking Matching"),
             "res_model": "picking.bill.line.match",
             "domain": domain,
             "view_mode": "tree",

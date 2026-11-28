@@ -1582,3 +1582,80 @@ class TestStockBillMatching(common.TransactionCase):
         picking = self.env["stock.picking"].browse(action.get("res_id", False))
         self.assertEqual(picking.move_ids.product_id, self.product_a)
         self.assertEqual(picking.move_ids.quantity_done, 2)
+
+    # ------------------------------------------------------------------
+    # The screen proposes what the wizard already identified: the receipts
+    # carrying the bill line's reference, not the whole vendor history
+    # ------------------------------------------------------------------
+
+    def test_46_screen_proposes_only_the_referenced_receipts(self):
+        """A vendor with years of history for the same product must not flood
+        the matching screen: only the receipts carrying the bill line's own
+        reference are proposed, and the wide set stays one context flag away.
+        """
+        old_picking = self.create_picking([(self.product_a, 3)])
+        self._set_reference(old_picking.move_ids, "P00007-1")
+        self._validate_picking(old_picking)
+        targeted = self.create_picking([(self.product_a, 2)])
+        self._set_reference(targeted.move_ids, "P00008-1")
+        bill = self.create_bill([(self.product_a, 2, 50.0)])
+        self._set_reference(bill.invoice_line_ids, "P00008-1")
+        self.env.flush_all()
+
+        narrowed = bill.with_context(
+            picking_matching_no_auto_match=True
+        ).action_picking_matching()
+        rows = self.env["picking.bill.line.match"].search(narrowed["domain"])
+        self.assertEqual(
+            rows.filtered(lambda row: row.line_type == "stock_move").picking_id,
+            targeted,
+            "Only the receipt carrying the bill line reference is proposed.",
+        )
+        self.assertEqual(
+            narrowed["context"]["search_default_group_matching_reference"],
+            1,
+            "The screen folds by match reference: one fold per order line.",
+        )
+        self.assertTrue(narrowed["context"]["hide_all_receipts"])
+        self.assertFalse(narrowed["context"]["hide_proposed_only"])
+
+        widened = bill.with_context(
+            picking_matching_all_receipts=True,
+            picking_matching_no_auto_match=True,
+        ).action_picking_matching()
+        wide_rows = self.env["picking.bill.line.match"].search(widened["domain"])
+        self.assertEqual(
+            wide_rows.filtered(lambda row: row.line_type == "stock_move").picking_id,
+            old_picking | targeted,
+            "The wide screen still shows every open receipt of the vendor.",
+        )
+        self.assertTrue(widened["context"]["hide_proposed_only"])
+        self.assertFalse(widened["context"]["hide_all_receipts"])
+
+    def test_47_a_bill_without_reference_keeps_the_wide_screen(self):
+        """When nothing identifies the receipt (no reference at all), narrowing
+        would hide the only receipts able to absorb the line, so that product
+        keeps the wide candidate set while the referenced one stays narrow."""
+        blind_picking = self.create_picking([(self.product_b, 4)])
+        targeted = self.create_picking([(self.product_a, 2)])
+        self._set_reference(targeted.move_ids, "P00009-1")
+        bill = self.create_bill([(self.product_a, 2, 50.0), (self.product_b, 4, 100.0)])
+        self._set_reference(
+            bill.invoice_line_ids.filtered(
+                lambda line: line.product_id == self.product_a
+            ),
+            "P00009-1",
+        )
+        self.env.flush_all()
+
+        action = bill.with_context(
+            picking_matching_no_auto_match=True
+        ).action_picking_matching()
+        rows = self.env["picking.bill.line.match"].search(action["domain"])
+        receipts = rows.filtered(lambda row: row.line_type == "stock_move")
+        self.assertEqual(
+            receipts.picking_id,
+            blind_picking | targeted,
+            "The product without a reference keeps its candidates, the "
+            "referenced one is narrowed to its own receipt.",
+        )

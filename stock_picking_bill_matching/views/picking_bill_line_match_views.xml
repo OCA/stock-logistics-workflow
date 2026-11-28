@@ -42,6 +42,11 @@
                         name="group_document"
                         context="{'group_by':'reference'}"
                     />
+                    <filter
+                        string="Match Ref."
+                        name="group_matching_reference"
+                        context="{'group_by':'matching_reference'}"
+                    />
                 </group>
             </search>
         </field>
@@ -82,6 +87,20 @@
                         string="Create / Add to Picking"
                         class="btn btn-info"
                         invisible="context.get('hide_match')"
+                    />
+                    <button
+                        name="action_show_all_receipts"
+                        type="object"
+                        string="All Receipts of this Vendor"
+                        class="btn btn-secondary"
+                        invisible="context.get('hide_all_receipts')"
+                    />
+                    <button
+                        name="action_show_proposed_receipts"
+                        type="object"
+                        string="Proposed Only"
+                        class="btn btn-secondary"
+                        invisible="context.get('hide_proposed_only')"
                     />
                 </header>
 
