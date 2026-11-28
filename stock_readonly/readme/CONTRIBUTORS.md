@@ -1,1 +1,2 @@
 - Sébastien Alix \<<sebastien.alix@akretion.com>\>
+- Dustin Mimbela \<<dmimbela@nlcode.com>\>

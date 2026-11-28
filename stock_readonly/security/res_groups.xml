@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="group_stock_readonly" model="res.groups">
         <field name="name">Readonly</field>
-        <field name="sequence">5</field>
+        <field name="sequence" eval="5" />
         <field name="privilege_id" ref="stock.res_groups_privilege_inventory" />
         <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]" />
         <field

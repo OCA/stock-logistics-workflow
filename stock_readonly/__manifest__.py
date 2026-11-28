@@ -5,7 +5,7 @@
 {
     "name": "Stock Readonly",
     "summary": "Read-only access to Inventory documents",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Supply Chain/Inventory",
     "website": "https://github.com/OCA/stock-logistics-workflow",
     "author": "Akretion, Odoo Community Association (OCA)",
@@ -16,7 +16,7 @@
     ],
     "data": [
         "security/res_groups.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/stock_menus.xml",
     ],
     "installable": True,

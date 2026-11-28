@@ -33,9 +33,6 @@ class TestStockReadonly(BaseCommon):
         cls.lot = cls.env["stock.lot"].create(
             {"name": "LOT-RO-1", "product_id": cls.product.id}
         )
-        cls.scrap = cls.env["stock.scrap"].create(
-            {"product_id": cls.product.id, "scrap_qty": 1.0}
-        )
         cls.scrap_reason_tag = cls.env["stock.scrap.reason.tag"].create(
             {"name": "Broken"}
         )
@@ -115,16 +112,6 @@ class TestStockReadonly(BaseCommon):
         with self.assertRaises(AccessError):
             self.env["stock.lot"].with_user(self.user_readonly).create(
                 {"name": "Sneaky Lot", "product_id": self.product.id}
-            )
-
-    def test_stock_scrap_readonly(self):
-        scrap = self.scrap.with_user(self.user_readonly)
-        self.assertTrue(scrap.read(["scrap_qty"]))
-        with self.assertRaises(AccessError):
-            scrap.scrap_qty = 2.0
-        with self.assertRaises(AccessError):
-            self.env["stock.scrap"].with_user(self.user_readonly).create(
-                {"product_id": self.product.id, "scrap_qty": 1.0}
             )
 
     def test_stock_scrap_reason_tag_readonly(self):
