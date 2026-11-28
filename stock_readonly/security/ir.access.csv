@@ -1,0 +1,9 @@
+id,name,model_id,group_id/id,operation,domain
+access_stock_picking_readonly,stock.picking readonly,stock.picking,group_stock_readonly,r,
+access_stock_move_readonly,stock.move readonly,stock.move,group_stock_readonly,r,
+access_stock_lot_readonly,stock.lot readonly,stock.lot,group_stock_readonly,r,
+access_stock_scrap_reason_tag_readonly,stock.scrap.reason.tag readonly,stock.scrap.reason.tag,group_stock_readonly,r,
+access_stock_warehouse_orderpoint_readonly,stock.warehouse.orderpoint readonly,stock.warehouse.orderpoint,group_stock_readonly,r,
+access_stock_package_type_readonly,stock.package.type readonly,stock.package.type,group_stock_readonly,r,
+access_stock_package_history_readonly,stock.package.history readonly,stock.package.history,group_stock_readonly,r,
+access_stock_traceability_report_readonly,stock.traceability.report readonly,stock.traceability.report,group_stock_readonly,cru,
